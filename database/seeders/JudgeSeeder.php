@@ -18,14 +18,14 @@ class JudgeSeeder extends Seeder
     {
         $i = 1;
 
-        while($i < 4) {
-            $exists = User::where('email', 'judge'.$i.'@mail.com')->count();
+        while ($i < 4) {
+            $exists = User::where('email', 'judge' . $i . '@mail.com')->count();
             if (!$exists)
                 User::insert([
-                    'name' => 'Judge-'.$i,
-                    'email' => 'judge'.$i.'@mail.com',
+                    'name' => 'Judge-' . $i,
+                    'email' => 'judge' . $i . '@mail.com',
                     'role' => 'judge',
-                    'password' => Hash::make('mb2023judge'.$i),
+                    'password' => Hash::make('mrmsuepjudge' . $i),
                 ]);
             $i++;
         }

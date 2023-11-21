@@ -3,14 +3,12 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use App\Models\Score;
-use App\Models\Stage;
-use App\Models\Barangay;
-use App\Models\Category;
+use App\Models\Mr_candidate;
+use App\Models\Mr_prepageant_score;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class InitialZeroScoreSeeder extends Seeder
+class MrPrepageantScoreSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -19,23 +17,20 @@ class InitialZeroScoreSeeder extends Seeder
      */
     public function run()
     {
-        //get active stage
-        $stage = Stage::where('is_active', 1)->first()->id;
 
         //get all judge
         $judges = User::where('role', 'judge')->get();
 
         //get all barangays
-        $barangays = Barangay::all();
+        $candidates = Mr_candidate::all();
 
         foreach ($judges as $judge) {
-            foreach ($barangays as $barangay) {
+            foreach ($candidates as $candidate) {
                 //initialize zero score to scores table based on stage, judges and barangays
-                Score::create([
-                    'stage_id' => $stage,
+                Mr_prepageant_score::create([
                     'judge_id' => $judge->id,
-                    'barangay_id' => $barangay->id,
-                    'candidate_id' => $barangay->id,
+                    'candidate_id' => $candidate->id,
+                    'is_lock' => 0,
                 ]);
             }
         }

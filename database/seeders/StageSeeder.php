@@ -19,7 +19,6 @@ class StageSeeder extends Seeder
         DB::insert("INSERT INTO `stages` (`stage_name`, `is_active`) VALUES
 			('Pre-Pageant',1),
 			('Preliminaries',0),
-			('Semifinal',0),
 			('Final',0)");
     }
 }

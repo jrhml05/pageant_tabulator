@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Judge;
 
-use App\Models\Score;
+use App\Models\Ms_prepageant_score;
 use Livewire\Component;
 
 use Illuminate\Support\Facades\Auth;
@@ -22,9 +22,8 @@ class ScoreBoardComponent extends Component
 
     public function mount()
     {
-        $this->records = Score::where('stage_id', $this->stage)
-            ->where('judge_id', Auth::user()->id)
-            ->orderBy('barangay_id', 'ASC')
+        $this->records = Ms_prepageant_score::where('judge_id', Auth::user()->id)
+            ->orderBy('candidate_id', 'ASC')
             ->get();
         // dd($this->records);
     }
@@ -47,8 +46,8 @@ class ScoreBoardComponent extends Component
     {
         foreach ($this->records as $record) {
 
-            if(!$record->is_lock) {
-                $saveScore = Score::updateOrCreate(
+            if (!$record->is_lock) {
+                $saveScore = Ms_prepageant_score::updateOrCreate(
                     [
                         'id' => $record->id,
                         'stage_id' => $this->stage,
@@ -62,7 +61,7 @@ class ScoreBoardComponent extends Component
                     ]
                 );
 
-                if($saveScore) {
+                if ($saveScore) {
                     $this->dispatchBrowserEvent('swal:modal', [
                         'type' => 'success',
                         'message' => 'Scores has been saved successfully!',
@@ -79,17 +78,14 @@ class ScoreBoardComponent extends Component
 
                 ]);
             }
-
         }
-
-
     }
 
     public function updatedRecords()
     {
         foreach ($this->records as $record) {
 
-            if(!$record->is_lock) {
+            if (!$record->is_lock) {
                 Score::updateOrCreate(
                     [
                         'id' => $record->id,
@@ -103,9 +99,7 @@ class ScoreBoardComponent extends Component
                         'intelligence' => $record->intelligence == '' ? null : $record->intelligence,
                     ]
                 );
-
             }
-
         }
     }
 }

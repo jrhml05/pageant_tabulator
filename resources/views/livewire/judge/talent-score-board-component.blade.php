@@ -13,28 +13,28 @@
                                 class="text-primary">{{ strtoupper($record->barangay->name) }}</span></h6> --}}
                         <div class="input-group mb-1">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Mastery & Execution 50%</span>
+                                <span class="input-group-text" id="basic-addon1">Execution Skills 50%</span>
                             </div>
-                            <input onfocus="this.select()" wire:model="records.{{ $index }}.mastery_and_execution" type="number"
-                                class="form-control text-center {{ $record->mastery_and_execution > 50 ? 'is-invalid' : '' }}"
+                            <input onfocus="this.select()" wire:model="records.{{ $index }}.execution" type="number"
+                                class="form-control text-center {{ $record->execution > 50 ? 'is-invalid' : '' }}"
                                 placeholder="00.00" aria-describedby="basic-addon1">
 
                         </div>
                         <div class="input-group mb-1">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Originality 40%</span>
+                                <span class="input-group-text" id="basic-addon1">Creativity & Originality 30%</span>
                             </div>
                             <input onfocus="this.select()" wire:model="records.{{ $index }}.originality" type="number"
-                                class="form-control text-center {{ $record->originality > 40 ? 'is-invalid' : '' }}"
+                                class="form-control text-center {{ $record->originality > 30 ? 'is-invalid' : '' }}"
                                 placeholder="00.00" aria-describedby="basic-addon1">
 
                         </div>
                         <div class="input-group mb-1">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Audience Impact 10%</span>
+                                <span class="input-group-text" id="basic-addon1">Stage Presence 20%</span>
                             </div>
-                            <input onfocus="this.select()" wire:model="records.{{ $index }}.audience_impact" type="number"
-                                class="form-control text-center {{ $record->audience_impact > 10 ? 'is-invalid' : '' }}"
+                            <input onfocus="this.select()" wire:model="records.{{ $index }}.stage_presence" type="number"
+                                class="form-control text-center {{ $record->stage_presence > 20 ? 'is-invalid' : '' }}"
                                 placeholder="00.00" aria-describedby="basic-addon1">
 
                         </div>
@@ -44,7 +44,7 @@
                                 <span class="input-group-text" id="basic-addon1"><strong>Total 100%</strong> </span>
                             </div>
                             @php
-                                $total = ((float) $record->mastery_and_execution) + ((float) $record->originality) + ((float) $record->audience_impact);
+                                $total = ((float) $record->execution) + ((float) $record->originality) + ((float) $record->stage_presence);
                             @endphp
                             <input style="font-weight: bold" disabled type="number" class="form-control text-center"
                                 value="{{ number_format($total, 2) }}" placeholder="00.00"
@@ -56,7 +56,7 @@
                                 </span>
                             </div>
                             @php
-                                $talent = (cal_percentage($total, 100) / 100 ) * 20;
+                                $talent = (cal_percentage($total, 100) / 100 ) * 40;
                             @endphp
                             <input style="font-weight: bold" disabled type="number"
                                 class="form-control text-center" value="{{ number_format($talent, 2) }}"

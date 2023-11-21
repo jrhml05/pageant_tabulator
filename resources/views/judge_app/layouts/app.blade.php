@@ -20,7 +20,7 @@
 </head>
 <body>
     <h1 class="fixed-top text-center bg-primary text-white p-1 "><i class="fas fa-solid fa-chess-queen rotate-n-15"></i>
-         MISS BINALONAN 2023 - {{ strtoupper(App\Models\Stage::where('is_active',1)->first()->stage_name) }} </h1>
+         MR. & MS. UEP - {{ strtoupper(App\Models\Stage::where('is_active',1)->first()->stage_name) }} </h1>
     <br><br>
 
     <div class="container-fluid" >

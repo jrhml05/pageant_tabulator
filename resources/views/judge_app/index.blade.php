@@ -191,15 +191,15 @@
     <div class="row mt-4">
         <div class="col-11 m-auto">
             <div class="owl-carousel owl-theme">
-                @foreach (App\Models\Barangay::all() as $barangay)
+                @foreach (App\Models\Ms_candidate::all() as $ms_candidate)
                     <div class="item mb-4">
                         <div class="card border-0 shadow">
-                            <img src="{{ asset('assets/img/mb/' . $barangay->id . '.jpg') }}" alt=""
+                            <img src="{{ asset('assets/img/mb/' . $ms_candidate->id . '.jpg') }}" alt=""
                                 class="card-img-top p-2 carousel-img">
                             <div class="card-body">
                                 <div class="card-title text-center">
                                     <center>
-                                        <h4 class="border-number mt-2">#{{ strtoupper($barangay->id) }}</h4>
+                                        <h4 class="border-number mt-2">#{{ strtoupper($ms_candidate->id) }}</h4>
                                     </center>
 
                                 </div>
