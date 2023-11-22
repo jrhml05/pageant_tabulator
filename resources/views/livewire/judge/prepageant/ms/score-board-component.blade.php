@@ -46,7 +46,7 @@
                                 <span class="input-group-text" id="basic-addon1"><strong>Total 100%</strong> </span>
                             </div>
                             @php
-                               $total = ((float) $record->prodnum) + ((float) $record->sportswear) +  ((float) $record->talent);
+                               $total = ((float) $record->production_number) + ((float) $record->sports_swear) +  ((float) $record->talent);
                             @endphp
                             <input style="font-weight: bold" disabled type="number"
                                 class="form-control text-center" value="{{ number_format($total, 2) }}" placeholder="00.00"

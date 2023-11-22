@@ -14,9 +14,8 @@ class ScoreBoardComponent extends Component
     protected $listeners = ['save'];
 
     protected $rules = [
-        'records.*.beauty' => 'required',
-        'records.*.poise' => 'required',
-        'records.*.intelligence' => 'required',
+        'records.*.production_number' => 'required',
+        'records.*.sports_wear' => 'required',
         'records.*.talent' => 'required',
     ];
 
@@ -55,8 +54,8 @@ class ScoreBoardComponent extends Component
                         'judge_id' => Auth::user()->id,
                     ],
                     [
-                        'poise' => $record->poise == '' ? null : $record->poise,
-                        'beauty' => $record->beauty == '' ? null : $record->beauty,
+                        'sports_wear' => $record->sports_wear == '' ? null : $record->sports_wear,
+                        'production_number' => $record->production_number == '' ? null : $record->production_number,
                         'intelligence' => $record->intelligence == '' ? null : $record->intelligence,
                     ]
                 );
@@ -94,8 +93,8 @@ class ScoreBoardComponent extends Component
                         'judge_id' => Auth::user()->id,
                     ],
                     [
-                        'poise' => $record->poise == '' ? null : $record->poise,
-                        'beauty' => $record->beauty == '' ? null : $record->beauty,
+                        'sports_wear' => $record->sports_wear == '' ? null : $record->sports_wear,
+                        'production_number' => $record->production_number == '' ? null : $record->beauty,
                         'intelligence' => $record->intelligence == '' ? null : $record->intelligence,
                     ]
                 );

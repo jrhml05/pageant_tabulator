@@ -28,7 +28,7 @@ class JudgeAppController extends Controller
 
     public function msSportswearScoreBoard($stage)
     {
-        return view('judge_app.prepageant.ms.talent-score-board-screen', compact('stage'));
+        return view('judge_app.prepageant.ms.sportswear-score-board-screen', compact('stage'));
     }
 
     public function msTalentScoreBoard($stage)
