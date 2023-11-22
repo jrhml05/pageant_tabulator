@@ -16,21 +16,29 @@ class JudgeAppController extends Controller
         return view('judge_app.category-screen', compact('stage'));
     }
 
-    public function scoreBoard($stage)
+    public function msScoreBoard($stage)
     {
-        return view('judge_app.score-board-screen', compact('stage'));
-
+        return view('judge_app.prepageant.ms.score-board-screen', compact('stage'));
     }
 
-    public function talentScoreBoard($stage)
+    public function msProdnumScoreBoard($stage)
     {
-        return view('judge_app.talent-score-board-screen', compact('stage'));
-
+        return view('judge_app.prepageant.ms.prodnum-score-board-screen', compact('stage'));
     }
+
+    public function msSportswearScoreBoard($stage)
+    {
+        return view('judge_app.prepageant.ms.talent-score-board-screen', compact('stage'));
+    }
+
+    public function msTalentScoreBoard($stage)
+    {
+        return view('judge_app.prepageant.ms.talent-score-board-screen', compact('stage'));
+    }
+
 
     public function finalScoreBoard()
     {
         return view('judge_app.final-score-board-screen');
-
     }
 }

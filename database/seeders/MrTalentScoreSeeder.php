@@ -8,7 +8,7 @@ use App\Models\Mr_talent_score;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class InitialZeroMrTalentScoreSeeder extends Seeder
+class MrTalentScoreSeeder extends Seeder
 {
     /**
      * Run the database seeds.

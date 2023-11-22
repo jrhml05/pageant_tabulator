@@ -4,11 +4,11 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Ms_candidate;
-use App\Models\Ms_talent_score;
+use App\Models\Ms_prodnum_score;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class MsTalentScoreSeeder extends Seeder
+class MsProdNumScoreSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -28,7 +28,7 @@ class MsTalentScoreSeeder extends Seeder
             //initialize data to sub scores table
 
             foreach ($judges as $judge) {
-                Ms_talent_score::create([
+                Ms_prodnum_score::create([
                     'judge_id' => $judge->id,
                     'candidate_id' => $candidate->id,
                     'is_lock' => 0

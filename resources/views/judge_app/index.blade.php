@@ -171,7 +171,7 @@
             <div class="col-md-2"></div>
             <div class="col-md-8">
                 <a class="btn btn-{{ $colors[$loop->iteration - 1] }} btn-lg btn-block rounded-pill"
-                    href="{{ $stage->id == 4 ? route('judge.app.final.score') : route('judge.app.score', $stage->id) }}">CLICK TO ENTER {{ strtoupper($stage->stage_name) }}
+                    href="{{ $stage->id == 4 ? route('judge.app.final.score') : route('judge.app.ms.score', $stage->id) }}">CLICK TO ENTER {{ strtoupper($stage->stage_name) }}
                     SCORE BOARD</a>
             </div>
             <div class="col-md-2"></div>
