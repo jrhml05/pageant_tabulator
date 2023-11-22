@@ -94,7 +94,7 @@ class ScoreBoardComponent extends Component
                     ],
                     [
                         'sports_wear' => $record->sports_wear == '' ? null : $record->sports_wear,
-                        'production_number' => $record->production_number == '' ? null : $record->beauty,
+                        'production_number' => $record->production_number == '' ? null : $record->production_number,
                         'intelligence' => $record->intelligence == '' ? null : $record->intelligence,
                     ]
                 );
