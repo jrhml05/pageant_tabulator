@@ -19,9 +19,26 @@
     @livewireStyles()
 </head>
 <body>
-    <h1 class="fixed-top text-center bg-primary text-white p-1 "><i class="fas fa-solid fa-chess-queen rotate-n-15"></i>
+    
+    <div class="fixed-top bg-white">
+        <h1 class="fixed-top text-center bg-primary text-white p-1 "><i class="fas fa-solid fa-chess-queen rotate-n-15"></i>
          MR. & MS. UEP - {{ strtoupper(App\Models\Stage::where('is_active',1)->first()->stage_name) }} </h1>
-    <br><br>
+    <br><br><br>
+        <div class="form-group pl-5 pr-5 pt-1">
+            {{-- <button wire:click="try" class="btn btn-primary">dadas</button> --}}
+            <div class="row mb-1 center ">
+                <div class="col-md-2 mb-1">
+                    <a href="{{ route('judge.app.mr.score', $stage) }}" type="button" class="btn btn-primary btn-lg btn-block rounded-pill">MR. UEP</a>
+                </div>
+                <div class="col-md-2 mb-1">
+                    <a href="{{ route('judge.app.ms.score',$stage) }}" type="button" class="btn btn-danger btn-lg btn-block rounded-pill">MS. UEP</a>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
 
     <div class="container-fluid" >
         {{-- <div class="row mt-4"> --}}

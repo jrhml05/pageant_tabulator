@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Mr_prepageant_score extends Model
+class Mr_prodnum_score extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'candidate_id',
         'judge_id',
-        'production_number',
-        'sports_wear',
-        'talent',
+        'mastery',
+        'poise',
+        'stage_presence',
     ];
 }

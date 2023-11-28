@@ -143,7 +143,10 @@ Route::middleware(['auth', 'user-access:judge'])->group(function () {
     Route::get('/judge-app/{stage}/ms-talent-score-board', [App\Http\Controllers\JudgeAppController::class, 'msTalentScoreBoard'])->name('judge.app.ms.talent.score');
 
     //MR
-    Route::get('/judge-app/{stage}/mr-score-board', [App\Http\Controllers\JudgeAppController::class, 'mrscoreBoard'])->name('judge.app.mr.score');
+    Route::get('/judge-app/{stage}/mr-score-board', [App\Http\Controllers\JudgeAppController::class, 'mrScoreBoard'])->name('judge.app.mr.score');
+    Route::get('/judge-app/{stage}/mr-prodnum-score-board', [App\Http\Controllers\JudgeAppController::class, 'mrProdnumScoreBoard'])->name('judge.app.mr.prodnum.score');
+    Route::get('/judge-app/{stage}/mr-sportswear-score-board', [App\Http\Controllers\JudgeAppController::class, 'mrSportswearScoreBoard'])->name('judge.app.mr.sportswear.score');
+    Route::get('/judge-app/{stage}/mr-talent-score-board', [App\Http\Controllers\JudgeAppController::class, 'mrTalentScoreBoard'])->name('judge.app.mr.talent.score');
 
     Route::get('/judge-app/final-score-board', [App\Http\Controllers\JudgeAppController::class, 'finalScoreBoard'])->name('judge.app.final.score');
 });
