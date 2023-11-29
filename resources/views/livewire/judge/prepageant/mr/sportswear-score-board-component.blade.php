@@ -1,5 +1,5 @@
-<div>
-    <div class="row">
+<div class="pt-5">
+    <div class="row pt-5">
         @foreach ($records as $index => $record)
             {{-- {{ dd($record->scores) }} --}}
             <div class="col-lg-3 mb-4">
@@ -78,7 +78,7 @@
             {{-- <button wire:click="try" class="btn btn-primary">dadas</button> --}}
             <div class="row mb-1">
                 <div class="col-md-6">
-                    <a href="{{ route('judge.app.ms.score', $stage) }}" type="button"
+                    <a href="{{ route('judge.app.mr.score', $stage) }}" type="button"
                         class="btn btn-secondary btn-lg btn-block rounded-pill">BACK TO MAIN SCORE BOARD</a>
                 </div>
                 <div class="col-md-6">

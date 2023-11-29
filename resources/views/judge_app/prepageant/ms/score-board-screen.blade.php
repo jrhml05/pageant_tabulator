@@ -1,6 +1,6 @@
 @extends('judge_app.layouts.app')
 @section('content')
-    <div class="row mt-4">
+    <div class="row pt-5">
         @if ($stage == 1)
             @livewire('judge.prepageant.ms.score-board-component', [ 'stage' => $stage ])
 

@@ -26,16 +26,14 @@
     <br><br><br>
         <div class="form-group pl-5 pr-5 pt-1">
             {{-- <button wire:click="try" class="btn btn-primary">dadas</button> --}}
-            <div class="row mb-1 center ">
+            <div class="row mb-1 justify-content-center">
                 <div class="col-md-2 mb-1">
-                    <a href="{{ route('judge.app.mr.score', $stage) }}" type="button" class="btn btn-primary btn-lg btn-block rounded-pill">MR. UEP</a>
+                    <a href="{{ route('judge.app.mr.score', $stage) }}" type="button" class="btn btn-primary btn-lg btn-block rounded-pill"><i class="fas fa-solid fa-crown"></i> MR. UEP</a>
                 </div>
                 <div class="col-md-2 mb-1">
-                    <a href="{{ route('judge.app.ms.score',$stage) }}" type="button" class="btn btn-danger btn-lg btn-block rounded-pill">MS. UEP</a>
+                    <a href="{{ route('judge.app.ms.score',$stage) }}" type="button" class="btn btn-danger btn-lg btn-block rounded-pill"><i class="fas fa-solid fa-crown"></i> MS. UEP</a>
                 </div>
             </div>
-
-
         </div>
 
     </div>

@@ -1,5 +1,5 @@
-<div>
-    <div class="row">
+<div class="pt-5">
+    <div class="row pt-5">
         @foreach ($records as $index => $record)
             {{-- {{ dd($record->scores) }} --}}
             <div class="col-lg-3 mb-4">

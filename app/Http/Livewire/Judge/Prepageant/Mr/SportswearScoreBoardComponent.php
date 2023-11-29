@@ -27,7 +27,7 @@ class SportswearScoreBoardComponent extends Component
     }
     public function render()
     {
-        return view('livewire.judge.prepageant.ms.sportswear-score-board-component');
+        return view('livewire.judge.prepageant.mr.sportswear-score-board-component');
     }
 
     public function alertConfirm()
