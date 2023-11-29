@@ -3,26 +3,26 @@
 @section('content')
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">TALENT SCORES - JUDGE 1</h1>
+        <h1 class="h3 mb-0 text-gray-800">MS. UEP - TALENT SCORES (JUDGE 3)</h1>
 
         <div>
 
-            <a href="{{ route('talent_judge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+            <a href="{{ route('ms_talent_judge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
                 class="fas fa-eye fa-sm text-white-50"></i> JUDGE 1 Talent Scores</a>
 
-            <a href="{{ route('talent_judge2') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+            <a href="{{ route('ms_talent_judge2') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
                 class="fas fa-eye fa-sm text-white-50"></i> JUDGE 2 Talent Scores</a>
 
-            <a href="{{ route('talent_judge3') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+            <a href="{{ route('ms_talent_judge3') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
                 class="fas fa-eye fa-sm text-white-50"></i> JUDGE 3 Talent Scores</a>
 
         </div>
 
         <div>
-            <a href="{{ route('talent') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+            <a href="{{ route('ms_talent') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
                 class="fas fa-less-than fa-sm text-white-50"></i> BACK TO OVERALL TALENT RESULTS</a>
-            <a href="{{ route('pdftalent_judge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-print fa-sm text-white-50"></i> PRINT SCORES JUDGE 1</a>
+            <a href="{{ route('ms_pdftalent_judge3') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-print fa-sm text-white-50"></i> PRINT SCORES JUDGE 3</a>
         </div>
 
     </div>
@@ -44,40 +44,37 @@
                             <table class="table table-bordered">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th style="width:5%; text-align: center">#</th>
-                                        <th style="width:15%">BARANGAY</th>
-                                        <th style="width:15%">MASTERY & EXECUTION</th>
-                                        <th style="width:15%">ORIGINALITY</th>
-                                        <th style="width:15%">AUDIENCE IMPACT</th>
-                                        <th style="width:5%">TOTAL</th>
-                                        <th style="width:5%">RANK</th>
+                                        <th style="width:10%">CANDIDATE</th>
+                                        <th style="width:15%">EXECUTION SKILLS 50%</th>
+                                        <th style="width:15%">CREATIVITY & ORIGINALITY 30%</th>
+                                        <th style="width:15%">STAGE PRESENCE 20%</th>
+                                        <th style="width:10%">TOTAL 100%</th>
+                                        <th style="width:10%">RANK</th>
 
                                         {{-- <th style="width:20%">RESULT</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($data['brgy'] as $brgy)
+                                    @forelse ($data['candidate'] as $candidate)
 
                                         <tr>
-                                            <td style="width:5%; text-align: center">
-                                                <strong>#{{ $loop->iteration }}</strong></td>
-                                            <td>{{ strtoupper($brgy->name) }}</td>
+                                            <td>{{ strtoupper($candidate->id) }}</td>
 
-                                            @foreach ( $brgy->subscores as $score)
+                                            @foreach ( $candidate->talent_score as $score)
 
-                                                @if ($brgy->id == $score->barangay_id && $score->judge_id == 2)
+                                                @if ($candidate->id == $score->candidate_id && $score->judge_id == 4)
 
-                                                    <td>{{ $score->mastery_and_execution }}</td>
+                                                    <td>{{ $score->execution }}</td>
                                                     <td>{{ $score->originality }}</td>
-                                                    <td>{{ $score->audience_impact }}</td>
+                                                    <td>{{ $score->stage_presence }}</td>
 
-                                                    <td>{{ $score->mastery_and_execution + $score->originality + $score->audience_impact }}</td>
+                                                    <td>{{ $score->execution + $score->originality + $score->stage_presence }}</td>
 
                                                     @forelse   ($data['rank'] as $rank)
 
-                                                        @if ($rank->barangay_id == $score->barangay_id && $rank->judge_id == 2)
+                                                        @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 4)
 
-                                                            <td>{{ $rank->talent_rank }}</td>
+                                                            <td>{{ $rank->ms_talent }}</td>
 
                                                         @endif
 

@@ -338,94 +338,43 @@
 <body id="page-top">
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">TALENT RESULT</h1>
+    <h1 class="h3 mb-0 text-gray-800">MS. UEP - PRODUCTION NUMBER SCORES (JUDGE 2)</h1>
 </div>
 
 <table class="table table-bordered">
     <thead class="table-dark">
         <tr>
-            <th style="width:5%; text-align: center">#</th>
-            <th style="width:15%">BARANGAY</th>
-            <th style="width:15%">JUDGE 1</th>
-            <th style="width:5%">RANK</th>
-            <th style="width:15%">JUDGE 2</th>
-            <th style="width:5%">RANK</th>
-            <th style="width:15%">JUDGE 3</th>
-            <th style="width:5%">RANK</th>
+            <th style="width:10%">CANDIDATE</th>
+            <th style="width:15%">MASTERY 40%</th>
+            <th style="width:15%">POISE & BEARING 30%</th>
+            <th style="width:15%">STAGE PRESENCE 30%</th>
+            <th style="width:10%">TOTAL 100%</th>
+            <th style="width:10%">RANK</th>
+
             {{-- <th style="width:20%">RESULT</th> --}}
         </tr>
     </thead>
     <tbody>
-        @forelse ($data['brgy'] as $brgy)
+        @forelse ($data['candidate'] as $candidate)
 
             <tr>
-                <td style="width:5%; text-align: center">
-                    <strong>#{{ $loop->iteration }}</strong></td>
-                <td>{{ strtoupper($brgy->name) }}</td>
+                <td>{{ strtoupper($candidate->id) }}</td>
 
-                @foreach ( $brgy->subscores as $score)
+                @foreach ( $candidate->prod_num_score as $score)
 
-                    @if ($brgy->id == $score->barangay_id && $score->judge_id == 2)
+                    @if ($candidate->id == $score->candidate_id && $score->judge_id == 3)
 
-                        @php
-                            $score_judge1 = $score->mastery_and_execution + $score->originality + $score->audience_impact;
-                        @endphp
+                        <td>{{ $score->mastery }}</td>
+                        <td>{{ $score->poise }}</td>
+                        <td>{{ $score->stage_presence }}</td>
 
-                        <td>{{ $score_judge1 }}</td>
+                        <td>{{ $score->mastery + $score->poise + $score->stage_presence }}</td>
 
                         @forelse   ($data['rank'] as $rank)
 
-                            @if ($rank->barangay_id == $score->barangay_id && $rank->judge_id == 2)
+                            @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 3)
 
-                                <td>{{ $rank->talent_rank }}</td>
-
-                            @endif
-
-                        @empty
-
-                            <td></td>
-
-                        @endforelse
-
-                    @endif
-
-                    @if ($brgy->id == $score->barangay_id && $score->judge_id == 3)
-
-                        @php
-                            $score_judge2 = $score->mastery_and_execution + $score->originality + $score->audience_impact;
-                        @endphp
-
-                        <td>{{ $score_judge2 }}</td>
-
-                        @forelse   ($data['rank'] as $rank)
-
-                            @if ($rank->barangay_id == $score->barangay_id && $rank->judge_id == 3)
-
-                                <td>{{ $rank->talent_rank }}</td>
-
-                            @endif
-
-                        @empty
-
-                            <td></td>
-
-                        @endforelse
-
-                    @endif
-
-                    @if ($brgy->id == $score->barangay_id && $score->judge_id == 4)
-
-                        @php
-                            $score_judge3 = $score->mastery_and_execution + $score->originality + $score->audience_impact;
-                        @endphp
-
-                        <td>{{ $score_judge3 }}</td>
-
-                        @forelse   ($data['rank'] as $rank)
-
-                            @if ($rank->barangay_id == $score->barangay_id && $rank->judge_id == 4)
-
-                                <td>{{ $rank->talent_rank }}</td>
+                                <td>{{ $rank->prod_num }}</td>
 
                             @endif
 

@@ -18,7 +18,7 @@ class JudgeSeeder extends Seeder
     {
         $i = 1;
 
-        while ($i < 4) {
+        while ($i < 6) {
             $exists = User::where('email', 'judge' . $i . '@mail.com')->count();
             if (!$exists)
                 User::insert([

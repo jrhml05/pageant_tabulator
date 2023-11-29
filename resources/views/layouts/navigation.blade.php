@@ -32,7 +32,7 @@
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBarangays"
             aria-expanded="true" aria-controls="collapseBarangays">
             <i class="fas fa fa-location-arrow"></i>
-            <span>Barangays ({{ \App\Models\Barangay::get()->count(); }})</span>
+            {{-- <span>Barangays ({{ \App\Models\Barangay::get()->count(); }})</span> --}}
         </a>
         <div id="collapseBarangays" class="collapse" aria-labelledby="headingBarangays" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
@@ -47,7 +47,7 @@
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCandidates"
             aria-expanded="true" aria-controls="collapseCandidates">
             <i class="fas fa-fw fa-users"></i>
-            <span>Candidates ({{ \App\Models\Candidate::get()->count(); }})</span>
+            <span>Candidates ({{ \App\Models\Ms_candidate::get()->count(); }})</span>
         </a>
         <div id="collapseCandidates" class="collapse" aria-labelledby="headingCandidates" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
@@ -77,7 +77,7 @@
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCategories"
             aria-expanded="true" aria-controls="collapseCategories">
             <i class="fas fa-fw fa-cogs"></i>
-            <span>Categories ({{ \App\Models\Category::get()->count(); }})</span>
+            {{-- <span>Categories ({{ \App\Models\Category::get()->count(); }})</span> --}}
         </a>
         <div id="collapseCategories" class="collapse" aria-labelledby="headingCategories" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
@@ -92,21 +92,15 @@
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReports"
             aria-expanded="true" aria-controls="collapseReports">
             <i class="fas fa-fw fa-file"></i>
-            <span>Reports ({{ \App\Models\Category::get()->count(); }})</span>
+            <span>Reports (Ms. UEP)</span>
         </a>
         <div id="collapseReports" class="collapse" aria-labelledby="headingReports" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Manage Reports:</h6>
-                <a class="collapse-item" href="{{ route('prepageant') }}">Pre-pageant Scores</a>
-                <a class="collapse-item" href="{{ route('talent') }}">Talent Scores</a>
-                <a class="collapse-item" href="{{ route('preliminaries') }}">Prelim Scores</a>
-                <a class="collapse-item" href="{{ route('swimsuit') }}">Swim Suit Scores</a>
-                <a class="collapse-item" href="{{ route('eveninggown') }}">Evening Gown Scores</a>
-                <a class="collapse-item" href="{{ route('top12') }}">TOP 12</a>
-                <a class="collapse-item" href="{{ route('semifinal') }}">Semi-Finals Scores</a>
-                <a class="collapse-item" href="{{ route('top5') }}">TOP 5</a>
-                <a class="collapse-item" href="{{ route('final') }}">Finals Scores</a>
-                <a class="collapse-item" href="{{ route('finalresult') }}">Final RESULT</a>
+                <a class="collapse-item" href="{{ route('ms_prepageant') }}">Pre-pageant Scores</a>
+                <a class="collapse-item" href="{{ route('ms_prod_num') }}">Production Number Scores</a>
+                <a class="collapse-item" href="{{ route('ms_sports_wear') }}">Sports Wear Scores</a>
+                <a class="collapse-item" href="{{ route('ms_talent') }}">Talent Scores</a>
             </div>
         </div>
     </li>

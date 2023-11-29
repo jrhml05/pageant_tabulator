@@ -3,32 +3,31 @@
 @section('content')
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-
-        <h1 class="h3 mb-0 text-gray-800">PRE-PAGEANT RESULT</h1>
+        <h1 class="h3 mb-0 text-gray-800">MS. UEP - SPORTS WEAR RESULT</h1>
 
         <div>
 
-            <a href="{{ route('prepageant_judge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 1 Scores</a>
+            <a href="{{ route('ms_sports_wear_judge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 1 Sports Wear Scores</a>
 
-            <a href="{{ route('prepageant_judge2') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 2 Scores</a>
+            <a href="{{ route('ms_sports_wear_judge2') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 2 Sports Wear Scores</a>
 
-            <a href="{{ route('prepageant_judge3') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 3 Scores</a>
+            <a href="{{ route('ms_sports_wear_judge3') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 3 Sports Wear Scores</a>
 
         </div>
 
         <div>
 
-            <a href="javascript:void(0)" onclick="prepageantrank()" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-ranking-star fa-sm text-white-50"></i> RANK CANDIDATES</a>
-            {{-- <a href="{{ route('prepageantrank') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-ranking-star fa-sm text-white-50"></i> RANK CANDIDATES</a> --}}
+            <a href="javascript:void(0)" onclick="sports_wear_rank()" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fa-solid fa-ranking-star fa-sm text-white-50"></i> RANK CANDIDATES</a>
 
-            <a href="{{ route('pdfprepageant') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+            {{-- <a  class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fa-solid fa-ranking-star fa-sm text-white-50"></i> RANK CANDIDATES</a> --}}
+
+            <a href="{{ route('ms_pdfsports_wear') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
                 class="fas fa-print fa-sm text-white-50"></i> PRINT RESULTS</a>
-
         </div>
 
     </div>
@@ -50,8 +49,7 @@
                             <table class="table table-bordered">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th style="width:5%; text-align: center">#</th>
-                                        <th style="width:15%">BARANGAY</th>
+                                        <th style="width:15%">CANDIDATE #</th>
                                         <th style="width:15%">JUDGE 1</th>
                                         <th style="width:5%">RANK</th>
                                         <th style="width:15%">JUDGE 2</th>
@@ -62,71 +60,81 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($data['brgy'] as $brgy)
-                                        <tr>
-                                            <td style="width:5%; text-align: center">
-                                                <strong>#{{ $loop->iteration }}</strong></td>
-                                            <td>{{ strtoupper($brgy->name) }}</td>
-                                            @foreach ( $brgy->scores as $score)
+                                    @forelse ($data['candidate'] as $candidate)
 
-                                                @if ($brgy->id == $score->barangay_id && $score->judge_id == 2)
+                                        <tr>
+                                            <td>{{ strtoupper($candidate->id) }}</td>
+
+                                            @foreach ( $candidate->sports_wear_score as $score)
+
+                                                @if ($candidate->id == $score->candidate_id && $score->judge_id == 2)
 
                                                     @php
-                                                        $score_judge1 = $score->talent + $score->beauty + $score->poise + $score->intelligence;
+                                                        $score_judge1 = $score->execution + $score->poise + $score->appearance;
                                                     @endphp
 
                                                     <td>{{ $score_judge1 }}</td>
 
                                                     @forelse   ($data['rank'] as $rank)
 
-                                                        @if ($rank->barangay_id == $score->barangay_id && $rank->judge_id == 2)
-                                                            <td>{{ $rank->prepageant_rank }}</td>
+                                                        @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 2)
+
+                                                            <td>{{ $rank->sports_wear }}</td>
+
                                                         @endif
 
                                                     @empty
-                                                        <td></td>
-                                                    @endforelse
 
-                                                    {{-- <td></td> --}}
+                                                        <td></td>
+
+                                                    @endforelse
 
                                                 @endif
 
-                                                @if ($brgy->id == $score->barangay_id && $score->judge_id == 3)
+                                                @if ($candidate->id == $score->candidate_id && $score->judge_id == 3)
 
                                                     @php
-                                                        $score_judge2 = $score->talent + $score->beauty + $score->poise + $score->intelligence;
+                                                        $score_judge2 = $score->execution + $score->poise + $score->appearance;
                                                     @endphp
 
                                                     <td>{{ $score_judge2 }}</td>
 
                                                     @forelse   ($data['rank'] as $rank)
 
-                                                        @if ($rank->barangay_id == $score->barangay_id && $rank->judge_id == 3)
-                                                            <td>{{ $rank->prepageant_rank }}</td>
+                                                        @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 3)
+
+                                                            <td>{{ $rank->sports_wear }}</td>
+
                                                         @endif
 
                                                     @empty
+
                                                         <td></td>
+
                                                     @endforelse
 
                                                 @endif
 
-                                                @if ($brgy->id == $score->barangay_id && $score->judge_id == 4)
+                                                @if ($candidate->id == $score->candidate_id && $score->judge_id == 4)
 
                                                     @php
-                                                        $score_judge3 = $score->talent + $score->beauty + $score->poise + $score->intelligence;
+                                                        $score_judge3 = $score->execution + $score->poise + $score->appearance;
                                                     @endphp
 
                                                     <td>{{ $score_judge3 }}</td>
 
                                                     @forelse   ($data['rank'] as $rank)
 
-                                                        @if ($rank->barangay_id == $score->barangay_id && $rank->judge_id == 4)
-                                                            <td>{{ $rank->prepageant_rank }}</td>
+                                                        @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 4)
+
+                                                            <td>{{ $rank->sports_wear }}</td>
+
                                                         @endif
 
                                                     @empty
+
                                                         <td></td>
+
                                                     @endforelse
 
                                                 @endif
@@ -134,12 +142,15 @@
                                             @endforeach
                                             {{-- <td>{{ ROUND(($score_judge1 + $score_judge2 + $score_judge3) / 3, 2) }}</td> --}}
                                         </tr>
+
                                     @empty
+
                                         <tr>
                                             <td colspan="6">
                                                 <center>No Data Found</center>
                                             </td>
                                         </tr>
+
                                     @endforelse
                                 </tbody>
                             </table>
@@ -153,24 +164,23 @@
 
     <script>
 
-        function prepageantrank()
+        function sports_wear_rank()
         {
-            alert("prepageant rank");
+            alert("sports wear rank");
 
             $.ajax({
                 type: "GET",
-                url: "/prepageantrank",
+                url: "/sportswearrank",
                 success: function (response) {
                     location.reload();
                 },
-                error: function (response)
+                error: function ()
                 {
-                    alert("no prepageant rank");
-                    console.log(response);
+                    alert("no sports wear rank");
                 }
             });
         }
 
-
     </script>
+
 @endsection

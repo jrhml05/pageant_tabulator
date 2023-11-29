@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Candidate;
+use App\Models\Ms_candidate;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -25,7 +25,7 @@ class HomeController extends Controller
     public function index()
     {
         $data['title'] = 'Dashboard';
-        $data['top_ten'] = Candidate::all();
+        $data['top_ten'] = Ms_candidate::all();
         return view('home', compact('data'));
     }
 }

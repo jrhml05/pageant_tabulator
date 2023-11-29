@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use PDF;
 use App\Models\Score;
-use App\Models\Ranking;
+use App\Models\Ms_candidate;
+use App\Models\Ms_ranking;
+
 use App\Models\FinalRanking;
-use App\Models\Barangay;
 use App\Models\PrelimScore;
 use App\Models\SemifinalScore;
 use App\Models\FinalScore;
@@ -18,64 +19,62 @@ use PhpParser\Node\Expr\FuncCall;
 class ReportsController extends Controller
 {
 
-    public function prepageant()
+    public function ms_prepageant()
     {
         $data['title'] = 'Pre-pageant Results';
 
-        $data['brgy'] = Barangay::all();
+        $data['candidate'] = Ms_candidate::all();
 
-        $data['rank'] = Ranking::all();
+        $data['rank'] = Ms_ranking::all();
 
-        return view('admin.reports.prepageant', compact('data'));
+        return view('admin.reports.prepageant.ms.prepageant', compact('data'));
     }
 
-    public function talent()
+    public function ms_talent()
     {
         $data['title'] = 'Talent Results';
 
-        $data['brgy'] = Barangay::all();
+        $data['candidate'] = Ms_candidate::all();
 
-        $data['rank'] = Ranking::all();
+        $data['rank'] = Ms_ranking::all();
 
-        return view('admin.reports.talent', compact('data'));
+        return view('admin.reports.prepageant.ms.talent', compact('data'));
     }
 
-    public function pdftalent()
-    {
-        $data['title'] = 'Talent Results';
-
-        $data['brgy'] = Barangay::all();
-
-        $data['rank'] = Ranking::all();
-
-        $pdf = PDF::loadView('admin.reports.pdftalent', compact('data'))->setPaper(array(0, 0, 612 ,936), 'landscape');
-
-        return $pdf->stream('talent_result.pdf');
-    }
-
-    public function pdfprepageant()
+    public function ms_pdfprepageant()
     {
         $data['title'] = 'Pre-pageant Results';
 
-        $data['brgy'] = Barangay::all();
+        $data['candidate'] = Ms_candidate::all();
 
-        $data['rank'] = Ranking::all();
+        $data['rank'] = Ms_ranking::all();
 
-        $pdf = PDF::loadView('admin.reports.pdfprepageant', compact('data'))->setPaper(array(0, 0, 612 ,936), 'landscape');
-        // $pdf = PDF::loadView('admin.reports.pdfprepageant', compact('data'))->setPaper('Legal    ', 'landscape');
+        $pdf = PDF::loadView('admin.reports.prepageant.ms.pdfprepageant', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
 
         return $pdf->stream('prepageant_result.pdf');
+    }
+
+    public function ms_pdftalent()
+    {
+        $data['title'] = 'Talent Results';
+
+        $data['candidate'] = Ms_candidate::all();
+
+        $data['rank'] = Ms_ranking::all();
+
+        $pdf = PDF::loadView('admin.reports.pdftalent', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
+
+        return $pdf->stream('talent_result.pdf');
     }
 
     public function prepageantrank()
     {
 
-        for($x=2; $x <=4; $x++)
-        {
+        for ($x = 2; $x <= 4; $x++) {
             $score = Score::where('judge_id', $x)
-            ->select(DB::raw('talent + beauty + intelligence + poise as score'), 'barangay_id')
-            ->orderBy('score', 'desc')
-            ->get();
+                ->select(DB::raw('talent + beauty + intelligence + poise as score'), 'barangay_id')
+                ->orderBy('score', 'desc')
+                ->get();
 
             $prev_rank = 1;
             $prev_score = 100;
@@ -85,15 +84,11 @@ class ReportsController extends Controller
                 $brgy_id = $score->barangay_id;
                 // print_r("Rank: " . $rank . ":" . $brgy_id . "(" . $score->score . ")<br>");
 
-                if ($prev_score > $score->score)
-                {
+                if ($prev_score > $score->score) {
                     $update_rank = Ranking::where('judge_id', $x)
                         ->where('barangay_id', $brgy_id)
                         ->update(['prepageant_rank' => $rank]);
-                }
-
-                elseif($prev_score == $score->score)
-                {
+                } elseif ($prev_score == $score->score) {
                     $update_rank = Ranking::where('judge_id', $x)
                         ->where('barangay_id', $brgy_id)
                         ->update(['prepageant_rank' => $prev_rank]);
@@ -101,30 +96,24 @@ class ReportsController extends Controller
 
                 $prev_rank = $rank;
                 $prev_score = $score->score;
-
             }
         }
 
         $get_rank = Ranking::select(DB::raw('SUM(prepageant_rank) as total'), 'barangay_id')
-                        ->groupBy('barangay_id')
-                        ->orderBy('total', 'asc')
-                        ->get();
+            ->groupBy('barangay_id')
+            ->orderBy('total', 'asc')
+            ->get();
 
         $prev_total_rank = 3;
         $prev_final_rank = 1;
 
-        foreach ($get_rank as $idx => $final_rank)
-        {
+        foreach ($get_rank as $idx => $final_rank) {
             $final_ranking = $idx + 1;
 
-            if($prev_total_rank < $final_rank->total)
-            {
+            if ($prev_total_rank < $final_rank->total) {
                 $update_final_rank = FinalRanking::where('barangay_id', $final_rank->barangay_id)
                     ->update(['prepageant_rank' => $final_ranking]);
-            }
-
-            elseif($prev_total_rank == $final_rank->total)
-            {
+            } elseif ($prev_total_rank == $final_rank->total) {
                 $update_final_rank = FinalRanking::where('barangay_id', $final_rank->barangay_id)
                     ->update(['prepageant_rank' => $prev_final_rank]);
             }
@@ -139,9 +128,9 @@ class ReportsController extends Controller
 
         for ($x = 2; $x <= 4; $x++) {
             $score = SubScore::where('judge_id', $x)
-            ->select(DB::raw('mastery_and_execution + originality + audience_impact as score'), 'barangay_id')
-            ->orderBy('score', 'desc')
-            ->get();
+                ->select(DB::raw('mastery_and_execution + originality + audience_impact as score'), 'barangay_id')
+                ->orderBy('score', 'desc')
+                ->get();
 
             $prev_rank = 1;
             $prev_score = 100;
@@ -151,13 +140,11 @@ class ReportsController extends Controller
                 $brgy_id = $score->barangay_id;
                 // print_r("Rank: " . $rank . ":" . $brgy_id . "(" . $score->score . ")<br>");
 
-                if($prev_score == $score->score)
-                {
+                if ($prev_score == $score->score) {
                     $update_rank = Ranking::where('judge_id', $x)
                         ->where('barangay_id', $brgy_id)
                         ->update(['talent_rank' => $prev_rank]);
-                }
-                elseif($prev_score > $score->score) {
+                } elseif ($prev_score > $score->score) {
                     $update_rank = Ranking::where('judge_id', $x)
                         ->where('barangay_id', $brgy_id)
                         ->update(['talent_rank' => $rank]);
@@ -170,9 +157,9 @@ class ReportsController extends Controller
         }
 
         $get_rank = Ranking::select(DB::raw('SUM(talent_rank) as total'), 'barangay_id')
-        ->groupBy('barangay_id')
-        ->orderBy('total', 'asc')
-        ->get();
+            ->groupBy('barangay_id')
+            ->orderBy('total', 'asc')
+            ->get();
 
         $prev_total_rank = 3;
         $prev_final_rank = 1;
@@ -193,86 +180,35 @@ class ReportsController extends Controller
         }
     }
 
-    public function prepageantjudge1()
+    public function ms_prepageantjudge1()
     {
 
-        $data['title'] = 'Pre-pageant Results Judge 1';
+        $data['title'] = 'Ms. UEP Pre-pageant Results Judge 1';
 
-        $data['brgy'] = Barangay::all();
+        $data['candidate'] = Ms_candidate::all();
 
-        $data['rank'] = Ranking::all();
+        $data['rank'] = Ms_ranking::all();
 
-        return view('admin.reports.prepageantjudge1', compact('data'));
-
+        return view('admin.reports.prepageant.ms.prepageantjudge1', compact('data'));
     }
 
-    public function prepageantjudge2()
+    public function ms_pdfprepageantjudge1()
     {
 
-        $data['title'] = 'Pre-pageant Results Judge 1';
+        $data['title'] = 'Ms. UEP Pre-pageant Results Judge 1';
 
-        $data['brgy'] = Barangay::all();
+        $data['candidate'] = Ms_candidate::all();
 
-        $data['rank'] = Ranking::all();
+        $data['rank'] = Ms_ranking::all();
 
-        return view('admin.reports.prepageantjudge2', compact('data'));
-    }
-
-    public function prepageantjudge3()
-    {
-
-        $data['title'] = 'Pre-pageant Results Judge 1';
-
-        $data['brgy'] = Barangay::all();
-
-        $data['rank'] = Ranking::all();
-
-        return view('admin.reports.prepageantjudge3', compact('data'));
-    }
-
-    public function pdfprepageantjudge1()
-    {
-
-        $data['title'] = 'Pre-pageant Results Judge 1';
-
-        $data['brgy'] = Barangay::all();
-
-        $data['rank'] = Ranking::all();
-
-        $pdf = PDF::loadView('admin.reports.pdfprepageantjudge1', compact('data'))->setPaper(array(0, 0, 612 ,936), 'landscape');
+        $pdf = PDF::loadView('admin.reports.prepageant.ms.pdfprepageantjudge1', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
 
         return $pdf->stream('prepageant_judge1.pdf');
     }
 
-    public function pdfprepageantjudge2()
-    {
 
-        $data['title'] = 'Pre-pageant Results Judge 2';
 
-        $data['brgy'] = Barangay::all();
-
-        $data['rank'] = Ranking::all();
-
-        $pdf = PDF::loadView('admin.reports.pdfprepageantjudge2', compact('data'))->setPaper(array(0, 0, 612 ,936), 'landscape');
-
-        return $pdf->stream('prepageant_judge2.pdf');
-    }
-
-    public function pdfprepageantjudge3()
-    {
-
-        $data['title'] = 'Pre-pageant Results Judge 3';
-
-        $data['brgy'] = Barangay::all();
-
-        $data['rank'] = Ranking::all();
-
-        $pdf = PDF::loadView('admin.reports.pdfprepageantjudge3', compact('data'))->setPaper(array(0, 0, 612 ,936), 'landscape');
-
-        return $pdf->stream('prepageant_judge3.pdf');
-    }
-
-    public function talentjudge1()
+    public function ms_talentjudge1()
     {
 
         $data['title'] = 'Talent Results Judge 1';
@@ -284,30 +220,6 @@ class ReportsController extends Controller
         return view('admin.reports.talentjudge1', compact('data'));
     }
 
-    public function talentjudge2()
-    {
-
-        $data['title'] = 'Talent Results Judge 2';
-
-        $data['brgy'] = Barangay::all();
-
-        $data['rank'] = Ranking::all();
-
-        return view('admin.reports.talentjudge2', compact('data'));
-    }
-
-    public function talentjudge3()
-    {
-
-        $data['title'] = 'Talent Results Judge 3';
-
-        $data['brgy'] = Barangay::all();
-
-        $data['rank'] = Ranking::all();
-
-        return view('admin.reports.talentjudge3', compact('data'));
-    }
-
     public function pdftalentjudge1()
     {
 
@@ -317,53 +229,23 @@ class ReportsController extends Controller
 
         $data['rank'] = Ranking::all();
 
-        $pdf = PDF::loadView('admin.reports.pdftalentjudge1', compact('data'))->setPaper(array(0, 0, 612 ,936), 'landscape');
+        $pdf = PDF::loadView('admin.reports.pdftalentjudge1', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
 
         return $pdf->stream('talent_judge1.pdf');
-    }
-
-    public function pdftalentjudge2()
-    {
-
-        $data['title'] = 'Talent Results Judge 2';
-
-        $data['brgy'] = Barangay::all();
-
-        $data['rank'] = Ranking::all();
-
-        $pdf = PDF::loadView('admin.reports.pdftalentjudge2', compact('data'))->setPaper(array(0, 0, 612 ,936), 'landscape');
-
-        return $pdf->stream('talent_judge2.pdf');
-    }
-
-    public function pdftalentjudge3()
-    {
-
-        $data['title'] = 'Talent Results Judge 3';
-
-        $data['brgy'] = Barangay::all();
-
-        $data['rank'] = Ranking::all();
-
-        $pdf = PDF::loadView('admin.reports.pdftalentjudge3', compact('data'))->setPaper(array(0, 0, 612 ,936), 'landscape');
-
-        return $pdf->stream('talent_judge3.pdf');
     }
 
     public function top5talent()
     {
 
 
-        $rank_talent = Ranking::select(DB::raw('SUM(talent_rank) AS RANK'),'barangay_id')
-                                ->groupBy('barangay_id')
-                                ->orderBy('RANK', 'ASC')
-                                ->take(5)
-                                ->get();
-        foreach($rank_talent as $rank)
-        {
-            print_r("BARANGAY: ".$rank->barangay_id." - Rank: ". $rank->RANK."<BR>");
+        $rank_talent = Ranking::select(DB::raw('SUM(talent_rank) AS RANK'), 'barangay_id')
+            ->groupBy('barangay_id')
+            ->orderBy('RANK', 'ASC')
+            ->take(5)
+            ->get();
+        foreach ($rank_talent as $rank) {
+            print_r("BARANGAY: " . $rank->barangay_id . " - Rank: " . $rank->RANK . "<BR>");
         }
-
     }
 
     public function preliminaries()
@@ -458,32 +340,28 @@ class ReportsController extends Controller
     {
         $prelim_scores = PrelimScore::where('judge_id', 5)->inRandomOrder()->get();
 
-        foreach($prelim_scores as $scores)
-        {
+        foreach ($prelim_scores as $scores) {
             $beauty = rand(19, 40);
             $poise = rand(9, 20);
             $swimsuit = rand(9, 20);
             $gown = rand(9, 20);
-            print_r("BEAUTY -> ".$beauty." || "."POISE -> " . $poise . " || ". "SWIMSUIT -> " . $swimsuit . " || "."EVENING GOWN -> ".$gown."<br>");
+            print_r("BEAUTY -> " . $beauty . " || " . "POISE -> " . $poise . " || " . "SWIMSUIT -> " . $swimsuit . " || " . "EVENING GOWN -> " . $gown . "<br>");
 
             $update_beauty = PrelimScore::where('judge_id', $scores->judge_id)
-                        ->where("barangay_id", $scores->barangay_id)
-                        ->update(['beauty' => $beauty]);
+                ->where("barangay_id", $scores->barangay_id)
+                ->update(['beauty' => $beauty]);
 
             $update_poise = PrelimScore::where('judge_id', $scores->judge_id)
-                        ->where("barangay_id", $scores->barangay_id)
-                        ->update(['poise' => $poise]);
+                ->where("barangay_id", $scores->barangay_id)
+                ->update(['poise' => $poise]);
 
             $update_swimsuit = PrelimScore::where('judge_id', $scores->judge_id)
-                        ->where("barangay_id", $scores->barangay_id)
-                        ->update(['swimsuit' => $swimsuit]);
+                ->where("barangay_id", $scores->barangay_id)
+                ->update(['swimsuit' => $swimsuit]);
 
             $update_gown = PrelimScore::where('judge_id', $scores->judge_id)
-                        ->where("barangay_id", $scores->barangay_id)
-                        ->update(['evening_gown' => $gown]);
-
-            
-
+                ->where("barangay_id", $scores->barangay_id)
+                ->update(['evening_gown' => $gown]);
         }
     }
 
@@ -492,8 +370,8 @@ class ReportsController extends Controller
         //ranking per judge
         for ($x = 2; $x <= 6; $x++) {
             $score = PrelimScore::where('judge_id', $x)
-            ->select(DB::raw('beauty + poise + swimsuit + evening_gown as score'), 'barangay_id')
-            ->orderBy('score', 'desc')
+                ->select(DB::raw('beauty + poise + swimsuit + evening_gown as score'), 'barangay_id')
+                ->orderBy('score', 'desc')
                 ->get();
 
             $prev_rank = 1;
@@ -506,12 +384,12 @@ class ReportsController extends Controller
 
                 if ($prev_score > $score->score) {
                     $update_rank = Ranking::where('judge_id', $x)
-                    ->where('barangay_id', $brgy_id)
+                        ->where('barangay_id', $brgy_id)
                         ->update(['prelim_rank' => $rank]);
                     $new_rank = $rank;
                 } elseif ($prev_score == $score->score) {
                     $update_rank = Ranking::where('judge_id', $x)
-                    ->where('barangay_id', $brgy_id)
+                        ->where('barangay_id', $brgy_id)
                         ->update(['prelim_rank' => $prev_rank]);
                     $new_rank = $prev_rank;
                 }
@@ -523,9 +401,9 @@ class ReportsController extends Controller
 
         //ranking for prelim
         $get_rank = Ranking::select(DB::raw('SUM(prelim_rank) as total'), 'barangay_id')
-        ->groupBy('barangay_id')
-        ->orderBy('total', 'asc')
-        ->get();
+            ->groupBy('barangay_id')
+            ->orderBy('total', 'asc')
+            ->get();
 
         $prev_total_rank = 5;
         $prev_final_rank = 1;
@@ -550,35 +428,30 @@ class ReportsController extends Controller
         //final ranking
 
         $get_rank_for_semis = FinalRanking::select(DB::raw('(prepageant_rank * 0.4) + (prelim_rank * 0.6) as for_semi'), 'barangay_id')
-                                                ->orderBy('for_semi', 'asc')
-                                                ->get();
+            ->orderBy('for_semi', 'asc')
+            ->get();
 
         $prev_total_semi_rank = 1;
         $prev_final_semi_rank = 1;
 
-        foreach($get_rank_for_semis as $i => $for_semi_rank)
-        {
-            
+        foreach ($get_rank_for_semis as $i => $for_semi_rank) {
+
             $for_top12_ranking = $i + 1;
 
-            if($prev_total_semi_rank < $for_semi_rank->for_semi)
-            {
+            if ($prev_total_semi_rank < $for_semi_rank->for_semi) {
                 $update_final_rank = FinalRanking::where('barangay_id', $for_semi_rank->barangay_id)
                     ->update(['for_semi_rank' => $for_top12_ranking]);
-                
+
                 $new_final_rank = $for_top12_ranking;
 
-                if($for_top12_ranking > 12)
-                {
+                if ($for_top12_ranking > 12) {
                     $update_active = Barangay::where('id', $for_semi_rank->barangay_id)
-                                            ->update(['is_active' => 0]);
+                        ->update(['is_active' => 0]);
                 }
-            }
-            elseif($prev_total_semi_rank == $for_semi_rank->for_semi)
-            {
+            } elseif ($prev_total_semi_rank == $for_semi_rank->for_semi) {
                 $update_final_rank = FinalRanking::where('barangay_id', $for_semi_rank->barangay_id)
                     ->update(['for_semi_rank' => $prev_final_semi_rank]);
-                
+
                 $new_final_rank = $prev_final_semi_rank;
 
                 if ($prev_final_semi_rank > 12) {
@@ -589,9 +462,8 @@ class ReportsController extends Controller
             $prev_total_semi_rank = $for_semi_rank->for_semi;
             $prev_final_semi_rank = $new_final_rank;
 
-            print_r("BARANGAY: ".$for_semi_rank->barangay_id."(".$for_semi_rank->for_semi.") - RANK #".$prev_final_semi_rank."<br>");
+            print_r("BARANGAY: " . $for_semi_rank->barangay_id . "(" . $for_semi_rank->for_semi . ") - RANK #" . $prev_final_semi_rank . "<br>");
         }
-
     }
 
     public function swimsuitrank()
@@ -609,23 +481,22 @@ class ReportsController extends Controller
             foreach ($score as $index => $score) {
                 $rank = $index + 1;
                 $brgy_id = $score->barangay_id;
-                
+
                 if ($prev_score > $score->swimsuit) {
                     $update_rank = Ranking::where('judge_id', $x)
                         ->where('barangay_id', $brgy_id)
                         ->update(['swim_suit_rank' => $rank]);
                     $new_rank = $rank;
-                        print_r("Rank: " . $rank . ":" . $brgy_id . "(" . $score->swimsuit . ")<br>");
-                } 
-                elseif ($prev_score == $score->swimsuit) {
+                    print_r("Rank: " . $rank . ":" . $brgy_id . "(" . $score->swimsuit . ")<br>");
+                } elseif ($prev_score == $score->swimsuit) {
                     $update_rank = Ranking::where('judge_id', $x)
                         ->where('barangay_id', $brgy_id)
                         ->update(['swim_suit_rank' => $prev_rank]);
 
                     $new_rank = $prev_rank;
-                        print_r("Rank: " . $prev_rank . ":" . $brgy_id . "(" . $score->swimsuit . ")<br>");
+                    print_r("Rank: " . $prev_rank . ":" . $brgy_id . "(" . $score->swimsuit . ")<br>");
                 }
-                
+
                 $prev_rank = $new_rank;
                 $prev_score = $score->swimsuit;
             }
@@ -633,9 +504,9 @@ class ReportsController extends Controller
 
         //ranking for swimsuit
         $get_rank = Ranking::select(DB::raw('SUM(swim_suit_rank) as total'), 'barangay_id')
-        ->groupBy('barangay_id')
-        ->orderBy('total', 'asc')
-        ->get();
+            ->groupBy('barangay_id')
+            ->orderBy('total', 'asc')
+            ->get();
 
         $prev_total_rank = 5;
         $prev_final_rank = 1;
@@ -663,9 +534,9 @@ class ReportsController extends Controller
         //ranking per judge
         for ($x = 2; $x <= 6; $x++) {
             $score = PrelimScore::where('judge_id', $x)
-            ->select('evening_gown', 'barangay_id')
-            ->orderBy('evening_gown', 'desc')
-            ->get();
+                ->select('evening_gown', 'barangay_id')
+                ->orderBy('evening_gown', 'desc')
+                ->get();
 
             $prev_rank = 1;
             $prev_score = 20;
@@ -677,15 +548,15 @@ class ReportsController extends Controller
 
                 if ($prev_score > $score->evening_gown) {
                     $update_rank = Ranking::where('judge_id', $x)
-                    ->where('barangay_id', $brgy_id)
+                        ->where('barangay_id', $brgy_id)
                         ->update(['evening_gown_rank' => $rank]);
 
                     $new_rank = $rank;
                 } elseif ($prev_score == $score->evening_gown) {
                     $update_rank = Ranking::where('judge_id', $x)
-                    ->where('barangay_id', $brgy_id)
+                        ->where('barangay_id', $brgy_id)
                         ->update(['evening_gown_rank' => $prev_rank]);
-                    
+
                     $new_rank = $prev_rank;
                 }
 
@@ -696,9 +567,9 @@ class ReportsController extends Controller
 
         //ranking for evening gown
         $get_rank = Ranking::select(DB::raw('SUM(evening_gown_rank) as total'), 'barangay_id')
-        ->groupBy('barangay_id')
-        ->orderBy('total', 'asc')
-        ->get();
+            ->groupBy('barangay_id')
+            ->orderBy('total', 'asc')
+            ->get();
 
         $prev_total_rank = 5;
         $prev_final_rank = 1;
@@ -829,7 +700,6 @@ class ReportsController extends Controller
         $data['final_rank'] = FinalRanking::all();
 
         return view('admin.reports.top12', compact('data'));
-
     }
 
     public function pdftop12()
@@ -848,14 +718,13 @@ class ReportsController extends Controller
 
         $semifinal_scores = SemifinalScore::inRandomOrder()->get();
 
-        foreach($semifinal_scores as $scores)
-        {
+        foreach ($semifinal_scores as $scores) {
 
             $beauty = rand(19, 40);
-            $poise = rand(9,30);
+            $poise = rand(9, 30);
             $intelligence = rand(9, 30);
 
-            print_r("CANDIDATE: ".$scores->barangay_id." --- BEAUTY -> " . $beauty . " || " . "POISE -> " . $poise . " || " . "INTELLIGENCE -> " . $intelligence . "<br>");
+            print_r("CANDIDATE: " . $scores->barangay_id . " --- BEAUTY -> " . $beauty . " || " . "POISE -> " . $poise . " || " . "INTELLIGENCE -> " . $intelligence . "<br>");
 
             $update_beauty = SemifinalScore::where('judge_id', $scores->judge_id)
                 ->where("barangay_id", $scores->barangay_id)
@@ -918,9 +787,9 @@ class ReportsController extends Controller
 
         //ranking for semis
         $get_rank = Ranking::whereNotNull('semi_rank')->select(DB::raw('SUM(semi_rank) as total'), 'barangay_id')
-        ->groupBy('barangay_id')
-        ->orderBy('total', 'asc')
-        ->get();
+            ->groupBy('barangay_id')
+            ->orderBy('total', 'asc')
+            ->get();
 
         $prev_total_rank = 5;
         $prev_final_rank = 1;
@@ -938,7 +807,6 @@ class ReportsController extends Controller
                     $update_active = Barangay::where('id', $final_rank->barangay_id)
                         ->update(['is_active' => 0]);
                 }
-
             } elseif ($prev_total_rank == $final_rank->total) {
                 $update_final_rank = FinalRanking::where('barangay_id', $final_rank->barangay_id)
                     ->update(['semi_rank' => $prev_final_rank]);
@@ -949,14 +817,11 @@ class ReportsController extends Controller
                     $update_active = Barangay::where('id', $final_rank->barangay_id)
                         ->update(['is_active' => 0]);
                 }
-
             }
 
             $prev_total_rank = $final_rank->total;
             $prev_final_rank = $new_final_rank;
         }
-
-
     }
 
     public function pdfsemifinal()
@@ -1151,9 +1016,9 @@ class ReportsController extends Controller
         //ranking per judge
         for ($x = 2; $x <= 6; $x++) {
             $score = FinalScore::where('judge_id', $x)
-            ->select(DB::raw('beauty +  intelligence as score'), 'barangay_id')
-            ->orderBy('score', 'desc')
-            ->get();
+                ->select(DB::raw('beauty +  intelligence as score'), 'barangay_id')
+                ->orderBy('score', 'desc')
+                ->get();
 
             $prev_rank = 1;
             $prev_score = 100;
@@ -1166,19 +1031,17 @@ class ReportsController extends Controller
                 if ($prev_score > $score->score) {
 
                     $update_rank = Ranking::where('judge_id', $x)
-                    ->where('barangay_id', $brgy_id)
+                        ->where('barangay_id', $brgy_id)
                         ->update(['final_rank' => $rank]);
 
                     $new_rank = $rank;
-
                 } elseif ($prev_score == $score->score) {
 
                     $update_rank = Ranking::where('judge_id', $x)
-                    ->where('barangay_id', $brgy_id)
+                        ->where('barangay_id', $brgy_id)
                         ->update(['final_rank' => $prev_rank]);
 
                     $new_rank = $prev_rank;
-
                 }
 
                 $prev_rank = $new_rank;
@@ -1188,8 +1051,8 @@ class ReportsController extends Controller
 
         //ranking for semis
         $get_rank = Ranking::whereNotNull('final_rank')->select(DB::raw('SUM(final_rank) as total'), 'barangay_id')
-        ->groupBy('barangay_id')
-        ->orderBy('total', 'asc')
+            ->groupBy('barangay_id')
+            ->orderBy('total', 'asc')
             ->get();
 
         $prev_total_rank = 5;
@@ -1204,14 +1067,12 @@ class ReportsController extends Controller
                     ->update(['final_rank' => $final_ranking]);
 
                 $new_final_rank = $final_ranking;
-
             } elseif ($prev_total_rank == $final_rank->total) {
 
                 $update_final_rank = FinalRanking::where('barangay_id', $final_rank->barangay_id)
                     ->update(['final_rank' => $prev_final_rank]);
 
                 $new_final_rank = $prev_final_rank;
-
             }
 
             $prev_total_rank = $final_rank->total;
@@ -1373,6 +1234,4 @@ class ReportsController extends Controller
 
         return $pdf->stream('finals_result.pdf');
     }
-
-
 }
