@@ -74,7 +74,7 @@
 
                                                         @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 2)
 
-                                                            <td>{{ $rank->ms_talent }}</td>
+                                                            <td>{{ $rank->talent }}</td>
 
                                                         @endif
 
