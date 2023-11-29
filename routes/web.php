@@ -75,6 +75,50 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/ms_pdftalent_judge2', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_pdftalentjudge2'])->name('ms_pdftalent_judge2');
     Route::get('/ms_pdftalent_judge3', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_pdftalentjudge3'])->name('ms_pdftalent_judge3');
 
+    //RESULTS for Mr. UEP PREPAGEANT
+    Route::get('/mr_prepageant', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_prepageant'])->name('mr_prepageant');
+    Route::get('/mr_prod_num', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_prod_num'])->name('mr_prod_num');
+    Route::get('/mr_sports_wear', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_sports_wear'])->name('mr_sports_wear');
+    Route::get('/mr_talent', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_talent'])->name('mr_talent');
+
+    //INDIVIDUAL RESULTS
+    Route::get('/mr_prepageant_judge1', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_prepageantjudge1'])->name('mr_prepageant_judge1');
+    Route::get('/mr_prepageant_judge2', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_prepageantjudge2'])->name('mr_prepageant_judge2');
+    Route::get('/mr_prepageant_judge3', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_prepageantjudge3'])->name('mr_prepageant_judge3');
+
+    Route::get('/mr_prod_num_judge1', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_prod_numjudge1'])->name('mr_prod_num_judge1');
+    Route::get('/mr_prod_num_judge2', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_prod_numjudge2'])->name('mr_prod_num_judge2');
+    Route::get('/mr_prod_num_judge3', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_prod_numjudge3'])->name('mr_prod_num_judge3');
+
+    Route::get('/mr_sports_wear_judge1', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_sports_wearjudge1'])->name('mr_sports_wear_judge1');
+    Route::get('/mr_sports_wear_judge2', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_sports_wearjudge2'])->name('mr_sports_wear_judge2');
+    Route::get('/mr_sports_wear_judge3', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_sports_wearjudge3'])->name('mr_sports_wear_judge3');
+
+    Route::get('/mr_talent_judge1', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_talentjudge1'])->name('mr_talent_judge1');
+    Route::get('/mr_talent_judge2', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_talentjudge2'])->name('mr_talent_judge2');
+    Route::get('/mr_talent_judge3', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_talentjudge3'])->name('mr_talent_judge3');
+
+    //PDF Result
+    Route::get('/mr_pdfprepageant', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_pdfprepageant'])->name('mr_pdfprepageant');
+    Route::get('/mr_pdfprepageant_judge1', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_pdfprepageantjudge1'])->name('mr_pdfprepageant_judge1');
+    Route::get('/mr_pdfprepageant_judge2', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_pdfprepageantjudge2'])->name('mr_pdfprepageant_judge2');
+    Route::get('/mr_pdfprepageant_judge3', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_pdfprepageantjudge3'])->name('mr_pdfprepageant_judge3');
+
+    Route::get('/mr_pdfprod_num', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_pdfprod_num'])->name('mr_pdfprod_num');
+    Route::get('/mr_pdfprod_num_judge1', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_pdfprod_numjudge1'])->name('mr_pdfprod_num_judge1');
+    Route::get('/mr_pdfprod_num_judge2', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_pdfprod_numjudge2'])->name('mr_pdfprod_num_judge2');
+    Route::get('/mr_pdfprod_num_judge3', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_pdfprod_numjudge3'])->name('mr_pdfprod_num_judge3');
+
+    Route::get('/mr_pdfsports_wear', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_pdfsports_wear'])->name('mr_pdfsports_wear');
+    Route::get('/mr_pdfsports_wear_judge1', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_pdfsports_wearjudge1'])->name('mr_pdfsports_wear_judge1');
+    Route::get('/mr_pdfsports_wear_judge2', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_pdfsports_wearjudge2'])->name('mr_pdfsports_wear_judge2');
+    Route::get('/mr_pdfsports_wear_judge3', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_pdfsports_wearjudge3'])->name('mr_pdfsports_wear_judge3');
+
+    Route::get('/mr_pdftalent', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_pdftalent'])->name('mr_pdftalent');
+    Route::get('/mr_pdftalent_judge1', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_pdftalentjudge1'])->name('mr_pdftalent_judge1');
+    Route::get('/mr_pdftalent_judge2', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_pdftalentjudge2'])->name('mr_pdftalent_judge2');
+    Route::get('/mr_pdftalent_judge3', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_pdftalentjudge3'])->name('mr_pdftalent_judge3');
+
     //RANKING
     Route::get('/prepageantrank', [App\Http\Controllers\ReportsController::class, 'prepageantrank'])->name('prepageantrank');
     Route::get('/talentrank', [App\Http\Controllers\ReportsController::class, 'talentrank'])->name('talentrank');

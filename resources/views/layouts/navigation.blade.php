@@ -89,18 +89,35 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReports"
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReportsMs"
             aria-expanded="true" aria-controls="collapseReports">
             <i class="fas fa-fw fa-file"></i>
             <span>Reports (Ms. UEP)</span>
         </a>
-        <div id="collapseReports" class="collapse" aria-labelledby="headingReports" data-parent="#accordionSidebar">
+        <div id="collapseReportsMs" class="collapse" aria-labelledby="headingReports" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Manage Reports:</h6>
                 <a class="collapse-item" href="{{ route('ms_prepageant') }}">Pre-pageant Scores</a>
                 <a class="collapse-item" href="{{ route('ms_prod_num') }}">Production Number Scores</a>
                 <a class="collapse-item" href="{{ route('ms_sports_wear') }}">Sports Wear Scores</a>
                 <a class="collapse-item" href="{{ route('ms_talent') }}">Talent Scores</a>
+            </div>
+        </div>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReportsMr"
+            aria-expanded="true" aria-controls="collapseReports">
+            <i class="fas fa-fw fa-file"></i>
+            <span>Reports (Mr. UEP)</span>
+        </a>
+        <div id="collapseReportsMr" class="collapse" aria-labelledby="headingReports" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Manage Reports:</h6>
+                <a class="collapse-item" href="{{ route('mr_prepageant') }}">Pre-pageant Scores</a>
+                <a class="collapse-item" href="{{ route('mr_prod_num') }}">Production Number Scores</a>
+                <a class="collapse-item" href="{{ route('mr_sports_wear') }}">Sports Wear Scores</a>
+                <a class="collapse-item" href="{{ route('mr_talent') }}">Talent Scores</a>
             </div>
         </div>
     </li>
