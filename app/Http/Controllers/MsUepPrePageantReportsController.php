@@ -40,7 +40,7 @@ class MsUepPrePageantReportsController extends Controller
 
         $pdf = PDF::loadView('admin.reports.prepageant.ms.pdfprepageant', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
 
-        return $pdf->stream('prepageant_result.pdf');
+        return $pdf->stream('ms_prepageant_result.pdf');
     }
 
     public function ms_prepageantjudge1()
@@ -66,7 +66,7 @@ class MsUepPrePageantReportsController extends Controller
 
         $pdf = PDF::loadView('admin.reports.prepageant.ms.pdfprepageantjudge1', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
 
-        return $pdf->stream('prepageant_judge1.pdf');
+        return $pdf->stream('ms_prepageant_judge1.pdf');
     }
 
     public function ms_prepageantjudge2()
@@ -92,7 +92,7 @@ class MsUepPrePageantReportsController extends Controller
 
         $pdf = PDF::loadView('admin.reports.prepageant.ms.pdfprepageantjudge2', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
 
-        return $pdf->stream('prepageant_judge2.pdf');
+        return $pdf->stream('ms_prepageant_judge2.pdf');
     }
 
     public function ms_prepageantjudge3()
@@ -118,7 +118,7 @@ class MsUepPrePageantReportsController extends Controller
 
         $pdf = PDF::loadView('admin.reports.prepageant.ms.pdfprepageantjudge3', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
 
-        return $pdf->stream('prepageant_judge3.pdf');
+        return $pdf->stream('ms_prepageant_judge3.pdf');
     }
 
     public function ms_prod_num()
