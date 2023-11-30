@@ -119,6 +119,26 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/mr_pdftalent_judge2', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_pdftalentjudge2'])->name('mr_pdftalent_judge2');
     Route::get('/mr_pdftalent_judge3', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_pdftalentjudge3'])->name('mr_pdftalent_judge3');
 
+    //RESULTS for Mr. UEP PRELIMINARIES
+    Route::get('/mr_prelim', [App\Http\Controllers\MrUepPrelimReportsController::class, 'mr_prelim'])->name('mr_prelim');
+    Route::get('/mr_casual_wear', [App\Http\Controllers\MrUepPrelimReportsController::class, 'mr_casual_wear'])->name('mr_casual_wear');
+    Route::get('/mr_formal_wear', [App\Http\Controllers\MrUepPrelimReportsController::class, 'mr_formal_wear'])->name('mr_formal_wear');
+
+    //INDIVIDUAL RESULTS
+    Route::get('/mr_prelim_judge1', [App\Http\Controllers\MrUepPrelimReportsController::class, 'mr_prelimjudge1'])->name('mr_prelim_judge1');
+    Route::get('/mr_prelim_judge2', [App\Http\Controllers\MrUepPrelimReportsController::class, 'mr_prelimjudge2'])->name('mr_prelim_judge2');
+    Route::get('/mr_prelim_judge3', [App\Http\Controllers\MrUepPrelimReportsController::class, 'mr_prelimjudge3'])->name('mr_prelim_judge3');
+    Route::get('/mr_prelim_judge4', [App\Http\Controllers\MrUepPrelimReportsController::class, 'mr_prelimjudge4'])->name('mr_prelim_judge4');
+    Route::get('/mr_prelim_judge5', [App\Http\Controllers\MrUepPrelimReportsController::class, 'mr_prelimjudge5'])->name('mr_prelim_judge5');
+
+    //PDF Result
+    Route::get('/mr_pdfprelim', [App\Http\Controllers\MrUepPrelimReportsController::class, 'mr_pdfprelim'])->name('mr_pdfprelim');
+    Route::get('/mr_pdfprelim_judge1', [App\Http\Controllers\MrUepPrelimReportsController::class, 'mr_pdfprelimjudge1'])->name('mr_pdfprelim_judge1');
+    Route::get('/mr_pdfprelim_judge2', [App\Http\Controllers\MrUepPrelimReportsController::class, 'mr_pdfprelimjudge2'])->name('mr_pdfprelim_judge2');
+    Route::get('/mr_pdfprelim_judge3', [App\Http\Controllers\MrUepPrelimReportsController::class, 'mr_pdfprelimjudge3'])->name('mr_pdfprelim_judge3');
+    Route::get('/mr_pdfprelim_judge4', [App\Http\Controllers\MrUepPrelimReportsController::class, 'mr_pdfprelimjudge4'])->name('mr_pdfprelim_judge4');
+    Route::get('/mr_pdfprelim_judge5', [App\Http\Controllers\MrUepPrelimReportsController::class, 'mr_pdfprelimjudge5'])->name('mr_pdfprelim_judge5');
+
     //RANKING
     Route::get('/prepageantrank', [App\Http\Controllers\ReportsController::class, 'prepageantrank'])->name('prepageantrank');
     Route::get('/talentrank', [App\Http\Controllers\ReportsController::class, 'talentrank'])->name('talentrank');

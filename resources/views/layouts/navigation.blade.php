@@ -101,6 +101,9 @@
                 <a class="collapse-item" href="{{ route('ms_prod_num') }}">Production Number Scores</a>
                 <a class="collapse-item" href="{{ route('ms_sports_wear') }}">Sports Wear Scores</a>
                 <a class="collapse-item" href="{{ route('ms_talent') }}">Talent Scores</a>
+                <a class="collapse-item" href="{{ route('mr_talent') }}">Preliminaries Scores</a>
+                <a class="collapse-item" href="{{ route('mr_talent') }}">Casual Wear Scores</a>
+                <a class="collapse-item" href="{{ route('mr_talent') }}">Long Gown Scores</a>
             </div>
         </div>
     </li>
@@ -118,6 +121,9 @@
                 <a class="collapse-item" href="{{ route('mr_prod_num') }}">Production Number Scores</a>
                 <a class="collapse-item" href="{{ route('mr_sports_wear') }}">Sports Wear Scores</a>
                 <a class="collapse-item" href="{{ route('mr_talent') }}">Talent Scores</a>
+                <a class="collapse-item" href="{{ route('mr_prelim') }}">Preliminaries Scores</a>
+                <a class="collapse-item" href="{{ route('mr_casual_wear') }}">Casual Wear Scores</a>
+                <a class="collapse-item" href="{{ route('mr_formal_wear') }}">Formal Wear Scores</a>
             </div>
         </div>
     </li>
