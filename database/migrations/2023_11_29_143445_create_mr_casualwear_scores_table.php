@@ -13,11 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('sub_categories', function (Blueprint $table) {
+        Schema::create('mr_casualwear_scores', function (Blueprint $table) {
             $table->id();
-            $table->string('sub_category_name');
-            $table->unsignedBigInteger('category_id');
-            $table->integer('sub_category_percent');
+            $table->unsignedBigInteger('candidate_id');
+            $table->unsignedBigInteger('judge_id');
+            $table->decimal('poise', 16)->nullable();
+            $table->decimal('execution', 16)->nullable();
+            $table->decimal('appearance', 16)->nullable();
+            $table->boolean('is_lock')->default(0);
             $table->timestamps();
         });
     }
@@ -29,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sub_categories');
+        Schema::dropIfExists('mr_casualwear_scores');
     }
 };

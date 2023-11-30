@@ -151,6 +151,17 @@ Route::middleware(['auth', 'user-access:judge'])->group(function () {
     Route::get('/judge-app/{stage}/mr-sportswear-score-board', [App\Http\Controllers\JudgeAppController::class, 'mrSportswearScoreBoard'])->name('judge.app.mr.sportswear.score');
     Route::get('/judge-app/{stage}/mr-talent-score-board', [App\Http\Controllers\JudgeAppController::class, 'mrTalentScoreBoard'])->name('judge.app.mr.talent.score');
 
+    // Preliminaries
+    //MR
+    Route::get('/judge-app/{stage}/mr-prelim-score-board', [App\Http\Controllers\JudgeAppController::class, 'mrPrelimScoreBoard'])->name('judge.app.mr.prelim.score');
+    Route::get('/judge-app/{stage}/mr-casualwear-score-board', [App\Http\Controllers\JudgeAppController::class, 'mrCasualwearScoreBoard'])->name('judge.app.mr.casualwear.score');
+    Route::get('/judge-app/{stage}/mr-formalwear-score-board', [App\Http\Controllers\JudgeAppController::class, 'mrFormalwearScoreBoard'])->name('judge.app.mr.formalwear.score');
+
+    //MS
+    Route::get('/judge-app/{stage}/ms-prelim-score-board', [App\Http\Controllers\JudgeAppController::class, 'msPrelimScoreBoard'])->name('judge.app.ms.prelim.score');
+    Route::get('/judge-app/{stage}/ms-casualwear-score-board', [App\Http\Controllers\JudgeAppController::class, 'msCasualwearScoreBoard'])->name('judge.app.ms.casualwear.score');
+    Route::get('/judge-app/{stage}/ms-formalwear-score-board', [App\Http\Controllers\JudgeAppController::class, 'msFormalwearScoreBoard'])->name('judge.app.ms.formalwear.score');
+
     Route::get('/judge-app/final-score-board', [App\Http\Controllers\JudgeAppController::class, 'finalScoreBoard'])->name('judge.app.final.score');
 });
 

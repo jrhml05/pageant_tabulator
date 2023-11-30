@@ -13,14 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('rankings', function (Blueprint $table) {
+        Schema::create('ms_formalwear_scores', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('candidate_id');
             $table->unsignedBigInteger('judge_id');
-            $table->unsignedBigInteger('barangay_id');
-            $table->unsignedBigInteger('prepageant_rank')->nullable();
-            $table->unsignedBigInteger('prelim_rank')->nullable();
-            $table->unsignedBigInteger('semi_rank')->nullable();
-            $table->unsignedBigInteger('final_rank')->nullable();
+            $table->decimal('elegance', 16)->nullable();
+            $table->decimal('presence', 16)->nullable();
+            $table->decimal('projection', 16)->nullable();
+            $table->decimal('poise', 16)->nullable();
+            $table->boolean('is_lock')->default(0);
             $table->timestamps();
         });
     }
@@ -32,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rankings');
+        Schema::dropIfExists('ms_formalwear_scores');
     }
 };

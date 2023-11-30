@@ -27,11 +27,23 @@
         <div class="form-group pl-5 pr-5 pt-1">
             {{-- <button wire:click="try" class="btn btn-primary">dadas</button> --}}
             <div class="row mb-1 justify-content-center">
+                @if (App\Models\Stage::where('is_active',1)->first()->id == 1)
+                    @php
+                        $route_mr = 'judge.app.mr.score';
+                        $route_ms = 'judge.app.ms.score';
+                    @endphp
+                @elseif (App\Models\Stage::where('is_active',1)->first()->id == 2)
+                    @php
+                        $route_mr = 'judge.app.mr.prelim.score';
+                        $route_ms = 'judge.app.ms.prelim.score';
+                    @endphp
+                @endif
+                
                 <div class="col-md-2 mb-1">
-                    <a href="{{ route('judge.app.mr.score', $stage) }}" type="button" class="btn btn-primary btn-lg btn-block rounded-pill"><i class="fas fa-solid fa-crown"></i> MR. UEP</a>
+                    <a href="{{ route($route_mr, $stage) }}" type="button" class="btn btn-primary btn-lg btn-block rounded-pill"><i class="fas fa-solid fa-crown"></i> MR. UEP</a>
                 </div>
                 <div class="col-md-2 mb-1">
-                    <a href="{{ route('judge.app.ms.score',$stage) }}" type="button" class="btn btn-danger btn-lg btn-block rounded-pill"><i class="fas fa-solid fa-crown"></i> MS. UEP</a>
+                    <a href="{{ route($route_ms, $stage) }}" type="button" class="btn btn-danger btn-lg btn-block rounded-pill"><i class="fas fa-solid fa-crown"></i> MS. UEP</a>
                 </div>
             </div>
         </div>

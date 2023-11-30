@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('mr_prelim_scores', function (Blueprint $table) {
             $table->id();
-            $table->string('tags');
-            $table->string('category_name');
-            $table->integer('percent');
-            $table->unsignedBigInteger('stage_id');
-            $table->boolean('is_active')->default(1);
+            $table->unsignedBigInteger('judge_id');
+            $table->unsignedBigInteger('candidate_id');
+            $table->decimal('casual_wear', 16)->nullable();
+            $table->decimal('formal_wear', 16)->nullable();
+            $table->boolean('is_lock')->default(0);
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('mr_prelim_scores');
     }
 };

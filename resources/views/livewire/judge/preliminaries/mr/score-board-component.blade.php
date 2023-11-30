@@ -1,6 +1,6 @@
-<div>
+<div class="pt-5">
 
-    <div class="row">
+    <div class="row pt-5">
 
         @foreach ($records as $index => $record)
             {{-- {{ dd($record->scores) }} --}}
@@ -15,37 +15,19 @@
                                 class="text-primary">{{ strtoupper($record->barangay->name) }}</span></h6> --}}
                         <div class="input-group mb-1">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Beauty 40%</span>
+                                <span class="input-group-text" id="basic-addon1">Casual Wear 50%</span>
                             </div>
-                            <input onfocus="this.select()" wire:model="records.{{ $index }}.beauty" type="number"
-                                class="form-control text-center {{ $record->beauty > 40 ? 'is-invalid' : '' }}" placeholder="00.00"
+                            <input disabled wire:model="records.{{ $index }}.casual_wear" type="number"
+                                class="form-control text-center" placeholder="00.00"
                                 aria-describedby="basic-addon1">
 
                         </div>
                         <div class="input-group mb-1">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Poise 20%</span>
+                                <span class="input-group-text" id="basic-addon1">Formal Wear 50%</span>
                             </div>
-                            <input onfocus="this.select()" wire:model="records.{{ $index }}.poise" type="number"
-                                class="form-control text-center {{ $record->poise > 20 ? 'is-invalid' : '' }}" placeholder="00.00"
-                                aria-describedby="basic-addon1">
-
-                        </div>
-                        <div class="input-group mb-1">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Swimsuit 20%</span>
-                            </div>
-                            <input onfocus="this.select()" wire:model="records.{{ $index }}.swimsuit" type="number"
-                                class="form-control text-center {{ $record->swimsuit > 20 ? 'is-invalid' : '' }}" placeholder="00.00"
-                                aria-describedby="basic-addon1">
-
-                        </div>
-                        <div class="input-group mb-1">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Evening Gown 20%</span>
-                            </div>
-                            <input wire:model="records.{{ $index }}.evening_gown" type="number"
-                                class="form-control text-center"  {{ $record->evening_gown > 20 ? 'is-invalid' : '' }}" placeholder="00.00"
+                            <input disabled wire:model="records.{{ $index }}.formal_wear" type="number"
+                                class="form-control text-center" placeholder="00.00"
                                 aria-describedby="basic-addon1">
 
                         </div>
@@ -55,7 +37,7 @@
                                 <span class="input-group-text" id="basic-addon1"><strong>Total 100%</strong> </span>
                             </div>
                             @php
-                               $total = ((float) $record->beauty) + ((float) $record->poise) + ((float) $record->swimsuit) + ((float) $record->evening_gown);
+                               $total = ((float) $record->casual_wear) + ((float) $record->formal_wear);
                             @endphp
                             <input style="font-weight: bold" disabled type="number"
                                 class="form-control text-center" value="{{ number_format($total, 2) }}" placeholder="00.00"
@@ -75,10 +57,18 @@
         <div class="form-group pl-5 pr-5 pt-1">
             {{-- <button wire:click="try" class="btn btn-primary">dadas</button> --}}
             <div class="row mb-1">
-                <div class="col-md-4 mb-1">
+                <div class="col-md-2 mb-1">
                     <a href="{{ route('judge.app') }}" type="button" class="btn btn-secondary btn-lg btn-block rounded-pill">BACK TO HOME</a>
                 </div>
                 <div class="col-md-4 mb-1">
+                    <a href="{{ route('judge.app.mr.casualwear.score',$stage) }}" type="button" class="btn btn-info btn-lg btn-block rounded-pill">ENTER CASUAL WEAR SCORES</a>
+
+                </div>
+                <div class="col-md-4 mb-1">
+                    <a href="{{ route('judge.app.mr.formalwear.score',$stage) }}" type="button" class="btn btn-info btn-lg btn-block rounded-pill">ENTER FORMAL WEAR SCORES</a>
+
+                </div>
+                <div class="col-md-2 mb-1">
                     <button wire:click="alertConfirm" type="button" class="btn btn-primary btn-lg btn-block rounded-pill">SAVE SCORES</button>
                 </div>
             </div>

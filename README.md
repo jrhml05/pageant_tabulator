@@ -49,6 +49,7 @@ Judge 5
 email: judge5@mail.com
 password: mrmsuepjudge5
 
-# For candidates image, please follow the size and format been used in this app, and rename it to 1-24.
+# For candidates image, please follow the size and format been used in this app, and rename it according to candidate number (eg. 1.jpg).
 
-- public/assets/img/mb
+- public/assets/img/mr
+- public/assets/img/ms

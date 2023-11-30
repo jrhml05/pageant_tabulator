@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Livewire\Judge\Preliminaries;
+namespace App\Http\Livewire\Judge\Preliminaries\Mr;
 
 use Livewire\Component;
-use App\Models\PrelimScore;
+use App\Models\Mr_prelim_score;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -15,22 +15,19 @@ class ScoreBoardComponent extends Component
     protected $listeners = ['save'];
 
     protected $rules = [
-        'records.*.beauty' => 'required',
-        'records.*.poise' => 'required',
-        'records.*.swimsuit' => 'required',
-        'records.*.evening_gown' => 'required',
+        'records.*.casual_wear' => 'required',
+        'records.*.formal_wear' => 'required',
     ];
 
     public function render()
     {
-        return view('livewire.judge.preliminaries.score-board-component');
+        return view('livewire.judge.preliminaries.mr.score-board-component');
     }
 
     public function mount()
     {
-        $this->records = PrelimScore::where('stage_id', $this->stage)
-            ->where('judge_id', Auth::user()->id)
-            ->orderBy('barangay_id', 'ASC')
+        $this->records = Mr_prelim_score::where('judge_id', Auth::user()->id)
+            ->orderBy('candidate_id', 'ASC')
             ->get();
         // dd($this->records);
     }
@@ -49,7 +46,7 @@ class ScoreBoardComponent extends Component
         foreach ($this->records as $record) {
 
             if (!$record->is_lock) {
-                $saveScore = PrelimScore::updateOrCreate(
+                $saveScore = Mr_prelim_score::updateOrCreate(
                     [
                         'id' => $record->id,
                         'stage_id' => $this->stage,
@@ -89,7 +86,7 @@ class ScoreBoardComponent extends Component
         foreach ($this->records as $record) {
 
             if (!$record->is_lock) {
-                PrelimScore::updateOrCreate(
+                Mr_prelim_score::updateOrCreate(
                     [
                         'id' => $record->id,
                         'stage_id' => $this->stage,
