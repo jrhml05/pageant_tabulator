@@ -24,6 +24,7 @@ return new class extends Migration
             $table->unsignedBigInteger('casual_wear');
             $table->unsignedBigInteger('formal_wear');
             $table->unsignedBigInteger('prelim');
+            $table->unsignedBigInteger('to_final');
             $table->unsignedBigInteger('final');
             $table->timestamps();
         });

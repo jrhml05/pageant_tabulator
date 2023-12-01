@@ -19,6 +19,7 @@ class Mr_ranking extends Model
         'casual_wear',
         'formal_wear',
         'prelim',
+        'to_final',
         'final'
     ];
 }

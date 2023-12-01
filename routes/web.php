@@ -211,9 +211,12 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/ms_pdfformal_wearjudge4', [App\Http\Controllers\MsUepPrelimReportsController::class, 'ms_pdfformal_wearjudge4'])->name('ms_pdfformal_wearjudge4');
     Route::get('/ms_pdfformal_wearjudge5', [App\Http\Controllers\MsUepPrelimReportsController::class, 'ms_pdfformal_wearjudge5'])->name('ms_pdfformal_wearjudge5');
 
-    //RANKING
-    Route::get('/prepageantrank', [App\Http\Controllers\ReportsController::class, 'prepageantrank'])->name('prepageantrank');
-    Route::get('/talentrank', [App\Http\Controllers\ReportsController::class, 'talentrank'])->name('talentrank');
+    //MR. RANKING
+    Route::get('/mr_prepageantrank', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_prepageant_rank'])->name('mr_prepageant_rank');
+    Route::get('/mr_prod_num_rank', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_prod_num_rank'])->name('mr_prod_num_rank');
+    Route::get('/mr_sports_wear_rank', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'smr_ports_wear_rank'])->name('mr_sports_wear_rank');
+    Route::get('/mr_talent_rank', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_talent_rank'])->name('mr_talent_rank');
+
     Route::get('/prelimrank', [App\Http\Controllers\ReportsController::class, 'prelimrank'])->name('prelimrank');
     Route::get('/swimsuitrank', [App\Http\Controllers\ReportsController::class, 'swimsuitrank'])->name('swimsuitrank');
     Route::get('/eveninggownrank', [App\Http\Controllers\ReportsController::class, 'eveninggownrank'])->name('eveninggownrank');

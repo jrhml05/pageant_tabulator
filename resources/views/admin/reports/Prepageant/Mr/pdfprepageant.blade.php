@@ -371,7 +371,7 @@
                         @forelse   ($data['rank'] as $rank)
 
                             @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 2)
-                                <td>{{ $rank->prepageant_rank }}</td>
+                                <td>{{ $rank->prepageant }}</td>
                             @endif
 
                         @empty
@@ -393,7 +393,7 @@
                         @forelse   ($data['rank'] as $rank)
 
                             @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 3)
-                                <td>{{ $rank->prepageant_rank }}</td>
+                                <td>{{ $rank->prepageant }}</td>
                             @endif
 
                         @empty
@@ -413,7 +413,7 @@
                         @forelse   ($data['rank'] as $rank)
 
                             @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 4)
-                                <td>{{ $rank->prepageant_rank }}</td>
+                                <td>{{ $rank->prepageant }}</td>
                             @endif
 
                         @empty
