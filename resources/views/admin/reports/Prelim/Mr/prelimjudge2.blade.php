@@ -4,7 +4,7 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
 
-        <h1 class="h3 mb-0 text-gray-800">MR. UEP - PRE-PAGEANT SCORES (JUDGE 2)</h1>
+        <h1 class="h3 mb-0 text-gray-800">MR. UEP - PRELIMINARIES SCORES (JUDGE 2)</h1>
 
         <div>
 
@@ -27,7 +27,7 @@
 
         <div>
             <a href="{{ route('mr_prelim') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-less-than fa-sm text-white-50"></i> BACK TO OVERALL prelim RESULTS</a>
+                class="fas fa-less-than fa-sm text-white-50"></i> BACK TO OVERALL PRELIMINARIES RESULTS</a>
             <a href="{{ route('mr_pdfprelim_judge2') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
                 class="fas fa-print fa-sm text-white-50"></i> PRINT JUDGE 2 SCORES</a>
         </div>
