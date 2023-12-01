@@ -167,53 +167,311 @@ class MrUepPrelimReportsController extends Controller
         return $pdf->stream('mr_prelim_judge5.pdf');
     }
 
-    public function mr_prod_num()
+    public function mr_casual_wear()
     {
-        $data['title'] = 'Mr. UEP - Production Number Results';
+        $data['title'] = 'Mr. UEP - Casual Wear Results';
 
         $data['candidate'] = Mr_candidate::all();
 
         $data['rank'] = Mr_ranking::all();
 
-        return view('admin.reports.prelim.mr.production_number.prod_num', compact('data'));
+        return view('admin.reports.prelim.mr.casual_wear.casual_wear', compact('data'));
     }
 
-    public function mr_pdfprod_num()
+    public function mr_pdfcasual_wear()
     {
-        $data['title'] = 'Mr. UEP - Production Number Results';
+        $data['title'] = 'Mr. UEP - Formal Wear Results';
 
         $data['candidate'] = Mr_candidate::all();
 
         $data['rank'] = Mr_ranking::all();
 
-        $pdf = PDF::loadView('admin.reports.prelim.mr.production_number.pdfprod_num', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
+        $pdf = PDF::loadView('admin.reports.prelim.mr.casual_wear.pdfcasual_wear', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
 
-        return $pdf->stream('mr_prod_num_result.pdf');
+        return $pdf->stream('mr_casual_wear_result.pdf');
     }
 
-    public function mr_prod_numjudge1()
+    public function mr_casual_wearjudge1()
     {
 
-        $data['title'] = 'Mr. UEP - Production Number Results (Judge 1)';
+        $data['title'] = 'Mr. UEP - Casual Wear Results (Judge 1)';
 
         $data['candidate'] = Mr_candidate::all();
 
         $data['rank'] = Mr_ranking::all();
 
-        return view('admin.reports.prelim.mr.production_number.prod_numjudge1', compact('data'));
+        return view('admin.reports.prelim.mr.casual_wear.casual_wearjudge1', compact('data'));
     }
 
-    public function mr_pdfprod_numjudge1()
+    public function mr_pdfcasual_wearjudge1()
     {
 
-        $data['title'] = 'Mr. UEP - Production Number Results (Judge 1)';
+        $data['title'] = 'Mr. UEP - Casual Wear Results (Judge 1)';
 
         $data['candidate'] = Mr_candidate::all();
 
         $data['rank'] = Mr_ranking::all();
 
-        $pdf = PDF::loadView('admin.reports.prelim.mr.production_number.pdfprod_numjudge1', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
+        $pdf = PDF::loadView('admin.reports.prelim.mr.casual_wear.pdfcasual_wearjudge1', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
 
-        return $pdf->stream('mr_prod_num_judge1.pdf');
+        return $pdf->stream('mr_casual_wear_judge1.pdf');
+    }
+
+    public function mr_casual_wearjudge2()
+    {
+
+        $data['title'] = 'Mr. UEP - Casual Wear Results (Judge 2)';
+
+        $data['candidate'] = Mr_candidate::all();
+
+        $data['rank'] = Mr_ranking::all();
+
+        return view('admin.reports.prelim.mr.casual_wear.casual_wearjudge2', compact('data'));
+    }
+
+    public function mr_pdfcasual_wearjudge2()
+    {
+
+        $data['title'] = 'Mr. UEP - Casual Wear Results (Judge 2)';
+
+        $data['candidate'] = Mr_candidate::all();
+
+        $data['rank'] = Mr_ranking::all();
+
+        $pdf = PDF::loadView('admin.reports.prelim.mr.casual_wear.pdfcasual_wearjudge2', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
+
+        return $pdf->stream('mr_casual_wear_judge2.pdf');
+    }
+
+    public function mr_casual_wearjudge3()
+    {
+
+        $data['title'] = 'Mr. UEP - Casual Wear Results (Judge 3)';
+
+        $data['candidate'] = Mr_candidate::all();
+
+        $data['rank'] = Mr_ranking::all();
+
+        return view('admin.reports.prelim.mr.casual_wear.casual_wearjudge3', compact('data'));
+    }
+
+    public function mr_pdfcasual_wearjudge3()
+    {
+
+        $data['title'] = 'Mr. UEP - Casual Wear Results (Judge 3)';
+
+        $data['candidate'] = Mr_candidate::all();
+
+        $data['rank'] = Mr_ranking::all();
+
+        $pdf = PDF::loadView('admin.reports.prelim.mr.casual_wear.pdfcasual_wearjudge3', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
+
+        return $pdf->stream('mr_casual_wear_judge3.pdf');
+    }
+
+    public function mr_casual_wearjudge4()
+    {
+
+        $data['title'] = 'Mr. UEP - Casual Wear Results (Judge 4)';
+
+        $data['candidate'] = Mr_candidate::all();
+
+        $data['rank'] = Mr_ranking::all();
+
+        return view('admin.reports.prelim.mr.casual_wear.casual_wearjudge4', compact('data'));
+    }
+
+    public function mr_pdfcasual_wearjudge4()
+    {
+
+        $data['title'] = 'Mr. UEP - Casual Wear Results (Judge 4)';
+
+        $data['candidate'] = Mr_candidate::all();
+
+        $data['rank'] = Mr_ranking::all();
+
+        $pdf = PDF::loadView('admin.reports.prelim.mr.casual_wear.pdfcasual_wearjudge4', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
+
+        return $pdf->stream('mr_casual_wear_judge4.pdf');
+    }
+
+    public function mr_casual_wearjudge5()
+    {
+
+        $data['title'] = 'Mr. UEP - Casual Wear Results (Judge 5)';
+
+        $data['candidate'] = Mr_candidate::all();
+
+        $data['rank'] = Mr_ranking::all();
+
+        return view('admin.reports.prelim.mr.casual_wear.casual_wearjudge5', compact('data'));
+    }
+
+    public function mr_pdfcasual_wearjudge5()
+    {
+
+        $data['title'] = 'Mr. UEP - Casual Wear Results (Judge 5)';
+
+        $data['candidate'] = Mr_candidate::all();
+
+        $data['rank'] = Mr_ranking::all();
+
+        $pdf = PDF::loadView('admin.reports.prelim.mr.casual_wear.pdfcasual_wearjudge5', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
+
+        return $pdf->stream('mr_casual_wear_judge5.pdf');
+    }
+
+    public function mr_formal_wear()
+    {
+        $data['title'] = 'Mr. UEP - Formal Wear Results';
+
+        $data['candidate'] = Mr_candidate::all();
+
+        $data['rank'] = Mr_ranking::all();
+
+        return view('admin.reports.prelim.mr.formal_wear.formal_wear', compact('data'));
+    }
+
+    public function mr_pdfformal_wear()
+    {
+        $data['title'] = 'Mr. UEP - Formal Wear Results';
+
+        $data['candidate'] = Mr_candidate::all();
+
+        $data['rank'] = Mr_ranking::all();
+
+        $pdf = PDF::loadView('admin.reports.prelim.mr.formal_wear.pdfformal_wear', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
+
+        return $pdf->stream('mr_formal_wear_result.pdf');
+    }
+
+    public function mr_formal_wearjudge1()
+    {
+
+        $data['title'] = 'Mr. UEP - Formal Wear Results (Judge 1)';
+
+        $data['candidate'] = Mr_candidate::all();
+
+        $data['rank'] = Mr_ranking::all();
+
+        return view('admin.reports.prelim.mr.formal_wear.formal_wearjudge1', compact('data'));
+    }
+
+    public function mr_pdfformal_wearjudge1()
+    {
+
+        $data['title'] = 'Mr. UEP - Formal Wear Results (Judge 1)';
+
+        $data['candidate'] = Mr_candidate::all();
+
+        $data['rank'] = Mr_ranking::all();
+
+        $pdf = PDF::loadView('admin.reports.prelim.mr.formal_wear.pdfformal_wearjudge1', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
+
+        return $pdf->stream('mr_formal_wear_judge1.pdf');
+    }
+
+    public function mr_formal_wearjudge2()
+    {
+
+        $data['title'] = 'Mr. UEP - Formal Wear Results (Judge 2)';
+
+        $data['candidate'] = Mr_candidate::all();
+
+        $data['rank'] = Mr_ranking::all();
+
+        return view('admin.reports.prelim.mr.formal_wear.formal_wearjudge2', compact('data'));
+    }
+
+    public function mr_pdfformal_wearjudge2()
+    {
+
+        $data['title'] = 'Mr. UEP - Formal Wear Results (Judge 2)';
+
+        $data['candidate'] = Mr_candidate::all();
+
+        $data['rank'] = Mr_ranking::all();
+
+        $pdf = PDF::loadView('admin.reports.prelim.mr.formal_wear.pdfformal_wearjudge2', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
+
+        return $pdf->stream('mr_formal_wear_judge2.pdf');
+    }
+
+    public function mr_formal_wearjudge3()
+    {
+
+        $data['title'] = 'Mr. UEP - Formal Wear Results (Judge 3)';
+
+        $data['candidate'] = Mr_candidate::all();
+
+        $data['rank'] = Mr_ranking::all();
+
+        return view('admin.reports.prelim.mr.formal_wear.formal_wearjudge3', compact('data'));
+    }
+
+    public function mr_pdfformal_wearjudge3()
+    {
+
+        $data['title'] = 'Mr. UEP - Formal Wear Results (Judge 3)';
+
+        $data['candidate'] = Mr_candidate::all();
+
+        $data['rank'] = Mr_ranking::all();
+
+        $pdf = PDF::loadView('admin.reports.prelim.mr.formal_wear.pdfformal_wearjudge3', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
+
+        return $pdf->stream('mr_formal_wear_judge3.pdf');
+    }
+
+    public function mr_formal_wearjudge4()
+    {
+
+        $data['title'] = 'Mr. UEP - Formal Wear Results (Judge 4)';
+
+        $data['candidate'] = Mr_candidate::all();
+
+        $data['rank'] = Mr_ranking::all();
+
+        return view('admin.reports.prelim.mr.formal_wear.formal_wearjudge4', compact('data'));
+    }
+
+    public function mr_pdfformal_wearjudge4()
+    {
+
+        $data['title'] = 'Mr. UEP - Formal Wear Results (Judge 4)';
+
+        $data['candidate'] = Mr_candidate::all();
+
+        $data['rank'] = Mr_ranking::all();
+
+        $pdf = PDF::loadView('admin.reports.prelim.mr.formal_wear.pdfformal_wearjudge4', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
+
+        return $pdf->stream('mr_formal_wear_judge4.pdf');
+    }
+
+    public function mr_formal_wearjudge5()
+    {
+
+        $data['title'] = 'Mr. UEP - Formal Wear Results (Judge 4)';
+
+        $data['candidate'] = Mr_candidate::all();
+
+        $data['rank'] = Mr_ranking::all();
+
+        return view('admin.reports.prelim.mr.formal_wear.formal_wearjudge5', compact('data'));
+    }
+
+    public function mr_pdfformal_wearjudge5()
+    {
+
+        $data['title'] = 'Mr. UEP - Formal Wear Results (Judge 5)';
+
+        $data['candidate'] = Mr_candidate::all();
+
+        $data['rank'] = Mr_ranking::all();
+
+        $pdf = PDF::loadView('admin.reports.prelim.mr.formal_wear.pdfformal_wearjudge5', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
+
+        return $pdf->stream('mr_formal_wear_judge5.pdf');
     }
 }
