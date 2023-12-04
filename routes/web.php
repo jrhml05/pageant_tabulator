@@ -212,10 +212,16 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/ms_pdfformal_wearjudge5', [App\Http\Controllers\MsUepPrelimReportsController::class, 'ms_pdfformal_wearjudge5'])->name('ms_pdfformal_wearjudge5');
 
     //MR. RANKING
-    Route::get('/mr_prepageantrank', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_prepageant_rank'])->name('mr_prepageant_rank');
+    Route::get('/mr_prepageant_rank', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_prepageant_rank'])->name('mr_prepageant_rank');
     Route::get('/mr_prod_num_rank', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_prod_num_rank'])->name('mr_prod_num_rank');
-    Route::get('/mr_sports_wear_rank', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'smr_ports_wear_rank'])->name('mr_sports_wear_rank');
+    Route::get('/mr_sports_wear_rank', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_sports_wear_rank'])->name('mr_sports_wear_rank');
     Route::get('/mr_talent_rank', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_talent_rank'])->name('mr_talent_rank');
+
+    //MS. RANKING
+    Route::get('/ms_prepageant_rank', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_prepageant_rank'])->name('ms_prepageant_rank');
+    Route::get('/ms_prod_num_rank', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_prod_num_rank'])->name('ms_prod_num_rank');
+    Route::get('/ms_sports_wear_rank', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_sports_wear_rank'])->name('ms_sports_wear_rank');
+    Route::get('/ms_talent_rank', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_talent_rank'])->name('ms_talent_rank');
 
     Route::get('/prelimrank', [App\Http\Controllers\ReportsController::class, 'prelimrank'])->name('prelimrank');
     Route::get('/swimsuitrank', [App\Http\Controllers\ReportsController::class, 'swimsuitrank'])->name('swimsuitrank');

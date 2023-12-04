@@ -7,7 +7,7 @@
             <div class="col-lg-3 mb-4">
                 <div class="card" id="card">
 
-                    <img class="card-img-top" src="{{ asset('assets/img/mb/' . $index + 1 . '.jpg') }}"
+                    <img class="card-img-top" src="{{ asset('assets/img/mr/' . $index + 1 . '.jpg') }}"
                         alt="Card image cap">
 
                     <div class="card-body">

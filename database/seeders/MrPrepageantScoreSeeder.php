@@ -19,7 +19,7 @@ class MrPrepageantScoreSeeder extends Seeder
     {
 
         //get all judge
-        $judges = User::where('role', 'judge')->get();
+        $judges = User::where('role', 'judge')->whereIn('id', range(2, 4))->get();
 
         //get all barangays
         $candidates = Mr_candidate::all();

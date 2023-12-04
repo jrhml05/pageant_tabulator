@@ -36,12 +36,11 @@
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block bg-login-image" style="background: url({{ asset('assets/img/mb2023/bg-login-image.jpg') }}); background-position: center;
-                            background-size: cover"></div>
+                                <div class="col-lg-6 d-none d-lg-block bg-login-image" style="background: url({{ asset('assets/img/logo-mr-ms-01.jpg') }}) center / contain no-repeat;  background-color: #000000"></div>
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <img src="{{ asset('assets/img/mb2023/logo.png') }}" width="200px" alt="">
+                                        <img src="{{ asset('assets/img/logo-foundation-01.png') }}" width="200px" alt="">
                                         <h1 class="h4 text-gray-900 mb-4">TABULATION SYSTEM</h1>
                                     </div>
 

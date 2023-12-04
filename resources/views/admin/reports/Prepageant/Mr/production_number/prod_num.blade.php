@@ -20,7 +20,7 @@
 
         <div>
 
-            <a href="javascript:void(0)" onclick="talentrank()" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+            <a href="javascript:void(0)" onclick="mr_prod_num_rank()" class="d-none d-sm-inline-block btn btn-primary shadow"><i
                 class="fa-solid fa-ranking-star fa-sm text-white-50"></i> RANK CANDIDATES</a>
 
             {{-- <a  class="d-none d-sm-inline-block btn btn-primary shadow"><i
@@ -164,19 +164,19 @@
 
     <script>
 
-        function talentrank()
+        function mr_prod_num_rank()
         {
-            alert("talent rank");
+            alert("production number rank");
 
             $.ajax({
                 type: "GET",
-                url: "/talentrank",
+                url: "/mr_prod_num_rank",
                 success: function (response) {
                     location.reload();
                 },
                 error: function ()
                 {
-                    alert("no talent rank");
+                    alert("no production number rank");
                 }
             });
         }

@@ -22,7 +22,7 @@ class MsTalentScoreSeeder extends Seeder
         //get all scores
         $candidates = Ms_candidate::all();
 
-        $judges = User::where('role', 'judge')->get();
+        $judges = User::where('role', 'judge')->whereIn('id', range(2, 4))->get();
 
         foreach ($candidates as $candidate) {
             //initialize data to sub scores table

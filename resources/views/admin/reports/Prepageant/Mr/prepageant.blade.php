@@ -156,7 +156,7 @@
 
             $.ajax({
                 type: "GET",
-                url: "/prepageantrank",
+                url: "/mr_prepageant_rank",
                 success: function (response) {
                     location.reload();
                 },

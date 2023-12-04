@@ -20,7 +20,7 @@
 
         <div>
 
-            <a href="javascript:void(0)" onclick="talentrank()" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+            <a href="javascript:void(0)" onclick="mr_talent_rank()" class="d-none d-sm-inline-block btn btn-primary shadow"><i
                 class="fa-solid fa-ranking-star fa-sm text-white-50"></i> RANK CANDIDATES</a>
 
             {{-- <a  class="d-none d-sm-inline-block btn btn-primary shadow"><i
@@ -164,13 +164,13 @@
 
     <script>
 
-        function talentrank()
+        function mr_talent_rank()
         {
             alert("talent rank");
 
             $.ajax({
                 type: "GET",
-                url: "/talentrank",
+                url: "/mr_talent_rank",
                 success: function (response) {
                     location.reload();
                 },
