@@ -338,7 +338,7 @@
 <body id="page-top">
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">MS. UEP - TALENT SCORES (JUDGE 3)</h1>
+    <h1 class="h3 mb-0 text-gray-800">MS. UEP - TALENT SCORES (JUDGE 2)</h1>
 </div>
 
 <table class="table table-bordered">
@@ -362,7 +362,7 @@
 
                 @foreach ( $candidate->talent_score as $score)
 
-                    @if ($candidate->id == $score->candidate_id && $score->judge_id == 4)
+                    @if ($candidate->id == $score->candidate_id && $score->judge_id == 3)
 
                         <td>{{ $score->execution }}</td>
                         <td>{{ $score->originality }}</td>
@@ -372,7 +372,7 @@
 
                         @forelse   ($data['rank'] as $rank)
 
-                            @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 4)
+                            @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 3)
 
                                 <td>{{ $rank->talent }}</td>
 

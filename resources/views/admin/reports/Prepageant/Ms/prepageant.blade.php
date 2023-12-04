@@ -21,7 +21,7 @@
 
         <div>
 
-            <a href="javascript:void(0)" onclick="prepageantrank()" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+            <a href="javascript:void(0)" onclick="ms_prepageant()" class="d-none d-sm-inline-block btn btn-primary shadow"><i
                 class="fas fa-ranking-star fa-sm text-white-50"></i> RANK CANDIDATES</a>
             {{-- <a href="{{ route('prepageantrank') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
                 class="fas fa-ranking-star fa-sm text-white-50"></i> RANK CANDIDATES</a> --}}
@@ -77,7 +77,7 @@
                                                     @forelse   ($data['rank'] as $rank)
 
                                                         @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 2)
-                                                            <td>{{ $rank->prepageant_rank }}</td>
+                                                            <td>{{ $rank->prepageant }}</td>
                                                         @endif
 
                                                     @empty
@@ -99,7 +99,7 @@
                                                     @forelse   ($data['rank'] as $rank)
 
                                                         @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 3)
-                                                            <td>{{ $rank->prepageant_rank }}</td>
+                                                            <td>{{ $rank->prepageant }}</td>
                                                         @endif
 
                                                     @empty
@@ -119,7 +119,7 @@
                                                     @forelse   ($data['rank'] as $rank)
 
                                                         @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 4)
-                                                            <td>{{ $rank->prepageant_rank }}</td>
+                                                            <td>{{ $rank->prepageant }}</td>
                                                         @endif
 
                                                     @empty
@@ -150,13 +150,13 @@
 
     <script>
 
-        function prepageantrank()
+        function ms_prepageant()
         {
             alert("prepageant rank");
 
             $.ajax({
                 type: "GET",
-                url: "/prepageantrank",
+                url: "/ms_prepageant",
                 success: function (response) {
                     location.reload();
                 },

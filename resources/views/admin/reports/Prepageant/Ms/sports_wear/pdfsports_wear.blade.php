@@ -374,7 +374,7 @@
 
                             @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 2)
 
-                                <td>{{ $rank->prod_num }}</td>
+                                <td>{{ $rank->sports_wear }}</td>
 
                             @endif
 
@@ -398,7 +398,7 @@
 
                             @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 3)
 
-                                <td>{{ $rank->prod_num }}</td>
+                                <td>{{ $rank->sports_wear }}</td>
 
                             @endif
 
@@ -422,7 +422,7 @@
 
                             @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 4)
 
-                                <td>{{ $rank->prod_num }}</td>
+                                <td>{{ $rank->sports_wear }}</td>
 
                             @endif
 

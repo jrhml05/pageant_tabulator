@@ -13,10 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ms_rankings', function (Blueprint $table) {
+        Schema::create('ms_final_ranks', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('candidate_id');
-            $table->unsignedBigInteger('judge_id');
             $table->unsignedBigInteger('prod_num');
             $table->unsignedBigInteger('sports_wear');
             $table->unsignedBigInteger('talent');
@@ -24,6 +23,7 @@ return new class extends Migration
             $table->unsignedBigInteger('casual_wear');
             $table->unsignedBigInteger('formal_wear');
             $table->unsignedBigInteger('prelim');
+            $table->unsignedBigInteger('to_final');
             $table->unsignedBigInteger('final');
             $table->timestamps();
         });
@@ -36,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ms_rankings');
+        Schema::dropIfExists('ms_final_ranks');
     }
 };
