@@ -87,8 +87,8 @@
 
                 </div> --}}
                 <div class="col-md-6">
-                    <button wire:click="alertConfirm" type="button"
-                        class="btn btn-primary btn-lg btn-block rounded-pill">SAVE SCORES</button>
+                    {{-- <button wire:click="alertConfirm" type="button"
+                        class="btn btn-primary btn-lg btn-block rounded-pill">SAVE SCORES</button> --}}
                 </div>
             </div>
 

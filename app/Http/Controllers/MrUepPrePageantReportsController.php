@@ -27,6 +27,8 @@ class MrUepPrePageantReportsController extends Controller
 
         $data['rank'] = Mr_ranking::all();
 
+        $data['final_rank'] = Mr_final_rank::all();
+
         return view('admin.reports.prepageant.mr.prepageant', compact('data'));
     }
 
@@ -128,6 +130,8 @@ class MrUepPrePageantReportsController extends Controller
         $data['candidate'] = Mr_candidate::all();
 
         $data['rank'] = Mr_ranking::all();
+
+        $data['final_rank'] = Mr_final_rank::all();
 
         return view('admin.reports.prepageant.mr.production_number.prod_num', compact('data'));
     }

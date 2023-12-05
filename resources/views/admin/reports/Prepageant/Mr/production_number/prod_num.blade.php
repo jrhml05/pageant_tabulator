@@ -56,6 +56,7 @@
                                         <th style="width:5%">RANK</th>
                                         <th style="width:15%">JUDGE 3</th>
                                         <th style="width:5%">RANK</th>
+                                        <th style="width:10%">Overall Rank</th>
                                         {{-- <th style="width:20%">RESULT</th> --}}
                                     </tr>
                                 </thead>
@@ -139,6 +140,21 @@
 
                                                 @endif
 
+                                                {{-- @foreach ($data['final_rank'] as $final_rank)
+                                                    @if ($candidate->id == $final_rank->candidate_id)
+                                                        <td>
+                                                            {{ $final_rank->prod_num == '' }}
+                                                        </td>
+                                                    @endif
+                                                @endforeach --}}
+
+                                            @endforeach
+                                            @foreach ($data['final_rank'] as $final_rank)
+                                                @if ($candidate->id == $final_rank->candidate_id)
+                                                    <td>
+                                                        {{ $final_rank->prod_num }}
+                                                    </td>
+                                                @endif
                                             @endforeach
                                             {{-- <td>{{ ROUND(($score_judge1 + $score_judge2 + $score_judge3) / 3, 2) }}</td> --}}
                                         </tr>
