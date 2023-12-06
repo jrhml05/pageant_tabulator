@@ -5,7 +5,7 @@
             <div class="col-lg-3 mb-4">
                 <div class="card" id="card">
 
-                    <img class="card-img-top" src="{{ asset('assets/img/mb/' . $index + 1 . '.jpg') }}"
+                    <img class="card-img-top" src="{{ asset('assets/img/ms/' . $index + 1 . '.jpg') }}"
                         alt="Card image cap">
 
                     <div class="card-body">
@@ -83,8 +83,8 @@
                         class="btn btn-secondary btn-lg btn-block rounded-pill">BACK TO MAIN SCORE BOARD</a>
                 </div>
                 <div class="col-md-6">
-                    <button wire:click="alertConfirm" type="button"
-                        class="btn btn-primary btn-lg btn-block rounded-pill">SAVE SCORES</button>
+                    {{-- <button wire:click="alertConfirm" type="button"
+                        class="btn btn-primary btn-lg btn-block rounded-pill">SAVE SCORES</button> --}}
                 </div>
             </div>
 

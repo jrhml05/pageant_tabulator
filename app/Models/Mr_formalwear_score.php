@@ -14,5 +14,6 @@ class Mr_formalwear_score extends Model
         'elegance',
         'presence',
         'projection',
+        'poise'
     ];
 }

@@ -7,7 +7,7 @@
             <div class="col-lg-3 mb-4">
                 <div class="card" id="card">
 
-                    <img class="card-img-top" src="{{ asset('assets/img/mb/' . $index + 1 . '.jpg') }}"
+                    <img class="card-img-top" src="{{ asset('assets/img/ms/' . $index + 1 . '.jpg') }}"
                         alt="Card image cap">
 
                     <div class="card-body">
@@ -24,7 +24,7 @@
                         </div>
                         <div class="input-group mb-1">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Formal Wear 50%</span>
+                                <span class="input-group-text" id="basic-addon1">Long Gown 50%</span>
                             </div>
                             <input disabled wire:model="records.{{ $index }}.formal_wear" type="number"
                                 class="form-control text-center" placeholder="00.00"
@@ -65,11 +65,11 @@
 
                 </div>
                 <div class="col-md-4 mb-1">
-                    <a href="{{ route('judge.app.ms.formalwear.score',$stage) }}" type="button" class="btn btn-info btn-lg btn-block rounded-pill">ENTER FORMAL WEAR SCORES</a>
+                    <a href="{{ route('judge.app.ms.formalwear.score',$stage) }}" type="button" class="btn btn-info btn-lg btn-block rounded-pill">ENTER LONG GOWN SCORES</a>
 
                 </div>
                 <div class="col-md-2 mb-1">
-                    <button wire:click="alertConfirm" type="button" class="btn btn-primary btn-lg btn-block rounded-pill">SAVE SCORES</button>
+                    {{-- <button wire:click="alertConfirm" type="button" class="btn btn-primary btn-lg btn-block rounded-pill">SAVE SCORES</button> --}}
                 </div>
             </div>
 

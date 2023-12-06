@@ -104,6 +104,8 @@
                 <a class="collapse-item" href="{{ route('ms_prelim') }}">Preliminaries Scores</a>
                 <a class="collapse-item" href="{{ route('ms_casual_wear') }}">Casual Wear Scores</a>
                 <a class="collapse-item" href="{{ route('ms_formal_wear') }}">Long Gown Scores</a>
+                <a class="collapse-item" href="{{ route('ms_top_6') }}">TOP 6</a>
+                <a class="collapse-item" href="{{ route('ms_final') }}">Final</a>
             </div>
         </div>
     </li>
@@ -124,6 +126,8 @@
                 <a class="collapse-item" href="{{ route('mr_prelim') }}">Preliminaries Scores</a>
                 <a class="collapse-item" href="{{ route('mr_casual_wear') }}">Casual Wear Scores</a>
                 <a class="collapse-item" href="{{ route('mr_formal_wear') }}">Formal Wear Scores</a>
+                <a class="collapse-item" href="{{ route('mr_top_6') }}">Top 6</a>
+                <a class="collapse-item" href="{{ route('mr_final') }}">Final</a>
             </div>
         </div>
     </li>

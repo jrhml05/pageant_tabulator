@@ -37,6 +37,12 @@
                         $route_mr = 'judge.app.mr.prelim.score';
                         $route_ms = 'judge.app.ms.prelim.score';
                     @endphp
+
+                @elseif (App\Models\Stage::where('is_active',1)->first()->id == 3)
+                    @php
+                        $route_mr = 'judge.app.mr.final.score';
+                        $route_ms = 'judge.app.ms.final.score';
+                    @endphp
                 @endif
                 
                 <div class="col-md-2 mb-1">

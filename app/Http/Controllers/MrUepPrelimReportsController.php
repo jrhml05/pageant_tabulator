@@ -3,9 +3,14 @@
 namespace App\Http\Controllers;
 
 use PDF;
-use App\Models\Score;
 use App\Models\Mr_candidate;
+use App\Models\Mr_prelim_score;
 use App\Models\Mr_ranking;
+use App\Models\Mr_final_rank;
+use App\Models\Mr_casualwear_score;
+use App\Models\Mr_formalwear_score;
+
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Expr\FuncCall;
@@ -473,5 +478,258 @@ class MrUepPrelimReportsController extends Controller
         $pdf = PDF::loadView('admin.reports.prelim.mr.formal_wear.pdfformal_wearjudge5', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
 
         return $pdf->stream('mr_formal_wear_judge5.pdf');
+    }
+
+    //Ranking
+    public function mr_prelim_rank()
+    {
+
+        for ($x = 2; $x <= 6; $x++) {
+            $score = Mr_prelim_score::where('judge_id', $x)
+                ->select(DB::raw('casual_wear + formal_wear as score'), 'candidate_id')
+                ->orderBy('score', 'desc')
+                ->get();
+
+            $prev_rank = 1;
+            $prev_score = 100;
+
+            foreach ($score as $index => $score) {
+                $rank = $index + 1;
+                $candidate_id = $score->candidate_id;
+                // print_r("Rank: " . $rank . ":" . $candidate_id . "(" . $score->score . ")<br>");
+
+                if ($prev_score > $score->score) {
+                    $update_rank = Mr_ranking::where('judge_id', $x)
+                        ->where('candidate_id', $candidate_id)
+                        ->update(['prelim' => $rank]);
+                    $new_rank = $rank;
+                } elseif ($prev_score == $score->score) {
+                    $update_rank = Mr_ranking::where('judge_id', $x)
+                        ->where('candidate_id', $candidate_id)
+                        ->update(['prelim' => $prev_rank]);
+                    $new_rank = $prev_rank;
+                }
+
+                $prev_rank = $new_rank;
+                $prev_score = $score->score;
+                // print_r($prev_rank . "<br>");
+            }
+        }
+
+        $get_rank = Mr_ranking::select(DB::raw('SUM(prelim) as total'), 'candidate_id')
+            ->groupBy('candidate_id')
+            ->orderBy('total', 'asc')
+            ->get();
+
+        $prev_total_rank = 5;
+        $prev_final_rank = 1;
+
+        foreach ($get_rank as $idx => $final_rank) {
+            $final_ranking = $idx + 1;
+
+            if ($prev_total_rank < $final_rank->total) {
+                $update_final_rank = Mr_final_rank::where('candidate_id', $final_rank->candidate_id)
+                    ->update(['prelim' => $final_ranking]);
+                $new_final_rank = $final_ranking;
+            } elseif ($prev_total_rank == $final_rank->total) {
+                $update_final_rank = Mr_final_rank::where('candidate_id', $final_rank->candidate_id)
+                    ->update(['prelim' => $prev_final_rank]);
+                $new_final_rank = $prev_final_rank;
+            }
+
+            $prev_total_rank = $final_rank->total;
+            $prev_final_rank = $new_final_rank;
+        }
+
+        //for top 6 rank
+        // $top_six_rank = Mr_final_rank::select('prepageant ')->limit(6)->get()->toArray();
+    }
+
+    public function mr_casual_wear_rank()
+    {
+
+        for ($x = 2; $x <= 6; $x++) {
+            $score = Mr_casualwear_score::where('judge_id', $x)
+                ->select(DB::raw('poise + execution + appearance as score'), 'candidate_id')
+                ->orderBy('score', 'desc')
+                ->get();
+
+            $prev_rank = 1;
+            $prev_score = 100;
+
+            foreach ($score as $index => $score) {
+                $rank = $index + 1;
+                $candidate_id = $score->candidate_id;
+                print_r("Rank: " . $rank . ":" . $candidate_id . "(" . $score->score . ")<br>");
+
+                if ($prev_score == $score->score) {
+                    $update_rank = Mr_ranking::where('judge_id', $x)
+                        ->where('candidate_id', $candidate_id)
+                        ->update(['casual_wear' => $prev_rank]);
+                    $new_rank = $prev_rank;
+                } elseif ($prev_score > $score->score) {
+                    $update_rank = Mr_ranking::where('judge_id', $x)
+                        ->where('candidate_id', $candidate_id)
+                        ->update(['casual_wear' => $rank]);
+                    $new_rank = $rank;
+                }
+
+
+                $prev_score = $score->score;
+                $prev_rank = $new_rank;
+
+                print_r($prev_rank . "<br>");
+            }
+        }
+
+        $get_rank = Mr_ranking::select(DB::raw('SUM(casual_wear) as total'), 'candidate_id')
+            ->groupBy('candidate_id')
+            ->orderBy('total', 'asc')
+            ->get();
+
+        $prev_total_rank = 5;
+        $prev_final_rank = 1;
+
+        foreach ($get_rank as $idx => $final_rank) {
+            $final_ranking = $idx + 1;
+
+            if ($prev_total_rank < $final_rank->total) {
+                $update_final_rank = Mr_final_rank::where('candidate_id', $final_rank->candidate_id)
+                    ->update(['casual_wear' => $final_ranking]);
+                $new_final_ranking = $final_ranking;
+            } elseif ($prev_total_rank == $final_rank->total) {
+                $update_final_rank = Mr_final_rank::where('candidate_id', $final_rank->candidate_id)
+                    ->update(['casual_wear' => $prev_final_rank]);
+                $new_final_ranking = $prev_final_rank;
+            }
+
+            $prev_total_rank = $final_rank->total;
+            $prev_final_rank = $new_final_ranking;
+        }
+    }
+
+    public function mr_formal_wear_rank()
+    {
+
+        for ($x = 2; $x <= 6; $x++) {
+            $score = Mr_formalwear_score::where('judge_id', $x)
+                ->select(DB::raw('elegance + presence + projection + poise as score'), 'candidate_id')
+                ->orderBy('score', 'desc')
+                ->get();
+
+            $prev_rank = 1;
+            $prev_score = 100;
+
+            foreach ($score as $index => $score) {
+                $rank = $index + 1;
+                $candidate_id = $score->candidate_id;
+                print_r("Rank: " . $rank . ":" . $candidate_id . "(" . $score->score . ")<br>");
+
+                if ($prev_score == $score->score) {
+                    $update_rank = Mr_ranking::where('judge_id', $x)
+                        ->where('candidate_id', $candidate_id)
+                        ->update(['formal_wear' => $prev_rank]);
+                    $new_rank = $prev_rank;
+                } elseif ($prev_score > $score->score) {
+                    $update_rank = Mr_ranking::where('judge_id', $x)
+                        ->where('candidate_id', $candidate_id)
+                        ->update(['formal_wear' => $rank]);
+                    $new_rank = $rank;
+                }
+
+
+                $prev_score = $score->score;
+                $prev_rank = $new_rank;
+
+                print_r($prev_rank . "<br>");
+            }
+        }
+
+        $get_rank = Mr_ranking::select(DB::raw('SUM(formal_wear) as total'), 'candidate_id')
+            ->groupBy('candidate_id')
+            ->orderBy('total', 'asc')
+            ->get();
+
+        $prev_total_rank = 5;
+        $prev_final_rank = 1;
+
+        foreach ($get_rank as $idx => $final_rank) {
+            $final_ranking = $idx + 1;
+
+            if ($prev_total_rank < $final_rank->total) {
+                $update_final_rank = Mr_final_rank::where('candidate_id', $final_rank->candidate_id)
+                    ->update(['formal_wear' => $final_ranking]);
+                $new_final_ranking = $final_ranking;
+            } elseif ($prev_total_rank == $final_rank->total) {
+                $update_final_rank = Mr_final_rank::where('candidate_id', $final_rank->candidate_id)
+                    ->update(['formal_wear' => $prev_final_rank]);
+                $new_final_ranking = $prev_final_rank;
+            }
+
+            $prev_total_rank = $final_rank->total;
+            $prev_final_rank = $new_final_ranking;
+        }
+    }
+
+    public function mr_top_6()
+    {
+        $data['title'] = 'MR. UEP Top 6 Results';
+
+        $data['final_rank'] = Mr_final_rank::where('to_final', '<=', 6)->get();
+
+        return view('admin.reports.prelim.mr.top6', compact('data'));
+    }
+
+    public function mr_pdftop_6()
+    {
+        $data['title'] = 'MR. UEP Top 6 Results';
+
+        $data['final_rank'] = Mr_final_rank::where('to_final', '<=', 6)->get();
+
+        $pdf = PDF::loadView('admin.reports.prelim.mr.pdftop6', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
+
+        return $pdf->stream('mr_top_6.pdf');
+
+        // return view('admin.reports.prelim.mr.top6', compact('data'));
+    }
+
+    public function mr_active()
+    {
+        $candidates = Mr_candidate::where('is_active', 1)->get();
+        foreach ($candidates as $candidate) {
+            print_r("Candidate #" . $candidate->id . "<br>");
+        }
+
+        $get_top_6 = Mr_final_rank::select(DB::raw('(prepageant * 0.5) + (prelim * 0.5) as total'), 'candidate_id')
+            // ->groupBy('candidate_id')
+            ->orderBy('total', 'asc')
+            ->get();
+
+        $prev_total_rank = 1;
+        $prev_final_rank = 1;
+
+        foreach ($get_top_6 as $idx => $final_rank) {
+            $final_ranking = $idx + 1;
+            if ($prev_total_rank < $final_rank->total) {
+                $update_final_rank = Mr_final_rank::where('candidate_id', $final_rank->candidate_id)
+                    ->update(['to_final' => $final_ranking]);
+                $new_final_rank = $final_ranking;
+            } elseif ($prev_total_rank == $final_rank->total) {
+                $update_final_rank = Mr_final_rank::where('candidate_id', $final_rank->candidate_id)
+                    ->update(['to_final' => $prev_final_rank]);
+                $new_final_rank = $prev_final_rank;
+            }
+
+            if ($new_final_rank <= 6) {
+                $is_active = Mr_candidate::where('id', $final_rank->candidate_id)
+                    ->update(['is_active' => 1]);
+            } else {
+                $is_active = Mr_candidate::where('id', $final_rank->candidate_id)
+                    ->update(['is_active' => 0]);
+            }
+
+            $prev_total_rank = $final_rank->total;
+            $prev_final_rank = $new_final_rank;
+        }
     }
 }

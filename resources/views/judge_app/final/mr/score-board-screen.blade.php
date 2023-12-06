@@ -8,9 +8,6 @@
         @elseif ($stage == 2)
             @livewire('judge.preliminaries.mr.score-board-component', [ 'stage' => $stage ])
 
-        {{-- @elseif ($stage == 3)
-            @livewire('judge.semifinal.mr.score-board-component', [ 'stage' => $stage ]) --}}
-
         @elseif ($stage == 3)
             @livewire('judge.final.mr.score-board-component', [ 'stage' => $stage ])
 

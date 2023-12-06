@@ -44,4 +44,9 @@ class Ms_candidate extends Model
     {
         return $this->hasMany(Ms_formalwear_score::class, 'candidate_id', 'id');
     }
+
+    public function final_score(): HasMany
+    {
+        return $this->hasMany(Ms_final_score::class, 'candidate_id', 'id');
+    }
 }

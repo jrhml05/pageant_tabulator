@@ -21,7 +21,7 @@
 
         <div>
 
-            <a href="javascript:void(0)" onclick="ms_prepageant()" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+            <a href="javascript:void(0)" onclick="ms_prepageant_rank()" class="d-none d-sm-inline-block btn btn-primary shadow"><i
                 class="fas fa-ranking-star fa-sm text-white-50"></i> RANK CANDIDATES</a>
             {{-- <a href="{{ route('prepageantrank') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
                 class="fas fa-ranking-star fa-sm text-white-50"></i> RANK CANDIDATES</a> --}}
@@ -150,13 +150,13 @@
 
     <script>
 
-        function ms_prepageant()
+        function ms_prepageant_rank()
         {
             alert("prepageant rank");
 
             $.ajax({
                 type: "GET",
-                url: "/ms_prepageant",
+                url: "/ms_prepageant_rank",
                 success: function (response) {
                     location.reload();
                 },

@@ -7,7 +7,7 @@
             <div class="col-lg-3 mb-4">
                 <div class="card" id="card">
 
-                    <img class="card-img-top" src="{{ asset('assets/img/mr/' . $index + 1 . '.jpg') }}"
+                    <img class="card-img-top" src="{{ asset('assets/img/ms/' . $record->candidate_id . '.jpg') }}"
                         alt="Card image cap">
 
                     <div class="card-body">
@@ -15,20 +15,26 @@
                                 class="text-primary">{{ strtoupper($record->barangay->name) }}</span></h6> --}}
                         <div class="input-group mb-1">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Casual Wear 50%</span>
+                                <span class="input-group-text" id="basic-addon1">Beauty 40%</span>
                             </div>
-                            <input disabled wire:model="records.{{ $index }}.casual_wear" type="number"
+                            {{-- <input disabled wire:model="records.{{ $index }}.casual_wear" type="number"
                                 class="form-control text-center" placeholder="00.00"
-                                aria-describedby="basic-addon1">
+                                aria-describedby="basic-addon1"> --}}
+                            <input onfocus="this.select()" wire:model="records.{{ $index }}.beauty" type="number"
+                                class="form-control text-center {{ $record->beauty > 40 ? 'is-invalid' : '' }}"
+                                placeholder="00.00" aria-describedby="basic-addon1">
 
                         </div>
                         <div class="input-group mb-1">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Formal Wear 50%</span>
+                                <span class="input-group-text" id="basic-addon1">Intelligence 60%</span>
                             </div>
-                            <input disabled wire:model="records.{{ $index }}.formal_wear" type="number"
+                            {{-- <input disabled wire:model="records.{{ $index }}.formal_wear" type="number"
                                 class="form-control text-center" placeholder="00.00"
-                                aria-describedby="basic-addon1">
+                                aria-describedby="basic-addon1"> --}}
+                            <input onfocus="this.select()" wire:model="records.{{ $index }}.intelligence" type="number"
+                                class="form-control text-center {{ $record->intelligence > 60 ? 'is-invalid' : '' }}"
+                                placeholder="00.00" aria-describedby="basic-addon1">
 
                         </div>
                         <hr>
@@ -37,7 +43,7 @@
                                 <span class="input-group-text" id="basic-addon1"><strong>Total 100%</strong> </span>
                             </div>
                             @php
-                               $total = ((float) $record->casual_wear) + ((float) $record->formal_wear);
+                               $total = ((float) $record->beauty) + ((float) $record->intelligence);
                             @endphp
                             <input style="font-weight: bold" disabled type="number"
                                 class="form-control text-center" value="{{ number_format($total, 2) }}" placeholder="00.00"
@@ -61,11 +67,11 @@
                     <a href="{{ route('judge.app') }}" type="button" class="btn btn-secondary btn-lg btn-block rounded-pill">BACK TO HOME</a>
                 </div>
                 <div class="col-md-4 mb-1">
-                    <a href="{{ route('judge.app.mr.casualwear.score',$stage) }}" type="button" class="btn btn-info btn-lg btn-block rounded-pill">ENTER CASUAL WEAR SCORES</a>
+                    {{-- <a href="{{ route('judge.app.mr.casualwear.score',$stage) }}" type="button" class="btn btn-info btn-lg btn-block rounded-pill">ENTER CASUAL WEAR SCORES</a> --}}
 
                 </div>
                 <div class="col-md-4 mb-1">
-                    <a href="{{ route('judge.app.mr.formalwear.score',$stage) }}" type="button" class="btn btn-info btn-lg btn-block rounded-pill">ENTER FORMAL WEAR SCORES</a>
+                    {{-- <a href="{{ route('judge.app.mr.formalwear.score',$stage) }}" type="button" class="btn btn-info btn-lg btn-block rounded-pill">ENTER FORMAL WEAR SCORES</a> --}}
 
                 </div>
                 <div class="col-md-2 mb-1">

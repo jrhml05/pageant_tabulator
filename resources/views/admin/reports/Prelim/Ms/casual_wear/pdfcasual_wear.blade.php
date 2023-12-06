@@ -375,7 +375,7 @@
                         @forelse   ($data['rank'] as $rank)
 
                             @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 2)
-                                <td>{{ $rank->casual_wear_rank }}</td>
+                                <td>{{ $rank->casual_wear }}</td>
                             @endif
 
                         @empty
@@ -397,7 +397,7 @@
                         @forelse   ($data['rank'] as $rank)
 
                             @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 3)
-                                <td>{{ $rank->casual_wear_rank }}</td>
+                                <td>{{ $rank->casual_wear }}</td>
                             @endif
 
                         @empty
@@ -417,7 +417,7 @@
                         @forelse   ($data['rank'] as $rank)
 
                             @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 4)
-                                <td>{{ $rank->casual_wear_rank }}</td>
+                                <td>{{ $rank->casual_wear }}</td>
                             @endif
 
                         @empty
@@ -437,7 +437,7 @@
                         @forelse   ($data['rank'] as $rank)
 
                             @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 5)
-                                <td>{{ $rank->casual_wear_rank }}</td>
+                                <td>{{ $rank->casual_wear }}</td>
                             @endif
 
                         @empty
@@ -457,7 +457,7 @@
                         @forelse   ($data['rank'] as $rank)
 
                             @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 6)
-                                <td>{{ $rank->casual_wear_rank }}</td>
+                                <td>{{ $rank->casual_wear }}</td>
                             @endif
 
                         @empty

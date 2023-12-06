@@ -27,7 +27,7 @@
 
         <div>
 
-            <a href="javascript:void(0)" onclick="prelimrank()" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+            <a href="javascript:void(0)" onclick="ms_formal_wear_rank()" class="d-none d-sm-inline-block btn btn-primary shadow"><i
                 class="fas fa-ranking-star fa-sm text-white-50"></i> RANK CANDIDATES</a>
             {{-- <a href="{{ route('prelimrank') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
                 class="fas fa-ranking-star fa-sm text-white-50"></i> RANK CANDIDATES</a> --}}
@@ -87,7 +87,7 @@
                                                     @forelse   ($data['rank'] as $rank)
 
                                                         @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 2)
-                                                            <td>{{ $rank->prelim_rank }}</td>
+                                                            <td>{{ $rank->formal_wear }}</td>
                                                         @endif
 
                                                     @empty
@@ -109,7 +109,7 @@
                                                     @forelse   ($data['rank'] as $rank)
 
                                                         @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 3)
-                                                            <td>{{ $rank->prelim_rank }}</td>
+                                                            <td>{{ $rank->formal_wear }}</td>
                                                         @endif
 
                                                     @empty
@@ -129,7 +129,7 @@
                                                     @forelse   ($data['rank'] as $rank)
 
                                                         @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 4)
-                                                            <td>{{ $rank->prelim_rank }}</td>
+                                                            <td>{{ $rank->formal_wear }}</td>
                                                         @endif
 
                                                     @empty
@@ -149,7 +149,7 @@
                                                     @forelse   ($data['rank'] as $rank)
 
                                                         @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 5)
-                                                            <td>{{ $rank->prelim_rank }}</td>
+                                                            <td>{{ $rank->formal_wear }}</td>
                                                         @endif
 
                                                     @empty
@@ -169,7 +169,7 @@
                                                     @forelse   ($data['rank'] as $rank)
 
                                                         @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 6)
-                                                            <td>{{ $rank->prelim_rank }}</td>
+                                                            <td>{{ $rank->formal_wear }}</td>
                                                         @endif
 
                                                     @empty
@@ -200,19 +200,19 @@
 
     <script>
 
-        function prelimrank()
+        function ms_formal_wear_rank()
         {
-            alert("prelim rank");
+            alert("long gown rank");
 
             $.ajax({
                 type: "GET",
-                url: "/prelimrank",
+                url: "/ms_formal_wear_rank",
                 success: function (response) {
                     location.reload();
                 },
                 error: function (response)
                 {
-                    alert("no prelim rank");
+                    alert("no long gown rank");
                     console.log(response);
                 }
             });

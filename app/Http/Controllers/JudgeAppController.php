@@ -90,4 +90,14 @@ class JudgeAppController extends Controller
     {
         return view('judge_app.final-score-board-screen');
     }
+
+    public function mrFinalScoreBoard($stage)
+    {
+        return view('judge_app.final.mr.score-board-screen', compact('stage'));
+    }
+
+    public function msFinalScoreBoard($stage)
+    {
+        return view('judge_app.final.ms.score-board-screen', compact('stage'));
+    }
 }
