@@ -6,7 +6,7 @@ Note: this is suitable for php 8.0
 
 - copy .env.example and rename it to .env
 
-- create database "mr_and_ms" or choose what you want
+- create database "mr_and_ms_uep" or choose what you want
 
 - php artisan key:generate
 
