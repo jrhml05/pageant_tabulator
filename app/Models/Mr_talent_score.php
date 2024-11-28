@@ -11,8 +11,9 @@ class Mr_talent_score extends Model
     protected $fillable = [
         'candidate_id',
         'judge_id',
-        'execution',
-        'originality',
+        'mastery',
+        'uniqueness',
         'stage_presence',
+        'audience_impact'
     ];
 }

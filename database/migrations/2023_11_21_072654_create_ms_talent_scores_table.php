@@ -15,12 +15,12 @@ return new class extends Migration
     {
         Schema::create('ms_talent_scores', function (Blueprint $table) {
             $table->id();
-
             $table->unsignedBigInteger('candidate_id');
             $table->unsignedBigInteger('judge_id');
-            $table->decimal('execution', 16)->nullable();
-            $table->decimal('originality', 16)->nullable();
+            $table->decimal('mastery', 16)->nullable();
+            $table->decimal('uniqueness', 16)->nullable();
             $table->decimal('stage_presence', 16)->nullable();
+            $table->decimal('audience_impact', 16)->nullable();
             $table->boolean('is_lock')->default(0);
             $table->timestamps();
         });

@@ -13,18 +13,10 @@
                     <div class="card-body">
                         {{-- <h6 class="text-center">#{{ $record->barangay_id }} <span
                                 class="text-primary">{{ strtoupper($record->barangay->name) }}</span></h6> --}}
+                        
                         <div class="input-group mb-1">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Prod. Number 30%</span>
-                            </div>
-                            <input disabled wire:model="records.{{ $index }}.production_number" type="number"
-                                class="form-control text-center" placeholder="00.00"
-                                aria-describedby="basic-addon1">
-
-                        </div>
-                        <div class="input-group mb-1">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Sports Wear 30%</span>
+                                <span class="input-group-text" id="basic-addon1">Sports Wear 50%</span>
                             </div>
                             <input disabled wire:model="records.{{ $index }}.sports_wear" type="number"
                                 class="form-control text-center" placeholder="00.00"
@@ -33,7 +25,7 @@
                         </div>
                         <div class="input-group mb-1">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Talent 40%</span>
+                                <span class="input-group-text" id="basic-addon1">Talent 50%</span>
                             </div>
                             <input disabled wire:model="records.{{ $index }}.talent" type="number"
                                 class="form-control text-center" placeholder="00.00"
@@ -70,10 +62,6 @@
                     <a href="{{ route('judge.app') }}" type="button" class="btn btn-secondary btn-lg btn-block rounded-pill">BACK TO HOME</a>
                 </div>
                 <div class="col-md-3 mb-1">
-                    <a href="{{ route('judge.app.mr.prodnum.score',$stage) }}" type="button" class="btn btn-info btn-lg btn-block rounded-pill">ENTER PRODUCTION NUMBER SCORES</a>
-
-                </div>
-                <div class="col-md-2 mb-1">
                     <a href="{{ route('judge.app.mr.sportswear.score',$stage) }}" type="button" class="btn btn-info btn-lg btn-block rounded-pill">ENTER SPORTS WEAR SCORES</a>
 
                 </div>

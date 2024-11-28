@@ -168,13 +168,13 @@
             </a>
         </div> --}}
 
-            <div class="col-md-2"></div>
+            {{-- <div class="col-md-2"></div>
             <div class="col-md-8">
                 <a class="btn btn-{{ $colors[$loop->iteration - 1] }} btn-lg btn-block rounded-pill"
                     href="{{ $stage->id == 4 ? route('judge.app.final.score') : route('judge.app.ms.score', $stage->id) }}">CLICK TO ENTER {{ strtoupper($stage->stage_name) }}
                     SCORE BOARD</a>
             </div>
-            <div class="col-md-2"></div>
+            <div class="col-md-2"></div> --}}
 
             {{-- </div> --}}
 
@@ -191,7 +191,7 @@
     <div class="row mt-4">
         <div class="col-11 m-auto">
             <div class="owl-carousel owl-theme">
-                @foreach (App\Models\Ms_candidate::all() as $ms_candidate)
+                {{-- @foreach (App\Models\Ms_candidate::all() as $ms_candidate)
                     <div class="item mb-4">
                         <div class="card border-0 shadow">
                             <img src="{{ asset('assets/img/ms/' . $ms_candidate->id . '.jpg') }}" alt=""
@@ -202,6 +202,40 @@
                                         <h4 class="border-number mt-2">#{{ strtoupper($ms_candidate->id) }}</h4>
                                     </center>
 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach --}}
+
+                @php
+                    // Fetch candidates from both models
+                    $ms_candidates = App\Models\Ms_candidate::all();
+                    $mr_candidates = App\Models\Mr_candidate::all();
+
+                    // Combine and alternate them
+                    $candidates = collect([]);
+                    $maxCount = max($ms_candidates->count(), $mr_candidates->count());
+                    for ($i = 0; $i < $maxCount; $i++) {
+                        if (isset($ms_candidates[$i])) {
+                            $candidates->push(['type' => 'ms', 'candidate' => $ms_candidates[$i]]);
+                        }
+                        if (isset($mr_candidates[$i])) {
+                            $candidates->push(['type' => 'mr', 'candidate' => $mr_candidates[$i]]);
+                        }
+                    }
+                @endphp
+
+                @foreach ($candidates as $item)
+                    <div class="item mb-4">
+                        <div class="card border-0 shadow">
+                            <img src="{{ asset('assets/img/' . $item['type'] . '/' . $item['candidate']->id . '.jpg') }}" alt=""
+                                class="card-img-top p-2 carousel-img">
+                            <div class="card-body">
+                                <div class="card-title text-center">
+                                    <center>
+                                        <h4 class="border-number mt-2">#{{ strtoupper($item['candidate']->id) }}</h4>
+                                    </center>
                                 </div>
                             </div>
                         </div>

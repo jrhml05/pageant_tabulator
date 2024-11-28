@@ -14,9 +14,10 @@ class TalentScoreBoardComponent extends Component
     protected $listeners = ['save'];
 
     protected $rules = [
-        'records.*.execution' => 'required',
-        'records.*.originality' => 'required',
+        'records.*.mastery' => 'required',
+        'records.*.uniqueness' => 'required',
         'records.*.stage_presence' => 'required',
+        'records.*.audience_impact' => 'required',
     ];
 
     public function mount()
@@ -58,14 +59,15 @@ class TalentScoreBoardComponent extends Component
                     'judge_id' => Auth::user()->id,
                 ],
                 [
-                    'execution' => $record->execution == '' ? null : $record->execution,
-                    'originality' => $record->originality == '' ? null : $record->originality,
+                    'mastery' => $record->mastery == '' ? null : $record->mastery,
+                    'uniqueness' => $record->uniqueness == '' ? null : $record->uniqueness,
                     'stage_presence' => $record->stage_presence == '' ? null : $record->stage_presence,
+                    'audience_impact' => $record->audience_impact == '' ? null : $record->audience_impact,
                 ]
             );
 
-            $total = ((float) $record->execution) + ((float) $record->originality) + ((float) $record->stage_presence);
-            $talent = ($this->cal_percentage($total, 100) / 100) * 40;
+            $total = ((float) $record->mastery) + ((float) $record->uniqueness) + ((float) $record->stage_presence) + ((float) $record->audience_impact);
+            $talent = ($this->cal_percentage($total, 100) / 100) * 50;
 
             Ms_prepageant_score::updateOrCreate(
                 [
@@ -85,7 +87,7 @@ class TalentScoreBoardComponent extends Component
             'text' => '.'
         ]);
 
-        return redirect()->route('judge.app.score', $this->stage);
+        return redirect()->route('judge.app.ms.score', $this->stage);
     }
 
     public function updatedRecords()
@@ -99,14 +101,15 @@ class TalentScoreBoardComponent extends Component
                     'judge_id' => Auth::user()->id,
                 ],
                 [
-                    'execution' => $record->execution == '' ? null : $record->execution,
-                    'originality' => $record->originality == '' ? null : $record->originality,
+                    'mastery' => $record->mastery == '' ? null : $record->mastery,
+                    'uniqueness' => $record->uniqueness == '' ? null : $record->uniqueness,
                     'stage_presence' => $record->stage_presence == '' ? null : $record->stage_presence,
+                    'audience_impact' => $record->audience_impact == '' ? null : $record->audience_impact,
                 ]
             );
 
-            $total = ((float) $record->execution) + ((float) $record->originality) + ((float) $record->stage_presence);
-            $talent = ($this->cal_percentage($total, 100) / 100) * 40;
+            $total = ((float) $record->mastery) + ((float) $record->uniqueness) + ((float) $record->stage_presence) + ((float) $record->audience_impact);
+            $talent = ($this->cal_percentage($total, 100) / 100) * 50;
 
             Ms_prepageant_score::updateOrCreate(
                 [
@@ -119,5 +122,49 @@ class TalentScoreBoardComponent extends Component
                 ]
             );
         }
+    }
+    public function lockInscore()
+    {
+        $this->dispatchBrowserEvent('swal:confirm', [
+            'type' => 'warning',
+            'message' => 'Are you sure you want to lock in the scores?',
+            'text' => 'If yes, score fields will be disabled!'
+        ]);
+    }
+
+    public function confirmedLockInScores()
+    {
+        foreach ($this->records as $record) {
+            if ($record->mastery === null || $record->uniqueness === null || $record->stage_presence === null || $record->audience_impact === null) {
+                $this->dispatchBrowserEvent('swal:modal', [
+                    'type' => 'warning',
+                    'message' => 'Fill out all Scores.',
+                    'text' => '.'
+                ]);
+                break;
+            } else {
+                if ($record->mastery > 40 || $record->uniqueness > 30 || $record->stage_presence > 20 || $record->audience_impact > 10) {
+
+                    $this->dispatchBrowserEvent('swal:modal', [
+                        'type' => 'warning',
+                        'message' => 'Fill out all Scores.',
+                        'text' => '.'
+                    ]);
+                    break;
+                } else {
+                    Ms_talent_score::updateOrCreate(
+                        [
+                            'id' => $record->id,
+                            'candidate_id' => $record->candidate_id,
+                            'judge_id' => Auth::user()->id,
+                        ],
+                        [
+                            'is_lock' => 1
+                        ]
+                    );
+                }
+            }
+        }
+        return redirect()->route('judge.prepageant.ms.score', $this->stage);
     }
 }

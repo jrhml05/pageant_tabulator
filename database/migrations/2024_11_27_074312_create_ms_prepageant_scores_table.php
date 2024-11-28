@@ -13,15 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('mr_talent_scores', function (Blueprint $table) {
+        Schema::create('ms_prepageant_scores', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('candidate_id');
             $table->unsignedBigInteger('judge_id');
-            $table->decimal('mastery', 16)->nullable();
-            $table->decimal('uniqueness', 16)->nullable();
-            $table->decimal('stage_presence', 16)->nullable();
-            $table->decimal('audience_impact', 16)->nullable();
-            $table->boolean('is_lock')->default(0);
+            $table->decimal('sports_wear', 16)->nullable();
+            $table->decimal('talent', 16)->nullable();
             $table->timestamps();
         });
     }
@@ -33,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mr_talent_scores');
+        Schema::dropIfExists('ms_prepageant_scores');
     }
 };

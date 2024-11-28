@@ -14,9 +14,10 @@ class TalentScoreBoardComponent extends Component
     protected $listeners = ['save'];
 
     protected $rules = [
-        'records.*.execution' => 'required',
-        'records.*.originality' => 'required',
+        'records.*.mastery' => 'required',
+        'records.*.uniqueness' => 'required',
         'records.*.stage_presence' => 'required',
+        'records.*.audience_impact' => 'required',
     ];
 
     public function mount()
@@ -58,14 +59,15 @@ class TalentScoreBoardComponent extends Component
                     'judge_id' => Auth::user()->id,
                 ],
                 [
-                    'execution' => $record->execution == '' ? null : $record->execution,
-                    'originality' => $record->originality == '' ? null : $record->originality,
+                    'mastery' => $record->mastery == '' ? null : $record->mastery,
+                    'uniqueness' => $record->uniqueness == '' ? null : $record->uniqueness,
                     'stage_presence' => $record->stage_presence == '' ? null : $record->stage_presence,
+                    'audience_impact' => $record->audience_impact == '' ? null : $record->audience_impact,
                 ]
             );
 
-            $total = ((float) $record->execution) + ((float) $record->originality) + ((float) $record->stage_presence);
-            $talent = ($this->cal_percentage($total, 100) / 100) * 40;
+            $total = ((float) $record->mastery) + ((float) $record->uniqueness) + ((float) $record->stage_presence) + ((float) $record->audience_impact);
+            $talent = ($this->cal_percentage($total, 100) / 100) * 50;
 
             Mr_prepageant_score::updateOrCreate(
                 [
@@ -99,14 +101,15 @@ class TalentScoreBoardComponent extends Component
                     'judge_id' => Auth::user()->id,
                 ],
                 [
-                    'execution' => $record->execution == '' ? null : $record->execution,
-                    'originality' => $record->originality == '' ? null : $record->originality,
+                    'mastery' => $record->mastery == '' ? null : $record->mastery,
+                    'uniqueness' => $record->uniqueness == '' ? null : $record->uniqueness,
                     'stage_presence' => $record->stage_presence == '' ? null : $record->stage_presence,
+                    'audience_impact' => $record->audience_impact == '' ? null : $record->audience_impact,
                 ]
             );
 
-            $total = ((float) $record->execution) + ((float) $record->originality) + ((float) $record->stage_presence);
-            $talent = ($this->cal_percentage($total, 100) / 100) * 40;
+            $total = ((float) $record->mastery) + ((float) $record->uniqueness) + ((float) $record->stage_presence) + ((float) $record->audience_impact);
+            $talent = ($this->cal_percentage($total, 100) / 100) * 50;
 
             Mr_prepageant_score::updateOrCreate(
                 [
