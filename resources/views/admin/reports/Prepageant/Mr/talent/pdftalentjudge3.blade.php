@@ -345,9 +345,10 @@
     <thead class="table-dark">
         <tr>
             <th style="width:10%">CANDIDATE</th>
-            <th style="width:15%">EXECUTION SKILLS 50%</th>
-            <th style="width:15%">CREATIVITY & ORIGINALITY 30%</th>
+            <th style="width:15%">MASTERY 40%</th>
+            <th style="width:15%">UNIQUENESS 30%</th>
             <th style="width:15%">STAGE PRESENCE 20%</th>
+            <th style="width:15%">AUDIENCE IMPACT 10%</th>
             <th style="width:10%">TOTAL 100%</th>
             <th style="width:10%">RANK</th>
 
@@ -362,17 +363,18 @@
 
                 @foreach ( $candidate->talent_score as $score)
 
-                    @if ($candidate->id == $score->candidate_id && $score->judge_id == 3)
+                    @if ($candidate->id == $score->candidate_id && $score->judge_id == 4)
 
-                        <td>{{ $score->execution }}</td>
-                        <td>{{ $score->originality }}</td>
+                        <td>{{ $score->mastery }}</td>
+                        <td>{{ $score->uniqueness }}</td>
                         <td>{{ $score->stage_presence }}</td>
+                        <td>{{ $score->audience_impact }}</td>
 
-                        <td>{{ $score->execution + $score->originality + $score->stage_presence }}</td>
+                        <td>{{ $score->mastery + $score->uniqueness + $score->stage_presence + $score->audience_impact }}</td>
 
                         @forelse   ($data['rank'] as $rank)
 
-                            @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 3)
+                            @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 4)
 
                                 <td>{{ $rank->talent }}</td>
 

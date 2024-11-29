@@ -338,16 +338,17 @@
 <body id="page-top">
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">MS. UEP - TALENT SCORES (JUDGE 1)</h1>
+    <h1 class="h3 mb-0 text-gray-800">MR. UEP - TALENT SCORES (JUDGE 1)</h1>
 </div>
 
 <table class="table table-bordered">
     <thead class="table-dark">
         <tr>
             <th style="width:10%">CANDIDATE</th>
-            <th style="width:15%">EXECUTION SKILLS 50%</th>
-            <th style="width:15%">CREATIVITY & ORIGINALITY 30%</th>
+            <th style="width:15%">MASTERY 40%</th>
+            <th style="width:15%">UNIQUENESS 30%</th>
             <th style="width:15%">STAGE PRESENCE 20%</th>
+            <th style="width:15%">AUDIENCE IMPACT 10%</th>
             <th style="width:10%">TOTAL 100%</th>
             <th style="width:10%">RANK</th>
 
@@ -364,11 +365,12 @@
 
                     @if ($candidate->id == $score->candidate_id && $score->judge_id == 2)
 
-                        <td>{{ $score->execution }}</td>
-                        <td>{{ $score->originality }}</td>
+                        <td>{{ $score->mastery }}</td>
+                        <td>{{ $score->uniqueness }}</td>
                         <td>{{ $score->stage_presence }}</td>
+                        <td>{{ $score->audience_impact }}</td>
 
-                        <td>{{ $score->execution + $score->originality + $score->stage_presence }}</td>
+                        <td>{{ $score->mastery + $score->uniqueness + $score->stage_presence + $score->audience_impact }}</td>
 
                         @forelse   ($data['rank'] as $rank)
 
