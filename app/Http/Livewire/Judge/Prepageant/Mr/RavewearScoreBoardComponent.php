@@ -2,42 +2,67 @@
 
 namespace App\Http\Livewire\Judge\Prepageant\Mr;
 
-use App\Models\Mr_prepageant_score;
 use Livewire\Component;
-use App\Models\Mr_talent_score;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Mr_ravewear_score;
+use App\Models\Mr_prepageant_score;
 
-class TalentScoreBoardComponent extends Component
+class RavewearScoreBoardComponent extends Component
 {
     public $stage;
     public $records;
     protected $listeners = ['confirmedLockInScores'];
 
     protected $rules = [
-        'records.*.mastery' => 'required',
-        'records.*.uniqueness' => 'required',
-        'records.*.stage_presence' => 'required',
+        'records.*.style' => 'required',
+        'records.*.creativity' => 'required',
+        'records.*.functionality' => 'required',
         'records.*.audience_impact' => 'required',
     ];
+    public function render()
+    {
+        return view('livewire.judge.prepageant.mr.ravewear-score-board-component');
+    }
 
     public function mount()
     {
-        $this->records = Mr_talent_score::where('judge_id', Auth::user()->id)
+        $this->records = Mr_ravewear_score::where('judge_id', Auth::user()->id)
             ->orderBy('candidate_id', 'ASC')
             ->get();
     }
-    public function render()
-    {
-        return view('livewire.judge.prepageant.mr.talent-score-board-component');
-    }
 
-    public function alertConfirm()
+    public function updatedRecords()
     {
-        $this->dispatchBrowserEvent('swal:confirm', [
-            'type' => 'warning',
-            'message' => 'Are you sure you want to save the scores?',
-            'text' => 'If saved, the fields with scores will be disabled!'
-        ]);
+        foreach ($this->records as $record) {
+
+            Mr_ravewear_score::updateOrCreate(
+                [
+                    // 'id' => $record->id,
+                    'candidate_id' => $record->candidate_id,
+                    'judge_id' => Auth::user()->id,
+                ],
+                [   'style' => $record->style == '' ? null : $record->style,
+                    'creativity' => $record->creativity == '' ? null : $record->creativity,
+                    'functionality' => $record->functionality == '' ? null : $record->functionality,
+                    'audience_impact' => $record->audience_impact == '' ? null : $record->audience_impact,
+                ]
+            );
+
+            $total = ((float) $record->style) + ((float) $record->creativity) + ((float) $record->functionality) + ((float) $record->audience_impact);
+            
+            $rave_wear = ($this->cal_percentage($total, 100) / 100) * 50;
+
+            Mr_prepageant_score::updateOrCreate(
+                [
+                    
+                    'candidate_id' => $record->candidate_id,
+                    'judge_id' => Auth::user()->id,
+                ],
+                [
+                    'rave_wear' => $rave_wear == '' ? null : $rave_wear,
+                ]
+            );
+        }
     }
 
     public function cal_percentage($num_amount, $num_total)
@@ -47,42 +72,6 @@ class TalentScoreBoardComponent extends Component
         $count = number_format($count2, 2);
         return $count;
     }
-
-    public function updatedRecords()
-    {
-        
-        foreach ($this->records as $record) {
-
-            Mr_talent_score::updateOrCreate(
-                [
-                    // 'id' => $record->id,
-                    'candidate_id' => $record->candidate_id,
-                    'judge_id' => Auth::user()->id,
-                ],
-                [
-                    'mastery' => $record->mastery == '' ? null : $record->mastery,
-                    'uniqueness' => $record->uniqueness == '' ? null : $record->uniqueness,
-                    'stage_presence' => $record->stage_presence == '' ? null : $record->stage_presence,
-                    'audience_impact' => $record->audience_impact == '' ? null : $record->audience_impact,
-                ]
-            );
-
-            $total = ((float) $record->mastery) + ((float) $record->uniqueness) + ((float) $record->stage_presence) + ((float) $record->audience_impact);
-            $talent = ($this->cal_percentage($total, 100) / 100) * 50;
-
-            Mr_prepageant_score::updateOrCreate(
-                [
-                    // 'id' => $record->score_id,
-                    'candidate_id' => $record->candidate_id,
-                    'judge_id' => Auth::user()->id,
-                ],
-                [
-                    'talent' => $talent == '' ? null : $talent,
-                ]
-            );
-        }
-    }
-
     public function lockInscore()
     {
         $this->dispatchBrowserEvent('swal:confirm', [
@@ -96,7 +85,7 @@ class TalentScoreBoardComponent extends Component
     {
         $locked = 0;
         foreach ($this->records as $record) {
-            if ($record->mastery === null || $record->uniqueness === null || $record->stage_presence === null || $record->audience_impact === null ) {
+            if ($record->style === null || $record->creativity === null || $record->functionality === null || $record->audience_impact === null ) {
                 $this->dispatchBrowserEvent('swal:modal', [
                     'type' => 'warning',
                     'message' => 'Fill out all Scores.',
@@ -105,7 +94,7 @@ class TalentScoreBoardComponent extends Component
                 $locked = 0;
                 break;
             } else {
-                if (($record->mastery > 40 || $record->mastery < 0) || ($record->uniqueness > 30 || $record->uniqueness < 0) || ($record->stage_presence > 20 || $record->stage_presence < 0) || ($record->audience_impact > 10 || $record->audience_impact < 0)) {
+                if (($record->style > 40 || $record->style < 0) || ($record->creativity > 30 || $record->creativity < 0) || ($record->functionality > 20 || $record->functionality < 0) || ($record->audience_impact > 10 || $record->audience_impact < 0)) {
 
                     $this->dispatchBrowserEvent('swal:modal', [
                         'type' => 'warning',
@@ -115,7 +104,7 @@ class TalentScoreBoardComponent extends Component
                     $locked = 0;
                     break;
                 } else {
-                    Mr_talent_score::updateOrCreate(
+                    Mr_ravewear_score::updateOrCreate(
                         [
                             // 'id' => $record->id,
                             'candidate_id' => $record->candidate_id,

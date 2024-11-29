@@ -11,8 +11,7 @@ class Ms_prepageant_score extends Model
     protected $fillable = [
         'candidate_id',
         'judge_id',
-        'production_number',
-        'sports_wear',
+        'rave_wear',
         'talent',
     ];
 }

@@ -5,7 +5,7 @@
             <div class="col-lg-3 mb-4">
                 <div class="card" id="card">
 
-                    <img class="card-img-top" src="{{ asset('assets/img/ms/' . $index + 1 . '.jpg') }}"
+                    <img class="card-img-top" src="{{ asset('assets/img/mr/' . $index + 1 . '.jpg') }}"
                         alt="Card image cap">
 
                     <div class="card-body">
@@ -13,29 +13,42 @@
                                 class="text-primary">{{ strtoupper($record->barangay->name) }}</span></h6> --}}
                         <div class="input-group mb-1">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Execution 30%</span>
+                                <span class="input-group-text" id="basic-addon1">Style & Aesthetcs 40%</span>
                             </div>
-                            <input onfocus="this.select()" wire:model="records.{{ $index }}.execution" type="number"
-                                class="form-control text-center {{ $record->execution > 30 ? 'is-invalid' : '' }}"
-                                placeholder="00.00" aria-describedby="basic-addon1">
+                            <input onfocus="this.select()" wire:model="records.{{ $index }}.style" type="number"
+                                class="form-control text-center {{ ($record->style > 40 || $record->style < 0) ? 'is-invalid' : '' }}"
+                                placeholder="00.00" aria-describedby="basic-addon1"
+                                {{ $record->is_lock === 1  ? 'disabled' : '' }}>
 
                         </div>
                         <div class="input-group mb-1">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Poise & Bearing 30%</span>
+                                <span class="input-group-text" id="basic-addon1">Creativity & Originality 30%</span>
                             </div>
-                            <input onfocus="this.select()" wire:model="records.{{ $index }}.poise" type="number"
-                                class="form-control text-center {{ $record->poise > 30 ? 'is-invalid' : '' }}"
-                                placeholder="00.00" aria-describedby="basic-addon1">
+                            <input onfocus="this.select()" wire:model="records.{{ $index }}.creativity" type="number"
+                                class="form-control text-center {{ ($record->creativity > 30 || $record->creativity < 0) ? 'is-invalid' : '' }}"
+                                placeholder="00.00" aria-describedby="basic-addon1"
+                                {{ $record->is_lock === 1  ? 'disabled' : '' }}>
 
                         </div>
                         <div class="input-group mb-1">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Overall Appearance 40%</span>
+                                <span class="input-group-text" id="basic-addon1">Functionality & Comfort 20%</span>
                             </div>
-                            <input onfocus="this.select()" wire:model="records.{{ $index }}.appearance" type="number"
-                                class="form-control text-center {{ $record->appearance > 40 ? 'is-invalid' : '' }}"
-                                placeholder="00.00" aria-describedby="basic-addon1">
+                            <input onfocus="this.select()" wire:model="records.{{ $index }}.functionality" type="number"
+                                class="form-control text-center {{ ($record->functionality > 20 || $record->functionality < 0) ? 'is-invalid' : '' }}"
+                                placeholder="00.00" aria-describedby="basic-addon1"
+                                {{ $record->is_lock === 1  ? 'disabled' : '' }}>
+
+                        </div>
+                        <div class="input-group mb-1">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Audience Impact 10%</span>
+                            </div>
+                            <input onfocus="this.select()" wire:model="records.{{ $index }}.audience_impact" type="number"
+                                class="form-control text-center {{ ($record->audience_impact > 10 || $record->audience_impact < 0) ? 'is-invalid' : '' }}"
+                                placeholder="00.00" aria-describedby="basic-addon1"
+                                {{ $record->is_lock === 1  ? 'disabled' : '' }}>
 
                         </div>
                         <hr>
@@ -44,7 +57,7 @@
                                 <span class="input-group-text" id="basic-addon1"><strong>Total 100%</strong> </span>
                             </div>
                             @php
-                                $total = ((float) $record->execution) + ((float) $record->poise) + ((float) $record->appearance);
+                                $total = ((float) $record->style) + ((float) $record->creativity) + ((float) $record->functionality) + ((float) $record->audience_impact);
                             @endphp
                             <input style="font-weight: bold" disabled type="number" class="form-control text-center"
                                 value="{{ number_format($total, 2) }}" placeholder="00.00"
@@ -52,14 +65,14 @@
                         </div>
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1"><strong>Sports Wear Equivalent.</strong>
+                                <span class="input-group-text" id="basic-addon1"><strong>Rave Wear Equivalent.</strong>
                                 </span>
                             </div>
                             @php
-                                $sports_wear = (cal_percentage($total, 100) / 100 ) * 30;
+                                $rave_wear = (cal_percentage($total, 100) / 100 ) * 50;
                             @endphp
                             <input style="font-weight: bold" disabled type="number"
-                                class="form-control text-center" value="{{ number_format($sports_wear, 2) }}"
+                                class="form-control text-center" value="{{ number_format($rave_wear, 2) }}"
                                 placeholder="00.00" aria-describedby="basic-addon1">
 
                         </div>
@@ -78,12 +91,12 @@
             {{-- <button wire:click="try" class="btn btn-primary">dadas</button> --}}
             <div class="row mb-1">
                 <div class="col-md-6">
-                    <a href="{{ route('judge.app.ms.score', $stage) }}" type="button"
+                    <a href="{{ route('judge.app.mr.score', $stage) }}" type="button"
                         class="btn btn-secondary btn-lg btn-block rounded-pill">BACK TO MAIN SCORE BOARD</a>
                 </div>
                 <div class="col-md-6">
-                    {{-- <button wire:click="alertConfirm" type="button"
-                        class="btn btn-primary btn-lg btn-block rounded-pill">SAVE SCORES</button> --}}
+                    <button wire:click="lockInscore" type="button"
+                        class="btn btn-primary btn-lg btn-block rounded-pill">LOCK IN SCORES</button>
                 </div>
             </div>
 
@@ -125,7 +138,7 @@
             })
             .then((willSave) => {
                 if (willSave) {
-                    window.livewire.emit('save');
+                    window.livewire.emit('confirmedLockInScores');
                 }
         });
     });

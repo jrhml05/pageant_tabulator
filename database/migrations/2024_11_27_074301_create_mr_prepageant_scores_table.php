@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('candidate_id');
             $table->unsignedBigInteger('judge_id');
-            $table->decimal('sports_wear', 16)->nullable();
+            $table->decimal('rave_wear', 16)->nullable();
             $table->decimal('talent', 16)->nullable();
             $table->timestamps();
         });

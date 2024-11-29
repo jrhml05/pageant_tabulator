@@ -14,6 +14,7 @@ class Mr_talent_score extends Model
         'mastery',
         'uniqueness',
         'stage_presence',
-        'audience_impact'
+        'audience_impact',
+        'is_lock',
     ];
 }

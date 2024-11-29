@@ -96,7 +96,7 @@
                 </div>
                 
                 <div class="col-md-6">
-                    <button wire:click="alertConfirm" type="button"
+                    <button wire:click="lockInscore" type="button"
                         class="btn btn-primary btn-lg btn-block rounded-pill">LOCK IN SCORES</button>
                 </div>
             </div>
@@ -139,7 +139,7 @@
             })
             .then((willSave) => {
                 if (willSave) {
-                    window.livewire.emit('save');
+                    window.livewire.emit('confirmedLockInScores');
                 }
         });
     });

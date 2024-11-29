@@ -273,15 +273,13 @@ Route::middleware(['auth', 'user-access:judge'])->group(function () {
     // Pre-Pageant
     //MS
     Route::get('/judge-app/{stage}/ms-score-board', [App\Http\Controllers\JudgeAppController::class, 'msScoreBoard'])->name('judge.app.ms.score');
-    Route::get('/judge-app/{stage}/ms-prodnum-score-board', [App\Http\Controllers\JudgeAppController::class, 'msProdnumScoreBoard'])->name('judge.app.ms.prodnum.score');
-    Route::get('/judge-app/{stage}/ms-sportswear-score-board', [App\Http\Controllers\JudgeAppController::class, 'msSportswearScoreBoard'])->name('judge.app.ms.sportswear.score');
     Route::get('/judge-app/{stage}/ms-talent-score-board', [App\Http\Controllers\JudgeAppController::class, 'msTalentScoreBoard'])->name('judge.app.ms.talent.score');
+    Route::get('/judge-app/{stage}/ms-ravewear-score-board',[App\Http\Controllers\JudgeAppController::class, 'msRavewearScoreBoard'])->name('judge.app.ms.ravewear.score');
 
     //MR
     Route::get('/judge-app/{stage}/mr-score-board', [App\Http\Controllers\JudgeAppController::class, 'mrScoreBoard'])->name('judge.app.mr.score');
-    Route::get('/judge-app/{stage}/mr-prodnum-score-board', [App\Http\Controllers\JudgeAppController::class, 'mrProdnumScoreBoard'])->name('judge.app.mr.prodnum.score');
-    Route::get('/judge-app/{stage}/mr-sportswear-score-board', [App\Http\Controllers\JudgeAppController::class, 'mrSportswearScoreBoard'])->name('judge.app.mr.sportswear.score');
     Route::get('/judge-app/{stage}/mr-talent-score-board', [App\Http\Controllers\JudgeAppController::class, 'mrTalentScoreBoard'])->name('judge.app.mr.talent.score');
+    Route::get('/judge-app/{stage}/mr-ravewear-score-board',[App\Http\Controllers\JudgeAppController::class, 'mrRavewearScoreBoard'])->name('judge.app.mr.ravewear.score');
 
     // Preliminaries
     //MR

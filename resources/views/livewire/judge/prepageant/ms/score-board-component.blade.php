@@ -14,9 +14,9 @@
                         
                         <div class="input-group mb-1">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Sports Wear 50%</span>
+                                <span class="input-group-text" id="basic-addon1">Rave Wear 50%</span>
                             </div>
-                            <input disabled wire:model="records.{{ $index }}.sports_wear" type="number"
+                            <input disabled wire:model="records.{{ $index }}.rave_wear" type="number"
                                 class="form-control text-center" placeholder="00.00"
                                 aria-describedby="basic-addon1">
 
@@ -61,7 +61,7 @@
                 </div>
                 
                 <div class="col-md-3 mb-1">
-                    <a href="{{ route('judge.app.ms.sportswear.score',$stage) }}" type="button" class="btn btn-info btn-lg btn-block rounded-pill">ENTER SPORTS WEAR SCORES</a>
+                    <a href="{{ route('judge.app.ms.ravewear.score',$stage) }}" type="button" class="btn btn-info btn-lg btn-block rounded-pill">ENTER RAVE WEAR SCORES</a>
 
                 </div>
                 <div class="col-md-2 mb-1">

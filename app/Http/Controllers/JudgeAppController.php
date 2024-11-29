@@ -21,14 +21,9 @@ class JudgeAppController extends Controller
         return view('judge_app.prepageant.ms.score-board-screen', compact('stage'));
     }
 
-    public function msProdnumScoreBoard($stage)
+    public function msRavewearScoreBoard($stage)
     {
-        return view('judge_app.prepageant.ms.prodnum-score-board-screen', compact('stage'));
-    }
-
-    public function msSportswearScoreBoard($stage)
-    {
-        return view('judge_app.prepageant.ms.sportswear-score-board-screen', compact('stage'));
+        return view('judge_app.prepageant.ms.ravewear-score-board-screen', compact('stage'));
     }
 
     public function msTalentScoreBoard($stage)
@@ -41,14 +36,9 @@ class JudgeAppController extends Controller
         return view('judge_app.prepageant.mr.score-board-screen', compact('stage'));
     }
 
-    public function mrProdnumScoreBoard($stage)
+    public function mrRavewearScoreBoard($stage)
     {
-        return view('judge_app.prepageant.mr.prodnum-score-board-screen', compact('stage'));
-    }
-
-    public function mrSportswearScoreBoard($stage)
-    {
-        return view('judge_app.prepageant.mr.sportswear-score-board-screen', compact('stage'));
+        return view('judge_app.prepageant.mr.ravewear-score-board-screen', compact('stage'));
     }
 
     public function mrTalentScoreBoard($stage)

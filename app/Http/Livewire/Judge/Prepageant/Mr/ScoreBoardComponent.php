@@ -14,7 +14,7 @@ class ScoreBoardComponent extends Component
     protected $listeners = ['save'];
 
     protected $rules = [
-        'records.*.sports_wear' => 'required',
+        'records.*.rave_wear' => 'required',
         'records.*.talent' => 'required',
     ];
 

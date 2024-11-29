@@ -11,7 +11,7 @@ class TalentScoreBoardComponent extends Component
 {
     public $stage;
     public $records;
-    protected $listeners = ['save'];
+    protected $listeners = ['confirmedLockInScores'];
 
     protected $rules = [
         'records.*.mastery' => 'required',
@@ -134,27 +134,30 @@ class TalentScoreBoardComponent extends Component
 
     public function confirmedLockInScores()
     {
+        $locked = 0;
         foreach ($this->records as $record) {
-            if ($record->mastery === null || $record->uniqueness === null || $record->stage_presence === null || $record->audience_impact === null) {
+            if ($record->mastery === null || $record->uniqueness === null || $record->stage_presence === null || $record->audience_impact === null ) {
                 $this->dispatchBrowserEvent('swal:modal', [
                     'type' => 'warning',
                     'message' => 'Fill out all Scores.',
                     'text' => '.'
                 ]);
+                $locked = 0;
                 break;
             } else {
-                if ($record->mastery > 40 || $record->uniqueness > 30 || $record->stage_presence > 20 || $record->audience_impact > 10) {
+                if (($record->mastery > 40 || $record->mastery < 0) || ($record->uniqueness > 30 || $record->uniqueness < 0) || ($record->stage_presence > 20 || $record->stage_presence < 0) || ($record->audience_impact > 10 || $record->audience_impact < 0)) {
 
                     $this->dispatchBrowserEvent('swal:modal', [
                         'type' => 'warning',
-                        'message' => 'Fill out all Scores.',
+                        'message' => 'Double Check your scores.',
                         'text' => '.'
                     ]);
+                    $locked = 0;
                     break;
                 } else {
                     Ms_talent_score::updateOrCreate(
                         [
-                            'id' => $record->id,
+                            // 'id' => $record->id,
                             'candidate_id' => $record->candidate_id,
                             'judge_id' => Auth::user()->id,
                         ],
@@ -162,9 +165,14 @@ class TalentScoreBoardComponent extends Component
                             'is_lock' => 1
                         ]
                     );
+                    $locked = 1;
                 }
             }
+
+            
         }
-        return redirect()->route('judge.prepageant.ms.score', $this->stage);
+        if($locked == 1){
+            return redirect()->route('judge.app.ms.score', $this->stage);
+        }
     }
 }

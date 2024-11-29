@@ -2,6 +2,6 @@
 @section('content')
 
     <div class="row pt-5">
-        @livewire('judge.prepageant.mr.sportswear-score-board-component', [ 'stage' => $stage ])
+        @livewire('judge.prepageant.mr.ravewear-score-board-component', [ 'stage' => $stage ])
     </div>
 @endsection

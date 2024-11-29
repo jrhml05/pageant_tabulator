@@ -16,9 +16,9 @@
                         
                         <div class="input-group mb-1">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Sports Wear 50%</span>
+                                <span class="input-group-text" id="basic-addon1">Rave Wear 50%</span>
                             </div>
-                            <input disabled wire:model="records.{{ $index }}.sports_wear" type="number"
+                            <input disabled wire:model="records.{{ $index }}.rave_wear" type="number"
                                 class="form-control text-center" placeholder="00.00"
                                 aria-describedby="basic-addon1">
 
@@ -38,7 +38,7 @@
                                 <span class="input-group-text" id="basic-addon1"><strong>Total 100%</strong> </span>
                             </div>
                             @php
-                               $total = ((float) $record->production_number) + ((float) $record->sports_wear) +  ((float) $record->talent);
+                               $total = ((float) $record->rave_wear) +  ((float) $record->talent);
                             @endphp
                             <input style="font-weight: bold" disabled type="number"
                                 class="form-control text-center" value="{{ number_format($total, 2) }}" placeholder="00.00"
@@ -62,7 +62,7 @@
                     <a href="{{ route('judge.app') }}" type="button" class="btn btn-secondary btn-lg btn-block rounded-pill">BACK TO HOME</a>
                 </div>
                 <div class="col-md-3 mb-1">
-                    <a href="{{ route('judge.app.mr.sportswear.score',$stage) }}" type="button" class="btn btn-info btn-lg btn-block rounded-pill">ENTER SPORTS WEAR SCORES</a>
+                    <a href="{{ route('judge.app.mr.ravewear.score',$stage) }}" type="button" class="btn btn-info btn-lg btn-block rounded-pill">ENTER RAVE WEAR SCORES</a>
 
                 </div>
                 <div class="col-md-2 mb-1">
