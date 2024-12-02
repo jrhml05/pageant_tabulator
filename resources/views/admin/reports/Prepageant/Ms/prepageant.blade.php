@@ -69,7 +69,7 @@
                                                 @if ($candidate->id == $score->candidate_id && $score->judge_id == 2)
 
                                                     @php
-                                                        $score_judge1 = $score->production_number + $score->sports_wear + $score->talent;
+                                                        $score_judge1 = $score->rave_wear + $score->talent;
                                                     @endphp
 
                                                     <td>{{ $score_judge1 }}</td>
@@ -91,7 +91,7 @@
                                                 @if ($candidate->id == $score->candidate_id && $score->judge_id == 3)
 
                                                     @php
-                                                        $score_judge2 = $score->production_number + $score->sports_wear + $score->talent;
+                                                        $score_judge2 = $score->rave_wear + $score->talent;
                                                     @endphp
 
                                                     <td>{{ $score_judge2 }}</td>
@@ -111,7 +111,7 @@
                                                 @if ($candidate->id == $score->candidate_id && $score->judge_id == 4)
 
                                                     @php
-                                                        $score_judge3 = $score->production_number + $score->sports_wear + $score->talent;
+                                                        $score_judge3 = $score->rave_wear + $score->talent;
                                                     @endphp
 
                                                     <td>{{ $score_judge3 }}</td>

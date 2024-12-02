@@ -3,26 +3,26 @@
 @section('content')
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">MS. UEP - PRODCUTION NUMBER SCORES (JUDGE 3)</h1>
+        <h1 class="h3 mb-0 text-gray-800">MS. UEP - RAVE WEAR SCORES (JUDGE 2)</h1>
 
         <div>
 
-            <a href="{{ route('ms_prod_num_judge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 1 Production Number Scores</a>
+            <a href="{{ route('ms_rave_wear_judge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 1 Rave Wear Scores</a>
 
-            <a href="{{ route('ms_prod_num_judge2') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 2 Production Number Scores</a>
+            <a href="{{ route('ms_rave_wear_judge2') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 2 Rave Wear Scores</a>
 
-            <a href="{{ route('ms_prod_num_judge3') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 3 Production Number Scores</a>
+            <a href="{{ route('ms_rave_wear_judge3') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 3 Rave Wear Scores</a>
 
         </div>
 
         <div>
-            <a href="{{ route('ms_prod_num') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-less-than fa-sm text-white-50"></i> BACK TO OVERALL PRODUCTION NUMBER RESULTS</a>
-            <a href="{{ route('ms_pdfprod_num_judge3') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-print fa-sm text-white-50"></i> PRINT SCORES JUDGE 3</a>
+            <a href="{{ route('ms_rave_wear') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-less-than fa-sm text-white-50"></i> BACK TO OVERALL Rave Wear RESULTS</a>
+            <a href="{{ route('ms_pdfrave_wear_judge2') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-print fa-sm text-white-50"></i> PRINT SCORES JUDGE 2</a>
         </div>
 
     </div>
@@ -45,9 +45,10 @@
                                 <thead class="table-dark">
                                     <tr>
                                         <th style="width:10%">CANDIDATE</th>
-                                        <th style="width:15%">MASTERY 40%</th>
-                                        <th style="width:15%">POISE & BEARING 30%</th>
-                                        <th style="width:15%">STAGE PRESENCE 30%</th>
+                                        <th style="width:15%">STYLE & AESTHETICS 40%</th>
+                                        <th style="width:15%">CREATIVITY & ORIGINALITY 30%</th>
+                                        <th style="width:15%">FUNCTIONALITY & COMFORT 20%</th>
+                                        <th style="width:15%">AUDIENCE IMPACT 10%</th>
                                         <th style="width:10%">TOTAL 100%</th>
                                         <th style="width:10%">RANK</th>
 
@@ -60,21 +61,22 @@
                                         <tr>
                                             <td>{{ strtoupper($candidate->id) }}</td>
 
-                                            @foreach ( $candidate->prod_num_score as $score)
+                                            @foreach ( $candidate->rave_wear_score as $score)
 
-                                                @if ($candidate->id == $score->candidate_id && $score->judge_id == 4)
+                                                @if ($candidate->id == $score->candidate_id && $score->judge_id == 3)
 
-                                                    <td>{{ $score->mastery }}</td>
-                                                    <td>{{ $score->poise }}</td>
-                                                    <td>{{ $score->stage_presence }}</td>
+                                                    <td>{{ $score->style }}</td>
+                                                    <td>{{ $score->creativity }}</td>
+                                                    <td>{{ $score->functionality }}</td>
+                                                    <td>{{ $score->audience_impact }}</td>
 
-                                                    <td>{{ $score->mastery + $score->poise + $score->stage_presence }}</td>
+                                                    <td>{{ $score->style + $score->creativity + $score->functionality + $score->audience_impact }}</td>
 
                                                     @forelse   ($data['rank'] as $rank)
 
-                                                        @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 4)
+                                                        @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 3)
 
-                                                            <td>{{ $rank->prod_num }}</td>
+                                                            <td>{{ $rank->rave_wear }}</td>
 
                                                         @endif
 

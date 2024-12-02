@@ -3,30 +3,30 @@
 @section('content')
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">MS. UEP - SPORTS WEAR RESULT</h1>
+        <h1 class="h3 mb-0 text-gray-800">MS. UEP - RAVE WEAR RESULT</h1>
 
         <div>
 
-            <a href="{{ route('ms_sports_wear_judge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 1 Sports Wear Scores</a>
+            <a href="{{ route('ms_rave_wear_judge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 1 Rave Wear Scores</a>
 
-            <a href="{{ route('ms_sports_wear_judge2') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 2 Sports Wear Scores</a>
+            <a href="{{ route('ms_rave_wear_judge2') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 2 Rave Wear Scores</a>
 
-            <a href="{{ route('ms_sports_wear_judge3') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 3 Sports Wear Scores</a>
+            <a href="{{ route('ms_rave_wear_judge3') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 3 Rave Wear Scores</a>
 
         </div>
 
         <div>
 
-            <a href="javascript:void(0)" onclick="ms_sports_wear_rank()" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+            <a href="javascript:void(0)" onclick="ms_rave_wear_rank()" class="d-none d-sm-inline-block btn btn-primary shadow"><i
                 class="fa-solid fa-ranking-star fa-sm text-white-50"></i> RANK CANDIDATES</a>
 
             {{-- <a  class="d-none d-sm-inline-block btn btn-primary shadow"><i
                 class="fa-solid fa-ranking-star fa-sm text-white-50"></i> RANK CANDIDATES</a> --}}
 
-            <a href="{{ route('ms_pdfsports_wear') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+            <a href="{{ route('ms_pdfrave_wear') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
                 class="fas fa-print fa-sm text-white-50"></i> PRINT RESULTS</a>
         </div>
 
@@ -65,12 +65,12 @@
                                         <tr>
                                             <td>{{ strtoupper($candidate->id) }}</td>
 
-                                            @foreach ( $candidate->sports_wear_score as $score)
+                                            @foreach ( $candidate->rave_wear_score as $score)
 
                                                 @if ($candidate->id == $score->candidate_id && $score->judge_id == 2)
 
                                                     @php
-                                                        $score_judge1 = $score->execution + $score->poise + $score->appearance;
+                                                        $score_judge1 = $score->style + $score->creativity + $score->functionality + $score->audience_impact;
                                                     @endphp
 
                                                     <td>{{ $score_judge1 }}</td>
@@ -79,7 +79,7 @@
 
                                                         @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 2)
 
-                                                            <td>{{ $rank->sports_wear }}</td>
+                                                            <td>{{ $rank->rave_wear }}</td>
 
                                                         @endif
 
@@ -94,7 +94,7 @@
                                                 @if ($candidate->id == $score->candidate_id && $score->judge_id == 3)
 
                                                     @php
-                                                        $score_judge2 = $score->execution + $score->poise + $score->appearance;
+                                                        $score_judge2 = $score->style + $score->creativity + $score->functionality + $score->audience_impact;
                                                     @endphp
 
                                                     <td>{{ $score_judge2 }}</td>
@@ -103,7 +103,7 @@
 
                                                         @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 3)
 
-                                                            <td>{{ $rank->sports_wear }}</td>
+                                                            <td>{{ $rank->rave_wear }}</td>
 
                                                         @endif
 
@@ -118,7 +118,7 @@
                                                 @if ($candidate->id == $score->candidate_id && $score->judge_id == 4)
 
                                                     @php
-                                                        $score_judge3 = $score->execution + $score->poise + $score->appearance;
+                                                        $score_judge3 = $score->style + $score->creativity + $score->functionality + $score->audience_impact;
                                                     @endphp
 
                                                     <td>{{ $score_judge3 }}</td>
@@ -127,7 +127,7 @@
 
                                                         @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 4)
 
-                                                            <td>{{ $rank->sports_wear }}</td>
+                                                            <td>{{ $rank->rave_wear }}</td>
 
                                                         @endif
 
@@ -164,19 +164,19 @@
 
     <script>
 
-        function ms_sports_wear_rank()
+        function ms_rave_wear_rank()
         {
-            alert("sports wear rank");
+            alert("Rave Wear rank");
 
             $.ajax({
                 type: "GET",
-                url: "/ms_sports_wear_rank",
+                url: "/ms_rave_wear_rank",
                 success: function (response) {
                     location.reload();
                 },
                 error: function ()
                 {
-                    alert("no sports wear rank");
+                    alert("no Rave Wear rank");
                 }
             });
         }

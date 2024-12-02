@@ -338,16 +338,17 @@
 <body id="page-top">
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">MS. UEP - PRODUCTION NUMBER SCORES (JUDGE 1)</h1>
+    <h1 class="h3 mb-0 text-gray-800">MS. UEP - RAVE WEAR SCORES (JUDGE 3)</h1>
 </div>
 
 <table class="table table-bordered">
     <thead class="table-dark">
         <tr>
             <th style="width:10%">CANDIDATE</th>
-            <th style="width:15%">MASTERY 40%</th>
-            <th style="width:15%">POISE & BEARING 30%</th>
-            <th style="width:15%">STAGE PRESENCE 30%</th>
+            <th style="width:15%">STYLE & AESTHETICS 40%</th>
+            <th style="width:15%">CREATIVITY & ORIGINALITY 30%</th>
+            <th style="width:15%">FUNCTIONALITY & COMFORT 20%</th>
+            <th style="width:15%">AUDIENCE IMPACT 10%</th>
             <th style="width:10%">TOTAL 100%</th>
             <th style="width:10%">RANK</th>
 
@@ -360,21 +361,22 @@
             <tr>
                 <td>{{ strtoupper($candidate->id) }}</td>
 
-                @foreach ( $candidate->prod_num_score as $score)
+                @foreach ( $candidate->rave_wear_score as $score)
 
-                    @if ($candidate->id == $score->candidate_id && $score->judge_id == 2)
+                    @if ($candidate->id == $score->candidate_id && $score->judge_id == 4)
 
-                        <td>{{ $score->mastery }}</td>
-                        <td>{{ $score->poise }}</td>
-                        <td>{{ $score->stage_presence }}</td>
+                        <td>{{ $score->style }}</td>
+                        <td>{{ $score->creativity }}</td>
+                        <td>{{ $score->functionality }}</td>
+                        <td>{{ $score->audience_impact }}</td>
 
-                        <td>{{ $score->mastery + $score->poise + $score->stage_presence }}</td>
+                        <td>{{ $score->style + $score->creativity + $score->functionality + $score->audience_impact }}</td>
 
                         @forelse   ($data['rank'] as $rank)
 
-                            @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 2)
+                            @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 4)
 
-                                <td>{{ $rank->prod_num }}</td>
+                                <td>{{ $rank->rave_wear }}</td>
 
                             @endif
 

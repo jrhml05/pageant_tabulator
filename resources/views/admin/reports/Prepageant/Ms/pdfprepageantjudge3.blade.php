@@ -345,9 +345,8 @@
     <thead class="table-dark">
         <tr>
             <th style="width:10%">CANDIDATE</th>
-            <th style="width:15%">PRODUCTION NUMBER 30%</th>
-            <th style="width:15%">SPORTS WEAR 30%</th>
-            <th style="width:15%">TALENT 40%</th>
+            <th style="width:15%">RAVE WEAR 50%</th>
+            <th style="width:15%">TALENT 50%</th>
             <th style="width:10%">TOTAL 100%</th>
             <th style="width:10%">RANK</th>
         </tr>
@@ -360,10 +359,9 @@
 
                     @if ($candidate->id == $score->candidate_id && $score->judge_id == 4)
 
-                        <td>{{ $score->production_number }}</td>
-                        <td>{{ $score->sports_wear }}</td>
-                        <td>{{ $score->talent }}</td>
-                        <td>{{ $score->production_number + $score->sports_wear + $score->talent }}</td>
+                    <td>{{ $score->rave_wear }}</td>
+                    <td>{{ $score->talent }}</td>
+                    <td>{{ $score->rave_wear + $score->talent }}</td>
 
                         @forelse   ($data['rank'] as $rank)
 
