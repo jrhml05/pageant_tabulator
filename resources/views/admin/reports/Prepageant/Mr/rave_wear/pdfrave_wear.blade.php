@@ -338,7 +338,7 @@
 <body id="page-top">
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">MR. UEP - SPORTS WEAR RESULT</h1>
+    <h1 class="h3 mb-0 text-gray-800">MR. UEP - RAVE WEAR RESULT</h1>
 </div>
 
 <table class="table table-bordered">
@@ -360,12 +360,12 @@
             <tr>
                 <td>{{ strtoupper($candidate->id) }}</td>
 
-                @foreach ( $candidate->sports_wear_score as $score)
+                @foreach ( $candidate->rave_wear_score as $score)
 
                     @if ($candidate->id == $score->candidate_id && $score->judge_id == 2)
 
                         @php
-                            $score_judge1 = $score->execution + $score->poise + $score->appearance;
+                            $score_judge1 = $score->style + $score->creativity + $score->functionality + $score->audience_impact;
                         @endphp
 
                         <td>{{ $score_judge1 }}</td>
@@ -374,7 +374,7 @@
 
                             @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 2)
 
-                                <td>{{ $rank->sports_wear }}</td>
+                                <td>{{ $rank->rave_wear }}</td>
 
                             @endif
 
@@ -389,7 +389,7 @@
                     @if ($candidate->id == $score->candidate_id && $score->judge_id == 3)
 
                         @php
-                            $score_judge2 = $score->execution + $score->poise + $score->appearance;
+                            $score_judge2 = $score->style + $score->creativity + $score->functionality + $score->audience_impact;
                         @endphp
 
                         <td>{{ $score_judge2 }}</td>
@@ -398,7 +398,7 @@
 
                             @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 3)
 
-                                <td>{{ $rank->sports_wear }}</td>
+                                <td>{{ $rank->rave_wear }}</td>
 
                             @endif
 
@@ -413,7 +413,7 @@
                     @if ($candidate->id == $score->candidate_id && $score->judge_id == 4)
 
                         @php
-                            $score_judge3 = $score->execution + $score->poise + $score->appearance;
+                            $score_judge3 = $score->style + $score->creativity + $score->functionality + $score->audience_impact;
                         @endphp
 
                         <td>{{ $score_judge3 }}</td>
@@ -422,7 +422,7 @@
 
                             @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 4)
 
-                                <td>{{ $rank->sports_wear }}</td>
+                                <td>{{ $rank->rave_wear }}</td>
 
                             @endif
 
