@@ -98,8 +98,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Manage Reports:</h6>
                 <a class="collapse-item" href="{{ route('ms_prepageant') }}">Pre-pageant Scores</a>
-                <a class="collapse-item" href="{{ route('ms_prod_num') }}">Production Number Scores</a>
-                <a class="collapse-item" href="{{ route('ms_sports_wear') }}">Sports Wear Scores</a>
+                <a class="collapse-item" href="{{ route('ms_rave_wear') }}">Sports Wear Scores</a>
                 <a class="collapse-item" href="{{ route('ms_talent') }}">Talent Scores</a>
                 <a class="collapse-item" href="{{ route('ms_prelim') }}">Preliminaries Scores</a>
                 <a class="collapse-item" href="{{ route('ms_casual_wear') }}">Casual Wear Scores</a>
@@ -120,10 +119,9 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Manage Reports:</h6>
                 <a class="collapse-item" href="{{ route('mr_prepageant') }}">Pre-pageant Scores</a>
-                <a class="collapse-item" href="{{ route('mr_prod_num') }}">Production Number Scores</a>
-                <a class="collapse-item" href="{{ route('mr_sports_wear') }}">Sports Wear Scores</a>
+                <a class="collapse-item" href="{{ route('mr_rave_wear') }}">Rave Wear Scores</a>
                 <a class="collapse-item" href="{{ route('mr_talent') }}">Talent Scores</a>
-                <a class="collapse-item" href="{{ route('mr_prelim') }}">Preliminaries Scores</a>
+                <a class="collapse-item" href="{{ route('mr_prelim') }}">Pageant Night Scores</a>
                 <a class="collapse-item" href="{{ route('mr_casual_wear') }}">Casual Wear Scores</a>
                 <a class="collapse-item" href="{{ route('mr_formal_wear') }}">Formal Wear Scores</a>
                 <a class="collapse-item" href="{{ route('mr_top_6') }}">Top 6</a>

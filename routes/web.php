@@ -34,7 +34,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     //RESULTS for Ms. UEP PREPAGEANT
     Route::get('/ms_prepageant', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_prepageant'])->name('ms_prepageant');
     Route::get('/ms_prod_num', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_prod_num'])->name('ms_prod_num');
-    Route::get('/ms_sports_wear', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_sports_wear'])->name('ms_sports_wear');
+    Route::get('/ms_rave_wear', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_rave_wear'])->name('ms_rave_wear');
     Route::get('/ms_talent', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_talent'])->name('ms_talent');
 
     //INDIVIDUAL RESULTS
@@ -42,13 +42,9 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/ms_prepageant_judge2', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_prepageantjudge2'])->name('ms_prepageant_judge2');
     Route::get('/ms_prepageant_judge3', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_prepageantjudge3'])->name('ms_prepageant_judge3');
 
-    Route::get('/ms_prod_num_judge1', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_prod_numjudge1'])->name('ms_prod_num_judge1');
-    Route::get('/ms_prod_num_judge2', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_prod_numjudge2'])->name('ms_prod_num_judge2');
-    Route::get('/ms_prod_num_judge3', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_prod_numjudge3'])->name('ms_prod_num_judge3');
-
-    Route::get('/ms_sports_wear_judge1', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_sports_wearjudge1'])->name('ms_sports_wear_judge1');
-    Route::get('/ms_sports_wear_judge2', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_sports_wearjudge2'])->name('ms_sports_wear_judge2');
-    Route::get('/ms_sports_wear_judge3', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_sports_wearjudge3'])->name('ms_sports_wear_judge3');
+    Route::get('/ms_rave_wear_judge1', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_rave_wearjudge1'])->name('ms_rave_wear_judge1');
+    Route::get('/ms_rave_wear_judge2', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_rave_wearjudge2'])->name('ms_rave_wear_judge2');
+    Route::get('/ms_rave_wear_judge3', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_rave_wearjudge3'])->name('ms_rave_wear_judge3');
 
     Route::get('/ms_talent_judge1', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_talentjudge1'])->name('ms_talent_judge1');
     Route::get('/ms_talent_judge2', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_talentjudge2'])->name('ms_talent_judge2');
@@ -65,10 +61,10 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/ms_pdfprod_num_judge2', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_pdfprod_numjudge2'])->name('ms_pdfprod_num_judge2');
     Route::get('/ms_pdfprod_num_judge3', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_pdfprod_numjudge3'])->name('ms_pdfprod_num_judge3');
 
-    Route::get('/ms_pdfsports_wear', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_pdfsports_wear'])->name('ms_pdfsports_wear');
-    Route::get('/ms_pdfsports_wear_judge1', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_pdfsports_wearjudge1'])->name('ms_pdfsports_wear_judge1');
-    Route::get('/ms_pdfsports_wear_judge2', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_pdfsports_wearjudge2'])->name('ms_pdfsports_wear_judge2');
-    Route::get('/ms_pdfsports_wear_judge3', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_pdfsports_wearjudge3'])->name('ms_pdfsports_wear_judge3');
+    Route::get('/ms_pdfrave_wear', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_pdfrave_wear'])->name('ms_pdfrave_wear');
+    Route::get('/ms_pdfrave_wear_judge1', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_pdfrave_wearjudge1'])->name('ms_pdfrave_wear_judge1');
+    Route::get('/ms_pdfrave_wear_judge2', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_pdfrave_wearjudge2'])->name('ms_pdfrave_wear_judge2');
+    Route::get('/ms_pdfrave_wear_judge3', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_pdfrave_wearjudge3'])->name('ms_pdfrave_wear_judge3');
 
     Route::get('/ms_pdftalent', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_pdftalent'])->name('ms_pdftalent');
     Route::get('/ms_pdftalent_judge1', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_pdftalentjudge1'])->name('ms_pdftalent_judge1');
@@ -78,7 +74,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     //RESULTS for Mr. UEP PREPAGEANT
     Route::get('/mr_prepageant', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_prepageant'])->name('mr_prepageant');
     Route::get('/mr_prod_num', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_prod_num'])->name('mr_prod_num');
-    Route::get('/mr_sports_wear', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_sports_wear'])->name('mr_sports_wear');
+    Route::get('/mr_rave_wear', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_rave_wear'])->name('mr_rave_wear');
     Route::get('/mr_talent', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_talent'])->name('mr_talent');
 
     //INDIVIDUAL RESULTS
@@ -90,9 +86,9 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/mr_prod_num_judge2', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_prod_numjudge2'])->name('mr_prod_num_judge2');
     Route::get('/mr_prod_num_judge3', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_prod_numjudge3'])->name('mr_prod_num_judge3');
 
-    Route::get('/mr_sports_wear_judge1', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_sports_wearjudge1'])->name('mr_sports_wear_judge1');
-    Route::get('/mr_sports_wear_judge2', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_sports_wearjudge2'])->name('mr_sports_wear_judge2');
-    Route::get('/mr_sports_wear_judge3', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_sports_wearjudge3'])->name('mr_sports_wear_judge3');
+    Route::get('/mr_rave_wear_judge1', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_rave_wearjudge1'])->name('mr_rave_wear_judge1');
+    Route::get('/mr_rave_wear_judge2', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_rave_wearjudge2'])->name('mr_rave_wear_judge2');
+    Route::get('/mr_rave_wear_judge3', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_rave_wearjudge3'])->name('mr_rave_wear_judge3');
 
     Route::get('/mr_talent_judge1', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_talentjudge1'])->name('mr_talent_judge1');
     Route::get('/mr_talent_judge2', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_talentjudge2'])->name('mr_talent_judge2');
@@ -109,10 +105,10 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/mr_pdfprod_num_judge2', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_pdfprod_numjudge2'])->name('mr_pdfprod_num_judge2');
     Route::get('/mr_pdfprod_num_judge3', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_pdfprod_numjudge3'])->name('mr_pdfprod_num_judge3');
 
-    Route::get('/mr_pdfsports_wear', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_pdfsports_wear'])->name('mr_pdfsports_wear');
-    Route::get('/mr_pdfsports_wear_judge1', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_pdfsports_wearjudge1'])->name('mr_pdfsports_wear_judge1');
-    Route::get('/mr_pdfsports_wear_judge2', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_pdfsports_wearjudge2'])->name('mr_pdfsports_wear_judge2');
-    Route::get('/mr_pdfsports_wear_judge3', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_pdfsports_wearjudge3'])->name('mr_pdfsports_wear_judge3');
+    Route::get('/mr_pdfrave_wear', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_pdfrave_wear'])->name('mr_pdfrave_wear');
+    Route::get('/mr_pdfrave_wear_judge1', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_pdfrave_wearjudge1'])->name('mr_pdfrave_wear_judge1');
+    Route::get('/mr_pdfrave_wear_judge2', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_pdfrave_wearjudge2'])->name('mr_pdfrave_wear_judge2');
+    Route::get('/mr_pdfrave_wear_judge3', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_pdfrave_wearjudge3'])->name('mr_pdfrave_wear_judge3');
 
     Route::get('/mr_pdftalent', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_pdftalent'])->name('mr_pdftalent');
     Route::get('/mr_pdftalent_judge1', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_pdftalentjudge1'])->name('mr_pdftalent_judge1');
@@ -232,7 +228,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     //MR. RANKING
     Route::get('/mr_prepageant_rank', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_prepageant_rank'])->name('mr_prepageant_rank');
     Route::get('/mr_prod_num_rank', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_prod_num_rank'])->name('mr_prod_num_rank');
-    Route::get('/mr_sports_wear_rank', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_sports_wear_rank'])->name('mr_sports_wear_rank');
+    Route::get('/mr_rave_wear_rank', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_rave_wear_rank'])->name('mr_rave_wear_rank');
     Route::get('/mr_talent_rank', [App\Http\Controllers\MrUepPrePageantReportsController::class, 'mr_talent_rank'])->name('mr_talent_rank');
 
     Route::get('/mr_prelim_rank', [App\Http\Controllers\MrUepPrelimReportsController::class, 'mr_prelim_rank'])->name('mr_prelim_rank');
@@ -245,7 +241,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     //MS. RANKING
     Route::get('/ms_prepageant_rank', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_prepageant_rank'])->name('ms_prepageant_rank');
     Route::get('/ms_prod_num_rank', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_prod_num_rank'])->name('ms_prod_num_rank');
-    Route::get('/ms_sports_wear_rank', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_sports_wear_rank'])->name('ms_sports_wear_rank');
+    Route::get('/ms_rave_wear_rank', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_rave_wear_rank'])->name('ms_rave_wear_rank');
     Route::get('/ms_talent_rank', [App\Http\Controllers\MsUepPrePageantReportsController::class, 'ms_talent_rank'])->name('ms_talent_rank');
 
     Route::get('/ms_prelim_rank', [App\Http\Controllers\MsUepPrelimReportsController::class, 'ms_prelim_rank'])->name('ms_prelim_rank');

@@ -20,14 +20,9 @@ class Mr_candidate extends Model
         return $this->hasMany(Mr_talent_score::class, 'candidate_id', 'id');
     }
 
-    public function prod_num_score(): HasMany
+    public function rave_wear_score(): HasMany
     {
-        return $this->hasMany(Mr_prodnum_score::class, 'candidate_id', 'id');
-    }
-
-    public function sports_wear_score(): HasMany
-    {
-        return $this->hasMany(Mr_sportswear_score::class, 'candidate_id', 'id');
+        return $this->hasMany(Mr_ravewear_score::class, 'candidate_id', 'id');
     }
 
     public function prelim_score(): HasMany
