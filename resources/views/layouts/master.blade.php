@@ -256,7 +256,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Miss Binalonan 2023</span>
+                        <span>Copyright &copy; MR & MS UEP 2024</span>
                     </div>
                 </div>
             </footer>
