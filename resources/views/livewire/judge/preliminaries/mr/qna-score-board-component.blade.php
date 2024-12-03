@@ -14,40 +14,40 @@
 
                         <div class="input-group mb-1">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Beauty & Poise 40%</span>
+                                <span class="input-group-text" id="basic-addon1">Relevance 40%</span>
                             </div>
-                            <input onfocus="this.select()" wire:model="records.{{ $index }}.beauty" type="number"
-                                class="form-control text-center {{ ( $record->beauty > 40 || $record->beauty < 0) ? 'is-invalid' : '' }}"
+                            <input onfocus="this.select()" wire:model="records.{{ $index }}.relevance" type="number"
+                                class="form-control text-center {{ ( $record->relevance > 40 || $record->relevance < 0) ? 'is-invalid' : '' }}"
                                 placeholder="00.00" aria-describedby="basic-addon1"
                                 {{ $record->is_lock === 1  ? 'disabled' : '' }}>
 
                         </div>
                         <div class="input-group mb-1">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Stage Deportment/Presence 30%</span>
+                                <span class="input-group-text" id="basic-addon1">Delivery/Confidence 20%</span>
                             </div>
-                            <input onfocus="this.select()" wire:model="records.{{ $index }}.stage_presence" type="number"
-                                class="form-control text-center {{ ($record->stage_presence > 30 || $record->stage_presence < 0) ? 'is-invalid' : '' }}"
+                            <input onfocus="this.select()" wire:model="records.{{ $index }}.delivery" type="number"
+                                class="form-control text-center {{ ($record->delivery > 20 || $record->delivery < 0) ? 'is-invalid' : '' }}"
                                 placeholder="00.00" aria-describedby="basic-addon1"
                                 {{ $record->is_lock === 1  ? 'disabled' : '' }}>
 
                         </div>
                         <div class="input-group mb-1">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Design & Fitting 20%</span>
+                                <span class="input-group-text" id="basic-addon1">Content of Answer 30%</span>
                             </div>
-                            <input onfocus="this.select()" wire:model="records.{{ $index }}.design" type="number"
-                                class="form-control text-center {{ ($record->design > 20 || $record->design < 0)? 'is-invalid' : '' }}"
+                            <input onfocus="this.select()" wire:model="records.{{ $index }}.content" type="number"
+                                class="form-control text-center {{ ($record->content > 30 || $record->content < 0)? 'is-invalid' : '' }}"
                                 placeholder="00.00" aria-describedby="basic-addon1"
                                 {{ $record->is_lock === 1  ? 'disabled' : '' }}>
 
                         </div>
                         <div class="input-group mb-1">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Overall Impact 10%</span>
+                                <span class="input-group-text" id="basic-addon1">Audience Impact 10%</span>
                             </div>
-                            <input onfocus="this.select()" wire:model="records.{{ $index }}.overall_impact" type="number"
-                                class="form-control text-center {{ ($record->overall_impact > 10 || $record->overall_impact < 0)? 'is-invalid' : '' }}"
+                            <input onfocus="this.select()" wire:model="records.{{ $index }}.audience_impact" type="number"
+                                class="form-control text-center {{ ($record->audience_impact > 10 || $record->audience_impact < 0)? 'is-invalid' : '' }}"
                                 placeholder="00.00" aria-describedby="basic-addon1"
                                 {{ $record->is_lock === 1  ? 'disabled' : '' }}>
 
@@ -58,7 +58,7 @@
                                 <span class="input-group-text" id="basic-addon1"><strong>Total 100%</strong> </span>
                             </div>
                             @php
-                                $total = ((float) $record->beauty) + ((float) $record->stage_presence) + ((float) $record->design) + ((float) $record->overall_impact);
+                                $total = ((float) $record->relevance) + ((float) $record->delivery) + ((float) $record->content) + ((float) $record->audience_impact);
                             @endphp
                             <input style="font-weight: bold" disabled type="number" class="form-control text-center"
                                 value="{{ number_format($total, 2) }}" placeholder="00.00"
@@ -66,14 +66,14 @@
                         </div>
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1"><strong>Formal Wear Equivalent</strong>
+                                <span class="input-group-text" id="basic-addon1"><strong>Casual Q&A Equivalent</strong>
                                 </span>
                             </div>
                             @php
-                                $formal_wear = (cal_percentage($total, 100) / 100 ) * 20;
+                                $qna = (cal_percentage($total, 100) / 100 ) * 20;
                             @endphp
                             <input style="font-weight: bold" disabled type="number"
-                                class="form-control text-center" value="{{ number_format($formal_wear, 2) }}"
+                                class="form-control text-center" value="{{ number_format($qna, 2) }}"
                                 placeholder="00.00" aria-describedby="basic-addon1">
 
                         </div>

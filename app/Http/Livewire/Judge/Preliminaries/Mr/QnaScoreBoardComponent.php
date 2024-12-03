@@ -2,31 +2,31 @@
 
 namespace App\Http\Livewire\Judge\Preliminaries\Mr;
 
-use App\Models\Mr_formalwear_score;
 use App\Models\Mr_prelim_score;
+use App\Models\Mr_qna_score;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
-class FormalwearScoreBoardComponent extends Component
+class QnaScoreBoardComponent extends Component
 {
     public $stage;
     public $records;
     protected $listeners = ['confirmedLockInScores'];
 
     protected $rules = [
-        'records.*.beauty' => 'required',
-        'records.*.stage_presence' => 'required',
-        'records.*.design' => 'required',
-        'records.*.overall_impact' => 'required',
+        'records.*.relevance' => 'required',
+        'records.*.delivery' => 'required',
+        'records.*.content' => 'required',
+        'records.*.audience_impact' => 'required',
     ];
     public function render()
     {
-        return view('livewire.judge.preliminaries.mr.formalwear-score-board-component');
+        return view('livewire.judge.preliminaries.mr.qna-score-board-component');
     }
 
     public function mount()
     {
-        $this->records = Mr_formalwear_score::where('judge_id', Auth::user()->id)
+        $this->records = Mr_qna_score::where('judge_id', Auth::user()->id)
             ->orderBy('candidate_id', 'ASC')
             ->get();
     }
@@ -35,23 +35,23 @@ class FormalwearScoreBoardComponent extends Component
     {
         foreach ($this->records as $record) {
 
-            Mr_formalwear_score::updateOrCreate(
+            Mr_qna_score::updateOrCreate(
                 [
                     // 'id' => $record->id,
                     'candidate_id' => $record->candidate_id,
                     'judge_id' => Auth::user()->id,
                 ],
                 [   
-                    'beauty' => $record->beauty == '' ? null : $record->beauty,
-                    'stage_presence' => $record->stage_presence == '' ? null : $record->stage_presence,
-                    'design' => $record->design == '' ? null : $record->design,
-                    'overall_impact' => $record->overall_impact == '' ? null : $record->overall_impact,
+                    'relevance' => $record->relevance == '' ? null : $record->relevance,
+                    'delivery' => $record->delivery == '' ? null : $record->delivery,
+                    'content' => $record->content == '' ? null : $record->content,
+                    'audience_impact' => $record->audience_impact == '' ? null : $record->audience_impact,
                 ]
             );
 
-            $total = ((float) $record->beauty) + ((float) $record->stage_presence) + ((float) $record->design) + ((float) $record->overall_impact);
+            $total = ((float) $record->relevance) + ((float) $record->delivery) + ((float) $record->content) + ((float) $record->audience_impact);
             
-            $formal_wear = ($this->cal_percentage($total, 100) / 100) * 20;
+            $qna = ($this->cal_percentage($total, 100) / 100) * 20;
 
             Mr_prelim_score::updateOrCreate(
                 [
@@ -60,7 +60,7 @@ class FormalwearScoreBoardComponent extends Component
                     'judge_id' => Auth::user()->id,
                 ],
                 [
-                    'formal_wear' => $formal_wear == '' ? null : $formal_wear,
+                    'qna' => $qna == '' ? null : $qna,
                 ]
             );
         }
@@ -86,7 +86,7 @@ class FormalwearScoreBoardComponent extends Component
     {
         $locked = 0;
         foreach ($this->records as $record) {
-            if ($record->beauty === null || $record->stage_presence === null || $record->design === null || $record->overall_impact === null ) {
+            if ($record->relevance === null || $record->delivery === null || $record->content === null || $record->audience_impact === null ) {
                 $this->dispatchBrowserEvent('swal:modal', [
                     'type' => 'warning',
                     'message' => 'Fill out all Scores.',
@@ -95,7 +95,7 @@ class FormalwearScoreBoardComponent extends Component
                 $locked = 0;
                 break;
             } else {
-                if (($record->beauty > 40 || $record->beauty < 0) || ($record->stage_presence > 30 || $record->stage_presence < 0) || ($record->design > 20 || $record->design < 0) || ($record->overall_impact > 10 || $record->overall_impact < 0)) {
+                if (($record->relevance > 40 || $record->relevance < 0) || ($record->delivery > 30 || $record->delivery < 0) || ($record->content > 20 || $record->content < 0) || ($record->audience_impact > 10 || $record->audience_impact < 0)) {
 
                     $this->dispatchBrowserEvent('swal:modal', [
                         'type' => 'warning',
@@ -105,7 +105,7 @@ class FormalwearScoreBoardComponent extends Component
                     $locked = 0;
                     break;
                 } else {
-                    Mr_formalwear_score::updateOrCreate(
+                    Mr_qna_score::updateOrCreate(
                         [
                             // 'id' => $record->id,
                             'candidate_id' => $record->candidate_id,

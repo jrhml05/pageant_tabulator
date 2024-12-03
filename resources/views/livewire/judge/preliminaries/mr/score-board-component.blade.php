@@ -15,18 +15,45 @@
                                 class="text-primary">{{ strtoupper($record->barangay->name) }}</span></h6> --}}
                         <div class="input-group mb-1">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Casual Wear 50%</span>
+                                <span class="input-group-text" id="basic-addon1">National Costume 20%</span>
                             </div>
-                            <input disabled wire:model="records.{{ $index }}.casual_wear" type="number"
+                            <input disabled wire:model="records.{{ $index }}.national_costume" type="number"
                                 class="form-control text-center" placeholder="00.00"
                                 aria-describedby="basic-addon1">
 
                         </div>
                         <div class="input-group mb-1">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Formal Wear 50%</span>
+                                <span class="input-group-text" id="basic-addon1">Departmental Uniform 20%</span>
+                            </div>
+                            <input disabled wire:model="records.{{ $index }}.dept_uniform" type="number"
+                                class="form-control text-center" placeholder="00.00"
+                                aria-describedby="basic-addon1">
+
+                        </div>
+                        <div class="input-group mb-1">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Swim Wear 20%</span>
+                            </div>
+                            <input disabled wire:model="records.{{ $index }}.swim_wear" type="number"
+                                class="form-control text-center" placeholder="00.00"
+                                aria-describedby="basic-addon1">
+
+                        </div>
+                        <div class="input-group mb-1">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Formal Wear 20%</span>
                             </div>
                             <input disabled wire:model="records.{{ $index }}.formal_wear" type="number"
+                                class="form-control text-center" placeholder="00.00"
+                                aria-describedby="basic-addon1">
+
+                        </div>
+                        <div class="input-group mb-1">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Casual Q&A 20%</span>
+                            </div>
+                            <input disabled wire:model="records.{{ $index }}.qna" type="number"
                                 class="form-control text-center" placeholder="00.00"
                                 aria-describedby="basic-addon1">
 
@@ -37,7 +64,7 @@
                                 <span class="input-group-text" id="basic-addon1"><strong>Total 100%</strong> </span>
                             </div>
                             @php
-                               $total = ((float) $record->casual_wear) + ((float) $record->formal_wear);
+                               $total = ((float) $record->national_costume) + ((float) $record->dept_uniform) + ((float) $record->swim_wear) + ((float) $record->formal_wear) + ((float) $record->qna);
                             @endphp
                             <input style="font-weight: bold" disabled type="number"
                                 class="form-control text-center" value="{{ number_format($total, 2) }}" placeholder="00.00"
@@ -60,12 +87,24 @@
                 <div class="col-md-2 mb-1">
                     <a href="{{ route('judge.app') }}" type="button" class="btn btn-secondary btn-lg btn-block rounded-pill">BACK TO HOME</a>
                 </div>
-                <div class="col-md-4 mb-1">
-                    <a href="{{ route('judge.app.mr.casualwear.score',$stage) }}" type="button" class="btn btn-info btn-lg btn-block rounded-pill">ENTER CASUAL WEAR SCORES</a>
+                <div class="col-md-2 mb-1">
+                    <a href="{{ route('judge.app.mr.nationalcostume.score',$stage) }}" type="button" class="btn btn-info btn-lg btn-block rounded-pill">NATIONAL COSTUME SCORES</a>
 
                 </div>
-                <div class="col-md-4 mb-1">
-                    <a href="{{ route('judge.app.mr.formalwear.score',$stage) }}" type="button" class="btn btn-info btn-lg btn-block rounded-pill">ENTER FORMAL WEAR SCORES</a>
+                <div class="col-md-2 mb-1">
+                    <a href="{{ route('judge.app.mr.departmentaluniform.score',$stage) }}" type="button" class="btn btn-info btn-lg btn-block rounded-pill">DEPARTMENTAL UNIFORM SCORES</a>
+
+                </div>
+                <div class="col-md-2 mb-1">
+                    <a href="{{ route('judge.app.mr.swimwear.score',$stage) }}" type="button" class="btn btn-info btn-lg btn-block rounded-pill">SWIM WEAR SCORES</a>
+
+                </div>
+                <div class="col-md-2 mb-1">
+                    <a href="{{ route('judge.app.mr.formalwear.score',$stage) }}" type="button" class="btn btn-info btn-lg btn-block rounded-pill">FORMAL WEAR SCORES</a>
+
+                </div>
+                <div class="col-md-2 mb-1">
+                    <a href="{{ route('judge.app.mr.qna.score',$stage) }}" type="button" class="btn btn-info btn-lg btn-block rounded-pill">Q&A SCORES</a>
 
                 </div>
                 <div class="col-md-2 mb-1">

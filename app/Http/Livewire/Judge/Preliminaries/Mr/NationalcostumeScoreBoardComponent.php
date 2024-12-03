@@ -2,31 +2,31 @@
 
 namespace App\Http\Livewire\Judge\Preliminaries\Mr;
 
-use App\Models\Mr_formalwear_score;
+use App\Models\Mr_natlcost_score;
 use App\Models\Mr_prelim_score;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
-class FormalwearScoreBoardComponent extends Component
+class NationalcostumeScoreBoardComponent extends Component
 {
     public $stage;
     public $records;
     protected $listeners = ['confirmedLockInScores'];
 
     protected $rules = [
-        'records.*.beauty' => 'required',
-        'records.*.stage_presence' => 'required',
         'records.*.design' => 'required',
+        'records.*.stage_presence' => 'required',
+        'records.*.poise_bearing' => 'required',
         'records.*.overall_impact' => 'required',
     ];
     public function render()
     {
-        return view('livewire.judge.preliminaries.mr.formalwear-score-board-component');
+        return view('livewire.judge.preliminaries.mr.nationalcostume-score-board-component');
     }
 
     public function mount()
     {
-        $this->records = Mr_formalwear_score::where('judge_id', Auth::user()->id)
+        $this->records = Mr_natlcost_score::where('judge_id', Auth::user()->id)
             ->orderBy('candidate_id', 'ASC')
             ->get();
     }
@@ -35,23 +35,22 @@ class FormalwearScoreBoardComponent extends Component
     {
         foreach ($this->records as $record) {
 
-            Mr_formalwear_score::updateOrCreate(
+            Mr_natlcost_score::updateOrCreate(
                 [
                     // 'id' => $record->id,
                     'candidate_id' => $record->candidate_id,
                     'judge_id' => Auth::user()->id,
                 ],
-                [   
-                    'beauty' => $record->beauty == '' ? null : $record->beauty,
+                [   'design' => $record->design == '' ? null : $record->design,
                     'stage_presence' => $record->stage_presence == '' ? null : $record->stage_presence,
-                    'design' => $record->design == '' ? null : $record->design,
+                    'poise_bearing' => $record->poise_bearing == '' ? null : $record->poise_bearing,
                     'overall_impact' => $record->overall_impact == '' ? null : $record->overall_impact,
                 ]
             );
 
-            $total = ((float) $record->beauty) + ((float) $record->stage_presence) + ((float) $record->design) + ((float) $record->overall_impact);
+            $total = ((float) $record->design) + ((float) $record->stage_presence) + ((float) $record->poise_bearing) + ((float) $record->overall_impact);
             
-            $formal_wear = ($this->cal_percentage($total, 100) / 100) * 20;
+            $national_costume = ($this->cal_percentage($total, 100) / 100) * 20;
 
             Mr_prelim_score::updateOrCreate(
                 [
@@ -60,7 +59,7 @@ class FormalwearScoreBoardComponent extends Component
                     'judge_id' => Auth::user()->id,
                 ],
                 [
-                    'formal_wear' => $formal_wear == '' ? null : $formal_wear,
+                    'national_costume' => $national_costume == '' ? null : $national_costume,
                 ]
             );
         }
@@ -86,7 +85,7 @@ class FormalwearScoreBoardComponent extends Component
     {
         $locked = 0;
         foreach ($this->records as $record) {
-            if ($record->beauty === null || $record->stage_presence === null || $record->design === null || $record->overall_impact === null ) {
+            if ($record->design === null || $record->stage_presence === null || $record->poise_bearing === null || $record->overall_impact === null ) {
                 $this->dispatchBrowserEvent('swal:modal', [
                     'type' => 'warning',
                     'message' => 'Fill out all Scores.',
@@ -95,7 +94,7 @@ class FormalwearScoreBoardComponent extends Component
                 $locked = 0;
                 break;
             } else {
-                if (($record->beauty > 40 || $record->beauty < 0) || ($record->stage_presence > 30 || $record->stage_presence < 0) || ($record->design > 20 || $record->design < 0) || ($record->overall_impact > 10 || $record->overall_impact < 0)) {
+                if (($record->design > 40 || $record->design < 0) || ($record->stage_presence > 30 || $record->stage_presence < 0) || ($record->poise_bearing > 20 || $record->poise_bearing < 0) || ($record->overall_impact > 10 || $record->overall_impact < 0)) {
 
                     $this->dispatchBrowserEvent('swal:modal', [
                         'type' => 'warning',
@@ -105,7 +104,7 @@ class FormalwearScoreBoardComponent extends Component
                     $locked = 0;
                     break;
                 } else {
-                    Mr_formalwear_score::updateOrCreate(
+                    Mr_natlcost_score::updateOrCreate(
                         [
                             // 'id' => $record->id,
                             'candidate_id' => $record->candidate_id,

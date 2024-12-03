@@ -14,17 +14,17 @@
 
                         <div class="input-group mb-1">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Beauty & Poise 40%</span>
+                                <span class="input-group-text" id="basic-addon1">Creative Design 40%</span>
                             </div>
-                            <input onfocus="this.select()" wire:model="records.{{ $index }}.beauty" type="number"
-                                class="form-control text-center {{ ( $record->beauty > 40 || $record->beauty < 0) ? 'is-invalid' : '' }}"
+                            <input onfocus="this.select()" wire:model="records.{{ $index }}.design" type="number"
+                                class="form-control text-center {{ ( $record->design > 40 || $record->design < 0) ? 'is-invalid' : '' }}"
                                 placeholder="00.00" aria-describedby="basic-addon1"
                                 {{ $record->is_lock === 1  ? 'disabled' : '' }}>
 
                         </div>
                         <div class="input-group mb-1">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Stage Deportment/Presence 30%</span>
+                                <span class="input-group-text" id="basic-addon1">Stage Presence 30%</span>
                             </div>
                             <input onfocus="this.select()" wire:model="records.{{ $index }}.stage_presence" type="number"
                                 class="form-control text-center {{ ($record->stage_presence > 30 || $record->stage_presence < 0) ? 'is-invalid' : '' }}"
@@ -34,10 +34,10 @@
                         </div>
                         <div class="input-group mb-1">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Design & Fitting 20%</span>
+                                <span class="input-group-text" id="basic-addon1">Poise & Bearing 20%</span>
                             </div>
-                            <input onfocus="this.select()" wire:model="records.{{ $index }}.design" type="number"
-                                class="form-control text-center {{ ($record->design > 20 || $record->design < 0)? 'is-invalid' : '' }}"
+                            <input onfocus="this.select()" wire:model="records.{{ $index }}.poise_bearing" type="number"
+                                class="form-control text-center {{ ($record->poise_bearing > 20 || $record->poise_bearing < 0)? 'is-invalid' : '' }}"
                                 placeholder="00.00" aria-describedby="basic-addon1"
                                 {{ $record->is_lock === 1  ? 'disabled' : '' }}>
 
@@ -58,7 +58,7 @@
                                 <span class="input-group-text" id="basic-addon1"><strong>Total 100%</strong> </span>
                             </div>
                             @php
-                                $total = ((float) $record->beauty) + ((float) $record->stage_presence) + ((float) $record->design) + ((float) $record->overall_impact);
+                                $total = ((float) $record->design) + ((float) $record->stage_presence) + ((float) $record->poise_bearing) + ((float) $record->overall_impact);
                             @endphp
                             <input style="font-weight: bold" disabled type="number" class="form-control text-center"
                                 value="{{ number_format($total, 2) }}" placeholder="00.00"
@@ -66,14 +66,14 @@
                         </div>
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1"><strong>Formal Wear Equivalent</strong>
+                                <span class="input-group-text" id="basic-addon1"><strong>National Costume Equivalent.</strong>
                                 </span>
                             </div>
                             @php
-                                $formal_wear = (cal_percentage($total, 100) / 100 ) * 20;
+                                $national_costume = (cal_percentage($total, 100) / 100 ) * 20;
                             @endphp
                             <input style="font-weight: bold" disabled type="number"
-                                class="form-control text-center" value="{{ number_format($formal_wear, 2) }}"
+                                class="form-control text-center" value="{{ number_format($national_costume, 2) }}"
                                 placeholder="00.00" aria-describedby="basic-addon1">
 
                         </div>

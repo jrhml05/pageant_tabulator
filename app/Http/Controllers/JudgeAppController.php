@@ -51,14 +51,29 @@ class JudgeAppController extends Controller
         return view('judge_app.preliminaries.mr.score-board-screen', compact('stage'));
     }
 
-    public function mrCasualwearScoreBoard($stage)
+    public function mrSwimwearScoreBoard($stage)
     {
-        return view('judge_app.preliminaries.mr.casualwear-score-board-screen', compact('stage'));
+        return view('judge_app.preliminaries.mr.swimwear-score-board-screen', compact('stage'));
+    }
+
+    public function mrNationalcostumeScoreBoard($stage)
+    {
+        return view('judge_app.preliminaries.mr.nationalcostume-score-board-screen', compact('stage'));
+    }
+
+    public function mrDepartmentaluniformScoreBoard($stage)
+    {
+        return view('judge_app.preliminaries.mr.departmentaluniform-score-board-screen', compact('stage'));
     }
 
     public function mrFormalwearScoreBoard($stage)
     {
         return view('judge_app.preliminaries.mr.formalwear-score-board-screen', compact('stage'));
+    }
+
+    public function mrQnaScoreBoard($stage)
+    {
+        return view('judge_app.preliminaries.mr.qna-score-board-screen', compact('stage'));
     }
 
     public function msPrelimScoreBoard($stage)
