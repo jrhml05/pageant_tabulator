@@ -121,7 +121,7 @@ class NationalcostumeScoreBoardComponent extends Component
             
         }
         if($locked == 1){
-            return redirect()->route('judge.app.mr.score', $this->stage);
+            return redirect()->route('judge.app.mr.prelim.score', $this->stage);
         }
         
     }

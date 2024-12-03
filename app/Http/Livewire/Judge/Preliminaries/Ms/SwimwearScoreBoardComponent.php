@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Livewire\Judge\Preliminaries\Mr;
+namespace App\Http\Livewire\Judge\Preliminaries\Ms;
 
-use App\Models\Mr_prelim_score;
+use App\Models\Ms_prelim_score;
 use Livewire\Component;
-use App\Models\Mr_swimwear_score;
+use App\Models\Ms_swimwear_score;
 use Illuminate\Support\Facades\Auth;
 
 class SwimwearScoreBoardComponent extends Component
@@ -22,13 +22,13 @@ class SwimwearScoreBoardComponent extends Component
 
     public function mount()
     {
-        $this->records = Mr_swimwear_score::where('judge_id', Auth::user()->id)
+        $this->records = Ms_swimwear_score::where('judge_id', Auth::user()->id)
             ->orderBy('candidate_id', 'ASC')
             ->get();
     }
     public function render()
     {
-        return view('livewire.judge.preliminaries.mr.swimwear-score-board-component');
+        return view('livewire.judge.preliminaries.ms.swimwear-score-board-component');
     }
 
     public function alertConfirm()
@@ -54,7 +54,7 @@ class SwimwearScoreBoardComponent extends Component
     {
         foreach ($this->records as $record) {
 
-            Mr_swimwear_score::updateOrCreate(
+            Ms_swimwear_score::updateOrCreate(
                 [
                     // 'id' => $record->id,
                     'candidate_id' => $record->candidate_id,
@@ -71,7 +71,7 @@ class SwimwearScoreBoardComponent extends Component
             $total = ((float) $record->poise) + ((float) $record->body) + ((float) $record->stage_presence) + ((float) $record->audience_impact);
             $swim_wear = ($this->cal_percentage($total, 100) / 100) * 20;
 
-            Mr_prelim_score::updateOrCreate(
+            Ms_prelim_score::updateOrCreate(
                 [
                     // 'id' => $record->score_id,
                     'candidate_id' => $record->candidate_id,
@@ -116,7 +116,7 @@ class SwimwearScoreBoardComponent extends Component
                     $locked = 0;
                     break;
                 } else {
-                    Mr_swimwear_score::updateOrCreate(
+                    Ms_swimwear_score::updateOrCreate(
                         [
                             // 'id' => $record->id,
                             'candidate_id' => $record->candidate_id,
@@ -133,7 +133,7 @@ class SwimwearScoreBoardComponent extends Component
             
         }
         if($locked == 1){
-            return redirect()->route('judge.app.mr.prelim.score', $this->stage);
+            return redirect()->route('judge.app.ms.prelim.score', $this->stage);
         }
         
     }

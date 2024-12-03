@@ -95,7 +95,7 @@ class QnaScoreBoardComponent extends Component
                 $locked = 0;
                 break;
             } else {
-                if (($record->relevance > 40 || $record->relevance < 0) || ($record->delivery > 30 || $record->delivery < 0) || ($record->content > 20 || $record->content < 0) || ($record->audience_impact > 10 || $record->audience_impact < 0)) {
+                if (($record->relevance > 40 || $record->relevance < 0) || ($record->delivery > 20 || $record->delivery < 0) || ($record->content > 30 || $record->content < 0) || ($record->audience_impact > 10 || $record->audience_impact < 0)) {
 
                     $this->dispatchBrowserEvent('swal:modal', [
                         'type' => 'warning',
@@ -122,7 +122,7 @@ class QnaScoreBoardComponent extends Component
             
         }
         if($locked == 1){
-            return redirect()->route('judge.app.mr.score', $this->stage);
+            return redirect()->route('judge.app.mr.prelim.score', $this->stage);
         }
         
     }

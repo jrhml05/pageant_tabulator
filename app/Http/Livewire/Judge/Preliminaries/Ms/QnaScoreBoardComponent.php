@@ -1,43 +1,69 @@
 <?php
 
-namespace App\Http\Livewire\Judge\Preliminaries\Mr;
+namespace App\Http\Livewire\Judge\Preliminaries\Ms;
 
-use App\Models\Mr_prelim_score;
-use Livewire\Component;
-use App\Models\Mr_swimwear_score;
+use App\Models\Ms_prelim_score;
+use App\Models\Ms_qna_score;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Component;
 
-class SwimwearScoreBoardComponent extends Component
+class QnaScoreBoardComponent extends Component
 {
     public $stage;
     public $records;
     protected $listeners = ['confirmedLockInScores'];
 
     protected $rules = [
-        'records.*.body' => 'required',
-        'records.*.poise' => 'required',
-        'records.*.stage_presence' => 'required',
+        'records.*.relevance' => 'required',
+        'records.*.delivery' => 'required',
+        'records.*.content' => 'required',
         'records.*.audience_impact' => 'required',
     ];
+    public function render()
+    {
+        return view('livewire.judge.preliminaries.ms.qna-score-board-component');
+    }
 
     public function mount()
     {
-        $this->records = Mr_swimwear_score::where('judge_id', Auth::user()->id)
+        $this->records = Ms_qna_score::where('judge_id', Auth::user()->id)
             ->orderBy('candidate_id', 'ASC')
             ->get();
     }
-    public function render()
-    {
-        return view('livewire.judge.preliminaries.mr.swimwear-score-board-component');
-    }
 
-    public function alertConfirm()
+    public function updatedRecords()
     {
-        $this->dispatchBrowserEvent('swal:confirm', [
-            'type' => 'warning',
-            'message' => 'Are you sure you want to save the scores?',
-            'text' => 'If saved, the fields with scores will be disabled!'
-        ]);
+        foreach ($this->records as $record) {
+
+            Ms_qna_score::updateOrCreate(
+                [
+                    // 'id' => $record->id,
+                    'candidate_id' => $record->candidate_id,
+                    'judge_id' => Auth::user()->id,
+                ],
+                [   
+                    'relevance' => $record->relevance == '' ? null : $record->relevance,
+                    'delivery' => $record->delivery == '' ? null : $record->delivery,
+                    'content' => $record->content == '' ? null : $record->content,
+                    'audience_impact' => $record->audience_impact == '' ? null : $record->audience_impact,
+                ]
+            );
+
+            $total = ((float) $record->relevance) + ((float) $record->delivery) + ((float) $record->content) + ((float) $record->audience_impact);
+            
+            $qna = ($this->cal_percentage($total, 100) / 100) * 20;
+
+            Ms_prelim_score::updateOrCreate(
+                [
+                    
+                    'candidate_id' => $record->candidate_id,
+                    'judge_id' => Auth::user()->id,
+                ],
+                [
+                    'qna' => $qna == '' ? null : $qna,
+                ]
+            );
+        }
     }
 
     public function cal_percentage($num_amount, $num_total)
@@ -47,43 +73,6 @@ class SwimwearScoreBoardComponent extends Component
         $count = number_format($count2, 2);
         return $count;
     }
-
-    
-
-    public function updatedRecords()
-    {
-        foreach ($this->records as $record) {
-
-            Mr_swimwear_score::updateOrCreate(
-                [
-                    // 'id' => $record->id,
-                    'candidate_id' => $record->candidate_id,
-                    'judge_id' => Auth::user()->id,
-                ],
-                [
-                    'poise' => $record->poise == '' ? null : $record->poise,
-                    'body' => $record->body == '' ? null : $record->body,
-                    'stage_presence' => $record->stage_presence == '' ? null : $record->stage_presence,
-                    'audience_impact' => $record->audience_impact == '' ? null : $record->audience_impact,
-                ]
-            );
-
-            $total = ((float) $record->poise) + ((float) $record->body) + ((float) $record->stage_presence) + ((float) $record->audience_impact);
-            $swim_wear = ($this->cal_percentage($total, 100) / 100) * 20;
-
-            Mr_prelim_score::updateOrCreate(
-                [
-                    // 'id' => $record->score_id,
-                    'candidate_id' => $record->candidate_id,
-                    'judge_id' => Auth::user()->id,
-                ],
-                [
-                    'swim_wear' => $swim_wear == '' ? null : $swim_wear,
-                ]
-            );
-        }
-    }
-
     public function lockInscore()
     {
         $this->dispatchBrowserEvent('swal:confirm', [
@@ -97,7 +86,7 @@ class SwimwearScoreBoardComponent extends Component
     {
         $locked = 0;
         foreach ($this->records as $record) {
-            if ($record->body === null || $record->poise === null || $record->stage_presence === null || $record->audience_impact === null ) {
+            if ($record->relevance === null || $record->delivery === null || $record->content === null || $record->audience_impact === null ) {
                 $this->dispatchBrowserEvent('swal:modal', [
                     'type' => 'warning',
                     'message' => 'Fill out all Scores.',
@@ -106,7 +95,7 @@ class SwimwearScoreBoardComponent extends Component
                 $locked = 0;
                 break;
             } else {
-                if (($record->body > 40 || $record->body < 0) || ($record->poise > 30 || $record->poise < 0) || ($record->stage_presence > 20 || $record->stage_presence < 0) || ($record->audience_impact > 10 || $record->audience_impact < 0)) {
+                if (($record->relevance > 40 || $record->relevance < 0) || ($record->delivery > 20 || $record->delivery < 0) || ($record->content > 30 || $record->content < 0) || ($record->audience_impact > 10 || $record->audience_impact < 0)) {
 
                     $this->dispatchBrowserEvent('swal:modal', [
                         'type' => 'warning',
@@ -116,7 +105,7 @@ class SwimwearScoreBoardComponent extends Component
                     $locked = 0;
                     break;
                 } else {
-                    Mr_swimwear_score::updateOrCreate(
+                    Ms_qna_score::updateOrCreate(
                         [
                             // 'id' => $record->id,
                             'candidate_id' => $record->candidate_id,
@@ -133,7 +122,7 @@ class SwimwearScoreBoardComponent extends Component
             
         }
         if($locked == 1){
-            return redirect()->route('judge.app.mr.prelim.score', $this->stage);
+            return redirect()->route('judge.app.ms.prelim.score', $this->stage);
         }
         
     }

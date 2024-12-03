@@ -288,8 +288,11 @@ Route::middleware(['auth', 'user-access:judge'])->group(function () {
 
     //MS
     Route::get('/judge-app/{stage}/ms-prelim-score-board', [App\Http\Controllers\JudgeAppController::class, 'msPrelimScoreBoard'])->name('judge.app.ms.prelim.score');
-    Route::get('/judge-app/{stage}/ms-casualwear-score-board', [App\Http\Controllers\JudgeAppController::class, 'msCasualwearScoreBoard'])->name('judge.app.ms.casualwear.score');
+    Route::get('/judge-app/{stage}/ms-nationalcostume-score-board', [App\Http\Controllers\JudgeAppController::class, 'msNationalcostumeScoreBoard'])->name('judge.app.ms.nationalcostume.score');
+    Route::get('/judge-app/{stage}/ms-deparmentaluniform-score-board', [App\Http\Controllers\JudgeAppController::class, 'msDepartmentaluniformScoreBoard'])->name('judge.app.ms.departmentaluniform.score');
+    Route::get('/judge-app/{stage}/ms-swimwear-score-board', [App\Http\Controllers\JudgeAppController::class, 'msSwimwearScoreBoard'])->name('judge.app.ms.swimwear.score');
     Route::get('/judge-app/{stage}/ms-formalwear-score-board', [App\Http\Controllers\JudgeAppController::class, 'msFormalwearScoreBoard'])->name('judge.app.ms.formalwear.score');
+    Route::get('/judge-app/{stage}/ms-qna-score-board', [App\Http\Controllers\JudgeAppController::class, 'msQnaScoreBoard'])->name('judge.app.ms.qna.score');
 
     // Final 6
     //MR
