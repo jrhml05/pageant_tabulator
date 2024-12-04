@@ -4,7 +4,7 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
 
-        <h1 class="h3 mb-0 text-gray-800">MS. UEP - LONG GOWN RESULT</h1>
+        <h1 class="h3 mb-0 text-gray-800">MS. UEP - FORMAL WEAR RESULT</h1>
 
         <div>
 
@@ -16,12 +16,6 @@
 
             <a href="{{ route('ms_formal_wear_judge3') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
                 class="fas fa-eye fa-sm text-white-50"></i> JUDGE 3 Scores</a>
-
-            <a href="{{ route('ms_formal_wear_judge4') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 4 Scores</a>
-
-            <a href="{{ route('ms_formal_wear_judge5') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 5 Scores</a>
 
         </div>
 
@@ -56,18 +50,14 @@
                             <table class="table table-bordered">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th style="width:10%">CANDIDATE #</th>
+                                        <th style="width:12%">CANDIDATE #</th>
                                         <th style="width:10%">JUDGE 1</th>
                                         <th style="width:5%">RANK</th>
                                         <th style="width:10%">JUDGE 2</th>
                                         <th style="width:5%">RANK</th>
                                         <th style="width:10%">JUDGE 3</th>
                                         <th style="width:5%">RANK</th>
-                                        <th style="width:10%">JUDGE 4</th>
-                                        <th style="width:5%">RANK</th>
-                                        <th style="width:10%">JUDGE 5</th>
-                                        <th style="width:5%">RANK</th>
-                                        {{-- <th style="width:20%">RESULT</th> --}}
+                                        <th style="width:10%">FINAL RANK</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -79,7 +69,7 @@
                                                 @if ($candidate->id == $score->candidate_id && $score->judge_id == 2)
 
                                                     @php
-                                                        $score_judge1 = $score->elegance + $score->presence + $score->projection + $score->poise;
+                                                        $score_judge1 = $score->beauty + $score->stage_presence + $score->design + $score->overall_impact;
                                                     @endphp
 
                                                     <td>{{ $score_judge1 }}</td>
@@ -101,7 +91,7 @@
                                                 @if ($candidate->id == $score->candidate_id && $score->judge_id == 3)
 
                                                     @php
-                                                        $score_judge2 = $score->elegance + $score->presence + $score->projection + $score->poise;
+                                                        $score_judge2 = $score->beauty + $score->stage_presence + $score->design + $score->overall_impact;
                                                     @endphp
 
                                                     <td>{{ $score_judge2 }}</td>
@@ -121,7 +111,7 @@
                                                 @if ($candidate->id == $score->candidate_id && $score->judge_id == 4)
 
                                                     @php
-                                                        $score_judge3 = $score->elegance + $score->presence + $score->projection + $score->poise;
+                                                        $score_judge3 = $score->beauty + $score->stage_presence + $score->design + $score->overall_impact;
                                                     @endphp
 
                                                     <td>{{ $score_judge3 }}</td>
@@ -138,48 +128,16 @@
 
                                                 @endif
 
-                                                @if ($candidate->id == $score->candidate_id && $score->judge_id == 5)
-
-                                                    @php
-                                                        $score_judge3 = $score->elegance + $score->presence + $score->projection + $score->poise;
-                                                    @endphp
-
-                                                    <td>{{ $score_judge3 }}</td>
-
-                                                    @forelse   ($data['rank'] as $rank)
-
-                                                        @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 5)
-                                                            <td>{{ $rank->formal_wear }}</td>
-                                                        @endif
-
-                                                    @empty
-                                                        <td></td>
-                                                    @endforelse
-
-                                                @endif
-
-                                                @if ($candidate->id == $score->candidate_id && $score->judge_id == 6)
-
-                                                    @php
-                                                        $score_judge3 = $score->elegance + $score->presence + $score->projection + $score->poise;
-                                                    @endphp
-
-                                                    <td>{{ $score_judge3 }}</td>
-
-                                                    @forelse   ($data['rank'] as $rank)
-
-                                                        @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 6)
-                                                            <td>{{ $rank->formal_wear }}</td>
-                                                        @endif
-
-                                                    @empty
-                                                        <td></td>
-                                                    @endforelse
-
-                                                @endif
-
                                             @endforeach
-                                            {{-- <td>{{ ROUND(($score_judge1 + $score_judge2 + $score_judge3) / 3, 2) }}</td> --}}
+                                            
+                                            @forelse ($data['final_rank'] as $final_rank)
+                                                @if ($final_rank->candidate_id == $candidate->id)
+                                                    <td style="width:5%; text-align: center">{{ $final_rank->formal_wear }}</td>
+                                                @endif
+                                            @empty
+                                                <td></td>
+                                            @endforelse
+
                                         </tr>
                                     @empty
                                         <tr>
@@ -202,7 +160,7 @@
 
         function ms_formal_wear_rank()
         {
-            alert("long gown rank");
+            alert("formal wear rank");
 
             $.ajax({
                 type: "GET",
@@ -212,7 +170,7 @@
                 },
                 error: function (response)
                 {
-                    alert("no long gown rank");
+                    alert("no formal wear rank");
                     console.log(response);
                 }
             });

@@ -3,32 +3,26 @@
 @section('content')
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">MS. UEP - LONG GOWN SCORES (JUDGE 4)</h1>
+        <h1 class="h3 mb-0 text-gray-800">MS. UEP - NATIONAL COSTUME SCORES (JUDGE 1)</h1>
 
         <div>
 
-            <a href="{{ route('ms_formal_wear_judge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 1 Long Gown Scores</a>
+            <a href="{{ route('ms_national_costume_judge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 1 National Costume Scores</a>
 
-            <a href="{{ route('ms_formal_wear_judge2') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 2 Long Gown Scores</a>
+            <a href="{{ route('ms_national_costume_judge2') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 2 National Costume Scores</a>
 
-            <a href="{{ route('ms_formal_wear_judge3') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 3 Long Gown Scores</a>
-
-            <a href="{{ route('ms_formal_wear_judge4') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 4 Long Gown Scores</a>
-
-            <a href="{{ route('ms_formal_wear_judge5') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 5 Long Gown Scores</a>
+            <a href="{{ route('ms_national_costume_judge3') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 3 National Costume Scores</a>
 
         </div>
 
         <div>
-            <a href="{{ route('ms_formal_wear') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-less-than fa-sm text-white-50"></i> BACK TO OVERALL LONG GOWN RESULTS</a>
-            <a href="{{ route('ms_pdfformal_wearjudge4') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-print fa-sm text-white-50"></i> PRINT SCORES JUDGE 4</a>
+            <a href="{{ route('ms_national_costume') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-less-than fa-sm text-white-50"></i> BACK TO OVERALL NATIONAL COSTUME RESULTS</a>
+            <a href="{{ route('ms_pdfnational_costumejudge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-print fa-sm text-white-50"></i> PRINT SCORES JUDGE 1</a>
         </div>
 
     </div>
@@ -51,10 +45,10 @@
                                 <thead class="table-dark">
                                     <tr>
                                         <th style="width:10%">CANDIDATE</th>
-                                        <th style="width:15%">ELEGANCE 25%</th>
-                                        <th style="width:15%">STAGE PRESENCE 25%</th>
-                                        <th style="width:15%">PROJECTION 25%</th>
-                                        <th style="width:15%">POISE 25%</th>
+                                        <th style="width:15%">CREATIVE DESIGN 40%</th>
+                                        <th style="width:15%">STAGE PRESENCE 30%</th>
+                                        <th style="width:15%">POISE & BEARING 20%</th>
+                                        <th style="width:15%">OVERALL IMPACT 10%</th>
                                         <th style="width:10%">TOTAL 100%</th>
                                         <th style="width:10%">RANK</th>
 
@@ -67,22 +61,22 @@
                                         <tr>
                                             <td>{{ strtoupper($candidate->id) }}</td>
 
-                                            @foreach ( $candidate->formal_wear_score as $score)
+                                            @foreach ( $candidate->national_costume_score as $score)
 
-                                                @if ($candidate->id == $score->candidate_id && $score->judge_id == 5)
+                                                @if ($candidate->id == $score->candidate_id && $score->judge_id == 2)
 
-                                                    <td>{{ $score->elegance }}</td>
-                                                    <td>{{ $score->presence }}</td>
-                                                    <td>{{ $score->projection }}</td>
-                                                    <td>{{ $score->poise }}</td>
+                                                    <td>{{ $score->design }}</td>
+                                                    <td>{{ $score->stage_presence }}</td>
+                                                    <td>{{ $score->poise_bearing }}</td>
+                                                    <td>{{ $score->overall_impact }}</td>
 
-                                                    <td>{{ $score->elegance + $score->presence + $score->projection + $score->poise }}</td>
+                                                    <td>{{ $score->design + $score->stage_presence + $score->poise_bearing + $score->overall_impact }}</td>
 
                                                     @forelse   ($data['rank'] as $rank)
 
-                                                        @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 5)
+                                                        @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 2)
 
-                                                            <td>{{ $rank->casual_wear }}</td>
+                                                            <td>{{ $rank->national_costume }}</td>
 
                                                         @endif
 

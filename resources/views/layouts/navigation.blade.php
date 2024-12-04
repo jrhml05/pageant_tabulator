@@ -101,9 +101,12 @@
                 <a class="collapse-item" href="{{ route('ms_rave_wear') }}">Rave Wear Scores</a>
                 <a class="collapse-item" href="{{ route('ms_talent') }}">Talent Scores</a>
                 <a class="collapse-item" href="{{ route('ms_prelim') }}">Pageant Night Scores</a>
-                <a class="collapse-item" href="{{ route('ms_casual_wear') }}">Casual Wear Scores</a>
-                <a class="collapse-item" href="{{ route('ms_formal_wear') }}">Long Gown Scores</a>
-                <a class="collapse-item" href="{{ route('ms_top_6') }}">TOP 6</a>
+                <a class="collapse-item" href="{{ route('ms_national_costume') }}">National Costume Scores</a>
+                <a class="collapse-item" href="{{ route('ms_departmental_uniform') }}">Departmental Uniform Scores</a>
+                <a class="collapse-item" href="{{ route('ms_swim_wear') }}">Swim Wear Scores</a>
+                <a class="collapse-item" href="{{ route('ms_formal_wear') }}">Formal Wear Scores</a>
+                <a class="collapse-item" href="{{ route('ms_qna') }}">Casual Q&A Scores</a>
+                <a class="collapse-item" href="{{ route('ms_top_6') }}">TOP 5</a>
                 <a class="collapse-item" href="{{ route('ms_final') }}">Final</a>
             </div>
         </div>
@@ -122,7 +125,7 @@
                 <a class="collapse-item" href="{{ route('mr_rave_wear') }}">Rave Wear Scores</a>
                 <a class="collapse-item" href="{{ route('mr_talent') }}">Talent Scores</a>
                 <a class="collapse-item" href="{{ route('mr_prelim') }}">Pageant Night Scores</a>
-                <a class="collapse-item" href="{{ route('mr_casual_wear') }}">Casual Wear Scores</a>
+                <a class="collapse-item" href="{{ route('mr_national_costume') }}">National Costume Scores</a>
                 <a class="collapse-item" href="{{ route('mr_formal_wear') }}">Formal Wear Scores</a>
                 <a class="collapse-item" href="{{ route('mr_top_6') }}">Top 6</a>
                 <a class="collapse-item" href="{{ route('mr_final') }}">Final</a>

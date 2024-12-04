@@ -3,32 +3,26 @@
 @section('content')
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">MS. UEP - CASUAL WEAR SCORES (JUDGE 4)</h1>
+        <h1 class="h3 mb-0 text-gray-800">MS. UEP - DEPARTMENTAL UNIFORM SCORES (JUDGE 2)</h1>
 
         <div>
 
-            <a href="{{ route('ms_casual_wear_judge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 1 Casual Wear Scores</a>
+            <a href="{{ route('ms_departmental_uniform_judge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 1 Departmental Uniform Scores</a>
 
-            <a href="{{ route('ms_casual_wear_judge2') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 2 Casual Wear Scores</a>
+            <a href="{{ route('ms_departmental_uniform_judge2') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 2 Departmental Uniform Scores</a>
 
-            <a href="{{ route('ms_casual_wear_judge3') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 3 Casual Wear Scores</a>
-
-            <a href="{{ route('ms_casual_wear_judge4') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 4 Casual Wear Scores</a>
-
-            <a href="{{ route('ms_casual_wear_judge5') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 5 Casual Wear Scores</a>
+            <a href="{{ route('ms_departmental_uniform_judge3') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 3 Departmental Uniform Scores</a>
 
         </div>
 
         <div>
-            <a href="{{ route('ms_casual_wear') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-less-than fa-sm text-white-50"></i> BACK TO OVERALL CASUAL WEAR RESULTS</a>
-            <a href="{{ route('ms_pdfcasual_wearjudge4') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-print fa-sm text-white-50"></i> PRINT SCORES JUDGE 4</a>
+            <a href="{{ route('ms_departmental_uniform') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-less-than fa-sm text-white-50"></i> BACK TO OVERALL DEPARTMENTAL UNIFORM RESULTS</a>
+            <a href="{{ route('ms_pdfdepartmental_uniformjudge2') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-print fa-sm text-white-50"></i> PRINT SCORES JUDGE 2</a>
         </div>
 
     </div>
@@ -51,9 +45,10 @@
                                 <thead class="table-dark">
                                     <tr>
                                         <th style="width:10%">CANDIDATE</th>
-                                        <th style="width:15%">POISE & POSTURE 30%</th>
-                                        <th style="width:15%">EXECUTION 40%</th>
-                                        <th style="width:15%">OVERALL APPEARANCE 30%</th>
+                                        <th style="width:15%">PRESENTATION & NEATNESS 40%</th>
+                                        <th style="width:15%">FIGURE 30%</th>
+                                        <th style="width:15%">BEAUTY & POISE 20%</th>
+                                        <th style="width:15%">OVERALL IMPACT 10%</th>
                                         <th style="width:10%">TOTAL 100%</th>
                                         <th style="width:10%">RANK</th>
 
@@ -66,21 +61,22 @@
                                         <tr>
                                             <td>{{ strtoupper($candidate->id) }}</td>
 
-                                            @foreach ( $candidate->casual_wear_score as $score)
+                                            @foreach ( $candidate->departmental_uniform_score as $score)
 
-                                                @if ($candidate->id == $score->candidate_id && $score->judge_id == 5)
+                                                @if ($candidate->id == $score->candidate_id && $score->judge_id == 3)
 
-                                                    <td>{{ $score->poise }}</td>
-                                                    <td>{{ $score->execution }}</td>
-                                                    <td>{{ $score->appearance }}</td>
+                                                    <td>{{ $score->presentation }}</td>
+                                                    <td>{{ $score->figure }}</td>
+                                                    <td>{{ $score->beauty_poise }}</td>
+                                                    <td>{{ $score->overall_impact }}</td>
 
-                                                    <td>{{ $score->poise + $score->execution + $score->appearance }}</td>
+                                                    <td>{{ $score->presentation + $score->figure + $score->beauty_poise + $score->overall_impact }}</td>
 
                                                     @forelse   ($data['rank'] as $rank)
 
-                                                        @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 5)
+                                                        @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 3)
 
-                                                            <td>{{ $rank->casual_wear }}</td>
+                                                            <td>{{ $rank->dept_uniform }}</td>
 
                                                         @endif
 

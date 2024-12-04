@@ -30,5 +30,29 @@ class Ms_candidate extends Model
         return $this->hasMany(Ms_prelim_score::class, 'candidate_id', 'id');
     }
 
+    public function national_costume_score(): HasMany
+    {
+        return $this->hasMany(Ms_natlcost_score::class, 'candidate_id', 'id');
+    }
+
+    public function departmental_uniform_score(): HasMany
+    {
+        return $this->hasMany(Ms_deptuni_score::class, 'candidate_id', 'id');
+    }
+
+    public function swim_wear_score(): HasMany
+    {
+        return $this->hasMany(Ms_swimwear_score::class, 'candidate_id', 'id');
+    }
+
+    public function formal_wear_score(): HasMany
+    {
+        return $this->hasMany(Ms_formalwear_score::class, 'candidate_id', 'id');
+    }
+
+    public function qna_score(): HasMany
+    {
+        return $this->hasMany(Ms_qna_score::class, 'candidate_id', 'id');
+    }
 
 }
