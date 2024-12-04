@@ -344,14 +344,14 @@
 <table class="table table-bordered">
     <thead class="table-dark">
         <tr>
-            <th style="width:15%">CANDIDATE</th>
+            <th style="width:15%">CANDIDATE #</th>
             <th style="width:15%">JUDGE 1</th>
             <th style="width:5%">RANK</th>
             <th style="width:15%">JUDGE 2</th>
             <th style="width:5%">RANK</th>
             <th style="width:15%">JUDGE 3</th>
             <th style="width:5%">RANK</th>
-            {{-- <th style="width:20%">RESULT</th> --}}
+            <th style="width:10%">FINAL RANK</th>
         </tr>
     </thead>
     <tbody>
@@ -435,7 +435,21 @@
                     @endif
 
                 @endforeach
-                {{-- <td>{{ ROUND(($score_judge1 + $score_judge2 + $score_judge3) / 3, 2) }}</td> --}}
+                
+                @forelse   ($data['final_rank'] as $final_rank)
+
+                    @if ($final_rank->candidate_id == $score->candidate_id )
+
+                        <td style="width:5%; text-align: center">{{ $final_rank->rave_wear }}</td>
+
+                    @endif
+
+                @empty
+
+                    <td></td>
+
+                @endforelse
+                
             </tr>
 
         @empty

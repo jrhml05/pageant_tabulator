@@ -8,7 +8,6 @@ use App\Models\Mr_candidate;
 use App\Models\Mr_ranking;
 use App\Models\Mr_prepageant_score;
 use App\Models\Mr_talent_score;
-use App\Models\Mr_prodnum_score;
 use App\Models\Mr_ravewear_score;
 
 use App\Models\Mr_final_rank;
@@ -39,6 +38,8 @@ class MrUepPrePageantReportsController extends Controller
         $data['candidate'] = Mr_candidate::all();
 
         $data['rank'] = Mr_ranking::all();
+
+        $data['final_rank'] = Mr_final_rank::all();
 
         $pdf = PDF::loadView('admin.reports.prepageant.mr.pdfprepageant', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
 
@@ -132,6 +133,8 @@ class MrUepPrePageantReportsController extends Controller
         $data['candidate'] = Mr_candidate::all();
 
         $data['rank'] = Mr_ranking::all();
+        
+        $data['final_rank'] = Mr_final_rank::all();
 
         return view('admin.reports.prepageant.mr.rave_wear.rave_wear', compact('data'));
     }
@@ -143,6 +146,8 @@ class MrUepPrePageantReportsController extends Controller
         $data['candidate'] = Mr_candidate::all();
 
         $data['rank'] = Mr_ranking::all();
+
+        $data['final_rank'] = Mr_final_rank::all();
 
         $pdf = PDF::loadView('admin.reports.prepageant.mr.rave_wear.pdfrave_wear', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
 
@@ -235,6 +240,8 @@ class MrUepPrePageantReportsController extends Controller
 
         $data['rank'] = Mr_ranking::all();
 
+        $data['final_rank'] = Mr_final_rank::all();
+
         return view('admin.reports.prepageant.mr.talent.talent', compact('data'));
     }
 
@@ -245,6 +252,8 @@ class MrUepPrePageantReportsController extends Controller
         $data['candidate'] = Mr_candidate::all();
 
         $data['rank'] = Mr_ranking::all();
+
+        $data['final_rank'] = Mr_final_rank::all();
 
         $pdf = PDF::loadView('admin.reports.prepageant.mr.talent.pdftalent', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
 

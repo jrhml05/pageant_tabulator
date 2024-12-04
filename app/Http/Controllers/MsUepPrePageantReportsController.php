@@ -40,6 +40,8 @@ class MsUepPrePageantReportsController extends Controller
 
         $data['rank'] = Ms_ranking::all();
 
+        $data['final_rank'] = Ms_final_rank::all();
+
         $pdf = PDF::loadView('admin.reports.prepageant.ms.pdfprepageant', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
 
         return $pdf->stream('ms_prepageant_result.pdf');
@@ -131,6 +133,8 @@ class MsUepPrePageantReportsController extends Controller
 
         $data['rank'] = Ms_ranking::all();
 
+        $data['final_rank'] = Ms_final_rank::all();
+
         return view('admin.reports.prepageant.ms.rave_wear.rave_wear', compact('data'));
     }
 
@@ -141,6 +145,8 @@ class MsUepPrePageantReportsController extends Controller
         $data['candidate'] = Ms_candidate::all();
 
         $data['rank'] = Ms_ranking::all();
+
+        $data['final_rank'] = Ms_final_rank::all();
 
         $pdf = PDF::loadView('admin.reports.prepageant.ms.rave_wear.pdfrave_wear', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
 
@@ -233,6 +239,8 @@ class MsUepPrePageantReportsController extends Controller
 
         $data['rank'] = Ms_ranking::all();
 
+        $data['final_rank'] = Ms_final_rank::all();
+
         return view('admin.reports.prepageant.ms.talent.talent', compact('data'));
     }
 
@@ -243,6 +251,8 @@ class MsUepPrePageantReportsController extends Controller
         $data['candidate'] = Ms_candidate::all();
 
         $data['rank'] = Ms_ranking::all();
+
+        $data['final_rank'] = Ms_final_rank::all();
 
         $pdf = PDF::loadView('admin.reports.prepageant.ms.talent.pdftalent', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
 
