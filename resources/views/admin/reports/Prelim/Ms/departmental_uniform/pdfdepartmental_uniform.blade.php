@@ -364,7 +364,7 @@
                     @if ($candidate->id == $score->candidate_id && $score->judge_id == 2)
 
                         @php
-                            $score_judge1 = $score->design + $score->stage_presence + $score->poise_bearing + $score->overall_impact;
+                            $score_judge1 = $score->presentation + $score->figure + $score->beauty_poise + $score->overall_impact;
                         @endphp
 
                         <td>{{ $score_judge1 }}</td>
@@ -386,7 +386,7 @@
                     @if ($candidate->id == $score->candidate_id && $score->judge_id == 3)
 
                         @php
-                            $score_judge2 = $score->design + $score->stage_presence + $score->poise_bearing + $score->overall_impact;
+                            $score_judge2 = $score->presentation + $score->figure + $score->beauty_poise + $score->overall_impact;
                         @endphp
 
                         <td>{{ $score_judge2 }}</td>
@@ -406,7 +406,7 @@
                     @if ($candidate->id == $score->candidate_id && $score->judge_id == 4)
 
                         @php
-                            $score_judge3 = $score->design + $score->stage_presence + $score->poise_bearing + $score->overall_impact;
+                            $score_judge3 = $score->presentation + $score->figure + $score->beauty_poise + $score->overall_impact;
                         @endphp
 
                         <td>{{ $score_judge3 }}</td>

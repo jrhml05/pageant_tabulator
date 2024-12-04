@@ -3,34 +3,28 @@
 @section('content')
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-
-        <h1 class="h3 mb-0 text-gray-800">MR. UEP - FORMAL WEAR RESULT</h1>
+        <h1 class="h3 mb-0 text-gray-800">MR. UEP - SWIM WEAR RESULT</h1>
 
         <div>
-
-            <a href="{{ route('mr_formal_wear_judge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 1 Scores</a>
-
-            <a href="{{ route('mr_formal_wear_judge2') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 2 Scores</a>
-
-            <a href="{{ route('mr_formal_wear_judge3') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 3 Scores</a>
-
+            <a href="{{ route('mr_swim_wear_judge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow">
+                <i class="fas fa-eye fa-sm text-white-50"></i> JUDGE 1 Scores
+            </a>
+            <a href="{{ route('mr_swim_wear_judge2') }}" class="d-none d-sm-inline-block btn btn-primary shadow">
+                <i class="fas fa-eye fa-sm text-white-50"></i> JUDGE 2 Scores
+            </a>
+            <a href="{{ route('mr_swim_wear_judge3') }}" class="d-none d-sm-inline-block btn btn-primary shadow">
+                <i class="fas fa-eye fa-sm text-white-50"></i> JUDGE 3 Scores
+            </a>
         </div>
 
         <div>
-
-            <a href="javascript:void(0)" onclick="mr_formal_wear_rank()" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-ranking-star fa-sm text-white-50"></i> RANK CANDIDATES</a>
-            {{-- <a href="{{ route('prelimrank') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-ranking-star fa-sm text-white-50"></i> RANK CANDIDATES</a> --}}
-
-            <a href="{{ route('mr_pdfformal_wear') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-print fa-sm text-white-50"></i> PRINT RESULTS</a>
-
+            <a href="javascript:void(0)" onclick="mr_swim_wear_rank()" class="d-none d-sm-inline-block btn btn-primary shadow">
+                <i class="fas fa-ranking-star fa-sm text-white-50"></i> RANK CANDIDATES
+            </a>
+            <a href="{{ route('mr_pdfswim_wear') }}" class="d-none d-sm-inline-block btn btn-primary shadow">
+                <i class="fas fa-print fa-sm text-white-50"></i> PRINT RESULTS
+            </a>
         </div>
-
     </div>
 
     @if (session()->has('success'))
@@ -41,6 +35,7 @@
             </button>
         </div>
     @endif
+
     <div class="row">
         <div class="col-xl-12 col-lg-12">
             <div class="card shadow mb-4">
@@ -64,84 +59,61 @@
                                     @forelse ($data['candidate'] as $candidate)
                                         <tr>
                                             <td>{{ strtoupper($candidate->name) }}</td>
-                                            @foreach ( $candidate->formal_wear_score as $score)
-
+                                            @foreach ($candidate->swim_wear_score as $score)
                                                 @if ($candidate->id == $score->candidate_id && $score->judge_id == 2)
-
                                                     @php
-                                                        $score_judge1 = $score->beauty + $score->stage_presence + $score->design + $score->overall_impact;
+                                                        $score_judge1 = $score->body + $score->poise + $score->stage_presence + $score->audience_impact;
                                                     @endphp
-
                                                     <td>{{ $score_judge1 }}</td>
-
-                                                    @forelse   ($data['rank'] as $rank)
-
+                                                    @forelse ($data['rank'] as $rank)
                                                         @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 2)
-                                                            <td>{{ $rank->formal_wear }}</td>
+                                                            <td>{{ $rank->swim_wear }}</td>
                                                         @endif
-
                                                     @empty
                                                         <td></td>
                                                     @endforelse
-
-                                                    {{-- <td></td> --}}
-
                                                 @endif
 
                                                 @if ($candidate->id == $score->candidate_id && $score->judge_id == 3)
-
                                                     @php
-                                                        $score_judge2 = $score->beauty + $score->stage_presence + $score->design + $score->overall_impact;
+                                                        $score_judge2 = $score->body + $score->poise + $score->stage_presence + $score->audience_impact;
                                                     @endphp
-
                                                     <td>{{ $score_judge2 }}</td>
-
-                                                    @forelse   ($data['rank'] as $rank)
-
+                                                    @forelse ($data['rank'] as $rank)
                                                         @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 3)
-                                                            <td>{{ $rank->formal_wear }}</td>
+                                                            <td>{{ $rank->swim_wear }}</td>
                                                         @endif
-
                                                     @empty
                                                         <td></td>
                                                     @endforelse
-
                                                 @endif
 
                                                 @if ($candidate->id == $score->candidate_id && $score->judge_id == 4)
-
                                                     @php
-                                                        $score_judge3 = $score->beauty + $score->stage_presence + $score->design + $score->overall_impact;
+                                                        $score_judge3 = $score->body + $score->poise + $score->stage_presence + $score->audience_impact;
                                                     @endphp
-
                                                     <td>{{ $score_judge3 }}</td>
-
-                                                    @forelse   ($data['rank'] as $rank)
-
+                                                    @forelse ($data['rank'] as $rank)
                                                         @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 4)
-                                                            <td>{{ $rank->formal_wear }}</td>
+                                                            <td>{{ $rank->swim_wear }}</td>
                                                         @endif
-
                                                     @empty
                                                         <td></td>
                                                     @endforelse
-
                                                 @endif
-
                                             @endforeach
-                                            
+
                                             @forelse ($data['final_rank'] as $final_rank)
                                                 @if ($final_rank->candidate_id == $candidate->id)
-                                                    <td style="width:5%; text-align: center">{{ $final_rank->formal_wear }}</td>
+                                                    <td style="width:5%; text-align: center">{{ $final_rank->swim_wear }}</td>
                                                 @endif
                                             @empty
                                                 <td></td>
                                             @endforelse
-
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="6">
+                                            <td colspan="8">
                                                 <center>No Data Found</center>
                                             </td>
                                         </tr>
@@ -153,29 +125,22 @@
                 </div>
             </div>
         </div>
-
     </div>
 
     <script>
-
-        function mr_formal_wear_rank()
-        {
-            alert("formal wear rank");
-
+        function mr_swim_wear_rank() {
+            alert("swim_wear rank");
             $.ajax({
                 type: "GET",
-                url: "/mr_formal_wear_rank",
+                url: "/mr_swim_wear_rank",
                 success: function (response) {
                     location.reload();
                 },
-                error: function (response)
-                {
-                    alert("no formal wear rank");
+                error: function (response) {
+                    alert("no swim_wear rank");
                     console.log(response);
                 }
             });
         }
-
-
     </script>
 @endsection

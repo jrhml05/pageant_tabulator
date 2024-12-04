@@ -21,9 +21,10 @@
 
 .table td,
 .table th {
-    padding: .75rem;
+    padding: 5px;
     vertical-align: top;
-    border-top: 1px solid #e3e6f0
+    border-top: 1px solid #e3e6f0;
+    line-height: 1.5;
 }
 
 .table thead th {
@@ -338,35 +339,40 @@
 <body id="page-top">
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">MR. UEP - PRELIMINARIES (JUDGE 5)</h1>
+    <h1 class="h3 mb-0 text-gray-800">MR. UEP - CASUAL Q&A OVERALL RESULT</h1>
 </div>
 
 <table class="table table-bordered">
     <thead class="table-dark">
         <tr>
-            <th style="width:10%">CANDIDATE #</th>
-            <th style="width:15%">CASUAL WEAR 50%</th>
-            <th style="width:15%">FORMAL WEAR 50%</th>
-            <th style="width:10%">TOTAL 100%</th>
-            <th style="width:10%">RANK</th>
+            <th style="width:12%">CANDIDATE #</th>
+            <th style="width:10%">JUDGE 1</th>
+            <th style="width:5%">RANK</th>
+            <th style="width:10%">JUDGE 2</th>
+            <th style="width:5%">RANK</th>
+            <th style="width:10%">JUDGE 3</th>
+            <th style="width:5%">RANK</th>
+            <th style="width:10%">FINAL RANK</th>
         </tr>
     </thead>
     <tbody>
         @forelse ($data['candidate'] as $candidate)
             <tr>
-                <td>{{ strtoupper($candidate->id) }}</td>
-                @foreach ( $candidate->prelim_score as $score)
+                <td>{{ strtoupper($candidate->name) }}</td>
+                @foreach ( $candidate->qna_score as $score)
 
-                    @if ($candidate->id == $score->candidate_id && $score->judge_id == 6)
+                    @if ($candidate->id == $score->candidate_id && $score->judge_id == 2)
 
-                        <td>{{ $score->casual_wear }}</td>
-                        <td>{{ $score->formal_wear }}</td>
-                        <td>{{ $score->casual_wear + $score->formal_wear }}</td>
+                        @php
+                            $score_judge1 = $score->relevance + $score->delivery + $score->content + $score->audience_impact;
+                        @endphp
+
+                        <td>{{ $score_judge1 }}</td>
 
                         @forelse   ($data['rank'] as $rank)
 
-                            @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 6)
-                                <td>{{ $rank->prelim_rank }}</td>
+                            @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 2)
+                                <td>{{ $rank->qna }}</td>
                             @endif
 
                         @empty
@@ -377,8 +383,55 @@
 
                     @endif
 
+                    @if ($candidate->id == $score->candidate_id && $score->judge_id == 3)
+
+                        @php
+                            $score_judge2 = $score->relevance + $score->delivery + $score->content + $score->audience_impact;
+                        @endphp
+
+                        <td>{{ $score_judge2 }}</td>
+
+                        @forelse   ($data['rank'] as $rank)
+
+                            @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 3)
+                                <td>{{ $rank->qna }}</td>
+                            @endif
+
+                        @empty
+                            <td></td>
+                        @endforelse
+
+                    @endif
+
+                    @if ($candidate->id == $score->candidate_id && $score->judge_id == 4)
+
+                        @php
+                            $score_judge3 = $score->relevance + $score->delivery + $score->content + $score->audience_impact;
+                        @endphp
+
+                        <td>{{ $score_judge3 }}</td>
+
+                        @forelse   ($data['rank'] as $rank)
+
+                            @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 4)
+                                <td>{{ $rank->qna }}</td>
+                            @endif
+
+                        @empty
+                            <td></td>
+                        @endforelse
+
+                    @endif
+
                 @endforeach
-                {{-- <td>{{ ROUND(($score_judge1 + $score_judge2 + $score_judge3) / 3, 2) }}</td> --}}
+                
+                @forelse ($data['final_rank'] as $final_rank)
+                    @if ($final_rank->candidate_id == $candidate->id)
+                        <td style="width:5%; text-align: center">{{ $final_rank->qna }}</td>
+                    @endif
+                @empty
+                    <td></td>
+                @endforelse
             </tr>
         @empty
             <tr>

@@ -3,25 +3,25 @@
 @section('content')
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">MS. UEP - FORMAL WEAR SCORES (JUDGE 1)</h1>
+        <h1 class="h3 mb-0 text-gray-800">MR. UEP - NATIONAL COSTUME SCORES (JUDGE 1)</h1>
 
         <div>
 
-            <a href="{{ route('ms_formal_wear_judge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 1 Formal Wear Scores</a>
+            <a href="{{ route('mr_national_costume_judge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 1 National Costume Scores</a>
 
-            <a href="{{ route('ms_formal_wear_judge2') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 2 Formal Wear Scores</a>
+            <a href="{{ route('mr_national_costume_judge2') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 2 National Costume Scores</a>
 
-            <a href="{{ route('ms_formal_wear_judge3') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 3 Formal Wear Scores</a>
+            <a href="{{ route('mr_national_costume_judge3') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 3 National Costume Scores</a>
 
         </div>
 
         <div>
-            <a href="{{ route('ms_formal_wear') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-less-than fa-sm text-white-50"></i> BACK TO OVERALL FORMAL WEAR RESULTS</a>
-            <a href="{{ route('ms_pdfformal_wearjudge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+            <a href="{{ route('mr_national_costume') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-less-than fa-sm text-white-50"></i> BACK TO OVERALL NATIONAL COSTUME RESULTS</a>
+            <a href="{{ route('mr_pdfnational_costumejudge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
                 class="fas fa-print fa-sm text-white-50"></i> PRINT SCORES JUDGE 1</a>
         </div>
 
@@ -44,10 +44,10 @@
                             <table class="table table-bordered">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th style="width:5%">CANDIDATE</th>
-                                        <th style="width:15%">BEAUTY & POISE 40%</th>
-                                        <th style="width:20%">STAGE DEPORTMENT/PRESENCE 30%</th>
-                                        <th style="width:15%">DESIGN & FITTING 20%</th>
+                                        <th style="width:10%">CANDIDATE</th>
+                                        <th style="width:15%">CREATIVE DESIGN 40%</th>
+                                        <th style="width:15%">STAGE PRESENCE 30%</th>
+                                        <th style="width:15%">POISE & BEARING 20%</th>
                                         <th style="width:15%">OVERALL IMPACT 10%</th>
                                         <th style="width:10%">TOTAL 100%</th>
                                         <th style="width:10%">RANK</th>
@@ -59,24 +59,24 @@
                                     @forelse ($data['candidate'] as $candidate)
 
                                         <tr>
-                                            <td>{{ strtoupper($candidate->id) }}</td>
+                                            <td>{{ strtoupper($candidate->name) }}</td>
 
-                                            @foreach ( $candidate->formal_wear_score as $score)
+                                            @foreach ( $candidate->national_costume_score as $score)
 
                                                 @if ($candidate->id == $score->candidate_id && $score->judge_id == 2)
 
-                                                    <td>{{ $score->beauty }}</td>
-                                                    <td>{{ $score->stage_presence }}</td>
                                                     <td>{{ $score->design }}</td>
+                                                    <td>{{ $score->stage_presence }}</td>
+                                                    <td>{{ $score->poise_bearing }}</td>
                                                     <td>{{ $score->overall_impact }}</td>
 
-                                                    <td>{{ $score->beauty + $score->stage_presence + $score->design + $score->overall_impact }}</td>
+                                                    <td>{{ $score->design + $score->stage_presence + $score->poise_bearing + $score->overall_impact }}</td>
 
                                                     @forelse   ($data['rank'] as $rank)
 
                                                         @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 2)
 
-                                                            <td>{{ $rank->formal_wear }}</td>
+                                                            <td>{{ $rank->national_costume }}</td>
 
                                                         @endif
 

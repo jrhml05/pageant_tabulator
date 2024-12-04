@@ -16,12 +16,6 @@
             <a href="{{ route('mr_formal_wear_judge3') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
                 class="fas fa-eye fa-sm text-white-50"></i> JUDGE 3 Formal Wear Scores</a>
 
-            <a href="{{ route('mr_formal_wear_judge4') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 4 Formal Wear Scores</a>
-
-            <a href="{{ route('mr_formal_wear_judge5') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 5 Formal Wear Scores</a>
-
         </div>
 
         <div>
@@ -50,11 +44,11 @@
                             <table class="table table-bordered">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th style="width:10%">CANDIDATE</th>
-                                        <th style="width:15%">ELEGANCE 25%</th>
-                                        <th style="width:15%">STAGE PRESENCE 25%</th>
-                                        <th style="width:15%">PROJECTION 25%</th>
-                                        <th style="width:15%">POISE 25%</th>
+                                        <th style="width:5%">CANDIDATE</th>
+                                        <th style="width:15%">BEAUTY & POISE 40%</th>
+                                        <th style="width:20%">STAGE DEPORTMENT/PRESENCE 30%</th>
+                                        <th style="width:15%">DESIGN & FITTING 20%</th>
+                                        <th style="width:15%">OVERALL IMPACT 10%</th>
                                         <th style="width:10%">TOTAL 100%</th>
                                         <th style="width:10%">RANK</th>
 
@@ -65,24 +59,24 @@
                                     @forelse ($data['candidate'] as $candidate)
 
                                         <tr>
-                                            <td>{{ strtoupper($candidate->id) }}</td>
+                                            <td>{{ strtoupper($candidate->name) }}</td>
 
                                             @foreach ( $candidate->formal_wear_score as $score)
 
                                                 @if ($candidate->id == $score->candidate_id && $score->judge_id == 3)
 
-                                                    <td>{{ $score->elegance }}</td>
-                                                    <td>{{ $score->presence }}</td>
-                                                    <td>{{ $score->projection }}</td>
-                                                    <td>{{ $score->poise }}</td>
+                                                    <td>{{ $score->beauty }}</td>
+                                                    <td>{{ $score->stage_presence }}</td>
+                                                    <td>{{ $score->design }}</td>
+                                                    <td>{{ $score->overall_impact }}</td>
 
-                                                    <td>{{ $score->elegance + $score->presence + $score->projection + $score->poise }}</td>
+                                                    <td>{{ $score->beauty + $score->stage_presence + $score->design + $score->overall_impact }}</td>
 
                                                     @forelse   ($data['rank'] as $rank)
 
                                                         @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 3)
 
-                                                            <td>{{ $rank->casual_wear }}</td>
+                                                            <td>{{ $rank->formal_wear }}</td>
 
                                                         @endif
 

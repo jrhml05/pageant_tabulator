@@ -167,20 +167,6 @@ class MsUepPrelimReportsController extends Controller
         return view('admin.reports.prelim.ms.national_costume.national_costumejudge1', compact('data'));
     }
 
-    public function ms_pdfnational_costumejudge1()
-    {
-
-        $data['title'] = 'Ms. UEP - National Costume Results (Judge 1)';
-
-        $data['candidate'] = Ms_candidate::all();
-
-        $data['rank'] = Ms_ranking::all();
-
-        $pdf = PDF::loadView('admin.reports.prelim.ms.national_costume.pdfnational_costumejudge1', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
-
-        return $pdf->stream('ms_national_costume_judge1.pdf');
-    }
-
     public function ms_national_costumejudge2()
     {
 
@@ -192,21 +178,6 @@ class MsUepPrelimReportsController extends Controller
 
         return view('admin.reports.prelim.ms.national_costume.national_costumejudge2', compact('data'));
     }
-
-    public function ms_pdfnational_costumejudge2()
-    {
-
-        $data['title'] = 'Ms. UEP - National Costume Results (Judge 2)';
-
-        $data['candidate'] = Ms_candidate::all();
-
-        $data['rank'] = Ms_ranking::all();
-
-        $pdf = PDF::loadView('admin.reports.prelim.ms.national_costume.pdfnational_costumejudge2', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
-
-        return $pdf->stream('ms_national_costume_judge2.pdf');
-    }
-
     public function ms_national_costumejudge3()
     {
 
@@ -217,20 +188,6 @@ class MsUepPrelimReportsController extends Controller
         $data['rank'] = Ms_ranking::all();
 
         return view('admin.reports.prelim.ms.national_costume.national_costumejudge3', compact('data'));
-    }
-
-    public function ms_pdfnational_costumejudge3()
-    {
-
-        $data['title'] = 'Ms. UEP - National Costume Results (Judge 3)';
-
-        $data['candidate'] = Ms_candidate::all();
-
-        $data['rank'] = Ms_ranking::all();
-
-        $pdf = PDF::loadView('admin.reports.prelim.ms.national_costume.pdfnational_costumejudge3', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
-
-        return $pdf->stream('ms_national_costume_judge3.pdf');
     }
 
     public function ms_departmental_uniform()

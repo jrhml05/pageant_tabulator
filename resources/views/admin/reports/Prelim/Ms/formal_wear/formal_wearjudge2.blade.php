@@ -3,24 +3,24 @@
 @section('content')
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">MS. UEP - LONG GOWN SCORES (JUDGE 2)</h1>
+        <h1 class="h3 mb-0 text-gray-800">MS. UEP - FORMAL WEAR SCORES (JUDGE 2)</h1>
 
         <div>
 
             <a href="{{ route('ms_formal_wear_judge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 1 Long Gown Scores</a>
+                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 1 Formal Wear Scores</a>
 
             <a href="{{ route('ms_formal_wear_judge2') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 2 Long Gown Scores</a>
+                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 2 Formal Wear Scores</a>
 
             <a href="{{ route('ms_formal_wear_judge3') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 3 Long Gown Scores</a>
+                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 3 Formal Wear Scores</a>
 
         </div>
 
         <div>
             <a href="{{ route('ms_formal_wear') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-less-than fa-sm text-white-50"></i> BACK TO OVERALL LONG GOWN RESULTS</a>
+                class="fas fa-less-than fa-sm text-white-50"></i> BACK TO OVERALL FORMAL WEAR RESULTS</a>
             <a href="{{ route('ms_pdfformal_wearjudge2') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
                 class="fas fa-print fa-sm text-white-50"></i> PRINT SCORES JUDGE 2</a>
         </div>

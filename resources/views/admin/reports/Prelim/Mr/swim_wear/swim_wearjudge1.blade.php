@@ -3,32 +3,26 @@
 @section('content')
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">MR. UEP - FORMAL WEAR SCORES (JUDGE 5)</h1>
+        <h1 class="h3 mb-0 text-gray-800">MR. UEP - SWIM WEAR SCORES (JUDGE 1)</h1>
 
         <div>
 
-            <a href="{{ route('mr_formal_wear_judge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 1 Formal Wear Scores</a>
+            <a href="{{ route('mr_swim_wear_judge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 1 Swim Wear Scores</a>
 
-            <a href="{{ route('mr_formal_wear_judge2') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 2 Formal Wear Scores</a>
+            <a href="{{ route('mr_swim_wear_judge2') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 2 Swim Wear Scores</a>
 
-            <a href="{{ route('mr_formal_wear_judge3') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 3 Formal Wear Scores</a>
-
-            <a href="{{ route('mr_formal_wear_judge4') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 4 Formal Wear Scores</a>
-
-            <a href="{{ route('mr_formal_wear_judge5') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 5 Formal Wear Scores</a>
+            <a href="{{ route('mr_swim_wear_judge3') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 3 Swim Wear Scores</a>
 
         </div>
 
         <div>
-            <a href="{{ route('mr_formal_wear') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-less-than fa-sm text-white-50"></i> BACK TO OVERALL FORMAL WEAR RESULTS</a>
-            <a href="{{ route('mr_pdfformal_wearjudge5') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-print fa-sm text-white-50"></i> PRINT SCORES JUDGE 5</a>
+            <a href="{{ route('mr_swim_wear') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-less-than fa-sm text-white-50"></i> BACK TO OVERALL SWIM WEAR RESULTS</a>
+            <a href="{{ route('mr_pdfswim_wearjudge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-print fa-sm text-white-50"></i> PRINT SCORES JUDGE 1</a>
         </div>
 
     </div>
@@ -51,10 +45,10 @@
                                 <thead class="table-dark">
                                     <tr>
                                         <th style="width:10%">CANDIDATE</th>
-                                        <th style="width:15%">ELEGANCE 25%</th>
-                                        <th style="width:15%">STAGE PRESENCE 25%</th>
-                                        <th style="width:15%">PROJECTION 25%</th>
-                                        <th style="width:15%">POISE 25%</th>
+                                        <th style="width:15%">CREATIVE DESIGN 40%</th>
+                                        <th style="width:15%">STAGE PRESENCE 30%</th>
+                                        <th style="width:15%">POISE & BEARING 20%</th>
+                                        <th style="width:15%">OVERALL IMPACT 10%</th>
                                         <th style="width:10%">TOTAL 100%</th>
                                         <th style="width:10%">RANK</th>
 
@@ -65,24 +59,24 @@
                                     @forelse ($data['candidate'] as $candidate)
 
                                         <tr>
-                                            <td>{{ strtoupper($candidate->id) }}</td>
+                                            <td>{{ strtoupper($candidate->name) }}</td>
 
-                                            @foreach ( $candidate->formal_wear_score as $score)
+                                            @foreach ( $candidate->swim_wear_score as $score)
 
-                                                @if ($candidate->id == $score->candidate_id && $score->judge_id == 6)
+                                                @if ($candidate->id == $score->candidate_id && $score->judge_id == 2)
 
-                                                    <td>{{ $score->elegance }}</td>
-                                                    <td>{{ $score->presence }}</td>
-                                                    <td>{{ $score->projection }}</td>
+                                                    <td>{{ $score->body }}</td>
                                                     <td>{{ $score->poise }}</td>
+                                                    <td>{{ $score->stage_presence }}</td>
+                                                    <td>{{ $score->audience_impact }}</td>
 
-                                                    <td>{{ $score->elegance + $score->presence + $score->projection + $score->poise }}</td>
+                                                    <td>{{ $score->body + $score->poise + $score->stage_presence + $score->audience_impact }}</td>
 
                                                     @forelse   ($data['rank'] as $rank)
 
-                                                        @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 6)
+                                                        @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 2)
 
-                                                            <td>{{ $rank->casual_wear }}</td>
+                                                            <td>{{ $rank->swim_wear }}</td>
 
                                                         @endif
 

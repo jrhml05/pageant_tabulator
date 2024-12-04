@@ -30,9 +30,19 @@ class Mr_candidate extends Model
         return $this->hasMany(Mr_prelim_score::class, 'candidate_id', 'id');
     }
 
-    public function casual_wear_score(): HasMany
+    public function national_costume_score(): HasMany
     {
-        return $this->hasMany(Mr_casualwear_score::class, 'candidate_id', 'id');
+        return $this->hasMany(Mr_natlcost_score::class, 'candidate_id', 'id');
+    }
+
+    public function departmental_uniform_score(): HasMany
+    {
+        return $this->hasMany(Mr_deptuni_score::class, 'candidate_id', 'id');
+    }
+
+    public function swim_wear_score(): HasMany
+    {
+        return $this->hasMany(Mr_swimwear_score::class, 'candidate_id', 'id');
     }
 
     public function formal_wear_score(): HasMany
@@ -40,8 +50,8 @@ class Mr_candidate extends Model
         return $this->hasMany(Mr_formalwear_score::class, 'candidate_id', 'id');
     }
 
-    public function final_score(): HasMany
+    public function qna_score(): HasMany
     {
-        return $this->hasMany(Mr_final_score::class, 'candidate_id', 'id');
+        return $this->hasMany(Mr_qna_score::class, 'candidate_id', 'id');
     }
 }

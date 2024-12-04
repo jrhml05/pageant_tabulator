@@ -3,27 +3,26 @@
 @section('content')
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-
-        <h1 class="h3 mb-0 text-gray-800">MS. UEP - PRELIMINARIES SCORES (JUDGE 1)</h1>
+        <h1 class="h3 mb-0 text-gray-800">MR. UEP - DEPARTMENTAL UNIFORM SCORES (JUDGE 1)</h1>
 
         <div>
 
-            <a href="{{ route('ms_prelim_judge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 1 Scores</a>
+            <a href="{{ route('mr_departmental_uniform_judge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 1 Departmental Uniform Scores</a>
 
-            <a href="{{ route('ms_prelim_judge2') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 2 Scores</a>
+            <a href="{{ route('mr_departmental_uniform_judge2') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 2 Departmental Uniform Scores</a>
 
-            <a href="{{ route('ms_prelim_judge3') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 3 Scores</a>
+            <a href="{{ route('mr_departmental_uniform_judge3') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 3 Departmental Uniform Scores</a>
 
         </div>
 
         <div>
-            <a href="{{ route('ms_prelim') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-less-than fa-sm text-white-50"></i> BACK TO OVERALL PRELIMINARIES RESULTS</a>
-            <a href="{{ route('ms_pdfprelim_judge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-print fa-sm text-white-50"></i> PRINT JUDGE 1 SCORES</a>
+            <a href="{{ route('mr_departmental_uniform') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-less-than fa-sm text-white-50"></i> BACK TO OVERALL DEPARTMENTAL UNIFORM RESULTS</a>
+            <a href="{{ route('mr_pdfdepartmental_uniformjudge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-print fa-sm text-white-50"></i> PRINT SCORES JUDGE 1</a>
         </div>
 
     </div>
@@ -45,54 +44,62 @@
                             <table class="table table-bordered">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th style="width:10%">CANDIDATE #</th>
-                                        <th style="width:15%">NATIONAL COSTUME 20%</th>
-                                        <th style="width:15%">DEPARTMENTAL UNIFORM 20%</th>
-                                        <th style="width:15%">SWIM WEAR 20%</th>
-                                        <th style="width:15%">FORMAL WEAR 20%</th>
-                                        <th style="width:15%">CASUAL Q&A 20%</th>
+                                        <th style="width:10%">CANDIDATE</th>
+                                        <th style="width:15%">PRESENTATION & NEATNESS 40%</th>
+                                        <th style="width:15%">FIGURE 30%</th>
+                                        <th style="width:15%">BEAUTY & POISE 20%</th>
+                                        <th style="width:15%">OVERALL IMPACT 10%</th>
                                         <th style="width:10%">TOTAL 100%</th>
                                         <th style="width:10%">RANK</th>
+
+                                        {{-- <th style="width:20%">RESULT</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse ($data['candidate'] as $candidate)
+
                                         <tr>
-                                            <td>{{ strtoupper($candidate->id) }}</td>
-                                            @foreach ( $candidate->prelim_score as $score)
+                                            <td>{{ strtoupper($candidate->name) }}</td>
+
+                                            @foreach ( $candidate->departmental_uniform_score as $score)
 
                                                 @if ($candidate->id == $score->candidate_id && $score->judge_id == 2)
 
-                                                    <td>{{ $score->national_costume }}</td>
-                                                    <td>{{ $score->dept_uniform }}</td>
-                                                    <td>{{ $score->swim_wear }}</td>
-                                                    <td>{{ $score->formal_wear }}</td>
-                                                    <td>{{ $score->qna }}</td>
-                                                    <td>{{ $score->national_costume + $score->dept_uniform + $score->swim_wear + $score->formal_wear + $score->qna }}</td>
+                                                    <td>{{ $score->presentation }}</td>
+                                                    <td>{{ $score->figure }}</td>
+                                                    <td>{{ $score->beauty_poise }}</td>
+                                                    <td>{{ $score->overall_impact }}</td>
+
+                                                    <td>{{ $score->presentation + $score->figure + $score->beauty_poise + $score->overall_impact }}</td>
 
                                                     @forelse   ($data['rank'] as $rank)
 
                                                         @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 2)
-                                                            <td>{{ $rank->pageant }}</td>
+
+                                                            <td>{{ $rank->dept_uniform }}</td>
+
                                                         @endif
 
                                                     @empty
-                                                        <td></td>
-                                                    @endforelse
 
-                                                    {{-- <td></td> --}}
+                                                        <td></td>
+
+                                                    @endforelse
 
                                                 @endif
 
                                             @endforeach
                                             {{-- <td>{{ ROUND(($score_judge1 + $score_judge2 + $score_judge3) / 3, 2) }}</td> --}}
                                         </tr>
+
                                     @empty
+
                                         <tr>
                                             <td colspan="6">
                                                 <center>No Data Found</center>
                                             </td>
                                         </tr>
+
                                     @endforelse
                                 </tbody>
                             </table>
@@ -103,4 +110,5 @@
         </div>
 
     </div>
+
 @endsection

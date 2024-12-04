@@ -21,9 +21,10 @@
 
 .table td,
 .table th {
-    padding: .75rem;
+    padding: 5px;
     vertical-align: top;
-    border-top: 1px solid #e3e6f0
+    border-top: 1px solid #e3e6f0;
+    line-height: 1.5;
 }
 
 .table thead th {
@@ -338,7 +339,7 @@
 <body id="page-top">
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">MR. UEP - CASUAL WEAR OVERALL RESULT</h1>
+    <h1 class="h3 mb-0 text-gray-800">MS. UEP - NATIONAL COSTUME OVERALL RESULT</h1>
 </div>
 
 <table class="table table-bordered">
@@ -351,23 +352,19 @@
             <th style="width:5%">RANK</th>
             <th style="width:10%">JUDGE 3</th>
             <th style="width:5%">RANK</th>
-            <th style="width:10%">JUDGE 4</th>
-            <th style="width:5%">RANK</th>
-            <th style="width:12%">JUDGE 5</th>
-            <th style="width:5%">RANK</th>
-            {{-- <th style="width:20%">RESULT</th> --}}
+            <th style="width:10%">FINAL RANK</th>
         </tr>
     </thead>
     <tbody>
         @forelse ($data['candidate'] as $candidate)
             <tr>
-                <td>{{ strtoupper($candidate->id) }}</td>
-                @foreach ( $candidate->casual_wear_score as $score)
+                <td>{{ strtoupper($candidate->name) }}</td>
+                @foreach ( $candidate->national_costume_score as $score)
 
                     @if ($candidate->id == $score->candidate_id && $score->judge_id == 2)
 
                         @php
-                            $score_judge1 = $score->poise + $score->execution + $score->appearance;
+                            $score_judge1 = $score->design + $score->stage_presence + $score->poise_bearing + $score->overall_impact;
                         @endphp
 
                         <td>{{ $score_judge1 }}</td>
@@ -375,7 +372,7 @@
                         @forelse   ($data['rank'] as $rank)
 
                             @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 2)
-                                <td>{{ $rank->casual_wear }}</td>
+                                <td>{{ $rank->national_costume }}</td>
                             @endif
 
                         @empty
@@ -389,7 +386,7 @@
                     @if ($candidate->id == $score->candidate_id && $score->judge_id == 3)
 
                         @php
-                            $score_judge2 = $score->poise + $score->execution + $score->appearance;
+                            $score_judge2 = $score->design + $score->stage_presence + $score->poise_bearing + $score->overall_impact;
                         @endphp
 
                         <td>{{ $score_judge2 }}</td>
@@ -397,7 +394,7 @@
                         @forelse   ($data['rank'] as $rank)
 
                             @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 3)
-                                <td>{{ $rank->casual_wear }}</td>
+                                <td>{{ $rank->national_costume }}</td>
                             @endif
 
                         @empty
@@ -409,7 +406,7 @@
                     @if ($candidate->id == $score->candidate_id && $score->judge_id == 4)
 
                         @php
-                            $score_judge3 = $score->poise + $score->execution + $score->appearance;
+                            $score_judge3 = $score->design + $score->stage_presence + $score->poise_bearing + $score->overall_impact;
                         @endphp
 
                         <td>{{ $score_judge3 }}</td>
@@ -417,47 +414,7 @@
                         @forelse   ($data['rank'] as $rank)
 
                             @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 4)
-                                <td>{{ $rank->casual_wear }}</td>
-                            @endif
-
-                        @empty
-                            <td></td>
-                        @endforelse
-
-                    @endif
-
-                    @if ($candidate->id == $score->candidate_id && $score->judge_id == 5)
-
-                        @php
-                            $score_judge3 = $score->poise + $score->execution + $score->appearance;
-                        @endphp
-
-                        <td>{{ $score_judge3 }}</td>
-
-                        @forelse   ($data['rank'] as $rank)
-
-                            @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 5)
-                                <td>{{ $rank->casual_wear }}</td>
-                            @endif
-
-                        @empty
-                            <td></td>
-                        @endforelse
-
-                    @endif
-
-                    @if ($candidate->id == $score->candidate_id && $score->judge_id == 6)
-
-                        @php
-                            $score_judge3 = $score->poise + $score->execution + $score->appearance;
-                        @endphp
-
-                        <td>{{ $score_judge3 }}</td>
-
-                        @forelse   ($data['rank'] as $rank)
-
-                            @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 6)
-                                <td>{{ $rank->casual_wear }}</td>
+                                <td>{{ $rank->national_costume }}</td>
                             @endif
 
                         @empty
@@ -467,7 +424,14 @@
                     @endif
 
                 @endforeach
-                {{-- <td>{{ ROUND(($score_judge1 + $score_judge2 + $score_judge3) / 3, 2) }}</td> --}}
+                
+                @forelse ($data['final_rank'] as $final_rank)
+                    @if ($final_rank->candidate_id == $candidate->id)
+                        <td style="width:5%; text-align: center">{{ $final_rank->national_costume }}</td>
+                    @endif
+                @empty
+                    <td></td>
+                @endforelse
             </tr>
         @empty
             <tr>
