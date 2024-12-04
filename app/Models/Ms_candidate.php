@@ -24,4 +24,11 @@ class Ms_candidate extends Model
     {
         return $this->hasMany(Ms_ravewear_score::class, 'candidate_id', 'id');
     }
+
+    public function prelim_score(): HasMany
+    {
+        return $this->hasMany(Ms_prelim_score::class, 'candidate_id', 'id');
+    }
+
+
 }

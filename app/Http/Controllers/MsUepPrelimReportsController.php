@@ -37,7 +37,10 @@ class MsUepPrelimReportsController extends Controller
 
         $data['rank'] = Ms_ranking::all();
 
-        $pdf = PDF::loadView('admin.reports.prelim.ms.pdfprelim', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
+        $data['final_rank'] = Ms_final_rank::all();
+
+        $pdf = PDF::loadView('admin.reports.prelim.ms.pdfprelim', compact('data'))
+                ->setPaper(array(0, 0, 612, 936), 'landscape');
 
         return $pdf->stream('ms_prelim_result.pdf');
     }
@@ -484,9 +487,9 @@ class MsUepPrelimReportsController extends Controller
     public function ms_prelim_rank()
     {
 
-        for ($x = 2; $x <= 6; $x++) {
+        for ($x = 2; $x <= 4; $x++) {
             $score = Ms_prelim_score::where('judge_id', $x)
-                ->select(DB::raw('casual_wear + formal_wear as score'), 'candidate_id')
+                ->select(DB::raw('national_costume + dept_uniform + swim_wear + formal_wear + qna as score'), 'candidate_id')
                 ->orderBy('score', 'desc')
                 ->get();
 
@@ -501,12 +504,12 @@ class MsUepPrelimReportsController extends Controller
                 if ($prev_score > $score->score) {
                     $update_rank = Ms_ranking::where('judge_id', $x)
                         ->where('candidate_id', $candidate_id)
-                        ->update(['prelim' => $rank]);
+                        ->update(['pageant' => $rank]);
                     $new_rank = $rank;
                 } elseif ($prev_score == $score->score) {
                     $update_rank = Ms_ranking::where('judge_id', $x)
                         ->where('candidate_id', $candidate_id)
-                        ->update(['prelim' => $prev_rank]);
+                        ->update(['pageant' => $prev_rank]);
                     $new_rank = $prev_rank;
                 }
 
@@ -516,12 +519,12 @@ class MsUepPrelimReportsController extends Controller
             }
         }
 
-        $get_rank = Ms_ranking::select(DB::raw('SUM(prelim) as total'), 'candidate_id')
+        $get_rank = Ms_ranking::select(DB::raw('SUM(pageant) as total'), 'candidate_id')
             ->groupBy('candidate_id')
             ->orderBy('total', 'asc')
             ->get();
 
-        $prev_total_rank = 5;
+        $prev_total_rank = 3;
         $prev_final_rank = 1;
 
         foreach ($get_rank as $idx => $final_rank) {
@@ -529,11 +532,11 @@ class MsUepPrelimReportsController extends Controller
 
             if ($prev_total_rank < $final_rank->total) {
                 $update_final_rank = Ms_final_rank::where('candidate_id', $final_rank->candidate_id)
-                    ->update(['prelim' => $final_ranking]);
+                    ->update(['pageant' => $final_ranking]);
                 $new_final_rank = $final_ranking;
             } elseif ($prev_total_rank == $final_rank->total) {
                 $update_final_rank = Ms_final_rank::where('candidate_id', $final_rank->candidate_id)
-                    ->update(['prelim' => $prev_final_rank]);
+                    ->update(['pageant' => $prev_final_rank]);
                 $new_final_rank = $prev_final_rank;
             }
 

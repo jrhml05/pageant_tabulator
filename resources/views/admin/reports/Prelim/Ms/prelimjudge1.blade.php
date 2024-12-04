@@ -17,12 +17,6 @@
             <a href="{{ route('ms_prelim_judge3') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
                 class="fas fa-eye fa-sm text-white-50"></i> JUDGE 3 Scores</a>
 
-            <a href="{{ route('ms_prelim_judge4') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 4 Scores</a>
-
-            <a href="{{ route('ms_prelim_judge5') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 5 Scores</a>
-
         </div>
 
         <div>
@@ -52,8 +46,11 @@
                                 <thead class="table-dark">
                                     <tr>
                                         <th style="width:10%">CANDIDATE #</th>
-                                        <th style="width:15%">CASUAL WEAR 50%</th>
-                                        <th style="width:15%">FORMAL WEAR 50%</th>
+                                        <th style="width:15%">NATIONAL COSTUME 20%</th>
+                                        <th style="width:15%">DEPARTMENTAL UNIFORM 20%</th>
+                                        <th style="width:15%">SWIM WEAR 20%</th>
+                                        <th style="width:15%">FORMAL WEAR 20%</th>
+                                        <th style="width:15%">CASUAL Q&A 20%</th>
                                         <th style="width:10%">TOTAL 100%</th>
                                         <th style="width:10%">RANK</th>
                                     </tr>
@@ -66,14 +63,17 @@
 
                                                 @if ($candidate->id == $score->candidate_id && $score->judge_id == 2)
 
-                                                    <td>{{ $score->casual_wear }}</td>
+                                                    <td>{{ $score->national_costume }}</td>
+                                                    <td>{{ $score->dept_uniform }}</td>
+                                                    <td>{{ $score->swim_wear }}</td>
                                                     <td>{{ $score->formal_wear }}</td>
-                                                    <td>{{ $score->casual_wear + $score->formal_wear}}</td>
+                                                    <td>{{ $score->qna }}</td>
+                                                    <td>{{ $score->national_costume + $score->dept_uniform + $score->swim_wear + $score->formal_wear + $score->qna }}</td>
 
                                                     @forelse   ($data['rank'] as $rank)
 
                                                         @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 2)
-                                                            <td>{{ $rank->prelim_rank }}</td>
+                                                            <td>{{ $rank->pageant }}</td>
                                                         @endif
 
                                                     @empty
