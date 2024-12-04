@@ -4,24 +4,10 @@
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
 
-    <h1 class="h3 mb-0 text-gray-800">MR. UEP - TOP 6</h1>
+    <h1 class="h3 mb-0 text-gray-800">MS. UEP - TOP 5</h1>
 
     <div>
 
-        <!-- <a href="{{ route('mr_prelim_judge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 1 Scores</a>
-
-            <a href="{{ route('mr_prelim_judge2') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 2 Scores</a>
-
-            <a href="{{ route('mr_prelim_judge3') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 3 Scores</a>
-
-            <a href="{{ route('mr_prelim_judge4') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 4 Scores</a>
-
-            <a href="{{ route('mr_prelim_judge5') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 5 Scores</a> -->
 
     </div>
 
@@ -30,7 +16,7 @@
         <!-- <a href="javascript:void(0)" onclick="mr_prelim_rank()" class="d-none d-sm-inline-block btn btn-primary shadow"><i class="fas fa-ranking-star fa-sm text-white-50"></i> RANK CANDIDATES</a>
         {{-- <a href="{{ route('prelimrank') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i class="fas fa-ranking-star fa-sm text-white-50"></i> RANK CANDIDATES</a> --}} -->
 
-        <a href="{{ route('mr_pdftop_6') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i class="fas fa-print fa-sm text-white-50"></i> PRINT RESULTS</a>
+        <a href="{{ route('ms_pdftop_5') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i class="fas fa-print fa-sm text-white-50"></i> PRINT RESULTS</a>
 
     </div>
 
@@ -63,12 +49,10 @@
                             <tbody>
                                 @forelse ($data['final_rank'] as $rank)
                                 <tr>
-                                    <td>{{ strtoupper($rank->candidate_id) }}</td>
+                                    <td>{{ strtoupper($rank->candidate->name) }}</td>
                                     <td>{{ strtoupper($rank->prepageant) }}</td>
-                                    <td>{{ strtoupper($rank->prelim) }}</td>
-                                    <td>{{ strtoupper($rank->to_final) }}</td>
-                                    
-                                    {{-- <td>{{ ROUND(($score_judge1 + $score_judge2 + $score_judge3) / 3, 2) }}</td> --}}
+                                    <td>{{ strtoupper($rank->pageant) }}</td>
+                                    <td>{{ strtoupper($rank->to_top_5) }}</td>
                                 </tr>
                                 @empty
                                 <tr>

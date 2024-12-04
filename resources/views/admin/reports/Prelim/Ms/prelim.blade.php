@@ -4,30 +4,30 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
 
-        <h1 class="h3 mb-0 text-gray-800">MR. UEP - PRELIMINARIES RESULT</h1>
+        <h1 class="h3 mb-0 text-gray-800">MS. UEP - PRELIMINARIES RESULT</h1>
 
         <div>
 
-            <a href="{{ route('mr_prelim_judge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+            <a href="{{ route('ms_prelim_judge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
                 class="fas fa-eye fa-sm text-white-50"></i> JUDGE 1 Scores</a>
 
-            <a href="{{ route('mr_prelim_judge2') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+            <a href="{{ route('ms_prelim_judge2') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
                 class="fas fa-eye fa-sm text-white-50"></i> JUDGE 2 Scores</a>
 
-            <a href="{{ route('mr_prelim_judge3') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+            <a href="{{ route('ms_prelim_judge3') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
                 class="fas fa-eye fa-sm text-white-50"></i> JUDGE 3 Scores</a>
 
         </div>
 
         <div>
 
-            <a href="javascript:void(0)" onclick="mr_prelim_rank()" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+            <a href="javascript:void(0)" onclick="ms_prelim_rank()" class="d-none d-sm-inline-block btn btn-primary shadow"><i
                 class="fas fa-ranking-star fa-sm text-white-50"></i> RANK CANDIDATES</a>
 
-            <a href="{{ route('mr_pdfprelim') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+            <a href="{{ route('ms_pdfprelim') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
                 class="fas fa-print fa-sm text-white-50"></i> PRINT RESULTS</a>
 
-            <a href="javascript:void(0)" onclick="mr_to_top_5_rank()" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+            <a href="javascript:void(0)" onclick="ms_to_top_5_rank()" class="d-none d-sm-inline-block btn btn-primary shadow"><i
                 class="fas fa-ranking-star fa-sm text-white-50"></i> RANK CANDIDATES to TOP 5</a>
 
         </div>
@@ -165,13 +165,13 @@
 
     <script>
 
-        function mr_prelim_rank()
+        function ms_prelim_rank()
         {
             alert("prelim rank");
 
             $.ajax({
                 type: "GET",
-                url: "/mr_prelim_rank",
+                url: "/ms_prelim_rank",
                 success: function (response) {
                     location.reload();
                 },
@@ -183,13 +183,13 @@
             });
         }
 
-        function mr_to_top_5_rank()
+        function ms_to_top_5_rank()
         {
             alert("top 5 rank");
 
             $.ajax({
                 type: "GET",
-                url: "/mr_to_top_5_rank",
+                url: "/ms_to_top_5_rank",
                 success: function (response) {
                     location.reload();
                 },

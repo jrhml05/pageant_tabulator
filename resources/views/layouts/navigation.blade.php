@@ -106,7 +106,7 @@
                 <a class="collapse-item" href="{{ route('ms_swim_wear') }}">Swim Wear Scores</a>
                 <a class="collapse-item" href="{{ route('ms_formal_wear') }}">Formal Wear Scores</a>
                 <a class="collapse-item" href="{{ route('ms_qna') }}">Casual Q&A Scores</a>
-                <a class="collapse-item" href="{{ route('ms_top_6') }}">TOP 5</a>
+                <a class="collapse-item" href="{{ route('ms_top_5') }}">TOP 5</a>
                 <a class="collapse-item" href="{{ route('ms_final') }}">Final</a>
             </div>
         </div>
@@ -130,7 +130,7 @@
                 <a class="collapse-item" href="{{ route('mr_swim_wear') }}">Swim Wear Scores</a>
                 <a class="collapse-item" href="{{ route('mr_formal_wear') }}">Formal Wear Scores</a>
                 <a class="collapse-item" href="{{ route('mr_qna') }}">Casual Q&A Scores</a>
-                <a class="collapse-item" href="{{ route('mr_top_6') }}">Top 6</a>
+                <a class="collapse-item" href="{{ route('mr_top_5') }}">TOP 5</a>
                 <a class="collapse-item" href="{{ route('mr_final') }}">Final</a>
             </div>
         </div>

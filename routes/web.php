@@ -108,7 +108,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/mr_swim_wear', [App\Http\Controllers\MrUepPrelimReportsController::class, 'mr_swim_wear'])->name('mr_swim_wear');
     Route::get('/mr_formal_wear', [App\Http\Controllers\MrUepPrelimReportsController::class, 'mr_formal_wear'])->name('mr_formal_wear');
     Route::get('/mr_qna', [App\Http\Controllers\MrUepPrelimReportsController::class, 'mr_qna'])->name('mr_qna');
-    Route::get('/mr_top_6', [App\Http\Controllers\MrUepPrelimReportsController::class, 'mr_top_6'])->name('mr_top_6');
+    Route::get('/mr_top_5', [App\Http\Controllers\MrUepPrelimReportsController::class, 'mr_top_5'])->name('mr_top_5');
 
     //INDIVIDUAL RESULTS
     Route::get('/mr_prelim_judge1', [App\Http\Controllers\MrUepPrelimReportsController::class, 'mr_prelimjudge1'])->name('mr_prelim_judge1');
@@ -140,7 +140,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/mr_pdfprelim_judge1', [App\Http\Controllers\MrUepPrelimReportsController::class, 'mr_pdfprelimjudge1'])->name('mr_pdfprelim_judge1');
     Route::get('/mr_pdfprelim_judge2', [App\Http\Controllers\MrUepPrelimReportsController::class, 'mr_pdfprelimjudge2'])->name('mr_pdfprelim_judge2');
     Route::get('/mr_pdfprelim_judge3', [App\Http\Controllers\MrUepPrelimReportsController::class, 'mr_pdfprelimjudge3'])->name('mr_pdfprelim_judge3');
-    Route::get('/mr_pdftop_6', [App\Http\Controllers\MrUepPrelimReportsController::class, 'mr_pdftop_6'])->name('mr_pdftop_6');
+    Route::get('/mr_pdftop_5', [App\Http\Controllers\MrUepPrelimReportsController::class, 'mr_pdftop_5'])->name('mr_pdftop_5');
 
     Route::get('/mr_pdfnational_costume', [App\Http\Controllers\MrUepPrelimReportsController::class, 'mr_pdfnational_costume'])->name('mr_pdfnational_costume');
     Route::get('/mr_pdfnational_costumejudge1', [App\Http\Controllers\MrUepPrelimReportsController::class, 'mr_pdfnational_costumejudge1'])->name('mr_pdfnational_costumejudge1');
@@ -174,7 +174,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/ms_swim_wear', [App\Http\Controllers\MsUepPrelimReportsController::class, 'ms_swim_wear'])->name('ms_swim_wear');
     Route::get('/ms_formal_wear', [App\Http\Controllers\MsUepPrelimReportsController::class, 'ms_formal_wear'])->name('ms_formal_wear');
     Route::get('/ms_qna', [App\Http\Controllers\MsUepPrelimReportsController::class, 'ms_qna'])->name('ms_qna');
-    Route::get('/ms_top_6', [App\Http\Controllers\MsUepPrelimReportsController::class, 'ms_top_6'])->name('ms_top_6');
+    Route::get('/ms_top_5', [App\Http\Controllers\MsUepPrelimReportsController::class, 'ms_top_5'])->name('ms_top_5');
 
     //INDIVIDUAL RESULTS
     Route::get('/ms_prelim_judge1', [App\Http\Controllers\MsUepPrelimReportsController::class, 'ms_prelimjudge1'])->name('ms_prelim_judge1');
@@ -206,8 +206,8 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/ms_pdfprelim_judge1', [App\Http\Controllers\MsUepPrelimReportsController::class, 'ms_pdfprelimjudge1'])->name('ms_pdfprelim_judge1');
     Route::get('/ms_pdfprelim_judge2', [App\Http\Controllers\MsUepPrelimReportsController::class, 'ms_pdfprelimjudge2'])->name('ms_pdfprelim_judge2');
     Route::get('/ms_pdfprelim_judge3', [App\Http\Controllers\MsUepPrelimReportsController::class, 'ms_pdfprelimjudge3'])->name('ms_pdfprelim_judge3');
-    Route::get('/ms_pdftop_6', [App\Http\Controllers\MsUepPrelimReportsController::class, 'ms_pdftop_6'])->name('ms_pdftop_6');
-    Route::get('/ms_active', [App\Http\Controllers\MsUepPrelimReportsController::class, 'ms_active'])->name('ms_active');
+    Route::get('/ms_pdftop_5', [App\Http\Controllers\MsUepPrelimReportsController::class, 'ms_pdftop_5'])->name('ms_pdftop_5');
+    Route::get('/ms_to_top_5_rank', [App\Http\Controllers\MsUepPrelimReportsController::class, 'ms_to_top_5_rank'])->name('ms_to_top_5_rank');
 
     Route::get('/ms_pdfnational_costume', [App\Http\Controllers\MsUepPrelimReportsController::class, 'ms_pdfnational_costume'])->name('ms_pdfnational_costume');
     Route::get('/ms_pdfnational_costumejudge1', [App\Http\Controllers\MsUepPrelimReportsController::class, 'ms_pdfnational_costumejudge1'])->name('ms_pdfnational_costumejudge1');
@@ -257,6 +257,8 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/mr_swim_wear_rank', [App\Http\Controllers\MrUepPrelimReportsController::class, 'mr_swim_wear_rank'])->name('mr_swim_wear_rank');
     Route::get('/mr_formal_wear_rank', [App\Http\Controllers\MrUepPrelimReportsController::class, 'mr_formal_wear_rank'])->name('mr_formal_wear_rank');
     Route::get('/mr_qna_rank', [App\Http\Controllers\MrUepPrelimReportsController::class, 'mr_qna_rank'])->name('mr_qna_rank');
+
+    Route::get('/mr_to_top_5_rank', [App\Http\Controllers\MrUepPrelimReportsController::class, 'mr_to_top_5_rank'])->name('mr_to_top_5_rank');
 
     Route::get('/mr_final_rank', [App\Http\Controllers\MrUepFinalReportsController::class, 'mr_final_rank'])->name('mr_final_rank');
 

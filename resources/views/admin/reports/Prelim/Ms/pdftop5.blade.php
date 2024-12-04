@@ -338,7 +338,7 @@
 <body id="page-top">
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">MR. UEP - TOP 6</h1>
+    <h1 class="h3 mb-0 text-gray-800">MS. UEP - TOP 5</h1>
 </div>
 
 <table class="table table-bordered">
@@ -354,12 +354,10 @@
     <tbody>
         @forelse ($data['final_rank'] as $rank)
             <tr>
-                <td>{{ strtoupper($rank->candidate_id) }}</td>
+                <td>{{ strtoupper($rank->candidate->name) }}</td>
                 <td>{{ strtoupper($rank->prepageant) }}</td>
-                <td>{{ strtoupper($rank->prelim) }}</td>
-                <td>{{ strtoupper($rank->to_final) }}</td>
-                
-                {{-- <td>{{ ROUND(($score_judge1 + $score_judge2 + $score_judge3) / 3, 2) }}</td> --}}
+                <td>{{ strtoupper($rank->pageant) }}</td>
+                <td>{{ strtoupper($rank->to_top_5) }}</td>
             </tr>
         @empty
             <tr>

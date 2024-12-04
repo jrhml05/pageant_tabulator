@@ -13,6 +13,10 @@
 
 </head>
 <style>
+    .d-sm-flex {
+        margin-top: 10px; /* Adjust the margin-top */
+        margin-bottom: 10px; /* Adjust the margin-bottom */
+    }
     .table {
     width: 100%;
     margin-bottom: 1rem;
@@ -21,9 +25,10 @@
 
 .table td,
 .table th {
-    padding: .75rem;
+    padding: 5px;
     vertical-align: top;
-    border-top: 1px solid #e3e6f0
+    border-top: 1px solid #e3e6f0;
+    line-height: 1.5;
 }
 
 .table thead th {
@@ -37,7 +42,7 @@
 
 .table-sm td,
 .table-sm th {
-    padding: .3rem
+    padding: 3px
 }
 
 .table-bordered {
@@ -338,28 +343,108 @@
 <body id="page-top">
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">MS. UEP - TOP 6</h1>
+    <h1 class="h3 mb-0 text-gray-800">MS. UEP - PRELIMINARIES OVERALL RESULT</h1>
 </div>
 
 <table class="table table-bordered">
     <thead class="table-dark">
         <tr>
-            <th style="width:10%">CANDIDATE #</th>
-            <th style="width:10%">PREPAGEANT RANK</th>
-            <th style="width:10%">PRELIMINIARIES RANK</th>
-            <th style="width:15%">OVERALL RANK</th>
-            {{-- <th style="width:20%">RESULT</th> --}}
+            <th style="width:12%">CANDIDATE #</th>
+            <th style="width:10%">JUDGE 1</th>
+            <th style="width:5%">RANK</th>
+            <th style="width:10%">JUDGE 2</th>
+            <th style="width:5%">RANK</th>
+            <th style="width:10%">JUDGE 3</th>
+            <th style="width:5%">RANK</th>
+            <th style="width:10%">FINAL RANK</th>
         </tr>
     </thead>
     <tbody>
-        @forelse ($data['final_rank'] as $rank)
+        @forelse ($data['candidate'] as $candidate)
             <tr>
-                <td>{{ strtoupper($rank->candidate_id) }}</td>
-                <td>{{ strtoupper($rank->prepageant) }}</td>
-                <td>{{ strtoupper($rank->prelim) }}</td>
-                <td>{{ strtoupper($rank->to_final) }}</td>
+                <td>{{ strtoupper($candidate->name) }}</td>
+                @foreach ( $candidate->prelim_score as $score)
+
+                    @if ($candidate->id == $score->candidate_id && $score->judge_id == 2)
+
+                        @php
+                            $score_judge1 = $score->national_costume + $score->dept_uniform + $score->swim_wear + $score->formal_wear + $score->qna;
+                        @endphp
+
+                        <td>{{ $score_judge1 }}</td>
+
+                        @forelse   ($data['rank'] as $rank)
+
+                            @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 2)
+                                <td>{{ $rank->pageant }}</td>
+                            @endif
+
+                        @empty
+                            <td></td>
+                        @endforelse
+
+                        {{-- <td></td> --}}
+
+                    @endif
+
+                    @if ($candidate->id == $score->candidate_id && $score->judge_id == 3)
+
+                        @php
+                            $score_judge2 = $score->national_costume + $score->dept_uniform + $score->swim_wear + $score->formal_wear + $score->qna;
+                        @endphp
+
+                        <td>{{ $score_judge2 }}</td>
+
+                        @forelse   ($data['rank'] as $rank)
+
+                            @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 3)
+                                <td>{{ $rank->pageant }}</td>
+                            @endif
+
+                        @empty
+                            <td></td>
+                        @endforelse
+
+                    @endif
+
+                    @if ($candidate->id == $score->candidate_id && $score->judge_id == 4)
+
+                        @php
+                            $score_judge3 = $score->national_costume + $score->dept_uniform + $score->swim_wear + $score->formal_wear + $score->qna;
+                        @endphp
+
+                        <td>{{ $score_judge3 }}</td>
+
+                        @forelse   ($data['rank'] as $rank)
+
+                            @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 4)
+                                <td>{{ $rank->pageant }}</td>
+                            @endif
+
+                        @empty
+                            <td></td>
+                        @endforelse
+
+                    @endif
+
+                    
+
+                @endforeach
                 
-                {{-- <td>{{ ROUND(($score_judge1 + $score_judge2 + $score_judge3) / 3, 2) }}</td> --}}
+                @forelse   ($data['final_rank'] as $final_rank)
+
+                    @if ($final_rank->candidate_id == $score->candidate_id )
+
+                        <td style="width:5%; text-align: center">{{ $final_rank->pageant }}</td>
+
+                    @endif
+
+                @empty
+
+                    <td></td>
+
+                @endforelse
+                
             </tr>
         @empty
             <tr>
@@ -369,6 +454,8 @@
             </tr>
         @endforelse
     </tbody>
+
+    
 </table>
 </body>
 </html>

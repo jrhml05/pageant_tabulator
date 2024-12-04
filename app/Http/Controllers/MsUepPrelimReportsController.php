@@ -866,36 +866,38 @@ class MsUepPrelimReportsController extends Controller
     }
 
 
-    public function ms_top_6()
+    public function ms_top_5()
     {
-        $data['title'] = 'MS. UEP Top 6 Results';
+        $data['title'] = 'MS. UEP Top 5 Results';
 
-        $data['final_rank'] = Ms_final_rank::where('to_final', '<=', 6)->get();
+        $data['final_rank'] = Ms_final_rank::where('to_top_5', '<=', 5)->get();
 
-        return view('admin.reports.prelim.ms.top6', compact('data'));
+        return view('admin.reports.prelim.ms.top5', compact('data'));
     }
 
-    public function ms_pdftop_6()
+    public function ms_pdftop_5()
     {
-        $data['title'] = 'MS. UEP Top 6 Results';
+        $data['title'] = 'MS. UEP Top 5 Results';
 
-        $data['final_rank'] = Ms_final_rank::where('to_final', '<=', 6)->get();
+        $data['final_rank'] = Ms_final_rank::where('to_top_5', '<=', 5)
+                                ->inRandomOrder()                  
+                                ->get();
 
-        $pdf = PDF::loadView('admin.reports.prelim.ms.pdftop6', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
+        $pdf = PDF::loadView('admin.reports.prelim.ms.pdftop5', compact('data'))->setPaper(array(0, 0, 612, 936), 'landscape');
 
-        return $pdf->stream('ms_top_6.pdf');
+        return $pdf->stream('ms_top_5.pdf');
 
         // return view('admin.reports.prelim.mr.top6', compact('data'));
     }
 
-    public function ms_active()
+    public function ms_to_top_5_rank()
     {
         $candidates = Ms_candidate::where('is_active', 1)->get();
         foreach ($candidates as $candidate) {
             print_r("Candidate #" . $candidate->id . "<br>");
         }
 
-        $get_top_6 = Ms_final_rank::select(DB::raw('(prepageant * 0.5) + (prelim * 0.5) as total'), 'candidate_id')
+        $get_top_5 = Ms_final_rank::select(DB::raw('(prepageant * 0.3) + (pageant * 0.7) as total'), 'candidate_id')
             // ->groupBy('candidate_id')
             ->orderBy('total', 'asc')
             ->get();
@@ -903,19 +905,19 @@ class MsUepPrelimReportsController extends Controller
         $prev_total_rank = 1;
         $prev_final_rank = 1;
 
-        foreach ($get_top_6 as $idx => $final_rank) {
+        foreach ($get_top_5 as $idx => $final_rank) {
             $final_ranking = $idx + 1;
             if ($prev_total_rank < $final_rank->total) {
                 $update_final_rank = Ms_final_rank::where('candidate_id', $final_rank->candidate_id)
-                    ->update(['to_final' => $final_ranking]);
+                    ->update(['to_top_5' => $final_ranking]);
                 $new_final_rank = $final_ranking;
             } elseif ($prev_total_rank == $final_rank->total) {
                 $update_final_rank = Ms_final_rank::where('candidate_id', $final_rank->candidate_id)
-                    ->update(['to_final' => $prev_final_rank]);
+                    ->update(['to_top_5' => $prev_final_rank]);
                 $new_final_rank = $prev_final_rank;
             }
 
-            if ($new_final_rank <= 6) {
+            if ($new_final_rank <= 5) {
                 $is_active = Ms_candidate::where('id', $final_rank->candidate_id)
                     ->update(['is_active' => 1]);
             } else {
