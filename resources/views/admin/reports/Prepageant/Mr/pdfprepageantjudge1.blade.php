@@ -354,7 +354,7 @@
     <tbody>
         @forelse ($data['candidate'] as $candidate)
             <tr>
-                <td>{{ strtoupper($candidate->id) }}</td>
+                <td>{{ strtoupper($candidate->name) }}</td>
                 @foreach ( $candidate->prepageant_score as $score)
 
                     @if ($candidate->id == $score->candidate_id && $score->judge_id == 2)

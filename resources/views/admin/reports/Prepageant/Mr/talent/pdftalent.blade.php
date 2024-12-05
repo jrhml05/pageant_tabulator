@@ -358,7 +358,7 @@
         @forelse ($data['candidate'] as $candidate)
 
             <tr>
-                <td>{{ strtoupper($candidate->id) }}</td>
+                <td>{{ strtoupper($candidate->name) }}</td>
 
                 @foreach ( $candidate->talent_score as $score)
 

@@ -63,7 +63,7 @@
                                     @forelse ($data['candidate'] as $candidate)
 
                                         <tr>
-                                            <td>{{ strtoupper($candidate->id) }}</td>
+                                            <td>{{ strtoupper($candidate->name) }}</td>
 
                                             @foreach ( $candidate->rave_wear_score as $score)
 
