@@ -4,7 +4,7 @@
 
         @foreach ($records as $index => $record)
             {{-- {{ dd($record->scores) }} --}}
-            <div class="col-lg-3 mb-4">
+            <div class="col-lg-5-col mb-4">
                 <div class="card" id="card">
 
                     <img class="card-img-top" src="{{ asset('assets/img/mr/' . $record->candidate_id . '.jpg') }}"
@@ -15,26 +15,42 @@
                                 class="text-primary">{{ strtoupper($record->barangay->name) }}</span></h6> --}}
                         <div class="input-group mb-1">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Beauty 40%</span>
+                                <span class="input-group-text" id="basic-addon1">Wit & Content 40%</span>
                             </div>
-                            {{-- <input disabled wire:model="records.{{ $index }}.casual_wear" type="number"
-                                class="form-control text-center" placeholder="00.00"
-                                aria-describedby="basic-addon1"> --}}
-                            <input onfocus="this.select()" wire:model="records.{{ $index }}.beauty" type="number"
-                                class="form-control text-center {{ $record->beauty > 40 ? 'is-invalid' : '' }}"
-                                placeholder="00.00" aria-describedby="basic-addon1">
+                            <input onfocus="this.select()" wire:model="records.{{ $index }}.wit" type="number"
+                                class="form-control text-center {{ ($record->wit > 40 || $record->wit < 0) ? 'is-invalid' : '' }}"
+                                placeholder="00.00" aria-describedby="basic-addon1"
+                                {{ $record->is_lock === 1  ? 'disabled' : '' }}>
 
                         </div>
                         <div class="input-group mb-1">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Intelligence 60%</span>
+                                <span class="input-group-text" id="basic-addon1">Projection & Delivery 30%</span>
                             </div>
-                            {{-- <input disabled wire:model="records.{{ $index }}.formal_wear" type="number"
-                                class="form-control text-center" placeholder="00.00"
-                                aria-describedby="basic-addon1"> --}}
-                            <input onfocus="this.select()" wire:model="records.{{ $index }}.intelligence" type="number"
-                                class="form-control text-center {{ $record->intelligence > 60 ? 'is-invalid' : '' }}"
-                                placeholder="00.00" aria-describedby="basic-addon1">
+                            <input onfocus="this.select()" wire:model="records.{{ $index }}.projection" type="number"
+                                class="form-control text-center {{ ($record->projection > 30 || $record->projection < 0) ? 'is-invalid' : '' }}"
+                                placeholder="00.00" aria-describedby="basic-addon1"
+                                {{ $record->is_lock === 1  ? 'disabled' : '' }}>
+
+                        </div>
+                        <div class="input-group mb-1">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Stage Presence 20%</span>
+                            </div>
+                            <input onfocus="this.select()" wire:model="records.{{ $index }}.stage_presence" type="number"
+                                class="form-control text-center {{ ($record->stage_presence > 20 || $record->stage_presence < 0) ? 'is-invalid' : '' }}"
+                                placeholder="00.00" aria-describedby="basic-addon1"
+                                {{ $record->is_lock === 1  ? 'disabled' : '' }}>
+
+                        </div>
+                        <div class="input-group mb-1">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Overall Impact 10%</span>
+                            </div>
+                            <input onfocus="this.select()" wire:model="records.{{ $index }}.overall_impact" type="number"
+                                class="form-control text-center {{ ($record->overall_impact > 10 || $record->overall_impact < 0)? 'is-invalid' : '' }}"
+                                placeholder="00.00" aria-describedby="basic-addon1"
+                                {{ $record->is_lock === 1  ? 'disabled' : '' }}>
 
                         </div>
                         <hr>
@@ -43,7 +59,7 @@
                                 <span class="input-group-text" id="basic-addon1"><strong>Total 100%</strong> </span>
                             </div>
                             @php
-                               $total = ((float) $record->beauty) + ((float) $record->intelligence);
+                               $total = ((float) $record->wit) + ((float) $record->projection) + ((float) $record->stage_presence) + ((float) $record->overall_impact);
                             @endphp
                             <input style="font-weight: bold" disabled type="number"
                                 class="form-control text-center" value="{{ number_format($total, 2) }}" placeholder="00.00"
@@ -66,16 +82,9 @@
                 <div class="col-md-2 mb-1">
                     <a href="{{ route('judge.app') }}" type="button" class="btn btn-secondary btn-lg btn-block rounded-pill">BACK TO HOME</a>
                 </div>
-                <div class="col-md-4 mb-1">
-                    {{-- <a href="{{ route('judge.app.mr.casualwear.score',$stage) }}" type="button" class="btn btn-info btn-lg btn-block rounded-pill">ENTER CASUAL WEAR SCORES</a> --}}
-
-                </div>
-                <div class="col-md-4 mb-1">
-                    {{-- <a href="{{ route('judge.app.mr.formalwear.score',$stage) }}" type="button" class="btn btn-info btn-lg btn-block rounded-pill">ENTER FORMAL WEAR SCORES</a> --}}
-
-                </div>
-                <div class="col-md-2 mb-1">
-                    {{-- <button wire:click="alertConfirm" type="button" class="btn btn-primary btn-lg btn-block rounded-pill">SAVE SCORES</button> --}}
+                <div class="col-md-6">
+                    <button wire:click="lockInscore" type="button"
+                        class="btn btn-primary btn-lg btn-block rounded-pill">LOCK IN SCORES</button>
                 </div>
             </div>
 
@@ -107,7 +116,7 @@
             })
             .then((willSave) => {
                 if (willSave) {
-                    window.livewire.emit('save');
+                    window.livewire.emit('confirmedLockInScores');
                 }
         });
     });

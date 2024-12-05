@@ -8,20 +8,14 @@
 
         <div>
 
-            {{-- <a href="{{ route('mr_final_judge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+            <a href="{{ route('ms_final_judge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
                 class="fas fa-eye fa-sm text-white-50"></i> JUDGE 1 Scores</a>
 
-            <a href="{{ route('mr_final_judge2') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+            <a href="{{ route('ms_final_judge2') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
                 class="fas fa-eye fa-sm text-white-50"></i> JUDGE 2 Scores</a>
 
-            <a href="{{ route('mr_final_judge3') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 3 Scores</a>
-
-            <a href="{{ route('mr_final_judge4') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 4 Scores</a>
-
-            <a href="{{ route('mr_final_judge5') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 5 Scores</a> --}}
+            <a href="{{ route('ms_final_judge3') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 3 Scores</a> 
 
         </div>
 
@@ -29,11 +23,12 @@
 
             <a href="javascript:void(0)" onclick="ms_final_rank()" class="d-none d-sm-inline-block btn btn-primary shadow"><i
                 class="fas fa-ranking-star fa-sm text-white-50"></i> RANK CANDIDATES</a>
-            {{-- <a href="{{ route('finalrank') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-ranking-star fa-sm text-white-50"></i> RANK CANDIDATES</a> --}}
 
             <a href="{{ route('ms_pdffinal') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
                 class="fas fa-print fa-sm text-white-50"></i> PRINT RESULTS</a>
+
+            <a href="javascript:void(0)" onclick="ms_final_score_seeder()" class="d-none d-sm-inline-block btn btn-primary shadow"><i
+                class="fas fa-ranking-star fa-sm text-white-50"></i> SCORE SEEDER</a>
 
         </div>
 
@@ -63,23 +58,19 @@
                                         <th style="width:5%">RANK</th>
                                         <th style="width:10%">JUDGE 3</th>
                                         <th style="width:5%">RANK</th>
-                                        <th style="width:10%">JUDGE 4</th>
-                                        <th style="width:5%">RANK</th>
-                                        <th style="width:10%">JUDGE 5</th>
-                                        <th style="width:5%">RANK</th>
-                                        {{-- <th style="width:20%">RESULT</th> --}}
+                                        <th style="width:20%">FINAL RANK</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse ($data['candidate'] as $candidate)
                                         <tr>
-                                            <td>{{ strtoupper($candidate->id) }}</td>
+                                            <td>{{ strtoupper($candidate->name) }}</td>
                                             @foreach ( $candidate->final_score as $score)
 
                                                 @if ($candidate->id == $score->candidate_id && $score->judge_id == 2)
 
                                                     @php
-                                                        $score_judge1 = $score->beauty + $score->intelligence;
+                                                        $score_judge1 = $score->wit + $score->projection + $score->stage_presence + $score->overall_impact;
                                                     @endphp
 
                                                     <td>{{ $score_judge1 }}</td>
@@ -101,7 +92,7 @@
                                                 @if ($candidate->id == $score->candidate_id && $score->judge_id == 3)
 
                                                     @php
-                                                        $score_judge2 = $score->beauty + $score->intelligence;
+                                                        $score_judge2 = $score->wit + $score->projection + $score->stage_presence + $score->overall_impact;
                                                     @endphp
 
                                                     <td>{{ $score_judge2 }}</td>
@@ -121,7 +112,7 @@
                                                 @if ($candidate->id == $score->candidate_id && $score->judge_id == 4)
 
                                                     @php
-                                                        $score_judge3 = $score->beauty + $score->intelligence;
+                                                        $score_judge3 = $score->wit + $score->projection + $score->stage_presence + $score->overall_impact;
                                                     @endphp
 
                                                     <td>{{ $score_judge3 }}</td>
@@ -138,48 +129,28 @@
 
                                                 @endif
 
-                                                @if ($candidate->id == $score->candidate_id && $score->judge_id == 5)
-
-                                                    @php
-                                                        $score_judge3 = $score->beauty + $score->intelligence;
-                                                    @endphp
-
-                                                    <td>{{ $score_judge3 }}</td>
-
-                                                    @forelse   ($data['rank'] as $rank)
-
-                                                        @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 5)
-                                                            <td>{{ $rank->final }}</td>
-                                                        @endif
-
-                                                    @empty
-                                                        <td></td>
-                                                    @endforelse
-
-                                                @endif
-
-                                                @if ($candidate->id == $score->candidate_id && $score->judge_id == 6)
-
-                                                    @php
-                                                        $score_judge3 = $score->beauty + $score->intelligence;
-                                                    @endphp
-
-                                                    <td>{{ $score_judge3 }}</td>
-
-                                                    @forelse   ($data['rank'] as $rank)
-
-                                                        @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 6)
-                                                            <td>{{ $rank->final }}</td>
-                                                        @endif
-
-                                                    @empty
-                                                        <td></td>
-                                                    @endforelse
-
-                                                @endif
+                                                
 
                                             @endforeach
-                                            {{-- <td>{{ ROUND(($score_judge1 + $score_judge2 + $score_judge3) / 3, 2) }}</td> --}}
+                                            
+                                            
+                                            @forelse   ($data['final_rank'] as $final_rank)
+
+                                            
+                                                @isset($score)
+                                                    @if ($final_rank->candidate_id == $score->candidate_id )
+
+                                                        <td style="width:5%; text-align: center">{{ $final_rank->final }}</td>
+
+                                                    @endif
+                                                @endisset
+
+                                            @empty
+
+                                                <td></td>
+
+                                            @endforelse
+
                                         </tr>
                                     @empty
                                         <tr>
@@ -213,6 +184,25 @@
                 error: function (response)
                 {
                     alert("no final rank");
+                    console.log(response);
+                }
+            });
+        }
+
+        function ms_final_score_seeder()
+        {
+            alert("final score seeder");
+
+            $.ajax({
+                type: "GET",
+                url: "/ms_final_score_seeder",
+                success: function (response) {
+                    alert(response);
+                    location.reload();
+                },
+                error: function (response)
+                {
+                    alert("no final score seeder");
                     console.log(response);
                 }
             });

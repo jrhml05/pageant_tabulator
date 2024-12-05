@@ -12,11 +12,13 @@ class ScoreBoardComponent extends Component
 
     public $stage;
     public $records;
-    protected $listeners = ['save'];
+    protected $listeners = ['confirmedLockInScores'];
 
     protected $rules = [
-        'records.*.beauty' => 'required',
-        'records.*.intelligence' => 'required',
+        'records.*.wit' => 'required',
+        'records.*.projection' => 'required',
+        'records.*.stage_presence' => 'required',
+        'records.*.overall_impact' => 'required',
     ];
 
     public function render()
@@ -32,52 +34,6 @@ class ScoreBoardComponent extends Component
         // dd($this->records);
     }
 
-    public function alertConfirm()
-    {
-        $this->dispatchBrowserEvent('swal:confirm', [
-            'type' => 'warning',
-            'message' => 'Are you sure you want to save the scores?',
-            'text' => 'If saved, the fields with scores will be disabled!'
-        ]);
-    }
-
-    public function save()
-    {
-        foreach ($this->records as $record) {
-
-            if (!$record->is_lock) {
-                $saveScore = Ms_final_score::updateOrCreate(
-                    [
-                        'id' => $record->id,
-                        'candidate_id' => $record->candidate_id,
-                        'judge_id' => Auth::user()->id,
-                    ],
-                    [
-                        'beauty' => $record->beauty == '' ? null : $record->beauty,
-                        'intelligence' => $record->intelligence == '' ? null : $record->intelligence,
-                    ]
-                );
-
-                if ($saveScore) {
-                    $this->dispatchBrowserEvent('swal:modal', [
-                        'type' => 'success',
-                        'message' => 'Scores has been saved successfully!',
-                        'text' => '.',
-                        'button' => false,
-                    ]);
-                }
-            } else {
-                $this->dispatchBrowserEvent('swal:modal', [
-                    'type' => 'error',
-                    'message' => 'Sorry, Score Board has already been locked!',
-                    'text' => 'Try to communicate with the tabulator team.',
-                    'button' => true,
-
-                ]);
-            }
-        }
-    }
-
     public function updatedRecords()
     {
         foreach ($this->records as $record) {
@@ -85,16 +41,73 @@ class ScoreBoardComponent extends Component
             if (!$record->is_lock) {
                 Ms_final_score::updateOrCreate(
                     [
-                        'id' => $record->id,
+                        // 'id' => $record->id,
                         'candidate_id' => $record->candidate_id,
                         'judge_id' => Auth::user()->id,
                     ],
                     [
-                        'beauty' => $record->beauty == '' ? null : $record->beauty,
-                        'intelligence' => $record->intelligence == '' ? null : $record->intelligence,
+                        'wit' => $record->wit == '' ? null : $record->wit,
+                        'projection' => $record->projection == '' ? null : $record->projection,
+                        'stage_presence' => $record->stage_presence == '' ? null : $record->stage_presence,
+                        'overall_impact' => $record->overall_impact == '' ? null : $record->overall_impact,
                     ]
                 );
             }
         }
     }
+
+    public function lockInscore()
+    {
+        $this->dispatchBrowserEvent('swal:confirm', [
+            'type' => 'warning',
+            'message' => 'Are you sure you want to lock in the scores?',
+            'text' => 'If yes, score fields will be disabled!'
+        ]);
+    }
+
+    public function confirmedLockInScores()
+    {
+        $locked = 0;
+        foreach ($this->records as $record) {
+            if ($record->wit === null || $record->projection === null || $record->stage_presence === null || $record->overall_impact === null ) {
+                $this->dispatchBrowserEvent('swal:modal', [
+                    'type' => 'warning',
+                    'message' => 'Fill out all Scores.',
+                    'text' => '.'
+                ]);
+                $locked = 0;
+                break;
+            } else {
+                if (($record->wit > 40 || $record->wit < 0) || ($record->projection > 30 || $record->projection < 0) || ($record->stage_presence > 20 || $record->stage_presence < 0) || ($record->overall_impact > 10 || $record->overall_impact < 0)) {
+
+                    $this->dispatchBrowserEvent('swal:modal', [
+                        'type' => 'warning',
+                        'message' => 'Double Check your scores.',
+                        'text' => '.'
+                    ]);
+                    $locked = 0;
+                    break;
+                } else {
+                    Ms_final_score::updateOrCreate(
+                        [
+                            // 'id' => $record->id,
+                            'candidate_id' => $record->candidate_id,
+                            'judge_id' => Auth::user()->id,
+                        ],
+                        [
+                            'is_lock' => 1
+                        ]
+                    );
+                    $locked = 1;
+                }
+            }
+
+            
+        }
+        if($locked == 1){
+            return redirect()->route('judge.app.ms.final.score', $this->stage);
+        }
+        
+    }
+
 }

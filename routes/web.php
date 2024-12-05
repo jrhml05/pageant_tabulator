@@ -236,12 +236,23 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
 
     //RESULTS for Mr. UEP FINAL
     Route::get('/mr_final', [App\Http\Controllers\MrUepFinalReportsController::class, 'mr_final'])->name('mr_final');
+    Route::get('/mr_final_judge1', [App\Http\Controllers\MrUepFinalReportsController::class, 'mr_final_judge1'])->name('mr_final_judge1');
+    Route::get('/mr_final_judge2', [App\Http\Controllers\MrUepFinalReportsController::class, 'mr_final_judge2'])->name('mr_final_judge2');
+    Route::get('/mr_final_judge3', [App\Http\Controllers\MrUepFinalReportsController::class, 'mr_final_judge3'])->name('mr_final_judge3');
+
+    Route::get('/mr_final_score_seeder', [App\Http\Controllers\MrUepFinalReportsController::class, 'mr_final_score_seeder'])->name('mr_final_score_seeder');
+
 
     //PDF Result
     Route::get('/mr_pdffinal', [App\Http\Controllers\MrUepFinalReportsController::class, 'mr_pdffinal'])->name('mr_pdffinal');
 
     //RESULTS for Ms. UEP FINAL
     Route::get('/ms_final', [App\Http\Controllers\MsUepFinalReportsController::class, 'ms_final'])->name('ms_final');
+    Route::get('/ms_final_judge1', [App\Http\Controllers\MsUepFinalReportsController::class, 'ms_final_judge1'])->name('ms_final_judge1');
+    Route::get('/ms_final_judge2', [App\Http\Controllers\MsUepFinalReportsController::class, 'ms_final_judge2'])->name('ms_final_judge2');
+    Route::get('/ms_final_judge3', [App\Http\Controllers\MsUepFinalReportsController::class, 'ms_final_judge3'])->name('ms_final_judge3');
+
+    Route::get('/ms_final_score_seeder', [App\Http\Controllers\MsUepFinalReportsController::class, 'ms_final_score_seeder'])->name('ms_final_score_seeder');
 
     //PDF Result
     Route::get('/ms_pdffinal', [App\Http\Controllers\MsUepFinalReportsController::class, 'ms_pdffinal'])->name('ms_pdffinal');
