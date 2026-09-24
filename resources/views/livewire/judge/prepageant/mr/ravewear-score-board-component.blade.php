@@ -1,137 +1,41 @@
-<div class="pt-5">
-    <div class="row pt-5">
+<div>
+    <div class="mb-6">
+        <p class="text-sm font-medium text-ink-2">Mr. LCUAA · Pre-pageant</p>
+        <h1 class="text-2xl font-semibold tracking-tight">Rave wear</h1>
+        <p class="mt-1 max-w-prose text-ink-2">Scores save as you type. When every candidate is scored, lock in to send your sheet to the tabulator.</p>
+    </div>
+    @if ($records->isEmpty())
+        <div class="card px-5 py-8 text-center text-ink-2">No score sheets for you yet. Ask the tabulator to create them.</div>
+    @endif
+
+    <x-judge.grid>
         @foreach ($records as $index => $record)
-            {{-- {{ dd($record->scores) }} --}}
-            <div class="col-lg-3 mb-4">
-                <div class="card" id="card">
-
-                    <img class="card-img-top" src="{{ asset('assets/img/mr/' . $index + 1 . '.jpg') }}"
-                        alt="Card image cap">
-
-                    <div class="card-body">
-                        {{-- <h6 class="text-center">#{{ $record->barangay_id }} <span
-                                class="text-primary">{{ strtoupper($record->barangay->name) }}</span></h6> --}}
-                        <div class="input-group mb-1">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Style & Aesthetcs 40%</span>
-                            </div>
-                            <input onfocus="this.select()" wire:model.live="records.{{ $index }}.style" type="number"
-                                class="form-control text-center {{ ($record->style > 40 || $record->style < 0) ? 'is-invalid' : '' }}"
-                                placeholder="00.00" aria-describedby="basic-addon1"
-                                {{ $record->is_lock === 1  ? 'disabled' : '' }}>
-
-                        </div>
-                        <div class="input-group mb-1">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Creativity & Originality 30%</span>
-                            </div>
-                            <input onfocus="this.select()" wire:model.live="records.{{ $index }}.creativity" type="number"
-                                class="form-control text-center {{ ($record->creativity > 30 || $record->creativity < 0) ? 'is-invalid' : '' }}"
-                                placeholder="00.00" aria-describedby="basic-addon1"
-                                {{ $record->is_lock === 1  ? 'disabled' : '' }}>
-
-                        </div>
-                        <div class="input-group mb-1">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Functionality & Comfort 20%</span>
-                            </div>
-                            <input onfocus="this.select()" wire:model.live="records.{{ $index }}.functionality" type="number"
-                                class="form-control text-center {{ ($record->functionality > 20 || $record->functionality < 0) ? 'is-invalid' : '' }}"
-                                placeholder="00.00" aria-describedby="basic-addon1"
-                                {{ $record->is_lock === 1  ? 'disabled' : '' }}>
-
-                        </div>
-                        <div class="input-group mb-1">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Audience Impact 10%</span>
-                            </div>
-                            <input onfocus="this.select()" wire:model.live="records.{{ $index }}.audience_impact" type="number"
-                                class="form-control text-center {{ ($record->audience_impact > 10 || $record->audience_impact < 0) ? 'is-invalid' : '' }}"
-                                placeholder="00.00" aria-describedby="basic-addon1"
-                                {{ $record->is_lock === 1  ? 'disabled' : '' }}>
-
-                        </div>
-                        <hr>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1"><strong>Total 100%</strong> </span>
-                            </div>
-                            @php
-                                $total = ((float) $record->style) + ((float) $record->creativity) + ((float) $record->functionality) + ((float) $record->audience_impact);
-                            @endphp
-                            <input style="font-weight: bold" disabled type="number" class="form-control text-center"
-                                value="{{ number_format($total, 2) }}" placeholder="00.00"
-                                aria-describedby="basic-addon1">
-                        </div>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1"><strong>Rave Wear Equivalent.</strong>
-                                </span>
-                            </div>
-                            @php
-                                $rave_wear = (cal_percentage($total, 100) / 100 ) * 50;
-                            @endphp
-                            <input style="font-weight: bold" disabled type="number"
-                                class="form-control text-center" value="{{ number_format($rave_wear, 2) }}"
-                                placeholder="00.00" aria-describedby="basic-addon1">
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
+            @php $total = (float) $record->style + (float) $record->creativity + (float) $record->functionality + (float) $record->audience_impact; @endphp
+            <x-judge.candidate-card division="mr" :record="$record" wire:key="score-{{ $record->id }}">
+                <x-judge.score-field :index="$index" field="style" label="Style & aesthetics" :max="40" :record="$record" />
+                <x-judge.score-field :index="$index" field="creativity" label="Creativity & originality" :max="30" :record="$record" />
+                <x-judge.score-field :index="$index" field="functionality" label="Functionality & comfort" :max="20" :record="$record" />
+                <x-judge.score-field :index="$index" field="audience_impact" label="Audience impact" :max="10" :record="$record" />
+                <x-slot:footer>
+                    <x-judge.totals :total="$total" label="Rave wear equivalent" :weight="50" />
+                </x-slot:footer>
+            </x-judge.candidate-card>
         @endforeach
-    </div>
-    <br>
-    <br>
-    <br>
-    <br>
-    <div class="fixed-bottom bg-white">
-        <div class="form-group pl-5 pr-5 pt-1">
-            {{-- <button wire:click="try" class="btn btn-primary">dadas</button> --}}
-            <div class="row mb-1">
-                <div class="col-md-6">
-                    <a href="{{ route('judge.app.mr.score', $stage) }}" type="button"
-                        class="btn btn-secondary btn-lg btn-block rounded-pill">BACK TO MAIN SCORE BOARD</a>
-                </div>
-                <div class="col-md-6">
-                    <button wire:click="lockInscore" type="button"
-                        class="btn btn-primary btn-lg btn-block rounded-pill">LOCK IN SCORES</button>
-                </div>
-            </div>
+    </x-judge.grid>
 
-
-        </div>
-
-    </div>
-
+    <x-judge.action-bar>
+        <a href="{{ route('judge.app.mr.score', $stage) }}" class="btn btn-secondary btn-lg">
+            <i class="fa-solid fa-chevron-left" aria-hidden="true"></i> Stage summary
+        </a>
+        <span wire:loading.inline-flex role="status" class="hidden items-center gap-2 text-sm text-ink-2">
+            <i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i> Saving…
+        </span>
+        @if ($records->isNotEmpty() && $records->every(fn ($r) => $r->is_lock))
+            <p class="ml-auto inline-flex items-center gap-2 font-medium"><i class="fa-solid fa-lock" aria-hidden="true"></i> Your scores are locked in</p>
+        @elseif ($records->isNotEmpty())
+            <button wire:click="lockInscore" wire:loading.attr="disabled" type="button" class="btn btn-primary btn-lg ml-auto">
+                <i class="fa-solid fa-lock" aria-hidden="true"></i> Lock in scores
+            </button>
+        @endif
+    </x-judge.action-bar>
 </div>
-
-
-@push('scripts')
-    <script>
-        window.addEventListener('swal:modal', event => {
-            swal({
-                title: event.detail.message,
-                text: event.detail.text,
-                icon: event.detail.type,
-                buttons: false,
-            });
-        });
-
-        window.addEventListener('swal:confirm', event => {
-        swal({
-                title: event.detail.message,
-                text: event.detail.text,
-                icon: event.detail.type,
-                buttons: true,
-                dangerMode: false,
-            })
-            .then((willSave) => {
-                if (willSave) {
-                    Livewire.dispatch('confirmedLockInScores');
-                }
-        });
-    });
-    </script>
-@endpush

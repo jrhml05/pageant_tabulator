@@ -31,14 +31,6 @@ class SwimwearScoreBoardComponent extends Component
         return view('livewire.judge.preliminaries.mr.swimwear-score-board-component');
     }
 
-    public function alertConfirm()
-    {
-        $this->dispatch('swal:confirm',
-            type: 'warning',
-            message: 'Are you sure you want to save the scores?',
-            text: 'If saved, the fields with scores will be disabled!'
-        );
-    }
 
     public function cal_percentage($num_amount, $num_total)
     {
@@ -50,9 +42,12 @@ class SwimwearScoreBoardComponent extends Component
 
     
 
-    public function updatedRecords()
+    public function updatedRecords($value, $key)
     {
-        foreach ($this->records as $record) {
+        // $key is "index.field": save only the candidate that was edited, not every row on each keystroke.
+        $changed = $key === null ? $this->records : array_filter([$this->records[(int) strtok($key, '.')] ?? null]);
+
+        foreach ($changed as $record) {
 
             Mr_swimwear_score::updateOrCreate(
                 [
@@ -88,8 +83,8 @@ class SwimwearScoreBoardComponent extends Component
     {
         $this->dispatch('swal:confirm',
             type: 'warning',
-            message: 'Are you sure you want to lock in the scores?',
-            text: 'If yes, score fields will be disabled!'
+            message: 'Lock in your scores?',
+            text: 'You will not be able to change them after this.'
         );
     }
 
@@ -100,8 +95,8 @@ class SwimwearScoreBoardComponent extends Component
             if ($record->body === null || $record->poise === null || $record->stage_presence === null || $record->audience_impact === null ) {
                 $this->dispatch('swal:modal',
                     type: 'warning',
-                    message: 'Fill out all Scores.',
-                    text: '.'
+                    message: 'Some scores are missing.',
+                    text: 'Enter every score for every candidate, then lock in again.'
                 );
                 $locked = 0;
                 break;
@@ -110,8 +105,8 @@ class SwimwearScoreBoardComponent extends Component
 
                     $this->dispatch('swal:modal',
                         type: 'warning',
-                        message: 'Double Check your scores.',
-                        text: '.'
+                        message: 'A score is out of range.',
+                        text: 'Fix the fields marked in red, then lock in again.'
                     );
                     $locked = 0;
                     break;

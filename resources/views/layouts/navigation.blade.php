@@ -1,153 +1,79 @@
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+@php
+    $main = [
+        ['Scoring status', 'home', 'fa-list-check', ['home']],
+        ['Candidates', 'candidates.index', 'fa-id-badge', ['candidates.*']],
+        ['Judges', 'judges.index', 'fa-user-tie', ['judges.*']],
+        ['Stages', 'settings', 'fa-sliders', ['settings']],
+    ];
 
-    <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-icon rotate-n-15">
-            {{-- <i class="fas fa-laugh-wink"></i> --}}
-            {{-- <i class="fas fa-sharp fa-solid fa-venus"></i> --}}
-            <i class="fas fa-solid fa-chess-queen"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3">TABULATION <sup>2</sup></div>
-    </a>
+    // [label, route]; each report also owns its `{route}_judge{n}` pages.
+    $reports = fn (string $d) => [
+        'Pre-pageant' => [
+            ['Overall', "{$d}_prepageant"],
+            ['Rave wear', "{$d}_rave_wear"],
+            ['Talent', "{$d}_talent"],
+        ],
+        'Preliminaries' => [
+            ['Overall', "{$d}_prelim"],
+            ['National costume', "{$d}_national_costume"],
+            ['Departmental uniform', "{$d}_departmental_uniform"],
+            ['Swim wear', "{$d}_swim_wear"],
+            ['Formal wear', "{$d}_formal_wear"],
+            ['Casual Q&A', "{$d}_qna"],
+            ['Top 5', "{$d}_top_5"],
+        ],
+        'Final' => [
+            ['Final', "{$d}_final"],
+        ],
+    ];
 
-    <!-- Divider -->
-    <hr class="sidebar-divider my-0">
+    $divisions = ['ms' => 'Ms. LCUAA results', 'mr' => 'Mr. LCUAA results'];
+    $linkClass = fn (bool $current) => 'flex min-h-10 items-center gap-3 rounded-md px-3 text-sm font-medium transition-colors '
+        . ($current ? 'bg-accent-soft text-accent-soft-ink' : 'text-ink-2 hover:bg-surface-2 hover:text-ink');
+@endphp
 
-    <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-        <a class="nav-link" href="{{ route('home') }}">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span></a>
-    </li>
+<nav aria-label="Admin" class="flex flex-col gap-6 px-3 py-4">
+    <ul class="flex flex-col gap-0.5">
+        @foreach ($main as [$label, $name, $icon, $patterns])
+            @php $current = request()->routeIs(...$patterns); @endphp
+            <li>
+                <a href="{{ route($name) }}" class="{{ $linkClass($current) }}" @if ($current) aria-current="page" @endif>
+                    <i class="fa-solid {{ $icon }} w-4 text-center" aria-hidden="true"></i>
+                    {{ $label }}
+                </a>
+            </li>
+        @endforeach
+    </ul>
 
-    <!-- Divider -->
-    <hr class="sidebar-divider">
-
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        Navigations
-    </div>
-
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBarangays"
-            aria-expanded="true" aria-controls="collapseBarangays">
-            <i class="fas fa fa-location-arrow"></i>
-            {{-- <span>Barangays ({{ \App\Models\Barangay::get()->count(); }})</span> --}}
-        </a>
-        <div id="collapseBarangays" class="collapse" aria-labelledby="headingBarangays" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Manage Barangays:</h6>
-                <a class="collapse-item" href="{{ route('barangays.create') }}">Add New</a>
-                <a class="collapse-item" href="{{ route('barangays.index') }}">View All</a>
+    @foreach ($divisions as $d => $divisionLabel)
+        @php
+            $groups = $reports($d);
+            $inDivision = collect($groups)->flatten(1)->contains(fn ($item) => request()->routeIs($item[1], $item[1] . '_judge*'));
+        @endphp
+        <details class="group" @if ($inDivision) open @endif>
+            <summary class="flex min-h-10 cursor-pointer list-none items-center justify-between rounded-md px-3 text-sm font-semibold hover:bg-surface-2 [&::-webkit-details-marker]:hidden">
+                {{ $divisionLabel }}
+                <i class="fa-solid fa-chevron-down text-xs text-ink-2 transition-transform group-open:rotate-180" aria-hidden="true"></i>
+            </summary>
+            <div class="mt-1 flex flex-col gap-3 pl-3">
+                @foreach ($groups as $groupLabel => $items)
+                    <div>
+                        @if (count($items) > 1)
+                            <p class="px-3 pt-1 pb-1 text-xs font-medium text-ink-2">{{ $groupLabel }}</p>
+                        @endif
+                        <ul class="flex flex-col gap-0.5">
+                            @foreach ($items as [$label, $name])
+                                @php $current = request()->routeIs($name, $name . '_judge*'); @endphp
+                                <li>
+                                    <a href="{{ route($name) }}" class="{{ $linkClass($current) }}" @if ($current) aria-current="page" @endif>
+                                        {{ $label }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endforeach
             </div>
-        </div>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCandidates"
-            aria-expanded="true" aria-controls="collapseCandidates">
-            <i class="fas fa-fw fa-users"></i>
-            <span>Candidates ({{ \App\Models\Ms_candidate::get()->count(); }})</span>
-        </a>
-        <div id="collapseCandidates" class="collapse" aria-labelledby="headingCandidates" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Manage Candidates:</h6>
-                <a class="collapse-item" href="{{ route('candidates.create') }}">Add New</a>
-                <a class="collapse-item" href="{{ route('candidates.index') }}">View All</a>
-            </div>
-        </div>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseJudges"
-            aria-expanded="true" aria-controls="collapseJudges">
-            <i class="fas fa-fw fa-users"></i>
-            <span>Judges ({{ \App\Models\User::where('role','judge')->get()->count(); }})</span>
-        </a>
-        <div id="collapseJudges" class="collapse" aria-labelledby="headingJudges" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Manage Judges:</h6>
-                <a class="collapse-item" href="{{ route('judges.create') }}">Add New</a>
-                <a class="collapse-item" href="{{ route('judges.index') }}">View All</a>
-            </div>
-        </div>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCategories"
-            aria-expanded="true" aria-controls="collapseCategories">
-            <i class="fas fa-fw fa-cogs"></i>
-            {{-- <span>Categories ({{ \App\Models\Category::get()->count(); }})</span> --}}
-        </a>
-        <div id="collapseCategories" class="collapse" aria-labelledby="headingCategories" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Manage Categories:</h6>
-                <a class="collapse-item" href="{{ route('categories.create') }}">Add New</a>
-                <a class="collapse-item" href="{{ route('categories.index') }}">View All</a>
-            </div>
-        </div>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReportsMs"
-            aria-expanded="true" aria-controls="collapseReports">
-            <i class="fas fa-fw fa-file"></i>
-            <span>Reports (Ms. UEP)</span>
-        </a>
-        <div id="collapseReportsMs" class="collapse" aria-labelledby="headingReports" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Manage Reports:</h6>
-                <a class="collapse-item" href="{{ route('ms_prepageant') }}">Pre-pageant Scores</a>
-                <a class="collapse-item" href="{{ route('ms_rave_wear') }}">Rave Wear Scores</a>
-                <a class="collapse-item" href="{{ route('ms_talent') }}">Talent Scores</a>
-                <a class="collapse-item" href="{{ route('ms_prelim') }}">Pageant Night Scores</a>
-                <a class="collapse-item" href="{{ route('ms_national_costume') }}">National Costume Scores</a>
-                <a class="collapse-item" href="{{ route('ms_departmental_uniform') }}">Departmental Uniform Scores</a>
-                <a class="collapse-item" href="{{ route('ms_swim_wear') }}">Swim Wear Scores</a>
-                <a class="collapse-item" href="{{ route('ms_formal_wear') }}">Formal Wear Scores</a>
-                <a class="collapse-item" href="{{ route('ms_qna') }}">Casual Q&A Scores</a>
-                <a class="collapse-item" href="{{ route('ms_top_5') }}">TOP 5</a>
-                <a class="collapse-item" href="{{ route('ms_final') }}">Final</a>
-            </div>
-        </div>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReportsMr"
-            aria-expanded="true" aria-controls="collapseReports">
-            <i class="fas fa-fw fa-file"></i>
-            <span>Reports (Mr. UEP)</span>
-        </a>
-        <div id="collapseReportsMr" class="collapse" aria-labelledby="headingReports" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Manage Reports:</h6>
-                <a class="collapse-item" href="{{ route('mr_prepageant') }}">Pre-pageant Scores</a>
-                <a class="collapse-item" href="{{ route('mr_rave_wear') }}">Rave Wear Scores</a>
-                <a class="collapse-item" href="{{ route('mr_talent') }}">Talent Scores</a>
-                <a class="collapse-item" href="{{ route('mr_prelim') }}">Pageant Night Scores</a>
-                <a class="collapse-item" href="{{ route('mr_national_costume') }}">National Costume Scores</a>
-                <a class="collapse-item" href="{{ route('mr_departmental_uniform') }}">Departmental Uniform Scores</a>
-                <a class="collapse-item" href="{{ route('mr_swim_wear') }}">Swim Wear Scores</a>
-                <a class="collapse-item" href="{{ route('mr_formal_wear') }}">Formal Wear Scores</a>
-                <a class="collapse-item" href="{{ route('mr_qna') }}">Casual Q&A Scores</a>
-                <a class="collapse-item" href="{{ route('mr_top_5') }}">TOP 5</a>
-                <a class="collapse-item" href="{{ route('mr_final') }}">Final</a>
-            </div>
-        </div>
-    </li>
-
-    {{-- <li class="nav-item">
-        <a class="nav-link" href="charts.html">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Preliminaries</span></a>
-    </li> --}}
-
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('settings') }}">
-            <i class="fas fa-fw fa-cogs"></i>
-            <span>Settings</span></a>
-    </li>
-
-
-
-</ul>
+        </details>
+    @endforeach
+</nav>

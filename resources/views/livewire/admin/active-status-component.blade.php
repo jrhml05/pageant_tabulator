@@ -1,9 +1,11 @@
-<div>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
-    <div class="form-check form-switch">
-        <input class="form-check-input"  wire:model.lazy="is_active" type="checkbox" role="switch" @if($is_active) checked @endif wire:ignore.self>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-</div>
+<label class="flex min-h-14 cursor-pointer items-center justify-between gap-4 px-5">
+    <span class="flex flex-col">
+        <span class="font-medium">{{ $label }}</span>
+        <span class="text-sm text-ink-2" wire:loading.remove>{{ $is_active ? 'Open to judges' : 'Closed' }}</span>
+        <span class="hidden text-sm text-ink-2" wire:loading.block>Saving…</span>
+    </span>
+    <input type="checkbox" role="switch" wire:model.live="is_active" @checked($is_active) class="peer sr-only">
+    <span aria-hidden="true"
+        class="relative h-7 w-12 shrink-0 rounded-full bg-line-strong transition-colors peer-checked:bg-accent peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent
+               after:absolute after:top-1 after:left-1 after:size-5 after:rounded-full after:bg-surface after:shadow-sm after:transition-transform peer-checked:after:translate-x-5"></span>
+</label>

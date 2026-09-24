@@ -1,206 +1,121 @@
 @extends('layouts.master')
 
+@section('title', 'Preliminaries · Mr. LCUAA')
+
 @section('content')
-    <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <x-report-header division="mr" stage="Preliminaries" title="Preliminaries" route="mr_prelim" :print="route('mr_pdfprelim')" rank="/mr_prelim_rank">
+        <button type="button" class="btn btn-secondary" data-action-url="/mr_to_top_5_rank"
+            data-busy-label="Marking…" data-error-label="Marking finalists"
+            data-confirm="Mark the five best combined ranks as finalists? This changes which candidates judges score in the final.">
+            <i class="fa-solid fa-medal" aria-hidden="true"></i>
+            <span data-label>Mark top 5 as finalists</span>
+        </button>
+    </x-report-header>
+    <x-table-card>
+        <table class="data-table data-table-ranked">
+            <thead>
+                <tr>
+                    <th scope="col" style="width:12%">Candidate</th>
+                    <th scope="col" style="width:10%">Judge 1</th>
+                    <th scope="col" style="width:5%">Rank</th>
+                    <th scope="col" style="width:10%">Judge 2</th>
+                    <th scope="col" style="width:5%">Rank</th>
+                    <th scope="col" style="width:10%">Judge 3</th>
+                    <th scope="col" style="width:5%">Rank</th>
+                    <th scope="col" style="width:10%">Final rank</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ($data['candidate'] as $candidate)
+                    <tr>
+                        <td>{{ strtoupper($candidate->name) }}</td>
+                        @foreach ( $candidate->prelim_score as $score)
 
-        <h1 class="h3 mb-0 text-gray-800">MR. UEP - PRELIMINARIES RESULT</h1>
+                            @if ($candidate->id == $score->candidate_id && $score->judge_id == 2)
 
-        <div>
+                                @php
+                                    $score_judge1 = $score->national_costume + $score->dept_uniform + $score->swim_wear + $score->formal_wear + $score->qna;
+                                @endphp
 
-            <a href="{{ route('mr_prelim_judge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 1 Scores</a>
+                                <td>{{ $score_judge1 }}</td>
 
-            <a href="{{ route('mr_prelim_judge2') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 2 Scores</a>
+                                @forelse   ($data['rank'] as $rank)
 
-            <a href="{{ route('mr_prelim_judge3') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 3 Scores</a>
+                                    @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 2)
+                                        <td>{{ $rank->pageant }}</td>
+                                    @endif
 
-        </div>
+                                @empty
+                                    <td></td>
+                                @endforelse
 
-        <div>
+                                {{-- <td></td> --}}
 
-            <a href="javascript:void(0)" onclick="mr_prelim_rank()" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-ranking-star fa-sm text-white-50"></i> RANK CANDIDATES</a>
+                            @endif
 
-            <a href="{{ route('mr_pdfprelim') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-print fa-sm text-white-50"></i> PRINT RESULTS</a>
+                            @if ($candidate->id == $score->candidate_id && $score->judge_id == 3)
 
-            <a href="javascript:void(0)" onclick="mr_to_top_5_rank()" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-ranking-star fa-sm text-white-50"></i> RANK CANDIDATES to TOP 5</a>
+                                @php
+                                    $score_judge2 = $score->national_costume + $score->dept_uniform + $score->swim_wear + $score->formal_wear + $score->qna;
+                                @endphp
 
-        </div>
+                                <td>{{ $score_judge2 }}</td>
 
-    </div>
+                                @forelse   ($data['rank'] as $rank)
 
-    @if (session()->has('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>{{ session('success') }}</strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
-    <div class="row">
-        <div class="col-xl-12 col-lg-12">
-            <div class="card shadow mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <thead class="table-dark">
-                                    <tr>
-                                        <th style="width:12%">CANDIDATE #</th>
-                                        <th style="width:10%">JUDGE 1</th>
-                                        <th style="width:5%">RANK</th>
-                                        <th style="width:10%">JUDGE 2</th>
-                                        <th style="width:5%">RANK</th>
-                                        <th style="width:10%">JUDGE 3</th>
-                                        <th style="width:5%">RANK</th>
-                                        <th style="width:10%">FINAL RANK</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse ($data['candidate'] as $candidate)
-                                        <tr>
-                                            <td>{{ strtoupper($candidate->name) }}</td>
-                                            @foreach ( $candidate->prelim_score as $score)
+                                    @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 3)
+                                        <td>{{ $rank->pageant }}</td>
+                                    @endif
 
-                                                @if ($candidate->id == $score->candidate_id && $score->judge_id == 2)
+                                @empty
+                                    <td></td>
+                                @endforelse
 
-                                                    @php
-                                                        $score_judge1 = $score->national_costume + $score->dept_uniform + $score->swim_wear + $score->formal_wear + $score->qna;
-                                                    @endphp
+                            @endif
 
-                                                    <td>{{ $score_judge1 }}</td>
+                            @if ($candidate->id == $score->candidate_id && $score->judge_id == 4)
 
-                                                    @forelse   ($data['rank'] as $rank)
+                                @php
+                                    $score_judge3 = $score->national_costume + $score->dept_uniform + $score->swim_wear + $score->formal_wear + $score->qna;
+                                @endphp
 
-                                                        @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 2)
-                                                            <td>{{ $rank->pageant }}</td>
-                                                        @endif
+                                <td>{{ $score_judge3 }}</td>
 
-                                                    @empty
-                                                        <td></td>
-                                                    @endforelse
+                                @forelse   ($data['rank'] as $rank)
 
-                                                    {{-- <td></td> --}}
+                                    @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 4)
+                                        <td>{{ $rank->pageant }}</td>
+                                    @endif
 
-                                                @endif
+                                @empty
+                                    <td></td>
+                                @endforelse
 
-                                                @if ($candidate->id == $score->candidate_id && $score->judge_id == 3)
+                            @endif
 
-                                                    @php
-                                                        $score_judge2 = $score->national_costume + $score->dept_uniform + $score->swim_wear + $score->formal_wear + $score->qna;
-                                                    @endphp
+                        @endforeach
 
-                                                    <td>{{ $score_judge2 }}</td>
+                        @forelse   ($data['final_rank'] as $final_rank)
 
-                                                    @forelse   ($data['rank'] as $rank)
+                            @if ($final_rank->candidate_id == $score->candidate_id )
 
-                                                        @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 3)
-                                                            <td>{{ $rank->pageant }}</td>
-                                                        @endif
+                                <td style="width:5%; text-align: center">{{ $final_rank->pageant }}</td>
 
-                                                    @empty
-                                                        <td></td>
-                                                    @endforelse
+                            @endif
 
-                                                @endif
+                        @empty
 
-                                                @if ($candidate->id == $score->candidate_id && $score->judge_id == 4)
+                            <td></td>
 
-                                                    @php
-                                                        $score_judge3 = $score->national_costume + $score->dept_uniform + $score->swim_wear + $score->formal_wear + $score->qna;
-                                                    @endphp
+                        @endforelse
 
-                                                    <td>{{ $score_judge3 }}</td>
-
-                                                    @forelse   ($data['rank'] as $rank)
-
-                                                        @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 4)
-                                                            <td>{{ $rank->pageant }}</td>
-                                                        @endif
-
-                                                    @empty
-                                                        <td></td>
-                                                    @endforelse
-
-                                                @endif
-
-                                            @endforeach
-                                            
-                                            @forelse   ($data['final_rank'] as $final_rank)
-
-                                                @if ($final_rank->candidate_id == $score->candidate_id )
-
-                                                    <td style="width:5%; text-align: center">{{ $final_rank->pageant }}</td>
-
-                                                @endif
-
-                                            @empty
-
-                                                <td></td>
-
-                                            @endforelse
-                                            
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="6">
-                                                <center>No Data Found</center>
-                                            </td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <script>
-
-        function mr_prelim_rank()
-        {
-            alert("prelim rank");
-
-            $.ajax({
-                type: "GET",
-                url: "/mr_prelim_rank",
-                success: function (response) {
-                    location.reload();
-                },
-                error: function (response)
-                {
-                    alert("no prelim rank");
-                    console.log(response);
-                }
-            });
-        }
-
-        function mr_to_top_5_rank()
-        {
-            alert("top 5 rank");
-
-            $.ajax({
-                type: "GET",
-                url: "/mr_to_top_5_rank",
-                success: function (response) {
-                    location.reload();
-                },
-                error: function (response)
-                {
-                    alert("no top 5 rank");
-                    console.log(response);
-                }
-            });
-        }
-
-
-    </script>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="8" class="data-table-empty">No candidates in the database. Run <code>php artisan db:seed</code>, then reload this page.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </x-table-card>
 @endsection

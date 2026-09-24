@@ -59,7 +59,8 @@ class LoginController extends Controller
             }
         }else{
             return redirect()->route('login')
-                ->with('error','Email-Address And Password Are Wrong.');
+                ->withInput($request->only('email'))
+                ->with('error', "That email and password don't match an account.");
         }
 
     }

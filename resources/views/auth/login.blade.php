@@ -1,36 +1,29 @@
 @extends('layouts.app')
 
 @section('content')
-    <form method="POST" action="{{ route('login') }}" class="user">
-        @csrf
-        <div class="form-group">
-            <input id="email" type="email" class="form-control form-control-user @error('email') is-invalid @enderror" name="email"
-                id="exampleInputEmail" aria-describedby="emailHelp"
-                placeholder="Enter Email...">
-                @error('email')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-        </div>
-        <div class="form-group">
-            <input id="password" type="password" class="form-control form-control-user @error('password') is-invalid @enderror" name="password" placeholder="Password">
-                @error('password')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-        </div>
-        <div class="form-group">
-            <div class="custom-control custom-checkbox small">
-                <input type="checkbox" class="custom-control-input" id="customCheck">
-                <label class="custom-control-label" for="customCheck">Remember
-                    Me</label>
-            </div>
-        </div>
-        <button type="submit" class="btn btn-primary btn-user btn-block">
-            Login
-        </button>
+    <x-flash />
 
+    <form method="POST" action="{{ route('login') }}" class="flex flex-col gap-5" novalidate>
+        @csrf
+
+        <div>
+            <label for="email" class="label">Email</label>
+            <input id="email" name="email" type="email" value="{{ old('email') }}" required autofocus
+                autocomplete="username" class="input mt-1.5" @error('email') aria-invalid="true" aria-describedby="email-error" @enderror>
+            @error('email')
+                <p id="email-error" class="field-error">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div>
+            <label for="password" class="label">Password</label>
+            <input id="password" name="password" type="password" required autocomplete="current-password"
+                class="input mt-1.5" @error('password') aria-invalid="true" aria-describedby="password-error" @enderror>
+            @error('password')
+                <p id="password-error" class="field-error">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg w-full">Sign in</button>
     </form>
 @endsection

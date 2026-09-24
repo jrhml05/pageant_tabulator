@@ -1,148 +1,53 @@
-<div class="pt-5">
+<div>
+    <div class="mb-6">
+        <p class="text-sm font-medium text-ink-2">Ms. LCUAA</p>
+        <h1 class="text-2xl font-semibold tracking-tight">Preliminaries</h1>
+        <p class="mt-1 max-w-prose text-ink-2">Your weighted totals for this stage. Pick a category to enter or review its scores.</p>
+    </div>
+    <nav aria-label="Categories" class="mb-8">
+        <ul class="flex flex-wrap gap-2">
+            <li><a href="{{ route('judge.app.ms.nationalcostume.score', $stage) }}" class="btn btn-secondary btn-lg">National costume</a></li>
+            <li><a href="{{ route('judge.app.ms.departmentaluniform.score', $stage) }}" class="btn btn-secondary btn-lg">Departmental uniform</a></li>
+            <li><a href="{{ route('judge.app.ms.swimwear.score', $stage) }}" class="btn btn-secondary btn-lg">Swim wear</a></li>
+            <li><a href="{{ route('judge.app.ms.formalwear.score', $stage) }}" class="btn btn-secondary btn-lg">Formal wear</a></li>
+            <li><a href="{{ route('judge.app.ms.qna.score', $stage) }}" class="btn btn-secondary btn-lg">Casual Q&A</a></li>
+        </ul>
+    </nav>
 
-    <div class="row pt-5">
+    @if ($records->isEmpty())
+        <div class="card px-5 py-8 text-center text-ink-2">No score sheets for you yet. Ask the tabulator to create them.</div>
+    @endif
 
-        @foreach ($records as $index => $record)
-            {{-- {{ dd($record->scores) }} --}}
-            <div class="col-lg-3 mb-4">
-                <div class="card" id="card">
-
-                    <img class="card-img-top" src="{{ asset('assets/img/ms/' . $index + 1 . '.jpg') }}"
-                        alt="Card image cap">
-
-                    <div class="card-body">
-                        {{-- <h6 class="text-center">#{{ $record->barangay_id }} <span
-                                class="text-primary">{{ strtoupper($record->barangay->name) }}</span></h6> --}}
-                        <div class="input-group mb-1">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">National Costume 20%</span>
-                            </div>
-                            <input disabled wire:model.live="records.{{ $index }}.national_costume" type="number"
-                                class="form-control text-center" placeholder="00.00"
-                                aria-describedby="basic-addon1">
-
-                        </div>
-                        <div class="input-group mb-1">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Departmental Uniform 20%</span>
-                            </div>
-                            <input disabled wire:model.live="records.{{ $index }}.dept_uniform" type="number"
-                                class="form-control text-center" placeholder="00.00"
-                                aria-describedby="basic-addon1">
-
-                        </div>
-                        <div class="input-group mb-1">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Swim Wear 20%</span>
-                            </div>
-                            <input disabled wire:model.live="records.{{ $index }}.swim_wear" type="number"
-                                class="form-control text-center" placeholder="00.00"
-                                aria-describedby="basic-addon1">
-
-                        </div>
-                        <div class="input-group mb-1">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Formal Wear 20%</span>
-                            </div>
-                            <input disabled wire:model.live="records.{{ $index }}.formal_wear" type="number"
-                                class="form-control text-center" placeholder="00.00"
-                                aria-describedby="basic-addon1">
-
-                        </div>
-                        <div class="input-group mb-1">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Casual Q&A 20%</span>
-                            </div>
-                            <input disabled wire:model.live="records.{{ $index }}.qna" type="number"
-                                class="form-control text-center" placeholder="00.00"
-                                aria-describedby="basic-addon1">
-
-                        </div>
-                        <hr>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1"><strong>Total 100%</strong> </span>
-                            </div>
-                            @php
-                               $total = ((float) $record->national_costume) + ((float) $record->dept_uniform) + ((float) $record->swim_wear) + ((float) $record->formal_wear) + ((float) $record->qna);
-                            @endphp
-                            <input style="font-weight: bold" disabled type="number"
-                                class="form-control text-center" value="{{ number_format($total, 2) }}" placeholder="00.00"
-                                aria-describedby="basic-addon1">
-
-                        </div>
+    <x-judge.grid>
+        @foreach ($records as $record)
+            @php $total = (float) $record->national_costume + (float) $record->dept_uniform + (float) $record->swim_wear + (float) $record->formal_wear + (float) $record->qna; @endphp
+            <x-judge.candidate-card division="ms" :record="$record" wire:key="summary-{{ $record->id }}">
+                <dl class="flex flex-col gap-2 tabular-nums">
+                    <div class="flex items-baseline justify-between gap-2">
+                        <dt class="text-ink-2">National costume</dt>
+                        <dd><span class="font-semibold">{{ is_numeric($record->national_costume) ? number_format($record->national_costume, 2) : 'Not scored' }}</span> <span class="text-sm text-ink-2">/ 20</span></dd>
                     </div>
-                </div>
-            </div>
+                    <div class="flex items-baseline justify-between gap-2">
+                        <dt class="text-ink-2">Departmental uniform</dt>
+                        <dd><span class="font-semibold">{{ is_numeric($record->dept_uniform) ? number_format($record->dept_uniform, 2) : 'Not scored' }}</span> <span class="text-sm text-ink-2">/ 20</span></dd>
+                    </div>
+                    <div class="flex items-baseline justify-between gap-2">
+                        <dt class="text-ink-2">Swim wear</dt>
+                        <dd><span class="font-semibold">{{ is_numeric($record->swim_wear) ? number_format($record->swim_wear, 2) : 'Not scored' }}</span> <span class="text-sm text-ink-2">/ 20</span></dd>
+                    </div>
+                    <div class="flex items-baseline justify-between gap-2">
+                        <dt class="text-ink-2">Formal wear</dt>
+                        <dd><span class="font-semibold">{{ is_numeric($record->formal_wear) ? number_format($record->formal_wear, 2) : 'Not scored' }}</span> <span class="text-sm text-ink-2">/ 20</span></dd>
+                    </div>
+                    <div class="flex items-baseline justify-between gap-2">
+                        <dt class="text-ink-2">Casual Q&A</dt>
+                        <dd><span class="font-semibold">{{ is_numeric($record->qna) ? number_format($record->qna, 2) : 'Not scored' }}</span> <span class="text-sm text-ink-2">/ 20</span></dd>
+                    </div>
+                </dl>
+                <x-slot:footer>
+                    <x-judge.totals :total="$total" />
+                </x-slot:footer>
+            </x-judge.candidate-card>
         @endforeach
-    </div>
-    <br>
-    <br>
-    <br>
-    <br>
-    <div class="fixed-bottom bg-white">
-        <div class="form-group pl-5 pr-5 pt-1">
-            {{-- <button wire:click="try" class="btn btn-primary">dadas</button> --}}
-            <div class="row mb-1">
-                <div class="col-md-2 mb-1">
-                    <a href="{{ route('judge.app') }}" type="button" class="btn btn-secondary btn-lg btn-block rounded-pill">BACK TO HOME</a>
-                </div>
-                <div class="col-md-2 mb-1">
-                    <a href="{{ route('judge.app.ms.nationalcostume.score',$stage) }}" type="button" class="btn btn-info btn-lg btn-block rounded-pill">NATIONAL COSTUME SCORES</a>
-
-                </div>
-                <div class="col-md-2 mb-1">
-                    <a href="{{ route('judge.app.ms.departmentaluniform.score',$stage) }}" type="button" class="btn btn-info btn-lg btn-block rounded-pill">DEPARTMENTAL UNIFORM SCORES</a>
-
-                </div>
-                <div class="col-md-2 mb-1">
-                    <a href="{{ route('judge.app.ms.swimwear.score',$stage) }}" type="button" class="btn btn-info btn-lg btn-block rounded-pill">SWIM WEAR SCORES</a>
-
-                </div>
-                <div class="col-md-2 mb-1">
-                    <a href="{{ route('judge.app.ms.formalwear.score',$stage) }}" type="button" class="btn btn-info btn-lg btn-block rounded-pill">FORMAL WEAR SCORES</a>
-
-                </div>
-                <div class="col-md-2 mb-1">
-                    <a href="{{ route('judge.app.ms.qna.score',$stage) }}" type="button" class="btn btn-info btn-lg btn-block rounded-pill">Q&A SCORES</a>
-
-                </div>
-                <div class="col-md-2 mb-1">
-                    {{-- <button wire:click="alertConfirm" type="button" class="btn btn-primary btn-lg btn-block rounded-pill">SAVE SCORES</button> --}}
-                </div>
-            </div>
-
-
-        </div>
-
-    </div>
-
+    </x-judge.grid>
 </div>
-
-@push('scripts')
-    <script>
-        window.addEventListener('swal:modal', event => {
-            swal({
-                title: event.detail.message,
-                text: event.detail.text,
-                icon: event.detail.type,
-                buttons: event.detail.button,
-            });
-        });
-
-        window.addEventListener('swal:confirm', event => {
-        swal({
-                title: event.detail.message,
-                text: event.detail.text,
-                icon: event.detail.type,
-                buttons: true,
-                dangerMode: false,
-            })
-            .then((willSave) => {
-                if (willSave) {
-                    Livewire.dispatch('save');
-                }
-        });
-    });
-    </script>
-@endpush

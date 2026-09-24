@@ -10,9 +10,4 @@ class Stage extends Model
     use HasFactory;
 
     protected $fillable = ['is_active'];
-
-    public function categories()
-    {
-        return $this->hasMany(Category::class, 'category_id', 'id');
-    }
 }

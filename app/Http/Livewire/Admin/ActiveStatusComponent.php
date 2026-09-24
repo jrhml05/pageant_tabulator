@@ -14,6 +14,8 @@ class ActiveStatusComponent extends Component
 
     public $is_active;
 
+    public $label;
+
     public function mount()
     {
         $this->is_active = (bool) $this->model->getAttribute($this->field);

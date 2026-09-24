@@ -34,12 +34,4 @@ class ScoreBoardComponent extends Component
         // dd($this->records);
     }
 
-    public function alertConfirm()
-    {
-        $this->dispatch('swal:confirm',
-            type: 'warning',
-            message: 'Are you sure you want to save the scores?',
-            text: 'If saved, the fields with scores will be disabled!'
-        );
-    }
 }

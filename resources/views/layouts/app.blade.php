@@ -2,79 +2,45 @@
 <html lang="en">
 
 <head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Tabulation - Login</title>
-
-    {{-- @vite(['assets/vendor/fontawesome-free/css/all.min.css','public/assets/css/sb-admin-2.min.css']) --}}
-    <!-- Custom fonts for this template-->
-    <link href="{{ asset('assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
-
-    <!-- Custom styles for this template-->
-    <link href="{{ asset('assets/css/sb-admin-2.min.css') }}" rel="stylesheet">
-    
+    @include('partials.head', ['title' => 'Sign in'])
 </head>
 
-<body class="bg-gradient-primary">
+@php
+    // Drop the event's key art at public/assets/img/event-art.jpg to show it here; until then the panel is text only.
+    $eventArt = is_file(public_path('assets/img/event-art.jpg')) ? 'assets/img/event-art.jpg' : null;
+@endphp
 
-    <div class="container">
-
-        <!-- Outer Row -->
-        <div class="row justify-content-center">
-
-            <div class="col-xl-10 col-lg-12 col-md-9">
-
-                <div class="card o-hidden border-0 shadow-lg my-5">
-                    <div class="card-body p-0">
-                        <!-- Nested Row within Card Body -->
-                        <div class="row">
-                                <div class="col-lg-6 d-none d-lg-block bg-login-image" style="background: url({{ asset('assets/img/logo-mr-ms-01.jpg') }}) center / contain no-repeat;  background-color: #000000"></div>
-                            <div class="col-lg-6">
-                                <div class="p-5">
-                                    <div class="text-center">
-                                        <img src="{{ asset('assets/img/logo-foundation-01.png') }}" width="200px" alt="">
-                                        <h1 class="h4 text-gray-900 mb-4">TABULATION SYSTEM</h1>
-                                    </div>
-
-                                    @yield('content')
-
-                                    <hr>
-                                    <div class="text-center">
-                                        <a class="small" href="forgot-password.html">Forgot Password?</a>
-                                    </div>
-                                    {{-- <div class="text-center">
-                                        <a class="small" href="register.html">Create an Account!</a>
-                                    </div> --}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
+<body class="min-h-dvh">
+    <div class="grid min-h-dvh lg:grid-cols-[minmax(0,1fr)_minmax(0,28rem)]">
+        <div class="hidden items-center justify-center bg-black lg:flex">
+            @if ($eventArt)
+                <img src="{{ asset($eventArt) }}?v={{ filemtime(public_path($eventArt)) }}" alt="Mr. & Ms. LCUAA 2026"
+                    class="max-h-dvh w-full object-contain">
+            @else
+                <p class="px-10 text-center font-semibold tracking-tight text-white">
+                    <span class="block text-5xl">Mr. & Ms.</span>
+                    <span class="block text-7xl">LCUAA</span>
+                    <span class="mt-4 block text-3xl font-normal text-white/80 tabular-nums">2026</span>
+                </p>
+            @endif
         </div>
 
+        <main class="flex flex-col justify-center bg-surface px-6 py-10 sm:px-10">
+            <div class="mx-auto w-full max-w-sm">
+                <p class="text-sm font-medium text-ink-2">Mr. & Ms. LCUAA 2026</p>
+                <h1 class="text-2xl font-semibold tracking-tight">Sign in to tabulation</h1>
+                <p class="mt-1 text-sm text-ink-2">Judges and the tabulator use the accounts set up for this event.</p>
+
+                <div class="mt-8">
+                    @yield('content')
+                </div>
+
+                <div class="mt-8 flex justify-end">
+                    <x-theme-toggle />
+                </div>
+            </div>
+        </main>
     </div>
-
-    <!-- Bootstrap core JavaScript-->
-
-    @vite([
-        'assets/vendor/jquery/jquery.min.js',
-        'assets/vendor/bootstrap/js/bootstrap.bundle.min.js',
-        'assets/vendor/jquery-easing/jquery.easing.min.js',
-        'assets/js/sb-admin-2.min.js',
-    ])
-
-
 </body>
 
 </html>

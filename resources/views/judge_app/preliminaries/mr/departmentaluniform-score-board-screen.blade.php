@@ -1,7 +1,7 @@
 @extends('judge_app.layouts.app')
-@section('content')
 
-    <div class="row pt-5">
-        @livewire('judge.preliminaries.mr.departmentaluniform-score-board-component', [ 'stage' => $stage ])
-    </div>
+@section('title', 'Departmental uniform · Mr. LCUAA')
+
+@section('content')
+    @livewire('judge.preliminaries.mr.departmentaluniform-score-board-component', ['stage' => $stage])
 @endsection

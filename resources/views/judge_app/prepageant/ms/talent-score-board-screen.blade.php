@@ -1,7 +1,7 @@
 @extends('judge_app.layouts.app')
-@section('content')
 
-    <div class="row pt-5">
-        @livewire('judge.prepageant.ms.talent-score-board-component', [ 'stage' => $stage ])
-    </div>
+@section('title', 'Talent · Ms. LCUAA')
+
+@section('content')
+    @livewire('judge.prepageant.ms.talent-score-board-component', ['stage' => $stage])
 @endsection

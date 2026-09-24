@@ -1,140 +1,79 @@
 @extends('layouts.master')
 
+@section('title', 'Scoring status')
+
 @section('content')
- <!-- Page Heading -->
- <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-            class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
-</div>
+    {{-- The tabulator's question on this screen: which categories can I rank yet? Lock status leads; counts are context. --}}
+    <x-page-header title="Scoring status" />
 
- <!-- Content Row -->
- <div class="row">
+    <p class="-mt-3 mb-6 max-w-prose text-sm text-ink-2">
+        A judge's sheet is locked once they press <span class="font-medium text-ink">Lock in scores</span>.
+        Rank a category when every judge has locked it: open it from the table below.
+        <span class="mt-2 block">
+            <a href="{{ route('candidates.index') }}" class="font-medium text-ink underline-offset-4 hover:underline">{{ $data['ms_count'] }} Ms. and {{ $data['mr_count'] }} Mr. candidates</a>
+            ·
+            <a href="{{ route('judges.index') }}" class="font-medium text-ink underline-offset-4 hover:underline">{{ $data['judges']->count() }} {{ Str::plural('judge', $data['judges']->count()) }}</a>
+        </span>
+    </p>
 
-    <!-- Earnings (Monthly) Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                            Total Barangays</div>
-                        {{-- <div class="h5 mb-0 font-weight-bold text-gray-800">{{ \App\Models\Barangay::get()->count(); }}</div> --}}
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                    </div>
-                </div>
-            </div>
+    @if ($data['judges']->isEmpty())
+        <div class="card px-5 py-8 text-center text-ink-2">
+            No judge accounts yet. <a href="{{ route('judges.create') }}" class="font-medium text-accent underline underline-offset-4">Add a judge</a> to start tracking locks.
         </div>
-    </div>
+    @else
+        <div class="flex flex-col gap-4">
+            @forelse ($data['stages'] as $stage)
+                <details class="card group" @if ($stage['active']) open @endif>
+                    <summary class="flex min-h-14 cursor-pointer list-none items-center justify-between gap-3 px-5 [&::-webkit-details-marker]:hidden">
+                        <span class="flex items-center gap-3">
+                            <span class="font-semibold">{{ $stage['name'] }}</span>
+                            @if ($stage['active'])
+                                <span class="rounded bg-accent-soft px-2 py-0.5 text-xs font-medium text-accent-soft-ink">Open to judges</span>
+                            @endif
+                        </span>
+                        <i class="fa-solid fa-chevron-down text-xs text-ink-2 transition-transform group-open:rotate-180" aria-hidden="true"></i>
+                    </summary>
 
-    <!-- Earnings (Monthly) Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-success shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                            Total Candidates</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ \App\Models\Ms_candidate::get()->count(); }}</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-users fa-2x text-gray-300"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Earnings (Monthly) Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-info shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks
-                        </div>
-                        <div class="row no-gutters align-items-center">
-                            <div class="col-auto">
-                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
-                            </div>
-                            <div class="col">
-                                <div class="progress progress-sm mr-2">
-                                    <div class="progress-bar bg-info" role="progressbar"
-                                        style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                                        aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Pending Requests Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-warning shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                            Total Judges</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ \App\Models\User::where('role', 'judge')->get()->count(); }}</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-users fa-2x text-gray-300"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-xl-12 col-lg-12">
-        <div class="card shadow mb-4">
-            <div class="card">
-                <div class="card-header">
-                    <h5>Top 10 (No Particular Orders)</h5>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered">
+                    <div class="overflow-x-auto border-t border-line">
+                        <table class="data-table">
                             <thead>
                                 <tr>
-                                    <th style="width:5%">#</th>
-                                    <th style="width:10%">Image</th>
-                                    <th style="width:20%">Barangay</th>
-                                    <th>Candidate Name</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col" class="text-left!">Ms. LCUAA</th>
+                                    <th scope="col" class="text-left!">Mr. LCUAA</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($data['top_ten'] as $data)
+                                @foreach ($stage['categories'] as $category)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td></td>
-                                        {{-- <td>{{ $data->barangay->name  }}</td> --}}
-                                        <td>{{ $data->first_name }}</td>
+                                        <td>{{ $category['label'] }}</td>
+                                        @foreach (['ms', 'mr'] as $division)
+                                            @php
+                                                $locked = $category[$division];
+                                                $waiting = $data['judges']->whereNotIn('id', $locked->pluck('id'));
+                                                $done = $waiting->isEmpty();
+                                            @endphp
+                                            <td class="text-left!">
+                                                <a href="{{ route("{$division}_{$category['report']}") }}" class="group/cell -mx-1 block rounded px-1 py-0.5 hover:bg-surface">
+                                                    <span class="inline-flex items-center gap-2 font-medium {{ $done ? 'text-success-ink' : '' }}">
+                                                        <i class="fa-solid {{ $done ? 'fa-lock' : 'fa-lock-open text-ink-2' }}" aria-hidden="true"></i>
+                                                        {{ $done ? 'All locked, ready to rank' : $locked->count() . ' of ' . $data['judges']->count() . ' locked' }}
+                                                    </span>
+                                                    <span class="block text-xs text-ink-2 group-hover/cell:underline">
+                                                        {{ $done ? 'Open results' : 'Waiting on ' . $waiting->pluck('name')->join(', ', ' and ') }}
+                                                    </span>
+                                                </a>
+                                            </td>
+                                        @endforeach
                                     </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="4">
-                                            <center>No Data Found</center>
-                                        </td>
-                                    </tr>
-                                @endforelse
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
-                </div>
-            </div>
+                </details>
+            @empty
+                <div class="card px-5 py-8 text-center text-ink-2">No stages set up. Run <code>php artisan db:seed --class=StageSeeder</code> to create them.</div>
+            @endforelse
         </div>
-    </div>
-
-</div>
+    @endif
 @endsection

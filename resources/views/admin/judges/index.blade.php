@@ -1,62 +1,51 @@
 @extends('layouts.master')
 
+@section('title', 'Judges')
+
 @section('content')
-    <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">JUDGES</h1>
-        <a href="{{ route('judges.create') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-plus fa-sm text-white-50"></i> ADD NEW</a>
-    </div>
+    <x-page-header title="Judges">
+        <x-slot:actions>
+            <a href="{{ route('judges.create') }}" class="btn btn-primary">
+                <i class="fa-solid fa-plus" aria-hidden="true"></i> Add judge
+            </a>
+        </x-slot:actions>
+    </x-page-header>
 
-    @if (session()->has('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>{{ session('success') }}</strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
-    <div class="row">
-        <div class="col-xl-12 col-lg-12">
-            <div class="card shadow mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <thead class="table-dark">
-                                    <tr>
-                                        <th style="width:5%; text-align: center">#</th>
-                                        <th style="width:25%">JUDGE NAME</th>
-                                        <th style="width:20%">EMAIL</th>
-                                        <th style="width:10%">ACTION</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse ($data['records'] as $data)
-                                        <tr>
-                                            <td style="width:5%; text-align: center">
-                                                <strong>#{{ $loop->iteration }}</strong></td>
-                                            <td>{{ strtoupper($data->name) }}</td>
-                                            <td>{{ $data->email }}</td>
-                                            <td>
-                                                <a href="{{ route('judges.edit', $data->id) }}"  class="btn btn-warning"><i class="fas fa-edit fa"></i> EDIT</a>
-                                                <a class="btn btn-danger"><i class="fas fa-trash fa"></i> REMOVE</a>
-                                            </td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="4">
-                                                <center>No Data Found</center>
-                                            </td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <p class="-mt-3 mb-5 max-w-prose text-sm text-ink-2">
+        Reports show the first three judge accounts as Judge 1, 2 and 3, in the order they were created.
+    </p>
 
-    </div>
+    <x-flash />
+
+    <x-table-card>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th scope="col">Judge</th>
+                    <th scope="col" class="text-left!">Name</th>
+                    <th scope="col" class="text-left!">Email</th>
+                    <th scope="col"><span class="sr-only">Actions</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ($data['records'] as $judge)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td class="text-left!">{{ $judge->name }}</td>
+                        <td class="text-left!">{{ $judge->email }}</td>
+                        <td class="text-right!">
+                            <a href="{{ route('judges.edit', $judge->id) }}" class="btn btn-ghost">
+                                <i class="fa-solid fa-pen" aria-hidden="true"></i> Edit
+                                <span class="sr-only">{{ $judge->name }}</span>
+                            </a>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="4" class="data-table-empty">No judges yet. Add one so they can sign in and score.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </x-table-card>
 @endsection

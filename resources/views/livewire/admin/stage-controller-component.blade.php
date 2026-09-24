@@ -1,28 +1,13 @@
 <div>
-    <div class="row">
-        <div class="col-xl-2 col-lg-4">
-            <div class="card shadow mb-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h6>Stage Controller</h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            @foreach ($stages as $stage)
-                                <div class="form-group ml-3">
-                                    <div class="form-check mr-4">
-                                        @livewire('admin.active-status-component', ['model' => $stage, 'field' => 'is_active'], key($stage->id))
-                                        <label class="form-check-label" for="exampleRadios1">
-                                            {{ $stage->stage_name }}
-                                        </label>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
+    @if ($stages->isEmpty())
+        <div class="card max-w-xl px-5 py-8 text-center text-ink-2">No stages set up. Run <code>php artisan db:seed --class=StageSeeder</code> to create them.</div>
+    @else
+        <ul class="card max-w-xl divide-y divide-line">
+            @foreach ($stages as $stage)
+                <li>
+                    @livewire('admin.active-status-component', ['model' => $stage, 'field' => 'is_active', 'label' => $stage->stage_name], key($stage->id))
+                </li>
+            @endforeach
+        </ul>
+    @endif
 </div>

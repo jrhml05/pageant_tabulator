@@ -1,0 +1,239 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/ibm-plex-sans';
+@import '@fortawesome/fontawesome-free/css/fontawesome.css' layer(base);
+@import '@fortawesome/fontawesome-free/css/solid.css' layer(base);
+
+@source '../views';
+
+/* Dark mode follows a class on <html>, set before paint by the inline script in each layout. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Palette: one neutral scale plus one teal accent. Teal marks the single primary action
+ * and the current location; it stays clear of the red used for out-of-range scores.
+ */
+:root {
+    --canvas: #f3f4f6;
+    --surface: #ffffff;
+    --surface-2: #eceef1;
+    --line: #d8dce2;
+    --line-strong: #7f8995;
+    --ink: #141920;
+    --ink-2: #4a5360;
+    --accent: #0f766e;
+    --accent-hover: #115e59;
+    --accent-ink: #ffffff;
+    --accent-soft: #dff1ee;
+    --accent-soft-ink: #0b5953;
+    --danger: #b42318;
+    --danger-soft: #fdeceb;
+    --success-soft: #e6f4ea;
+    --success-ink: #166534;
+    color-scheme: light;
+}
+
+.dark {
+    --canvas: #0d1015;
+    --surface: #151a21;
+    --surface-2: #1c232c;
+    --line: #29313c;
+    --line-strong: #646f7e;
+    --ink: #e7eaee;
+    --ink-2: #a4aebb;
+    --accent: #2dd4bf;
+    --accent-hover: #5eead4;
+    --accent-ink: #04211e;
+    --accent-soft: #10302d;
+    --accent-soft-ink: #7ee8d8;
+    --danger: #f87171;
+    --danger-soft: #3a1719;
+    --success-soft: #11291a;
+    --success-ink: #86efac;
+    color-scheme: dark;
+}
+
+@theme inline {
+    --font-sans: 'IBM Plex Sans Variable', ui-sans-serif, system-ui, sans-serif;
+
+    --color-canvas: var(--canvas);
+    --color-surface: var(--surface);
+    --color-surface-2: var(--surface-2);
+    --color-line: var(--line);
+    --color-line-strong: var(--line-strong);
+    --color-ink: var(--ink);
+    --color-ink-2: var(--ink-2);
+    --color-accent: var(--accent);
+    --color-accent-hover: var(--accent-hover);
+    --color-accent-ink: var(--accent-ink);
+    --color-accent-soft: var(--accent-soft);
+    --color-accent-soft-ink: var(--accent-soft-ink);
+    --color-danger: var(--danger);
+    --color-danger-soft: var(--danger-soft);
+    --color-success-soft: var(--success-soft);
+    --color-success-ink: var(--success-ink);
+}
+
+@layer base {
+    html {
+        -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+        @apply bg-canvas text-ink font-sans antialiased;
+    }
+
+    :focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+    }
+
+    [x-cloak] {
+        display: none !important;
+    }
+}
+
+@layer components {
+    .btn {
+        @apply inline-flex min-h-10 cursor-pointer items-center justify-center gap-2 rounded-md border px-3.5 text-sm font-medium whitespace-nowrap transition-colors select-none;
+        @apply disabled:cursor-not-allowed disabled:opacity-50;
+        touch-action: manipulation;
+    }
+
+    .btn-primary {
+        @apply border-transparent bg-accent text-accent-ink hover:bg-accent-hover;
+    }
+
+    .btn-secondary {
+        @apply border-line-strong bg-surface text-ink hover:bg-surface-2;
+    }
+
+    .btn-ghost {
+        @apply border-transparent text-ink-2 hover:bg-surface-2 hover:text-ink;
+    }
+
+    /* Judges tap these on tablets during a live segment: 48px targets. */
+    .btn-lg {
+        @apply min-h-12 px-5 text-base;
+    }
+
+    .card {
+        @apply rounded-lg border border-line bg-surface;
+    }
+
+    .label {
+        @apply block text-sm font-medium text-ink;
+    }
+
+    .input {
+        @apply block min-h-11 w-full rounded-md border border-line-strong bg-surface px-3 text-base text-ink placeholder:text-ink-2/70;
+        @apply disabled:bg-surface-2 disabled:text-ink-2;
+        @apply aria-invalid:border-danger aria-invalid:bg-danger-soft;
+    }
+
+    .field-error {
+        @apply mt-1.5 text-sm text-danger;
+    }
+
+    /* Score tables: tabular figures so columns of totals line up digit for digit. */
+    .data-table {
+        @apply w-full border-separate border-spacing-0 text-sm tabular-nums;
+    }
+
+    .data-table th {
+        @apply border-b border-line bg-surface-2 px-3 py-2.5 text-center text-xs font-semibold text-ink-2;
+    }
+
+    .data-table td {
+        @apply border-b border-line px-3 py-2.5 text-center;
+    }
+
+    .data-table tbody tr:last-child td {
+        @apply border-b-0;
+    }
+
+    .data-table tbody tr:hover td {
+        @apply bg-surface-2;
+    }
+
+    /* Candidate column stays put while the scores scroll sideways on narrow screens. */
+    .data-table th:first-child,
+    .data-table td:first-child {
+        @apply sticky left-0 z-10 text-left font-semibold;
+    }
+
+    .data-table td:first-child {
+        @apply bg-surface;
+    }
+
+    .data-table th:first-child {
+        @apply bg-surface-2;
+    }
+
+    /* Overall tables end with the final rank: the one column the tabulator reads out. */
+    .data-table-ranked th:last-child {
+        @apply bg-accent-soft text-accent-soft-ink;
+    }
+
+    .data-table-ranked td:last-child {
+        @apply text-base font-semibold text-ink;
+    }
+
+    .data-table td.data-table-empty {
+        @apply static py-10 text-center font-normal text-ink-2;
+    }
+}
+
+/* SweetAlert (judge confirmations) themed to match both modes. */
+.swal-modal {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 0.5rem;
+}
+
+.swal-title {
+    color: var(--ink);
+    font-family: var(--font-sans);
+}
+
+.swal-text {
+    color: var(--ink-2);
+    font-family: var(--font-sans);
+    text-align: center;
+}
+
+.swal-button {
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-family: var(--font-sans);
+    border-radius: 0.375rem;
+    min-height: 44px;
+}
+
+.swal-button:not([disabled]):hover {
+    background: var(--accent-hover);
+}
+
+.swal-button--cancel {
+    background: var(--surface-2);
+    color: var(--ink);
+}
+
+.swal-button--cancel:not([disabled]):hover {
+    background: var(--line);
+}
+
+.swal-icon--success:before,
+.swal-icon--success:after,
+.swal-icon--success__hide-corners {
+    background: var(--surface);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}

@@ -1,114 +1,70 @@
 @extends('layouts.master')
 
+@section('title', 'National costume · Judge 2 · Ms. LCUAA')
+
 @section('content')
-    <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">MS. UEP - NATIONAL COSTUME SCORES (JUDGE 2)</h1>
+    <x-report-header division="ms" stage="Preliminaries" title="National costume" route="ms_national_costume" judge="2" :print="route('ms_pdfnational_costumejudge2')" />
+    <x-table-card>
+        <table class="data-table data-table-ranked">
+            <thead>
+                <tr>
+                    <th scope="col" style="width:10%">Candidate</th>
+                    <th scope="col" style="width:15%">Creative design 40%</th>
+                    <th scope="col" style="width:15%">Stage presence 30%</th>
+                    <th scope="col" style="width:15%">Poise & bearing 20%</th>
+                    <th scope="col" style="width:15%">Overall impact 10%</th>
+                    <th scope="col" style="width:10%">Total 100%</th>
+                    <th scope="col" style="width:10%">Rank</th>
 
-        <div>
+                    {{-- <th scope="col" style="width:20%">Result</th> --}}
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ($data['candidate'] as $candidate)
 
-            <a href="{{ route('ms_national_costume_judge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 1 National Costume Scores</a>
+                    <tr>
+                        <td>{{ strtoupper($candidate->id) }}</td>
 
-            <a href="{{ route('ms_national_costume_judge2') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 2 National Costume Scores</a>
+                        @foreach ( $candidate->national_costume_score as $score)
 
-            <a href="{{ route('ms_national_costume_judge3') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 3 National Costume Scores</a>
+                            @if ($candidate->id == $score->candidate_id && $score->judge_id == 3)
 
-        </div>
+                                <td>{{ $score->design }}</td>
+                                <td>{{ $score->stage_presence }}</td>
+                                <td>{{ $score->poise_bearing }}</td>
+                                <td>{{ $score->overall_impact }}</td>
 
-        <div>
-            <a href="{{ route('ms_national_costume') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-less-than fa-sm text-white-50"></i> BACK TO OVERALL NATIONAL COSTUME RESULTS</a>
-            <a href="{{ route('ms_pdfnational_costumejudge2') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-print fa-sm text-white-50"></i> PRINT SCORES JUDGE 2</a>
-        </div>
+                                <td>{{ $score->design + $score->stage_presence + $score->poise_bearing + $score->overall_impact }}</td>
 
-    </div>
+                                @forelse   ($data['rank'] as $rank)
 
-    @if (session()->has('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>{{ session('success') }}</strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
-    <div class="row">
-        <div class="col-xl-12 col-lg-12">
-            <div class="card shadow mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <thead class="table-dark">
-                                    <tr>
-                                        <th style="width:10%">CANDIDATE</th>
-                                        <th style="width:15%">CREATIVE DESIGN 40%</th>
-                                        <th style="width:15%">STAGE PRESENCE 30%</th>
-                                        <th style="width:15%">POISE & BEARING 20%</th>
-                                        <th style="width:15%">OVERALL IMPACT 10%</th>
-                                        <th style="width:10%">TOTAL 100%</th>
-                                        <th style="width:10%">RANK</th>
+                                    @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 3)
 
-                                        {{-- <th style="width:20%">RESULT</th> --}}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse ($data['candidate'] as $candidate)
+                                        <td>{{ $rank->national_costume }}</td>
 
-                                        <tr>
-                                            <td>{{ strtoupper($candidate->id) }}</td>
+                                    @endif
 
-                                            @foreach ( $candidate->national_costume_score as $score)
+                                @empty
 
-                                                @if ($candidate->id == $score->candidate_id && $score->judge_id == 3)
+                                    <td></td>
 
-                                                    <td>{{ $score->design }}</td>
-                                                    <td>{{ $score->stage_presence }}</td>
-                                                    <td>{{ $score->poise_bearing }}</td>
-                                                    <td>{{ $score->overall_impact }}</td>
+                                @endforelse
 
-                                                    <td>{{ $score->design + $score->stage_presence + $score->poise_bearing + $score->overall_impact }}</td>
+                            @endif
 
-                                                    @forelse   ($data['rank'] as $rank)
+                        @endforeach
+                        {{-- <td>{{ ROUND(($score_judge1 + $score_judge2 + $score_judge3) / 3, 2) }}</td> --}}
+                    </tr>
 
-                                                        @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 3)
+                @empty
 
-                                                            <td>{{ $rank->national_costume }}</td>
+                    <tr>
+                        <td colspan="7" class="data-table-empty">No candidates in the database. Run <code>php artisan db:seed</code>, then reload this page.</td>
+                    </tr>
 
-                                                        @endif
-
-                                                    @empty
-
-                                                        <td></td>
-
-                                                    @endforelse
-
-                                                @endif
-
-                                            @endforeach
-                                            {{-- <td>{{ ROUND(($score_judge1 + $score_judge2 + $score_judge3) / 3, 2) }}</td> --}}
-                                        </tr>
-
-                                    @empty
-
-                                        <tr>
-                                            <td colspan="6">
-                                                <center>No Data Found</center>
-                                            </td>
-                                        </tr>
-
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
+                @endforelse
+            </tbody>
+        </table>
+    </x-table-card>
 
 @endsection

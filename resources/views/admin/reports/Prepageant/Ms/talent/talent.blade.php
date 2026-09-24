@@ -1,200 +1,130 @@
 @extends('layouts.master')
 
+@section('title', 'Talent · Ms. LCUAA')
+
 @section('content')
-    <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">MS. UEP - TALENT RESULT</h1>
+    <x-report-header division="ms" stage="Pre-pageant" title="Talent" route="ms_talent" :print="route('ms_pdftalent')" rank="/ms_talent_rank" />
+    <x-table-card>
+        <table class="data-table data-table-ranked">
+            <thead>
+                <tr>
+                    <th scope="col" style="width:15%">Candidate</th>
+                    <th scope="col" style="width:10%">Judge 1</th>
+                    <th scope="col" style="width:5%">Rank</th>
+                    <th scope="col" style="width:10%">Judge 2</th>
+                    <th scope="col" style="width:5%">Rank</th>
+                    <th scope="col" style="width:10%">Judge 3</th>
+                    <th scope="col" style="width:5%">Rank</th>
+                    <th scope="col" style="width:10%">Final rank</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ($data['candidate'] as $candidate)
 
-        <div>
+                    <tr>
+                        <td>{{ strtoupper($candidate->id) }}</td>
 
-            <a href="{{ route('ms_talent_judge1') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 1 Talent Scores</a>
+                        @foreach ( $candidate->talent_score as $score)
 
-            <a href="{{ route('ms_talent_judge2') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 2 Talent Scores</a>
+                            @if ($candidate->id == $score->candidate_id && $score->judge_id == 2)
 
-            <a href="{{ route('ms_talent_judge3') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-eye fa-sm text-white-50"></i> JUDGE 3 Talent Scores</a>
+                                @php
+                                    $score_judge1 = $score->mastery + $score->uniqueness + $score->stage_presence + $score->audience_impact;
+                                @endphp
 
-        </div>
+                                <td>{{ $score_judge1 }}</td>
 
-        <div>
+                                @forelse   ($data['rank'] as $rank)
 
-            <a href="javascript:void(0)" onclick="ms_talent_rank()" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fa-solid fa-ranking-star fa-sm text-white-50"></i> RANK CANDIDATES</a>
+                                    @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 2)
 
-            {{-- <a  class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fa-solid fa-ranking-star fa-sm text-white-50"></i> RANK CANDIDATES</a> --}}
+                                        <td>{{ $rank->talent }}</td>
 
-            <a href="{{ route('ms_pdftalent') }}" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-print fa-sm text-white-50"></i> PRINT RESULTS</a>
-        </div>
+                                    @endif
 
-    </div>
+                                @empty
 
-    @if (session()->has('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>{{ session('success') }}</strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
-    <div class="row">
-        <div class="col-xl-12 col-lg-12">
-            <div class="card shadow mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <thead class="table-dark">
-                                    <tr>
-                                        <th style="width:15%">CANDIDATE #</th>
-                                        <th style="width:10%">JUDGE 1</th>
-                                        <th style="width:5%">RANK</th>
-                                        <th style="width:10%">JUDGE 2</th>
-                                        <th style="width:5%">RANK</th>
-                                        <th style="width:10%">JUDGE 3</th>
-                                        <th style="width:5%">RANK</th>
-                                        <th style="width:10%">FINAL RANK</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse ($data['candidate'] as $candidate)
+                                    <td></td>
 
-                                        <tr>
-                                            <td>{{ strtoupper($candidate->id) }}</td>
+                                @endforelse
 
-                                            @foreach ( $candidate->talent_score as $score)
+                            @endif
 
-                                                @if ($candidate->id == $score->candidate_id && $score->judge_id == 2)
+                            @if ($candidate->id == $score->candidate_id && $score->judge_id == 3)
 
-                                                    @php
-                                                        $score_judge1 = $score->mastery + $score->uniqueness + $score->stage_presence + $score->audience_impact;
-                                                    @endphp
+                                @php
+                                    $score_judge2 = $score->mastery + $score->uniqueness + $score->stage_presence + $score->audience_impact;
+                                @endphp
 
-                                                    <td>{{ $score_judge1 }}</td>
+                                <td>{{ $score_judge2 }}</td>
 
-                                                    @forelse   ($data['rank'] as $rank)
+                                @forelse   ($data['rank'] as $rank)
 
-                                                        @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 2)
+                                    @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 3)
 
-                                                            <td>{{ $rank->talent }}</td>
+                                        <td>{{ $rank->talent }}</td>
 
-                                                        @endif
+                                    @endif
 
-                                                    @empty
+                                @empty
 
-                                                        <td></td>
+                                    <td></td>
 
-                                                    @endforelse
+                                @endforelse
 
-                                                @endif
+                            @endif
 
-                                                @if ($candidate->id == $score->candidate_id && $score->judge_id == 3)
+                            @if ($candidate->id == $score->candidate_id && $score->judge_id == 4)
 
-                                                    @php
-                                                        $score_judge2 = $score->mastery + $score->uniqueness + $score->stage_presence + $score->audience_impact;
-                                                    @endphp
+                                @php
+                                    $score_judge3 = $score->mastery + $score->uniqueness + $score->stage_presence + $score->audience_impact;
+                                @endphp
 
-                                                    <td>{{ $score_judge2 }}</td>
+                                <td>{{ $score_judge3 }}</td>
 
-                                                    @forelse   ($data['rank'] as $rank)
+                                @forelse   ($data['rank'] as $rank)
 
-                                                        @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 3)
+                                    @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 4)
 
-                                                            <td>{{ $rank->talent }}</td>
+                                        <td>{{ $rank->talent }}</td>
 
-                                                        @endif
+                                    @endif
 
-                                                    @empty
+                                @empty
 
-                                                        <td></td>
+                                    <td></td>
 
-                                                    @endforelse
+                                @endforelse
 
-                                                @endif
+                            @endif
 
-                                                @if ($candidate->id == $score->candidate_id && $score->judge_id == 4)
+                        @endforeach
 
-                                                    @php
-                                                        $score_judge3 = $score->mastery + $score->uniqueness + $score->stage_presence + $score->audience_impact;
-                                                    @endphp
+                        @forelse   ($data['final_rank'] as $final_rank)
 
-                                                    <td>{{ $score_judge3 }}</td>
+                            @if ($final_rank->candidate_id == $score->candidate_id )
 
-                                                    @forelse   ($data['rank'] as $rank)
+                                <td style="width:5%; text-align: center">{{ $final_rank->talent }}</td>
 
-                                                        @if ($rank->candidate_id == $score->candidate_id && $rank->judge_id == 4)
+                            @endif
 
-                                                            <td>{{ $rank->talent }}</td>
+                        @empty
 
-                                                        @endif
+                            <td></td>
 
-                                                    @empty
+                        @endforelse
 
-                                                        <td></td>
+                    </tr>
 
-                                                    @endforelse
+                @empty
 
-                                                @endif
+                    <tr>
+                        <td colspan="8" class="data-table-empty">No candidates in the database. Run <code>php artisan db:seed</code>, then reload this page.</td>
+                    </tr>
 
-                                            @endforeach
-                                            
-                                            @forelse   ($data['final_rank'] as $final_rank)
-
-                                                @if ($final_rank->candidate_id == $score->candidate_id )
-
-                                                    <td style="width:5%; text-align: center">{{ $final_rank->talent }}</td>
-
-                                                @endif
-
-                                            @empty
-
-                                                <td></td>
-
-                                            @endforelse
-
-                                        </tr>
-
-                                    @empty
-
-                                        <tr>
-                                            <td colspan="6">
-                                                <center>No Data Found</center>
-                                            </td>
-                                        </tr>
-
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <script>
-
-        function ms_talent_rank()
-        {
-            alert("talent rank");
-
-            $.ajax({
-                type: "GET",
-                url: "/ms_talent_rank",
-                success: function (response) {
-                    location.reload();
-                },
-                error: function ()
-                {
-                    alert("no talent rank");
-                }
-            });
-        }
-
-    </script>
+                @endforelse
+            </tbody>
+        </table>
+    </x-table-card>
 
 @endsection

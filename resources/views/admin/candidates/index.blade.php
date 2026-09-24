@@ -1,61 +1,35 @@
 @extends('layouts.master')
 
+@section('title', 'Candidates')
+
 @section('content')
-    <style>
-        #card {
-            cursor: pointer;
-            transition: transform .2s;
-            /* Animation */
-            margin: 0 auto;
-        }
+    <x-page-header title="Candidates" />
 
-        #card:hover {
-            transform: scale(1.3);
-            z-index: 1;
-        }
+    <p class="-mt-3 mb-6 max-w-prose text-sm text-ink-2">
+        Photos come from <code class="text-ink">public/assets/img/ms</code> and <code class="text-ink">public/assets/img/mr</code>, named by candidate number.
+    </p>
 
-        .modal .modal-dialog-aside {
-            width: 350px;
-            max-width: 80%;
-            height: 100%;
-            margin: 0;
-            transform: translate(0);
-            transition: transform .2s;
-        }
+    @foreach (['ms' => 'Ms. LCUAA', 'mr' => 'Mr. LCUAA'] as $division => $label)
+        <section aria-labelledby="{{ $division }}-heading" class="mb-10">
+            <h2 id="{{ $division }}-heading" class="mb-3 text-lg font-semibold">
+                {{ $label }} <span class="font-normal text-ink-2">({{ $data[$division]->count() }})</span>
+            </h2>
 
-        .modal .modal-dialog-aside .modal-content {
-            height: inherit;
-            border: 0;
-            border-radius: 0;
-        }
-
-        .modal .modal-dialog-aside .modal-content .modal-body {
-            overflow-y: auto
-        }
-
-        .modal.fixed-left .modal-dialog-aside {
-            margin-left: auto;
-            transform: translateX(100%);
-        }
-
-        .modal.fixed-right .modal-dialog-aside {
-            margin-right: auto;
-            transform: translateX(-100%);
-        }
-
-        .modal.show .modal-dialog-aside {
-            transform: translateX(0);
-        }
-    </style>
-
-    <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Candidates</h1>
-        {{-- <a href="#" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-plus fa-sm text-white-50"></i> ADD NEW</a> --}}
-    </div>
-
-
-    @livewire('admin.candidates-component')
-
+            @if ($data[$division]->isEmpty())
+                <div class="card px-5 py-8 text-center text-ink-2">No {{ $label }} candidates. Run <code>php artisan db:seed --class={{ $division === 'mr' ? 'MrCandidateSeeder' : 'MsCandidateSeeder' }}</code> to add them.</div>
+            @else
+                <ul class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6">
+                    @foreach ($data[$division] as $candidate)
+                        <li class="card overflow-hidden">
+                            <x-candidate-photo :division="$division" :number="$candidate->id" />
+                            <p class="px-3 py-2.5 font-semibold tabular-nums">No. {{ $candidate->name }}</p>
+                            @if ($candidate->department)
+                                <p class="-mt-1.5 px-3 pb-2.5 text-sm text-ink-2">{{ $candidate->department }}</p>
+                            @endif
+                        </li>
+                    @endforeach
+                </ul>
+            @endif
+        </section>
+    @endforeach
 @endsection

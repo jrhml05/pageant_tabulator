@@ -25,7 +25,7 @@ class JudgeSeeder extends Seeder
                     'name' => 'Judge-' . $i,
                     'email' => 'judge' . $i . '@mail.com',
                     'role' => 'judge',
-                    'password' => Hash::make('mrmsuepjudge' . $i),
+                    'password' => Hash::make('mrmslcuaajudge' . $i),
                 ]);
             $i++;
         }
