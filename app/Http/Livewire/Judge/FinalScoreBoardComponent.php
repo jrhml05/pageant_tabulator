@@ -45,19 +45,19 @@ class FinalScoreBoardComponent extends Component
     public function alertConfirm($param)
     {
         if($param == 1) {
-            $this->dispatchBrowserEvent('swal:confirm', [
-                'type' => 'info',
-                'message' => 'Are you sure you want to lock in the scores?',
-                'text' => 'If OK, the fields with scores will be disabled!'
-            ]);
+            $this->dispatch('swal:confirm',
+                type: 'info',
+                message: 'Are you sure you want to lock in the scores?',
+                text: 'If OK, the fields with scores will be disabled!'
+            );
         }else{
-            $this->dispatchBrowserEvent('swal:modal', [
-                'type' => 'warning',
-                'message' => 'To request unlock, contact our tabulator staff.',
-                'text' => '.',
-                'button' => true,
+            $this->dispatch('swal:modal',
+                type: 'warning',
+                message: 'To request unlock, contact our tabulator staff.',
+                text: '.',
+                button: true,
 
-            ]);
+            );
         }
 
     }
@@ -80,23 +80,23 @@ class FinalScoreBoardComponent extends Component
                 );
 
                 if ($lockScore) {
-                    $this->dispatchBrowserEvent('swal:modal', [
-                        'type' => 'success',
-                        'message' => 'Scores has been lock successfully!',
-                        'text' => '.',
-                        'button' => false,
-                    ]);
+                    $this->dispatch('swal:modal',
+                        type: 'success',
+                        message: 'Scores has been lock successfully!',
+                        text: '.',
+                        button: false,
+                    );
 
                     $this->score_lock = true;
                 }
             } else {
-                $this->dispatchBrowserEvent('swal:modal', [
-                    'type' => 'error',
-                    'message' => 'Sorry, Score Board has already been locked!',
-                    'text' => 'Try to communicate with the tabulator team.',
-                    'button' => true,
+                $this->dispatch('swal:modal',
+                    type: 'error',
+                    message: 'Sorry, Score Board has already been locked!',
+                    text: 'Try to communicate with the tabulator team.',
+                    button: true,
 
-                ]);
+                );
 
                 $this->score_lock = false;
             }

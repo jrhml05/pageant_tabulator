@@ -33,11 +33,11 @@ class ScoreBoardComponent extends Component
 
     public function alertConfirm()
     {
-        $this->dispatchBrowserEvent('swal:confirm', [
-            'type' => 'warning',
-            'message' => 'Are you sure you want to save the scores?',
-            'text' => 'If saved, the fields with scores will be disabled!'
-        ]);
+        $this->dispatch('swal:confirm',
+            type: 'warning',
+            message: 'Are you sure you want to save the scores?',
+            text: 'If saved, the fields with scores will be disabled!'
+        );
     }
 
     public function save()
@@ -60,21 +60,21 @@ class ScoreBoardComponent extends Component
                 );
 
                 if ($saveScore) {
-                    $this->dispatchBrowserEvent('swal:modal', [
-                        'type' => 'success',
-                        'message' => 'Scores has been saved successfully!',
-                        'text' => '.',
-                        'button' => false,
-                    ]);
+                    $this->dispatch('swal:modal',
+                        type: 'success',
+                        message: 'Scores has been saved successfully!',
+                        text: '.',
+                        button: false,
+                    );
                 }
             } else {
-                $this->dispatchBrowserEvent('swal:modal', [
-                    'type' => 'error',
-                    'message' => 'Sorry, Score Board has already been locked!',
-                    'text' => 'Try to communicate with the tabulator team.',
-                    'button' => true,
+                $this->dispatch('swal:modal',
+                    type: 'error',
+                    message: 'Sorry, Score Board has already been locked!',
+                    text: 'Try to communicate with the tabulator team.',
+                    button: true,
 
-                ]);
+                );
             }
         }
     }

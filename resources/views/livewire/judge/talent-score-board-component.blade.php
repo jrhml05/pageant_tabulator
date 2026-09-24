@@ -15,7 +15,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">Execution Skills 50%</span>
                             </div>
-                            <input onfocus="this.select()" wire:model="records.{{ $index }}.execution" type="number"
+                            <input onfocus="this.select()" wire:model.live="records.{{ $index }}.execution" type="number"
                                 class="form-control text-center {{ $record->execution > 50 ? 'is-invalid' : '' }}"
                                 placeholder="00.00" aria-describedby="basic-addon1">
 
@@ -24,7 +24,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">Creativity & Originality 30%</span>
                             </div>
-                            <input onfocus="this.select()" wire:model="records.{{ $index }}.originality" type="number"
+                            <input onfocus="this.select()" wire:model.live="records.{{ $index }}.originality" type="number"
                                 class="form-control text-center {{ $record->originality > 30 ? 'is-invalid' : '' }}"
                                 placeholder="00.00" aria-describedby="basic-addon1">
 
@@ -33,7 +33,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">Stage Presence 20%</span>
                             </div>
-                            <input onfocus="this.select()" wire:model="records.{{ $index }}.stage_presence" type="number"
+                            <input onfocus="this.select()" wire:model.live="records.{{ $index }}.stage_presence" type="number"
                                 class="form-control text-center {{ $record->stage_presence > 20 ? 'is-invalid' : '' }}"
                                 placeholder="00.00" aria-describedby="basic-addon1">
 
@@ -99,15 +99,6 @@
 
 </div>
 
-@php
-    function cal_percentage($num_amount, $num_total)
-    {
-        $count1 = $num_amount / $num_total;
-        $count2 = $count1 * 100;
-        $count = number_format($count2, 2);
-        return $count;
-    }
-@endphp
 
 @push('scripts')
     <script>
@@ -130,7 +121,7 @@
             })
             .then((willSave) => {
                 if (willSave) {
-                    window.livewire.emit('save');
+                    Livewire.dispatch('save');
                 }
         });
     });

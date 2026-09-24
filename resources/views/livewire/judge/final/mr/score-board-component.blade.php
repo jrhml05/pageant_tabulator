@@ -17,7 +17,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">Wit & Content 40%</span>
                             </div>
-                            <input onfocus="this.select()" wire:model="records.{{ $index }}.wit" type="number"
+                            <input onfocus="this.select()" wire:model.live="records.{{ $index }}.wit" type="number"
                                 class="form-control text-center {{ ($record->wit > 40 || $record->wit < 0) ? 'is-invalid' : '' }}"
                                 placeholder="00.00" aria-describedby="basic-addon1"
                                 {{ $record->is_lock === 1  ? 'disabled' : '' }}>
@@ -27,7 +27,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">Projection & Delivery 30%</span>
                             </div>
-                            <input onfocus="this.select()" wire:model="records.{{ $index }}.projection" type="number"
+                            <input onfocus="this.select()" wire:model.live="records.{{ $index }}.projection" type="number"
                                 class="form-control text-center {{ ($record->projection > 30 || $record->projection < 0) ? 'is-invalid' : '' }}"
                                 placeholder="00.00" aria-describedby="basic-addon1"
                                 {{ $record->is_lock === 1  ? 'disabled' : '' }}>
@@ -37,7 +37,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">Stage Presence 20%</span>
                             </div>
-                            <input onfocus="this.select()" wire:model="records.{{ $index }}.stage_presence" type="number"
+                            <input onfocus="this.select()" wire:model.live="records.{{ $index }}.stage_presence" type="number"
                                 class="form-control text-center {{ ($record->stage_presence > 20 || $record->stage_presence < 0) ? 'is-invalid' : '' }}"
                                 placeholder="00.00" aria-describedby="basic-addon1"
                                 {{ $record->is_lock === 1  ? 'disabled' : '' }}>
@@ -47,7 +47,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">Overall Impact 10%</span>
                             </div>
-                            <input onfocus="this.select()" wire:model="records.{{ $index }}.overall_impact" type="number"
+                            <input onfocus="this.select()" wire:model.live="records.{{ $index }}.overall_impact" type="number"
                                 class="form-control text-center {{ ($record->overall_impact > 10 || $record->overall_impact < 0)? 'is-invalid' : '' }}"
                                 placeholder="00.00" aria-describedby="basic-addon1"
                                 {{ $record->is_lock === 1  ? 'disabled' : '' }}>
@@ -116,7 +116,7 @@
             })
             .then((willSave) => {
                 if (willSave) {
-                    window.livewire.emit('confirmedLockInScores');
+                    Livewire.dispatch('confirmedLockInScores');
                 }
         });
     });

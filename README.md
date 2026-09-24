@@ -1,6 +1,6 @@
 #how to install
 
-Note: this is suitable for php 8.0
+Note: requires PHP 8.3+ (Laravel 13, Livewire 4)
 
 - composer install
 

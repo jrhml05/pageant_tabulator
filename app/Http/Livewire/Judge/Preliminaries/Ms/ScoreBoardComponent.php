@@ -36,10 +36,10 @@ class ScoreBoardComponent extends Component
 
     public function alertConfirm()
     {
-        $this->dispatchBrowserEvent('swal:confirm', [
-            'type' => 'warning',
-            'message' => 'Are you sure you want to save the scores?',
-            'text' => 'If saved, the fields with scores will be disabled!'
-        ]);
+        $this->dispatch('swal:confirm',
+            type: 'warning',
+            message: 'Are you sure you want to save the scores?',
+            text: 'If saved, the fields with scores will be disabled!'
+        );
     }
 }

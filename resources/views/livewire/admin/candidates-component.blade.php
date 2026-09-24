@@ -61,19 +61,19 @@
                     @endif
                     <div class="form-group">
                         <label for="">First Name</label>
-                        <input wire:model="first_name" type="text" class="form-control form-control-lg">
+                        <input wire:model.live="first_name" type="text" class="form-control form-control-lg">
                     </div>
                     <div class="form-group">
                         <label for="">Middle Name</label>
-                        <input wire:model="middle_name" type="text" class="form-control form-control-lg">
+                        <input wire:model.live="middle_name" type="text" class="form-control form-control-lg">
                     </div>
                     <div class="form-group">
                         <label for="">Last Name</label>
-                        <input wire:model="last_name" type="text" class="form-control form-control-lg">
+                        <input wire:model.live="last_name" type="text" class="form-control form-control-lg">
                     </div>
                     <div class="form-group">
                         <label for="">Age</label>
-                        <input wire:model="age" type="text" class="form-control form-control-lg">
+                        <input wire:model.live="age" type="text" class="form-control form-control-lg">
                     </div>
                 </div>
                 <div class="modal-footer">

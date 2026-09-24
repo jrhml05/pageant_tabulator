@@ -26,7 +26,7 @@
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label for="order-status">Select Stage</label>
-                                <select wire:model="stage" class="form-control">
+                                <select wire:model.live="stage" class="form-control">
                                     {{-- <option value="">Any</option> --}}
                                     @foreach (\App\Models\Stage::all() as $stage)
                                         <option value="{{ $stage->id }}">{{ $stage->stage_name }}</option>
@@ -80,11 +80,11 @@
                                 <tbody>
                                     @forelse ($records as $index => $record)
                                         <tr>
-                                            <td><input wire:model="records.{{ $index }}.category_name"
+                                            <td><input wire:model.live="records.{{ $index }}.category_name"
                                                     type="text" class="form-control form-control-lg"></td>
-                                            <td><input wire:model="records.{{ $index }}.percent" type="number"
+                                            <td><input wire:model.live="records.{{ $index }}.percent" type="number"
                                                     class="form-control form-control-lg"></td>
-                                            {{-- <td><input wire:model="records.{{ $index }}.is_active" type="number" class="form-control form-control-lg"></td> --}}
+                                            {{-- <td><input wire:model.live="records.{{ $index }}.is_active" type="number" class="form-control form-control-lg"></td> --}}
                                             <td>
                                                 <a href="{{ route('subcategory', ($record->id ?? 1)) }}"
                                                     class="btn btn-info"><i class="fas fa-plus fa-sm text-white-50"></i>

@@ -17,7 +17,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">National Costume 20%</span>
                             </div>
-                            <input disabled wire:model="records.{{ $index }}.national_costume" type="number"
+                            <input disabled wire:model.live="records.{{ $index }}.national_costume" type="number"
                                 class="form-control text-center" placeholder="00.00"
                                 aria-describedby="basic-addon1">
 
@@ -26,7 +26,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">Departmental Uniform 20%</span>
                             </div>
-                            <input disabled wire:model="records.{{ $index }}.dept_uniform" type="number"
+                            <input disabled wire:model.live="records.{{ $index }}.dept_uniform" type="number"
                                 class="form-control text-center" placeholder="00.00"
                                 aria-describedby="basic-addon1">
 
@@ -35,7 +35,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">Swim Wear 20%</span>
                             </div>
-                            <input disabled wire:model="records.{{ $index }}.swim_wear" type="number"
+                            <input disabled wire:model.live="records.{{ $index }}.swim_wear" type="number"
                                 class="form-control text-center" placeholder="00.00"
                                 aria-describedby="basic-addon1">
 
@@ -44,7 +44,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">Formal Wear 20%</span>
                             </div>
-                            <input disabled wire:model="records.{{ $index }}.formal_wear" type="number"
+                            <input disabled wire:model.live="records.{{ $index }}.formal_wear" type="number"
                                 class="form-control text-center" placeholder="00.00"
                                 aria-describedby="basic-addon1">
 
@@ -53,7 +53,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">Casual Q&A 20%</span>
                             </div>
-                            <input disabled wire:model="records.{{ $index }}.qna" type="number"
+                            <input disabled wire:model.live="records.{{ $index }}.qna" type="number"
                                 class="form-control text-center" placeholder="00.00"
                                 aria-describedby="basic-addon1">
 
@@ -140,7 +140,7 @@
             })
             .then((willSave) => {
                 if (willSave) {
-                    window.livewire.emit('save');
+                    Livewire.dispatch('save');
                 }
         });
     });

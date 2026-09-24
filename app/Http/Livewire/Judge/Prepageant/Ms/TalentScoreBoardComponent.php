@@ -33,11 +33,11 @@ class TalentScoreBoardComponent extends Component
 
     public function alertConfirm()
     {
-        $this->dispatchBrowserEvent('swal:confirm', [
-            'type' => 'warning',
-            'message' => 'Are you sure you want to save the scores?',
-            'text' => 'If saved, the fields with scores will be disabled!'
-        ]);
+        $this->dispatch('swal:confirm',
+            type: 'warning',
+            message: 'Are you sure you want to save the scores?',
+            text: 'If saved, the fields with scores will be disabled!'
+        );
     }
 
     public function cal_percentage($num_amount, $num_total)
@@ -81,11 +81,11 @@ class TalentScoreBoardComponent extends Component
             );
         }
 
-        $this->dispatchBrowserEvent('swal:modal', [
-            'type' => 'success',
-            'message' => 'Scores has been saved successfully!',
-            'text' => '.'
-        ]);
+        $this->dispatch('swal:modal',
+            type: 'success',
+            message: 'Scores has been saved successfully!',
+            text: '.'
+        );
 
         return redirect()->route('judge.app.ms.score', $this->stage);
     }
@@ -125,11 +125,11 @@ class TalentScoreBoardComponent extends Component
     }
     public function lockInscore()
     {
-        $this->dispatchBrowserEvent('swal:confirm', [
-            'type' => 'warning',
-            'message' => 'Are you sure you want to lock in the scores?',
-            'text' => 'If yes, score fields will be disabled!'
-        ]);
+        $this->dispatch('swal:confirm',
+            type: 'warning',
+            message: 'Are you sure you want to lock in the scores?',
+            text: 'If yes, score fields will be disabled!'
+        );
     }
 
     public function confirmedLockInScores()
@@ -137,21 +137,21 @@ class TalentScoreBoardComponent extends Component
         $locked = 0;
         foreach ($this->records as $record) {
             if ($record->mastery === null || $record->uniqueness === null || $record->stage_presence === null || $record->audience_impact === null ) {
-                $this->dispatchBrowserEvent('swal:modal', [
-                    'type' => 'warning',
-                    'message' => 'Fill out all Scores.',
-                    'text' => '.'
-                ]);
+                $this->dispatch('swal:modal',
+                    type: 'warning',
+                    message: 'Fill out all Scores.',
+                    text: '.'
+                );
                 $locked = 0;
                 break;
             } else {
                 if (($record->mastery > 40 || $record->mastery < 0) || ($record->uniqueness > 30 || $record->uniqueness < 0) || ($record->stage_presence > 20 || $record->stage_presence < 0) || ($record->audience_impact > 10 || $record->audience_impact < 0)) {
 
-                    $this->dispatchBrowserEvent('swal:modal', [
-                        'type' => 'warning',
-                        'message' => 'Double Check your scores.',
-                        'text' => '.'
-                    ]);
+                    $this->dispatch('swal:modal',
+                        type: 'warning',
+                        message: 'Double Check your scores.',
+                        text: '.'
+                    );
                     $locked = 0;
                     break;
                 } else {

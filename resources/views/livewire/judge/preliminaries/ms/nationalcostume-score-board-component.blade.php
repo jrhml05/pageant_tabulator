@@ -16,7 +16,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">Creative Design 40%</span>
                             </div>
-                            <input onfocus="this.select()" wire:model="records.{{ $index }}.design" type="number"
+                            <input onfocus="this.select()" wire:model.live="records.{{ $index }}.design" type="number"
                                 class="form-control text-center {{ ( $record->design > 40 || $record->design < 0) ? 'is-invalid' : '' }}"
                                 placeholder="00.00" aria-describedby="basic-addon1"
                                 {{ $record->is_lock === 1  ? 'disabled' : '' }}>
@@ -26,7 +26,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">Stage Presence 30%</span>
                             </div>
-                            <input onfocus="this.select()" wire:model="records.{{ $index }}.stage_presence" type="number"
+                            <input onfocus="this.select()" wire:model.live="records.{{ $index }}.stage_presence" type="number"
                                 class="form-control text-center {{ ($record->stage_presence > 30 || $record->stage_presence < 0) ? 'is-invalid' : '' }}"
                                 placeholder="00.00" aria-describedby="basic-addon1"
                                 {{ $record->is_lock === 1  ? 'disabled' : '' }}>
@@ -36,7 +36,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">Poise & Bearing 20%</span>
                             </div>
-                            <input onfocus="this.select()" wire:model="records.{{ $index }}.poise_bearing" type="number"
+                            <input onfocus="this.select()" wire:model.live="records.{{ $index }}.poise_bearing" type="number"
                                 class="form-control text-center {{ ($record->poise_bearing > 20 || $record->poise_bearing < 0)? 'is-invalid' : '' }}"
                                 placeholder="00.00" aria-describedby="basic-addon1"
                                 {{ $record->is_lock === 1  ? 'disabled' : '' }}>
@@ -46,7 +46,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">Overall Impact 10%</span>
                             </div>
-                            <input onfocus="this.select()" wire:model="records.{{ $index }}.overall_impact" type="number"
+                            <input onfocus="this.select()" wire:model.live="records.{{ $index }}.overall_impact" type="number"
                                 class="form-control text-center {{ ($record->overall_impact > 10 || $record->overall_impact < 0)? 'is-invalid' : '' }}"
                                 placeholder="00.00" aria-describedby="basic-addon1"
                                 {{ $record->is_lock === 1  ? 'disabled' : '' }}>
@@ -108,15 +108,6 @@
 
 </div>
 
-@php
-    function cal_percentage($num_amount, $num_total)
-    {
-        $count1 = $num_amount / $num_total;
-        $count2 = $count1 * 100;
-        $count = number_format($count2, 2);
-        return $count;
-    }
-@endphp
 
 @push('scripts')
     <script>
@@ -139,7 +130,7 @@
             })
             .then((willSave) => {
                 if (willSave) {
-                    window.livewire.emit('confirmedLockInScores');
+                    Livewire.dispatch('confirmedLockInScores');
                 }
         });
     });
