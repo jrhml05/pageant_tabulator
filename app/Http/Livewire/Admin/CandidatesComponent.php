@@ -31,7 +31,7 @@ class CandidatesComponent extends Component
 
     public function edit($barangay_id)
     {
-        $this->dispatchBrowserEvent('show-modal');
+        $this->dispatch('show-modal');
         $this->barangay_id = $barangay_id;
         $this->barangay_name = Barangay::find($barangay_id)->name;
 
@@ -64,7 +64,7 @@ class CandidatesComponent extends Component
 
         if($data) {
             session()->flash('success','Candidate Data has been updated successfully!');
-            $this->dispatchBrowserEvent('hide-modal');
+            $this->dispatch('hide-modal');
         } else {
             session()->flash('error','Something went wrong!');
         }

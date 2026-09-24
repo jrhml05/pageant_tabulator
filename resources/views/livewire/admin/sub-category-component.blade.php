@@ -56,11 +56,11 @@
                                 <tbody>
                                     @forelse ($records as $index => $record)
                                         <tr>
-                                            <td><input wire:model="records.{{ $index }}.sub_category_name"
+                                            <td><input wire:model.live="records.{{ $index }}.sub_category_name"
                                                     type="text" class="form-control form-control-lg"></td>
-                                            <td><input wire:model="records.{{ $index }}.sub_category_percent" type="number"
+                                            <td><input wire:model.live="records.{{ $index }}.sub_category_percent" type="number"
                                                     class="form-control form-control-lg"></td>
-                                            {{-- <td><input wire:model="records.{{ $index }}.is_active" type="number" class="form-control form-control-lg"></td> --}}
+                                            {{-- <td><input wire:model.live="records.{{ $index }}.is_active" type="number" class="form-control form-control-lg"></td> --}}
                                             <td>
                                                 <button wire:click="remove({{ $index }})"
                                                     class="btn btn-danger">Remove</button>

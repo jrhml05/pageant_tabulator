@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('', function (Blueprint $table) {
+        Schema::create('mr_prepageant_scores', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('candidate_id');
             $table->unsignedBigInteger('judge_id');

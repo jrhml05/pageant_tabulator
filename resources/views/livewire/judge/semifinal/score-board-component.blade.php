@@ -17,7 +17,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">Beauty 40%</span>
                             </div>
-                            <input onfocus="this.select()" wire:model="records.{{ $index }}.beauty" type="number"
+                            <input onfocus="this.select()" wire:model.live="records.{{ $index }}.beauty" type="number"
                                 class="form-control text-center {{ $record->beauty > 40 ? 'is-invalid' : '' }}" placeholder="00.00"
                                 aria-describedby="basic-addon1">
 
@@ -26,7 +26,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">Poise 30%</span>
                             </div>
-                            <input onfocus="this.select()" wire:model="records.{{ $index }}.poise" type="number"
+                            <input onfocus="this.select()" wire:model.live="records.{{ $index }}.poise" type="number"
                                 class="form-control text-center {{ $record->poise > 30 ? 'is-invalid' : '' }}" placeholder="00.00"
                                 aria-describedby="basic-addon1">
 
@@ -35,7 +35,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">Intelligence 30%</span>
                             </div>
-                            <input onfocus="this.select()" wire:model="records.{{ $index }}.intelligence" type="number"
+                            <input onfocus="this.select()" wire:model.live="records.{{ $index }}.intelligence" type="number"
                                 class="form-control text-center {{ $record->intelligence > 30 ? 'is-invalid' : '' }}" placeholder="00.00"
                                 aria-describedby="basic-addon1">
 
@@ -102,7 +102,7 @@
             })
             .then((willSave) => {
                 if (willSave) {
-                    window.livewire.emit('save');
+                    Livewire.dispatch('save');
                 }
         });
     });

@@ -16,7 +16,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">Rave Wear 50%</span>
                             </div>
-                            <input disabled wire:model="records.{{ $index }}.rave_wear" type="number"
+                            <input disabled wire:model.live="records.{{ $index }}.rave_wear" type="number"
                                 class="form-control text-center" placeholder="00.00"
                                 aria-describedby="basic-addon1">
 
@@ -25,7 +25,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">Talent 50%</span>
                             </div>
-                            <input disabled wire:model="records.{{ $index }}.talent" type="number"
+                            <input disabled wire:model.live="records.{{ $index }}.talent" type="number"
                                 class="form-control text-center" placeholder="00.00"
                                 aria-describedby="basic-addon1">
 
@@ -101,7 +101,7 @@
             })
             .then((willSave) => {
                 if (willSave) {
-                    window.livewire.emit('save');
+                    Livewire.dispatch('save');
                 }
         });
     });

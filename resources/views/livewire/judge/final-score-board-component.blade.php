@@ -182,7 +182,7 @@
             })
             .then((willLock) => {
                 if (willLock) {
-                    window.livewire.emit('lock');
+                    Livewire.dispatch('lock');
                 }
         });
     });

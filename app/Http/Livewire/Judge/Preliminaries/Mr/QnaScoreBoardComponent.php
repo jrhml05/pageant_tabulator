@@ -75,11 +75,11 @@ class QnaScoreBoardComponent extends Component
     }
     public function lockInscore()
     {
-        $this->dispatchBrowserEvent('swal:confirm', [
-            'type' => 'warning',
-            'message' => 'Are you sure you want to lock in the scores?',
-            'text' => 'If yes, score fields will be disabled!'
-        ]);
+        $this->dispatch('swal:confirm',
+            type: 'warning',
+            message: 'Are you sure you want to lock in the scores?',
+            text: 'If yes, score fields will be disabled!'
+        );
     }
 
     public function confirmedLockInScores()
@@ -87,21 +87,21 @@ class QnaScoreBoardComponent extends Component
         $locked = 0;
         foreach ($this->records as $record) {
             if ($record->relevance === null || $record->delivery === null || $record->content === null || $record->audience_impact === null ) {
-                $this->dispatchBrowserEvent('swal:modal', [
-                    'type' => 'warning',
-                    'message' => 'Fill out all Scores.',
-                    'text' => '.'
-                ]);
+                $this->dispatch('swal:modal',
+                    type: 'warning',
+                    message: 'Fill out all Scores.',
+                    text: '.'
+                );
                 $locked = 0;
                 break;
             } else {
                 if (($record->relevance > 40 || $record->relevance < 0) || ($record->delivery > 20 || $record->delivery < 0) || ($record->content > 30 || $record->content < 0) || ($record->audience_impact > 10 || $record->audience_impact < 0)) {
 
-                    $this->dispatchBrowserEvent('swal:modal', [
-                        'type' => 'warning',
-                        'message' => 'Double Check your scores.',
-                        'text' => '.'
-                    ]);
+                    $this->dispatch('swal:modal',
+                        type: 'warning',
+                        message: 'Double Check your scores.',
+                        text: '.'
+                    );
                     $locked = 0;
                     break;
                 } else {
