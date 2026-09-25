@@ -5,7 +5,7 @@
 @section('content')
     <x-report-header division="mr" stage="Final" title="Final" route="mr_final" :print="route('mr_pdffinal')" rank="/mr_final_rank">
         <button type="button" class="btn btn-secondary" data-action-url="/mr_final_score_seeder"
-            data-busy-label="Creating…" data-error-label="Creating score sheets"
+            data-busy-label="Creating…" data-done-label="Final score sheets created" data-error-label="Creating score sheets"
             data-confirm="This deletes every final score already entered and creates blank sheets for the current finalists. Continue?">
             <i class="fa-solid fa-table-list" aria-hidden="true"></i>
             <span data-label>Create final score sheets</span>

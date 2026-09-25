@@ -23,8 +23,79 @@ function setDrawer(open) {
     if (open) drawer.querySelector('aside a')?.focus();
 }
 
+const REFRESH_MS = 5000;
+
+class SignedOutError extends Error {
+    constructor() {
+        super('you are signed out, sign in again');
+    }
+}
+
+async function request(url) {
+    const response = await fetch(url, {
+        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+        cache: 'no-store',
+    });
+    // 401/419 or a redirect to the login page: the session expired.
+    if (response.redirected || [401, 419].includes(response.status)) throw new SignedOutError();
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return response;
+}
+
+function setLiveNote(text) {
+    const note = document.querySelector('[data-live-note]');
+    if (note) note.textContent = text;
+}
+
+// Report tables are server-rendered Blade, so a refresh re-requests this page and
+// swaps in each [data-refresh-region] by position. Only regions whose markup
+// changed are replaced, which keeps horizontal scroll and text selection intact.
+let refreshSeq = 0;
+let refreshTimer = null;
+
+async function refreshTables() {
+    const seq = ++refreshSeq;
+    const html = await (await request(window.location.href)).text();
+    // A later refresh (e.g. one started by an action) already won.
+    if (seq !== refreshSeq) return;
+
+    const fresh = new DOMParser().parseFromString(html, 'text/html').querySelectorAll('[data-refresh-region]');
+    const regions = document.querySelectorAll('[data-refresh-region]');
+    // The page layout changed (e.g. the final's empty state became a table).
+    if (fresh.length !== regions.length) {
+        window.location.reload();
+        return;
+    }
+    regions.forEach((region, i) => {
+        if (region.innerHTML !== fresh[i].innerHTML) region.innerHTML = fresh[i].innerHTML;
+    });
+
+    const time = document.querySelector('[data-live-time]');
+    if (time) time.textContent = `Updated ${new Date().toLocaleTimeString()}`;
+}
+
+let pollFailing = false;
+
+async function pollTables() {
+    clearTimeout(refreshTimer);
+    if (document.hidden) return;
+    try {
+        await refreshTables();
+        if (pollFailing) setLiveNote('');
+        pollFailing = false;
+    } catch (error) {
+        pollFailing = true;
+        if (error instanceof SignedOutError) {
+            setLiveNote('Signed out. Sign in again to see new scores.');
+            return;
+        }
+        setLiveNote("Can't reach the server. Scores shown may be out of date; retrying.");
+    }
+    refreshTimer = setTimeout(pollTables, REFRESH_MS);
+}
+
 // Ranking and seeding endpoints are plain GETs that rewrite tables server-side,
-// so the page reloads to show the new ranks once the request succeeds.
+// so the tables are refreshed in place once the request succeeds.
 async function runAction(button) {
     const status = document.getElementById(button.dataset.statusTarget ?? 'action-status');
     if (button.dataset.confirm && !window.confirm(button.dataset.confirm)) return;
@@ -37,19 +108,32 @@ async function runAction(button) {
     if (status) status.textContent = '';
 
     try {
-        const response = await fetch(button.dataset.actionUrl, {
-            headers: { 'X-Requested-With': 'XMLHttpRequest' },
-        });
-        // 401/419 or a redirect to the login page: the session expired.
-        if (response.redirected || [401, 419].includes(response.status)) throw new Error('you are signed out, sign in again');
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        window.location.reload();
+        await request(button.dataset.actionUrl);
     } catch (error) {
-        button.disabled = false;
-        button.removeAttribute('aria-busy');
-        if (label) label.textContent = idleText;
+        restoreButton(button, label, idleText);
         if (status) status.textContent = `${button.dataset.errorLabel ?? 'That action'} failed (${error.message}). Nothing was changed on this page; try again.`;
+        return;
     }
+
+    if (!document.querySelector('[data-live-report]')) {
+        window.location.reload();
+        return;
+    }
+    try {
+        await refreshTables();
+        setLiveNote(`${button.dataset.doneLabel ?? 'Done'}.`);
+    } catch {
+        // The action itself succeeded; only the redraw failed.
+        window.location.reload();
+        return;
+    }
+    restoreButton(button, label, idleText);
+}
+
+function restoreButton(button, label, idleText) {
+    button.disabled = false;
+    button.removeAttribute('aria-busy');
+    if (label) label.textContent = idleText;
 }
 
 document.addEventListener('click', (event) => {
@@ -97,3 +181,13 @@ document.addEventListener('keydown', (event) => {
 });
 
 applyTheme(currentTheme());
+
+if (document.querySelector('[data-live-report]')) {
+    const time = document.querySelector('[data-live-time]');
+    if (time) time.textContent = `Updated ${new Date().toLocaleTimeString()}`;
+    refreshTimer = setTimeout(pollTables, REFRESH_MS);
+    // Background tabs stop polling; catch up as soon as the tab is shown again.
+    document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) pollTables();
+    });
+}

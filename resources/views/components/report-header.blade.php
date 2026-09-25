@@ -24,7 +24,7 @@
     <x-slot:actions>
         @if ($rank)
             <button type="button" class="btn btn-primary" data-action-url="{{ $rank }}"
-                data-busy-label="Ranking…" data-error-label="Ranking">
+                data-busy-label="Ranking…" data-done-label="Ranks updated" data-error-label="Ranking">
                 <i class="fa-solid fa-ranking-star" aria-hidden="true"></i>
                 <span data-label>Rank candidates</span>
             </button>
@@ -41,20 +41,27 @@
 
 <p id="action-status" role="alert" class="-mt-3 mb-4 text-sm font-medium text-danger empty:hidden"></p>
 
-@if ($tabs)
-    <nav aria-label="Score sheets" class="mb-5 overflow-x-auto">
-        <ul class="inline-flex min-w-max gap-1 rounded-lg border border-line bg-surface p-1">
-            @foreach ($tabs as $label => $name)
-                @php $current = request()->routeIs($name); @endphp
-                <li>
-                    <a href="{{ route($name) }}" @if ($current) aria-current="page" @endif
-                        class="flex min-h-10 items-center rounded-md px-4 text-sm font-medium transition-colors {{ $current ? 'bg-accent-soft text-accent-soft-ink' : 'text-ink-2 hover:bg-surface-2 hover:text-ink' }}">
-                        {{ $label }}
-                    </a>
-                </li>
-            @endforeach
-        </ul>
-    </nav>
-@endif
+<div class="mb-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+    @if ($tabs)
+        <nav aria-label="Score sheets" class="max-w-full overflow-x-auto">
+            <ul class="inline-flex min-w-max gap-1 rounded-lg border border-line bg-surface p-1">
+                @foreach ($tabs as $label => $name)
+                    @php $current = request()->routeIs($name); @endphp
+                    <li>
+                        <a href="{{ route($name) }}" @if ($current) aria-current="page" @endif
+                            class="flex min-h-10 items-center rounded-md px-4 text-sm font-medium transition-colors {{ $current ? 'bg-accent-soft text-accent-soft-ink' : 'text-ink-2 hover:bg-surface-2 hover:text-ink' }}">
+                            {{ $label }}
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        </nav>
+    @endif
+    {{-- app.js polls this page every few seconds and swaps in the new tables. --}}
+    <p data-live-report class="text-sm text-ink-2">
+        <span data-live-note role="status" class="font-medium text-ink empty:hidden"></span>
+        <span data-live-time>Scores refresh automatically.</span>
+    </p>
+</div>
 
 <x-flash />

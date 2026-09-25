@@ -5,7 +5,7 @@
 @section('content')
     <x-report-header division="ms" stage="Preliminaries" title="Preliminaries" route="ms_prelim" :print="route('ms_pdfprelim')" rank="/ms_prelim_rank">
         <button type="button" class="btn btn-secondary" data-action-url="/ms_to_top_5_rank"
-            data-busy-label="Marking…" data-error-label="Marking finalists"
+            data-busy-label="Marking…" data-done-label="Top 5 marked as finalists" data-error-label="Marking finalists"
             data-confirm="Mark the five best combined ranks as finalists? This changes which candidates judges score in the final.">
             <i class="fa-solid fa-medal" aria-hidden="true"></i>
             <span data-label>Mark top 5 as finalists</span>
