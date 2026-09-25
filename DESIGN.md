@@ -12,7 +12,7 @@ Direction chosen by the owner: a clean operations console, light and dark themes
 |---|---|
 | Neutral gray scale plus one teal accent (`--accent`) | Teal marks the one primary action per screen (Rank candidates, Lock in scores, Sign in) and where you are (current nav item and tab). It stays clear of the red that flags an out-of-range score. |
 | Green (`--success-ink`) only for "all judges locked" | It's the one positive state the tabulator waits for, and it also carries a lock icon and text, not color alone. |
-| Red (`--danger`) only for errors and out-of-range scores | It needs to be the loudest thing on screen when it appears, so nothing else uses it. |
+| Red (`--danger`) only for errors, out-of-range scores, and the Delete candidate button | It needs to be the loudest thing on screen when it appears, so nothing else uses it. Deleting a candidate also deletes their scores, so it earns the same weight, and it sits alone at the bottom of the edit page. |
 | IBM Plex Sans, bundled with Vite | Clear, tabular figures so score columns line up digit for digit, and 1/l/I are easy to tell apart. Bundled because the venue has no internet. |
 | Font Awesome solid icons, bundled | Filled glyphs stay legible at 14px on tablets. Icons appear only beside a text label (print, rank, lock) or as the theme and menu toggles, which have accessible names. |
 | Radii: 6px controls, 8px cards and tab groups, full round only on the switch | Controls and containers read as different kinds of things. |

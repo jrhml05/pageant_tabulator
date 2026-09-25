@@ -48,9 +48,9 @@
     "semantic_hash": "fd61de1da45caf8e8a962288285f211e"
   },
   "app/Http/Controllers/CandidateController.php": {
-    "mtime": 1790220835.2958193,
-    "seen": 1790221873.40768,
-    "ast_hash": "78cfb02a0e547746d63fd6a02fd34f0c",
+    "mtime": 1790298205.197464,
+    "seen": 1790298335.5971682,
+    "ast_hash": "113de32e0a2d18c71b57df78fcc44491",
     "semantic_hash": ""
   },
   "app/Http/Controllers/Controller.php": {
@@ -978,15 +978,15 @@
     "semantic_hash": "eb177ddb91c36eb3f80a02f323947983"
   },
   "resources/js/app.js": {
-    "mtime": 1790297212.0213945,
-    "seen": 1790297299.8292868,
-    "ast_hash": "fa47297969190449598e0bd6643c5851",
+    "mtime": 1790298227.0625718,
+    "seen": 1790298335.597271,
+    "ast_hash": "e2bab7fa6f4df65f0d45cc7de0070ae3",
     "semantic_hash": ""
   },
   "resources/views/admin/candidates/index.blade.php": {
-    "mtime": 1790233065.957269,
-    "seen": 1790297299.8292868,
-    "ast_hash": "049bda045ecc7a6be958ebebef256de1",
+    "mtime": 1790298254.2028184,
+    "seen": 1790298335.597273,
+    "ast_hash": "ef7e8246196b8ea50f46f2aed9520d1b",
     "semantic_hash": ""
   },
   "resources/views/admin/judges/create.blade.php": {
@@ -2088,9 +2088,9 @@
     "semantic_hash": "62bfb59371c073b4ec966528fdd9c3f9"
   },
   "routes/web.php": {
-    "mtime": 1790231804.4480796,
-    "seen": 1790297299.829407,
-    "ast_hash": "b346a41f9a91393f183df76dd40d6185",
+    "mtime": 1790298334.3440936,
+    "seen": 1790298335.597412,
+    "ast_hash": "2398710b3b9923176aae585291217774",
     "semantic_hash": ""
   },
   "artisan": {
@@ -2262,9 +2262,9 @@
     "semantic_hash": ""
   },
   "CLAUDE.md": {
-    "mtime": 1790236657.6366646,
-    "seen": 1790297299.829411,
-    "ast_hash": "5d41114d87eb4823f8ce6019c3150683",
+    "mtime": 1790297304.1074011,
+    "seen": 1790298335.597416,
+    "ast_hash": "e3a217375432764061c9d68f4870c5a5",
     "semantic_hash": ""
   },
   "README.md": {
@@ -2688,9 +2688,27 @@
     "semantic_hash": ""
   },
   "DESIGN.md": {
-    "mtime": 1790233080.0375412,
-    "seen": 1790297299.829412,
-    "ast_hash": "2662d523b402337dc18cfde765d0c4b0",
+    "mtime": 1790298227.0624688,
+    "seen": 1790298335.597416,
+    "ast_hash": "7cd302b1f1ab01cb48ad6160321644eb",
+    "semantic_hash": ""
+  },
+  "resources/views/admin/candidates/create.blade.php": {
+    "mtime": 1790298239.4500527,
+    "seen": 1790298335.5972722,
+    "ast_hash": "9260781b7eadc2f92354a053ae804b97",
+    "semantic_hash": ""
+  },
+  "resources/views/admin/candidates/edit.blade.php": {
+    "mtime": 1790298244.1845782,
+    "seen": 1790298335.5972722,
+    "ast_hash": "4f4dab2c32ab2a4cccd12549f4d54ec7",
+    "semantic_hash": ""
+  },
+  "resources/views/admin/candidates/form.blade.php": {
+    "mtime": 1790298238.0678475,
+    "seen": 1790298335.597273,
+    "ast_hash": "116820f715229e68fa76b90d245ca30b",
     "semantic_hash": ""
   }
 }

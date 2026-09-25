@@ -171,6 +171,12 @@ document.addEventListener('click', (event) => {
     }
 });
 
+// Destructive forms (deleting a candidate) ask first.
+document.addEventListener('submit', (event) => {
+    const message = event.target.dataset?.confirm;
+    if (message && !window.confirm(message)) event.preventDefault();
+});
+
 document.addEventListener('keydown', (event) => {
     if (event.key !== 'Escape') return;
     const drawer = document.getElementById('admin-drawer');

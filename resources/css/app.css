@@ -107,6 +107,11 @@
         @apply border-line-strong bg-surface text-ink hover:bg-surface-2;
     }
 
+    /* Only for deleting a candidate, which also wipes their scores. */
+    .btn-danger {
+        @apply border-danger bg-surface text-danger hover:bg-danger-soft;
+    }
+
     .btn-ghost {
         @apply border-transparent text-ink-2 hover:bg-surface-2 hover:text-ink;
     }

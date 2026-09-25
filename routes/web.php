@@ -22,6 +22,15 @@ Route::get('/logout', function () {
 Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/candidates', [App\Http\Controllers\CandidateController::class, 'index'])->name('candidates.index');
+    Route::controller(App\Http\Controllers\CandidateController::class)
+        ->prefix('candidates/{division}')->whereIn('division', ['mr', 'ms'])->name('candidates.')
+        ->group(function () {
+            Route::get('/create', 'create')->name('create');
+            Route::post('/', 'store')->name('store');
+            Route::get('/{number}/edit', 'edit')->whereNumber('number')->name('edit');
+            Route::put('/{number}', 'update')->whereNumber('number')->name('update');
+            Route::delete('/{number}', 'destroy')->whereNumber('number')->name('destroy');
+        });
     Route::resource('judges', App\Http\Controllers\UserController::class);
     Route::get('/settings', function () {
         return view('admin.settings.index');
