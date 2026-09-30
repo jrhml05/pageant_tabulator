@@ -56,6 +56,32 @@
       "source_location": "L13"
     },
     {
+      "id": "tests_testcase_testcase",
+      "label": "TestCase",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "Segment",
+      "file_type": "code",
+      "norm_label": "testcase",
+      "source_file": "tests/TestCase.php",
+      "source_location": "L7"
+    },
+    {
+      "id": "tests_feature_announcementtest_announcementtest",
+      "label": "AnnouncementTest",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "AnnouncementTest",
+      "file_type": "code",
+      "norm_label": "announcementtest",
+      "source_file": "tests/Feature/AnnouncementTest.php",
+      "source_location": "L12"
+    },
+    {
       "id": "resources_js_app_signedouterror",
       "label": "SignedOutError",
       "_callable": true,
@@ -67,6 +93,58 @@
       "norm_label": "signedouterror",
       "source_file": "resources/js/app.js",
       "source_location": "L28"
+    },
+    {
+      "id": "app_http_controllers_usercontroller_usercontroller",
+      "label": "UserController",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": "usercontroller",
+      "source_file": "app/Http/Controllers/UserController.php",
+      "source_location": "L10"
+    },
+    {
+      "id": "app_models_user_user",
+      "label": "User",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": "user",
+      "source_file": "app/Models/User.php",
+      "source_location": "L10"
+    },
+    {
+      "id": "database_seeders_userseeder_userseeder",
+      "label": "UserSeeder",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": "userseeder",
+      "source_file": "database/seeders/UserSeeder.php",
+      "source_location": "L12"
+    },
+    {
+      "id": "tests_feature_pagestest_pagestest",
+      "label": "PagesTest",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": "pagestest",
+      "source_file": "tests/Feature/PagesTest.php",
+      "source_location": "L13"
     },
     {
       "id": "app_http_controllers_auth_confirmpasswordcontroller_confirmpasswordcontroller",
@@ -251,19 +329,6 @@
       "source_location": "L9"
     },
     {
-      "id": "app_http_controllers_usercontroller_usercontroller",
-      "label": "UserController",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 32,
-      "community_name": "Illuminate\\Http\\Request",
-      "file_type": "code",
-      "norm_label": "usercontroller",
-      "source_file": "app/Http/Controllers/UserController.php",
-      "source_location": "L10"
-    },
-    {
       "id": "app_http_middleware_redirectifauthenticated_redirectifauthenticated",
       "label": "RedirectIfAuthenticated",
       "_callable": true,
@@ -329,19 +394,6 @@
       "source_location": "L13"
     },
     {
-      "id": "tests_feature_announcementtest_announcementtest",
-      "label": "AnnouncementTest",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "ResultsController",
-      "file_type": "code",
-      "norm_label": "announcementtest",
-      "source_file": "tests/Feature/AnnouncementTest.php",
-      "source_location": "L12"
-    },
-    {
       "id": "tests_createsapplication_createsapplication",
       "label": "CreatesApplication",
       "_callable": true,
@@ -361,7 +413,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 36,
-      "community_name": "Illuminate\\Support\\Str",
+      "community_name": "UserFactory",
       "file_type": "code",
       "norm_label": "userfactory",
       "source_file": "database/factories/UserFactory.php",
@@ -602,32 +654,6 @@
       "source_location": "L8"
     },
     {
-      "id": "app_models_user_user",
-      "label": "User",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "Candidate",
-      "file_type": "code",
-      "norm_label": "user",
-      "source_file": "app/Models/User.php",
-      "source_location": "L10"
-    },
-    {
-      "id": "tests_feature_pagestest_pagestest",
-      "label": "PagesTest",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "Candidate",
-      "file_type": "code",
-      "norm_label": "pagestest",
-      "source_file": "tests/Feature/PagesTest.php",
-      "source_location": "L13"
-    },
-    {
       "id": "tests_feature_scoresheettest_scoresheettest",
       "label": "ScoreSheetTest",
       "_callable": true,
@@ -639,19 +665,6 @@
       "norm_label": "scoresheettest",
       "source_file": "tests/Feature/ScoreSheetTest.php",
       "source_location": "L15"
-    },
-    {
-      "id": "tests_testcase_testcase",
-      "label": "TestCase",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "Candidate",
-      "file_type": "code",
-      "norm_label": "testcase",
-      "source_file": "tests/TestCase.php",
-      "source_location": "L7"
     },
     {
       "id": "database_seeders_candidateseeder_candidateseeder",
@@ -678,19 +691,6 @@
       "norm_label": "databaseseeder",
       "source_file": "database/seeders/DatabaseSeeder.php",
       "source_location": "L7"
-    },
-    {
-      "id": "database_seeders_userseeder_userseeder",
-      "label": "UserSeeder",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "Illuminate\\Database\\Seeder",
-      "file_type": "code",
-      "norm_label": "userseeder",
-      "source_file": "database/seeders/UserSeeder.php",
-      "source_location": "L12"
     },
     {
       "id": "app_http_livewire_judge_scoresheet_scoresheet_candidates",
@@ -1077,6 +1077,90 @@
       "source_location": "L23"
     },
     {
+      "id": "tests_feature_announcementtest_announcementtest_callorder",
+      "label": ".callOrder()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "AnnouncementTest",
+      "file_type": "code",
+      "norm_label": ".callorder()",
+      "source_file": "tests/Feature/AnnouncementTest.php",
+      "source_location": "L108"
+    },
+    {
+      "id": "tests_feature_announcementtest_announcementtest_savefinalists",
+      "label": ".saveFinalists()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "AnnouncementTest",
+      "file_type": "code",
+      "norm_label": ".savefinalists()",
+      "source_file": "tests/Feature/AnnouncementTest.php",
+      "source_location": "L102"
+    },
+    {
+      "id": "tests_feature_announcementtest_announcementtest_test_changing_the_finalists_draws_a_new_order_and_clears_the_dropped_one",
+      "label": ".test_changing_the_finalists_draws_a_new_order_and_clears_the_dropped_one()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "AnnouncementTest",
+      "file_type": "code",
+      "norm_label": ".test_changing_the_finalists_draws_a_new_order_and_clears_the_dropped_one()",
+      "source_file": "tests/Feature/AnnouncementTest.php",
+      "source_location": "L72"
+    },
+    {
+      "id": "tests_feature_announcementtest_announcementtest_test_every_reshuffle_avoids_the_ranking_the_numbers_and_the_previous_order",
+      "label": ".test_every_reshuffle_avoids_the_ranking_the_numbers_and_the_previous_order()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "AnnouncementTest",
+      "file_type": "code",
+      "norm_label": ".test_every_reshuffle_avoids_the_ranking_the_numbers_and_the_previous_order()",
+      "source_file": "tests/Feature/AnnouncementTest.php",
+      "source_location": "L46"
+    },
+    {
+      "id": "tests_feature_announcementtest_announcementtest_test_reshuffle_button_and_announcement_sheet",
+      "label": ".test_reshuffle_button_and_announcement_sheet()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "AnnouncementTest",
+      "file_type": "code",
+      "norm_label": ".test_reshuffle_button_and_announcement_sheet()",
+      "source_file": "tests/Feature/AnnouncementTest.php",
+      "source_location": "L84"
+    },
+    {
+      "id": "tests_feature_announcementtest_announcementtest_test_saving_finalists_draws_a_call_order_that_is_neither_ranking_nor_numbers",
+      "label": ".test_saving_finalists_draws_a_call_order_that_is_neither_ranking_nor_numbers()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "AnnouncementTest",
+      "file_type": "code",
+      "norm_label": ".test_saving_finalists_draws_a_call_order_that_is_neither_ranking_nor_numbers()",
+      "source_file": "tests/Feature/AnnouncementTest.php",
+      "source_location": "L35"
+    },
+    {
+      "id": "tests_feature_announcementtest_announcementtest_test_saving_the_same_finalists_again_keeps_the_printed_order",
+      "label": ".test_saving_the_same_finalists_again_keeps_the_printed_order()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "AnnouncementTest",
+      "file_type": "code",
+      "norm_label": ".test_saving_the_same_finalists_again_keeps_the_printed_order()",
+      "source_file": "tests/Feature/AnnouncementTest.php",
+      "source_location": "L62"
+    },
+    {
       "id": "resources_js_app_applytheme",
       "label": "applyTheme()",
       "_callable": true,
@@ -1183,6 +1267,306 @@
       "norm_label": ".constructor()",
       "source_file": "resources/js/app.js",
       "source_location": "L29"
+    },
+    {
+      "id": "app_http_controllers_usercontroller_usercontroller_create",
+      "label": ".create()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": ".create()",
+      "source_file": "app/Http/Controllers/UserController.php",
+      "source_location": "L21"
+    },
+    {
+      "id": "app_http_controllers_usercontroller_usercontroller_edit",
+      "label": ".edit()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": ".edit()",
+      "source_file": "app/Http/Controllers/UserController.php",
+      "source_location": "L45"
+    },
+    {
+      "id": "app_http_controllers_usercontroller_usercontroller_index",
+      "label": ".index()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": ".index()",
+      "source_file": "app/Http/Controllers/UserController.php",
+      "source_location": "L12"
+    },
+    {
+      "id": "app_http_controllers_usercontroller_usercontroller_store",
+      "label": ".store()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": ".store()",
+      "source_file": "app/Http/Controllers/UserController.php",
+      "source_location": "L28"
+    },
+    {
+      "id": "app_http_controllers_usercontroller_usercontroller_update",
+      "label": ".update()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": ".update()",
+      "source_file": "app/Http/Controllers/UserController.php",
+      "source_location": "L53"
+    },
+    {
+      "id": "app_http_controllers_usercontroller_usercontroller_validated",
+      "label": ".validated()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": ".validated()",
+      "source_file": "app/Http/Controllers/UserController.php",
+      "source_location": "L73"
+    },
+    {
+      "id": "app_models_candidate_candidate_scopedivision",
+      "label": ".scopeDivision()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": ".scopedivision()",
+      "source_file": "app/Models/Candidate.php",
+      "source_location": "L24"
+    },
+    {
+      "id": "app_models_user_user_isjudge",
+      "label": ".isJudge()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": ".isjudge()",
+      "source_file": "app/Models/User.php",
+      "source_location": "L27"
+    },
+    {
+      "id": "app_models_user_user_scopeonpanel",
+      "label": ".scopeOnPanel()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": ".scopeonpanel()",
+      "source_file": "app/Models/User.php",
+      "source_location": "L35"
+    },
+    {
+      "id": "database_seeders_userseeder_userseeder_run",
+      "label": ".run()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": ".run()",
+      "source_file": "database/seeders/UserSeeder.php",
+      "source_location": "L14"
+    },
+    {
+      "id": "tests_feature_pagestest_pagestest_seedsomescores",
+      "label": ".seedSomeScores()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": ".seedsomescores()",
+      "source_file": "tests/Feature/PagesTest.php",
+      "source_location": "L188"
+    },
+    {
+      "id": "tests_feature_pagestest_pagestest_setup",
+      "label": ".setUp()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": ".setup()",
+      "source_file": "tests/Feature/PagesTest.php",
+      "source_location": "L19"
+    },
+    {
+      "id": "tests_feature_pagestest_pagestest_sidebar",
+      "label": ".sidebar()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": ".sidebar()",
+      "source_file": "tests/Feature/PagesTest.php",
+      "source_location": "L93"
+    },
+    {
+      "id": "tests_feature_pagestest_pagestest_test_a_candidates_college_or_university_is_saved_and_shown",
+      "label": ".test_a_candidates_college_or_university_is_saved_and_shown()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": ".test_a_candidates_college_or_university_is_saved_and_shown()",
+      "source_file": "tests/Feature/PagesTest.php",
+      "source_location": "L163"
+    },
+    {
+      "id": "tests_feature_pagestest_pagestest_test_a_wrong_password_is_refused",
+      "label": ".test_a_wrong_password_is_refused()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": ".test_a_wrong_password_is_refused()",
+      "source_file": "tests/Feature/PagesTest.php",
+      "source_location": "L37"
+    },
+    {
+      "id": "tests_feature_pagestest_pagestest_test_admins_sign_in_to_scoring_control",
+      "label": ".test_admins_sign_in_to_scoring_control()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": ".test_admins_sign_in_to_scoring_control()",
+      "source_file": "tests/Feature/PagesTest.php",
+      "source_location": "L32"
+    },
+    {
+      "id": "tests_feature_pagestest_pagestest_test_deleting_a_candidate_deletes_their_scores",
+      "label": ".test_deleting_a_candidate_deletes_their_scores()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": ".test_deleting_a_candidate_deletes_their_scores()",
+      "source_file": "tests/Feature/PagesTest.php",
+      "source_location": "L178"
+    },
+    {
+      "id": "tests_feature_pagestest_pagestest_test_every_admin_page_renders",
+      "label": ".test_every_admin_page_renders()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": ".test_every_admin_page_renders()",
+      "source_file": "tests/Feature/PagesTest.php",
+      "source_location": "L43"
+    },
+    {
+      "id": "tests_feature_pagestest_pagestest_test_judge_accounts_use_a_username_and_a_panel",
+      "label": ".test_judge_accounts_use_a_username_and_a_panel()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": ".test_judge_accounts_use_a_username_and_a_panel()",
+      "source_file": "tests/Feature/PagesTest.php",
+      "source_location": "L150"
+    },
+    {
+      "id": "tests_feature_pagestest_pagestest_test_judges_cannot_reach_admin_pages",
+      "label": ".test_judges_cannot_reach_admin_pages()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": ".test_judges_cannot_reach_admin_pages()",
+      "source_file": "tests/Feature/PagesTest.php",
+      "source_location": "L101"
+    },
+    {
+      "id": "tests_feature_pagestest_pagestest_test_opening_a_segment_sends_its_panel_straight_to_the_sheet",
+      "label": ".test_opening_a_segment_sends_its_panel_straight_to_the_sheet()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": ".test_opening_a_segment_sends_its_panel_straight_to_the_sheet()",
+      "source_file": "tests/Feature/PagesTest.php",
+      "source_location": "L106"
+    },
+    {
+      "id": "tests_feature_pagestest_pagestest_test_results_pages_switch_division_in_place_and_the_sidebar_follows",
+      "label": ".test_results_pages_switch_division_in_place_and_the_sidebar_follows()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": ".test_results_pages_switch_division_in_place_and_the_sidebar_follows()",
+      "source_file": "tests/Feature/PagesTest.php",
+      "source_location": "L69"
+    },
+    {
+      "id": "tests_feature_pagestest_pagestest_test_saving_finalists_replaces_the_previous_set",
+      "label": ".test_saving_finalists_replaces_the_previous_set()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": ".test_saving_finalists_replaces_the_previous_set()",
+      "source_file": "tests/Feature/PagesTest.php",
+      "source_location": "L134"
+    },
+    {
+      "id": "tests_feature_pagestest_pagestest_test_sign_in_uses_the_username",
+      "label": ".test_sign_in_uses_the_username()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": ".test_sign_in_uses_the_username()",
+      "source_file": "tests/Feature/PagesTest.php",
+      "source_location": "L26"
+    },
+    {
+      "id": "tests_feature_pagestest_pagestest_test_unlock_removes_a_judges_lock",
+      "label": ".test_unlock_removes_a_judges_lock()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": ".test_unlock_removes_a_judges_lock()",
+      "source_file": "tests/Feature/PagesTest.php",
+      "source_location": "L124"
     },
     {
       "id": "app_http_controllers_auth_confirmpasswordcontroller_confirmpasswordcontroller_construct",
@@ -1809,78 +2193,6 @@
       "source_location": "L32"
     },
     {
-      "id": "app_http_controllers_usercontroller_usercontroller_create",
-      "label": ".create()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 32,
-      "community_name": "Illuminate\\Http\\Request",
-      "file_type": "code",
-      "norm_label": ".create()",
-      "source_file": "app/Http/Controllers/UserController.php",
-      "source_location": "L21"
-    },
-    {
-      "id": "app_http_controllers_usercontroller_usercontroller_edit",
-      "label": ".edit()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 32,
-      "community_name": "Illuminate\\Http\\Request",
-      "file_type": "code",
-      "norm_label": ".edit()",
-      "source_file": "app/Http/Controllers/UserController.php",
-      "source_location": "L45"
-    },
-    {
-      "id": "app_http_controllers_usercontroller_usercontroller_index",
-      "label": ".index()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 32,
-      "community_name": "Illuminate\\Http\\Request",
-      "file_type": "code",
-      "norm_label": ".index()",
-      "source_file": "app/Http/Controllers/UserController.php",
-      "source_location": "L12"
-    },
-    {
-      "id": "app_http_controllers_usercontroller_usercontroller_store",
-      "label": ".store()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 32,
-      "community_name": "Illuminate\\Http\\Request",
-      "file_type": "code",
-      "norm_label": ".store()",
-      "source_file": "app/Http/Controllers/UserController.php",
-      "source_location": "L28"
-    },
-    {
-      "id": "app_http_controllers_usercontroller_usercontroller_update",
-      "label": ".update()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 32,
-      "community_name": "Illuminate\\Http\\Request",
-      "file_type": "code",
-      "norm_label": ".update()",
-      "source_file": "app/Http/Controllers/UserController.php",
-      "source_location": "L53"
-    },
-    {
-      "id": "app_http_controllers_usercontroller_usercontroller_validated",
-      "label": ".validated()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 32,
-      "community_name": "Illuminate\\Http\\Request",
-      "file_type": "code",
-      "norm_label": ".validated()",
-      "source_file": "app/Http/Controllers/UserController.php",
-      "source_location": "L73"
-    },
-    {
       "id": "app_http_middleware_redirectifauthenticated_redirectifauthenticated_handle",
       "label": ".handle()",
       "_callable": true,
@@ -2073,90 +2385,6 @@
       "source_location": "L30"
     },
     {
-      "id": "tests_feature_announcementtest_announcementtest_callorder",
-      "label": ".callOrder()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "ResultsController",
-      "file_type": "code",
-      "norm_label": ".callorder()",
-      "source_file": "tests/Feature/AnnouncementTest.php",
-      "source_location": "L108"
-    },
-    {
-      "id": "tests_feature_announcementtest_announcementtest_savefinalists",
-      "label": ".saveFinalists()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "ResultsController",
-      "file_type": "code",
-      "norm_label": ".savefinalists()",
-      "source_file": "tests/Feature/AnnouncementTest.php",
-      "source_location": "L102"
-    },
-    {
-      "id": "tests_feature_announcementtest_announcementtest_test_changing_the_finalists_draws_a_new_order_and_clears_the_dropped_one",
-      "label": ".test_changing_the_finalists_draws_a_new_order_and_clears_the_dropped_one()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "ResultsController",
-      "file_type": "code",
-      "norm_label": ".test_changing_the_finalists_draws_a_new_order_and_clears_the_dropped_one()",
-      "source_file": "tests/Feature/AnnouncementTest.php",
-      "source_location": "L72"
-    },
-    {
-      "id": "tests_feature_announcementtest_announcementtest_test_every_reshuffle_avoids_the_ranking_the_numbers_and_the_previous_order",
-      "label": ".test_every_reshuffle_avoids_the_ranking_the_numbers_and_the_previous_order()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "ResultsController",
-      "file_type": "code",
-      "norm_label": ".test_every_reshuffle_avoids_the_ranking_the_numbers_and_the_previous_order()",
-      "source_file": "tests/Feature/AnnouncementTest.php",
-      "source_location": "L46"
-    },
-    {
-      "id": "tests_feature_announcementtest_announcementtest_test_reshuffle_button_and_announcement_sheet",
-      "label": ".test_reshuffle_button_and_announcement_sheet()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "ResultsController",
-      "file_type": "code",
-      "norm_label": ".test_reshuffle_button_and_announcement_sheet()",
-      "source_file": "tests/Feature/AnnouncementTest.php",
-      "source_location": "L84"
-    },
-    {
-      "id": "tests_feature_announcementtest_announcementtest_test_saving_finalists_draws_a_call_order_that_is_neither_ranking_nor_numbers",
-      "label": ".test_saving_finalists_draws_a_call_order_that_is_neither_ranking_nor_numbers()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "ResultsController",
-      "file_type": "code",
-      "norm_label": ".test_saving_finalists_draws_a_call_order_that_is_neither_ranking_nor_numbers()",
-      "source_file": "tests/Feature/AnnouncementTest.php",
-      "source_location": "L35"
-    },
-    {
-      "id": "tests_feature_announcementtest_announcementtest_test_saving_the_same_finalists_again_keeps_the_printed_order",
-      "label": ".test_saving_the_same_finalists_again_keeps_the_printed_order()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "ResultsController",
-      "file_type": "code",
-      "norm_label": ".test_saving_the_same_finalists_again_keeps_the_printed_order()",
-      "source_file": "tests/Feature/AnnouncementTest.php",
-      "source_location": "L62"
-    },
-    {
       "id": "tests_createsapplication_createsapplication_createapplication",
       "label": ".createApplication()",
       "_callable": true,
@@ -2174,11 +2402,23 @@
       "_callable": true,
       "_origin": "ast",
       "community": 36,
-      "community_name": "Illuminate\\Support\\Str",
+      "community_name": "UserFactory",
       "file_type": "code",
       "norm_label": ".definition()",
       "source_file": "database/factories/UserFactory.php",
       "source_location": "L18"
+    },
+    {
+      "id": "database_factories_userfactory_userfactory_unverified",
+      "label": ".unverified()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 36,
+      "community_name": "UserFactory",
+      "file_type": "code",
+      "norm_label": ".unverified()",
+      "source_file": "database/factories/UserFactory.php",
+      "source_location": "L34"
     },
     {
       "id": "app_providers_eventserviceprovider_eventserviceprovider_boot",
@@ -2337,18 +2577,6 @@
       "source_location": "L29"
     },
     {
-      "id": "app_models_candidate_candidate_scopedivision",
-      "label": ".scopeDivision()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "Candidate",
-      "file_type": "code",
-      "norm_label": ".scopedivision()",
-      "source_file": "app/Models/Candidate.php",
-      "source_location": "L24"
-    },
-    {
       "id": "app_models_candidate_candidate_scores",
       "label": ".scores()",
       "_callable": true,
@@ -2397,30 +2625,6 @@
       "source_location": "L21"
     },
     {
-      "id": "app_models_user_user_isjudge",
-      "label": ".isJudge()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "Candidate",
-      "file_type": "code",
-      "norm_label": ".isjudge()",
-      "source_file": "app/Models/User.php",
-      "source_location": "L27"
-    },
-    {
-      "id": "app_models_user_user_scopeonpanel",
-      "label": ".scopeOnPanel()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "Candidate",
-      "file_type": "code",
-      "norm_label": ".scopeonpanel()",
-      "source_file": "app/Models/User.php",
-      "source_location": "L35"
-    },
-    {
       "id": "app_scoring_segment_segment_isopen",
       "label": ".isOpen()",
       "_callable": true,
@@ -2443,186 +2647,6 @@
       "norm_label": ".setup()",
       "source_file": "tests/Feature/AnnouncementTest.php",
       "source_location": "L21"
-    },
-    {
-      "id": "tests_feature_pagestest_pagestest_seedsomescores",
-      "label": ".seedSomeScores()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "Candidate",
-      "file_type": "code",
-      "norm_label": ".seedsomescores()",
-      "source_file": "tests/Feature/PagesTest.php",
-      "source_location": "L188"
-    },
-    {
-      "id": "tests_feature_pagestest_pagestest_setup",
-      "label": ".setUp()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "Candidate",
-      "file_type": "code",
-      "norm_label": ".setup()",
-      "source_file": "tests/Feature/PagesTest.php",
-      "source_location": "L19"
-    },
-    {
-      "id": "tests_feature_pagestest_pagestest_sidebar",
-      "label": ".sidebar()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "Candidate",
-      "file_type": "code",
-      "norm_label": ".sidebar()",
-      "source_file": "tests/Feature/PagesTest.php",
-      "source_location": "L93"
-    },
-    {
-      "id": "tests_feature_pagestest_pagestest_test_a_candidates_college_or_university_is_saved_and_shown",
-      "label": ".test_a_candidates_college_or_university_is_saved_and_shown()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "Candidate",
-      "file_type": "code",
-      "norm_label": ".test_a_candidates_college_or_university_is_saved_and_shown()",
-      "source_file": "tests/Feature/PagesTest.php",
-      "source_location": "L163"
-    },
-    {
-      "id": "tests_feature_pagestest_pagestest_test_a_wrong_password_is_refused",
-      "label": ".test_a_wrong_password_is_refused()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "Candidate",
-      "file_type": "code",
-      "norm_label": ".test_a_wrong_password_is_refused()",
-      "source_file": "tests/Feature/PagesTest.php",
-      "source_location": "L37"
-    },
-    {
-      "id": "tests_feature_pagestest_pagestest_test_admins_sign_in_to_scoring_control",
-      "label": ".test_admins_sign_in_to_scoring_control()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "Candidate",
-      "file_type": "code",
-      "norm_label": ".test_admins_sign_in_to_scoring_control()",
-      "source_file": "tests/Feature/PagesTest.php",
-      "source_location": "L32"
-    },
-    {
-      "id": "tests_feature_pagestest_pagestest_test_deleting_a_candidate_deletes_their_scores",
-      "label": ".test_deleting_a_candidate_deletes_their_scores()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "Candidate",
-      "file_type": "code",
-      "norm_label": ".test_deleting_a_candidate_deletes_their_scores()",
-      "source_file": "tests/Feature/PagesTest.php",
-      "source_location": "L178"
-    },
-    {
-      "id": "tests_feature_pagestest_pagestest_test_every_admin_page_renders",
-      "label": ".test_every_admin_page_renders()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "Candidate",
-      "file_type": "code",
-      "norm_label": ".test_every_admin_page_renders()",
-      "source_file": "tests/Feature/PagesTest.php",
-      "source_location": "L43"
-    },
-    {
-      "id": "tests_feature_pagestest_pagestest_test_judge_accounts_use_a_username_and_a_panel",
-      "label": ".test_judge_accounts_use_a_username_and_a_panel()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "Candidate",
-      "file_type": "code",
-      "norm_label": ".test_judge_accounts_use_a_username_and_a_panel()",
-      "source_file": "tests/Feature/PagesTest.php",
-      "source_location": "L150"
-    },
-    {
-      "id": "tests_feature_pagestest_pagestest_test_judges_cannot_reach_admin_pages",
-      "label": ".test_judges_cannot_reach_admin_pages()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "Candidate",
-      "file_type": "code",
-      "norm_label": ".test_judges_cannot_reach_admin_pages()",
-      "source_file": "tests/Feature/PagesTest.php",
-      "source_location": "L101"
-    },
-    {
-      "id": "tests_feature_pagestest_pagestest_test_opening_a_segment_sends_its_panel_straight_to_the_sheet",
-      "label": ".test_opening_a_segment_sends_its_panel_straight_to_the_sheet()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "Candidate",
-      "file_type": "code",
-      "norm_label": ".test_opening_a_segment_sends_its_panel_straight_to_the_sheet()",
-      "source_file": "tests/Feature/PagesTest.php",
-      "source_location": "L106"
-    },
-    {
-      "id": "tests_feature_pagestest_pagestest_test_results_pages_switch_division_in_place_and_the_sidebar_follows",
-      "label": ".test_results_pages_switch_division_in_place_and_the_sidebar_follows()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "Candidate",
-      "file_type": "code",
-      "norm_label": ".test_results_pages_switch_division_in_place_and_the_sidebar_follows()",
-      "source_file": "tests/Feature/PagesTest.php",
-      "source_location": "L69"
-    },
-    {
-      "id": "tests_feature_pagestest_pagestest_test_saving_finalists_replaces_the_previous_set",
-      "label": ".test_saving_finalists_replaces_the_previous_set()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "Candidate",
-      "file_type": "code",
-      "norm_label": ".test_saving_finalists_replaces_the_previous_set()",
-      "source_file": "tests/Feature/PagesTest.php",
-      "source_location": "L134"
-    },
-    {
-      "id": "tests_feature_pagestest_pagestest_test_sign_in_uses_the_username",
-      "label": ".test_sign_in_uses_the_username()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "Candidate",
-      "file_type": "code",
-      "norm_label": ".test_sign_in_uses_the_username()",
-      "source_file": "tests/Feature/PagesTest.php",
-      "source_location": "L26"
-    },
-    {
-      "id": "tests_feature_pagestest_pagestest_test_unlock_removes_a_judges_lock",
-      "label": ".test_unlock_removes_a_judges_lock()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "Candidate",
-      "file_type": "code",
-      "norm_label": ".test_unlock_removes_a_judges_lock()",
-      "source_file": "tests/Feature/PagesTest.php",
-      "source_location": "L124"
     },
     {
       "id": "tests_feature_scoresheettest_scoresheettest_points",
@@ -2817,16 +2841,15 @@
       "source_location": "L9"
     },
     {
-      "id": "database_seeders_userseeder_userseeder_run",
-      "label": ".run()",
-      "_callable": true,
+      "id": "app_scoring_segment",
+      "label": "Segment.php",
       "_origin": "ast",
-      "community": 9,
-      "community_name": "Illuminate\\Database\\Seeder",
+      "community": 0,
+      "community_name": "Segment",
       "file_type": "code",
-      "norm_label": ".run()",
-      "source_file": "database/seeders/UserSeeder.php",
-      "source_location": "L14"
+      "norm_label": "segment.php",
+      "source_file": "app/Scoring/Segment.php",
+      "source_location": "L1"
     },
     {
       "id": "app_scoring_tabulator",
@@ -2838,6 +2861,28 @@
       "norm_label": "tabulator.php",
       "source_file": "app/Scoring/Tabulator.php",
       "source_location": "L1"
+    },
+    {
+      "id": "illuminate_foundation_testing_refreshdatabase",
+      "label": "Illuminate\\Foundation\\Testing\\RefreshDatabase",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "Segment",
+      "file_type": "code",
+      "norm_label": "illuminate\\foundation\\testing\\refreshdatabase",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "illuminate_foundation_testing_testcase",
+      "label": "Illuminate\\Foundation\\Testing\\TestCase",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "Segment",
+      "file_type": "code",
+      "norm_label": "illuminate\\foundation\\testing\\testcase",
+      "source_file": "",
+      "source_location": ""
     },
     {
       "id": "illuminate_support_collection",
@@ -2862,6 +2907,17 @@
       "source_location": ""
     },
     {
+      "id": "tests_feature_announcementtest",
+      "label": "AnnouncementTest.php",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "Segment",
+      "file_type": "code",
+      "norm_label": "announcementtest.php",
+      "source_file": "tests/Feature/AnnouncementTest.php",
+      "source_location": "L1"
+    },
+    {
       "id": "tests_feature_scoringconfigtest",
       "label": "ScoringConfigTest.php",
       "_origin": "ast",
@@ -2870,6 +2926,28 @@
       "file_type": "code",
       "norm_label": "scoringconfigtest.php",
       "source_file": "tests/Feature/ScoringConfigTest.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "tests_feature_tabulatortest",
+      "label": "TabulatorTest.php",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "Segment",
+      "file_type": "code",
+      "norm_label": "tabulatortest.php",
+      "source_file": "tests/Feature/TabulatorTest.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "tests_testcase",
+      "label": "TestCase.php",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "Segment",
+      "file_type": "code",
+      "norm_label": "testcase.php",
+      "source_file": "tests/TestCase.php",
       "source_location": "L1"
     },
     {
@@ -3145,6 +3223,116 @@
       "file_type": "code",
       "norm_label": "livewire.php",
       "source_file": "config/livewire.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_http_controllers_usercontroller",
+      "label": "UserController.php",
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": "usercontroller.php",
+      "source_file": "app/Http/Controllers/UserController.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_models_user",
+      "label": "User.php",
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": "user.php",
+      "source_file": "app/Models/User.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "database_seeders_userseeder",
+      "label": "UserSeeder.php",
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": "userseeder.php",
+      "source_file": "database/seeders/UserSeeder.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "illuminate_database_eloquent_builder",
+      "label": "Illuminate\\Database\\Eloquent\\Builder",
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": "illuminate\\database\\eloquent\\builder",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "illuminate_database_eloquent_factories_hasfactory",
+      "label": "Illuminate\\Database\\Eloquent\\Factories\\HasFactory",
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": "illuminate\\database\\eloquent\\factories\\hasfactory",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "illuminate_foundation_auth_user",
+      "label": "Illuminate\\Foundation\\Auth\\User",
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": "illuminate\\foundation\\auth\\user",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "illuminate_notifications_notifiable",
+      "label": "Illuminate\\Notifications\\Notifiable",
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": "illuminate\\notifications\\notifiable",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "illuminate_support_facades_hash",
+      "label": "Illuminate\\Support\\Facades\\Hash",
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": "illuminate\\support\\facades\\hash",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "illuminate_validation_rule",
+      "label": "Illuminate\\Validation\\Rule",
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": "illuminate\\validation\\rule",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "tests_feature_pagestest",
+      "label": "PagesTest.php",
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "User",
+      "file_type": "code",
+      "norm_label": "pagestest.php",
+      "source_file": "tests/Feature/PagesTest.php",
       "source_location": "L1"
     },
     {
@@ -4910,7 +5098,7 @@
       "label": "cache.php",
       "_origin": "ast",
       "community": 36,
-      "community_name": "Illuminate\\Support\\Str",
+      "community_name": "UserFactory",
       "file_type": "code",
       "norm_label": "cache.php",
       "source_file": "config/cache.php",
@@ -4921,7 +5109,7 @@
       "label": "database.php",
       "_origin": "ast",
       "community": 36,
-      "community_name": "Illuminate\\Support\\Str",
+      "community_name": "UserFactory",
       "file_type": "code",
       "norm_label": "database.php",
       "source_file": "config/database.php",
@@ -4932,7 +5120,7 @@
       "label": "session.php",
       "_origin": "ast",
       "community": 36,
-      "community_name": "Illuminate\\Support\\Str",
+      "community_name": "UserFactory",
       "file_type": "code",
       "norm_label": "session.php",
       "source_file": "config/session.php",
@@ -4943,7 +5131,7 @@
       "label": "UserFactory.php",
       "_origin": "ast",
       "community": 36,
-      "community_name": "Illuminate\\Support\\Str",
+      "community_name": "UserFactory",
       "file_type": "code",
       "norm_label": "userfactory.php",
       "source_file": "database/factories/UserFactory.php",
@@ -4954,7 +5142,7 @@
       "label": "Illuminate\\Database\\Eloquent\\Factories\\Factory",
       "_origin": "ast",
       "community": 36,
-      "community_name": "Illuminate\\Support\\Str",
+      "community_name": "UserFactory",
       "file_type": "code",
       "norm_label": "illuminate\\database\\eloquent\\factories\\factory",
       "source_file": "",
@@ -4965,7 +5153,7 @@
       "label": "Illuminate\\Support\\Str",
       "_origin": "ast",
       "community": 36,
-      "community_name": "Illuminate\\Support\\Str",
+      "community_name": "UserFactory",
       "file_type": "code",
       "norm_label": "illuminate\\support\\str",
       "source_file": "",
@@ -5940,17 +6128,6 @@
       "source_location": "L1"
     },
     {
-      "id": "app_models_user",
-      "label": "User.php",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "Candidate",
-      "file_type": "code",
-      "norm_label": "user.php",
-      "source_file": "app/Models/User.php",
-      "source_location": "L1"
-    },
-    {
       "id": "app_scoring_announcement",
       "label": "Announcement.php",
       "_origin": "ast",
@@ -5960,39 +6137,6 @@
       "norm_label": "announcement.php",
       "source_file": "app/Scoring/Announcement.php",
       "source_location": "L1"
-    },
-    {
-      "id": "app_scoring_segment",
-      "label": "Segment.php",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "Candidate",
-      "file_type": "code",
-      "norm_label": "segment.php",
-      "source_file": "app/Scoring/Segment.php",
-      "source_location": "L1"
-    },
-    {
-      "id": "illuminate_database_eloquent_builder",
-      "label": "Illuminate\\Database\\Eloquent\\Builder",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "Candidate",
-      "file_type": "code",
-      "norm_label": "illuminate\\database\\eloquent\\builder",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "illuminate_database_eloquent_factories_hasfactory",
-      "label": "Illuminate\\Database\\Eloquent\\Factories\\HasFactory",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "Candidate",
-      "file_type": "code",
-      "norm_label": "illuminate\\database\\eloquent\\factories\\hasfactory",
-      "source_file": "",
-      "source_location": ""
     },
     {
       "id": "illuminate_database_eloquent_model",
@@ -6028,50 +6172,6 @@
       "source_location": ""
     },
     {
-      "id": "illuminate_foundation_auth_user",
-      "label": "Illuminate\\Foundation\\Auth\\User",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "Candidate",
-      "file_type": "code",
-      "norm_label": "illuminate\\foundation\\auth\\user",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "illuminate_foundation_testing_refreshdatabase",
-      "label": "Illuminate\\Foundation\\Testing\\RefreshDatabase",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "Candidate",
-      "file_type": "code",
-      "norm_label": "illuminate\\foundation\\testing\\refreshdatabase",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "illuminate_foundation_testing_testcase",
-      "label": "Illuminate\\Foundation\\Testing\\TestCase",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "Candidate",
-      "file_type": "code",
-      "norm_label": "illuminate\\foundation\\testing\\testcase",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "illuminate_notifications_notifiable",
-      "label": "Illuminate\\Notifications\\Notifiable",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "Candidate",
-      "file_type": "code",
-      "norm_label": "illuminate\\notifications\\notifiable",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
       "id": "illuminate_support_facades_db",
       "label": "Illuminate\\Support\\Facades\\DB",
       "_origin": "ast",
@@ -6094,28 +6194,6 @@
       "source_location": ""
     },
     {
-      "id": "tests_feature_announcementtest",
-      "label": "AnnouncementTest.php",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "Candidate",
-      "file_type": "code",
-      "norm_label": "announcementtest.php",
-      "source_file": "tests/Feature/AnnouncementTest.php",
-      "source_location": "L1"
-    },
-    {
-      "id": "tests_feature_pagestest",
-      "label": "PagesTest.php",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "Candidate",
-      "file_type": "code",
-      "norm_label": "pagestest.php",
-      "source_file": "tests/Feature/PagesTest.php",
-      "source_location": "L1"
-    },
-    {
       "id": "tests_feature_scoresheettest",
       "label": "ScoreSheetTest.php",
       "_origin": "ast",
@@ -6124,28 +6202,6 @@
       "file_type": "code",
       "norm_label": "scoresheettest.php",
       "source_file": "tests/Feature/ScoreSheetTest.php",
-      "source_location": "L1"
-    },
-    {
-      "id": "tests_feature_tabulatortest",
-      "label": "TabulatorTest.php",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "Candidate",
-      "file_type": "code",
-      "norm_label": "tabulatortest.php",
-      "source_file": "tests/Feature/TabulatorTest.php",
-      "source_location": "L1"
-    },
-    {
-      "id": "tests_testcase",
-      "label": "TestCase.php",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "Candidate",
-      "file_type": "code",
-      "norm_label": "testcase.php",
-      "source_file": "tests/TestCase.php",
       "source_location": "L1"
     },
     {
@@ -6171,17 +6227,6 @@
       "source_location": null
     },
     {
-      "id": "app_http_controllers_usercontroller",
-      "label": "UserController.php",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "Illuminate\\Database\\Seeder",
-      "file_type": "code",
-      "norm_label": "usercontroller.php",
-      "source_file": "app/Http/Controllers/UserController.php",
-      "source_location": "L1"
-    },
-    {
       "id": "database_seeders_candidateseeder",
       "label": "CandidateSeeder.php",
       "_origin": "ast",
@@ -6204,17 +6249,6 @@
       "source_location": "L1"
     },
     {
-      "id": "database_seeders_userseeder",
-      "label": "UserSeeder.php",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "Illuminate\\Database\\Seeder",
-      "file_type": "code",
-      "norm_label": "userseeder.php",
-      "source_file": "database/seeders/UserSeeder.php",
-      "source_location": "L1"
-    },
-    {
       "id": "illuminate_database_seeder",
       "label": "Illuminate\\Database\\Seeder",
       "_origin": "ast",
@@ -6222,28 +6256,6 @@
       "community_name": "Illuminate\\Database\\Seeder",
       "file_type": "code",
       "norm_label": "illuminate\\database\\seeder",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "illuminate_support_facades_hash",
-      "label": "Illuminate\\Support\\Facades\\Hash",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "Illuminate\\Database\\Seeder",
-      "file_type": "code",
-      "norm_label": "illuminate\\support\\facades\\hash",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "illuminate_validation_rule",
-      "label": "Illuminate\\Validation\\Rule",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "Illuminate\\Database\\Seeder",
-      "file_type": "code",
-      "norm_label": "illuminate\\validation\\rule",
       "source_file": "",
       "source_location": ""
     },
@@ -15152,6 +15164,17 @@
       "weight": 1.0
     },
     {
+      "source": "database_factories_userfactory_userfactory",
+      "target": "database_factories_userfactory_userfactory_unverified",
+      "relation": "method",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "database/factories/UserFactory.php",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
       "source": "database_seeders_candidateseeder_candidateseeder",
       "target": "database_seeders_candidateseeder_candidateseeder_run",
       "relation": "method",
@@ -15996,5 +16019,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "e10b50865d57ca872914a55623ffaecf4f1aef0a"
+  "built_at_commit": "f4777c20c11f816438c59c5cb00b3bdc464f56c1"
 }

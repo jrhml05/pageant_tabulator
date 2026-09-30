@@ -246,10 +246,10 @@
     "semantic_hash": "24e00ccca17634d028fbbfdafd9e7461"
   },
   "database/factories/UserFactory.php": {
-    "mtime": 1790729095.7279918,
-    "seen": 1790729111.528915,
-    "ast_hash": "d8b5f06356e805e95d19ef85a43902aa",
-    "semantic_hash": ""
+    "mtime": 1790209791.3313615,
+    "seen": 1790220155.5854578,
+    "ast_hash": "5757b66856e0f657f0fdd844b1843265",
+    "semantic_hash": "5757b66856e0f657f0fdd844b1843265"
   },
   "database/seeders/DatabaseSeeder.php": {
     "mtime": 1790652456.4061148,
@@ -468,15 +468,15 @@
     "semantic_hash": ""
   },
   "CLAUDE.md": {
-    "mtime": 1790671110.7160773,
-    "seen": 1790671111.462409,
-    "ast_hash": "9c9744a99adcaa96aba25650e500b3d7",
+    "mtime": 1790665671.037163,
+    "seen": 1790665671.6421719,
+    "ast_hash": "34c576263842fc1bdb9dc87ea8e3ab57",
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1790671110.71658,
-    "seen": 1790671111.46241,
-    "ast_hash": "079d84041319d52c2df62c9ba5d18771",
+    "mtime": 1790654665.6991787,
+    "seen": 1790654669.317564,
+    "ast_hash": "317a614d7b81651d1083d43580395939",
     "semantic_hash": ""
   },
   "public/assets/.travis.yml": {
@@ -750,21 +750,21 @@
     "semantic_hash": ""
   },
   "app/Scoring/Segment.php": {
-    "mtime": 1790671002.3752925,
-    "seen": 1790671111.462359,
-    "ast_hash": "9e1982d7bd8bb54bc0f022b3ad606783",
+    "mtime": 1790652415.2730105,
+    "seen": 1790653697.76977,
+    "ast_hash": "dbbb65d2e18e19a14f8268be387bb873",
     "semantic_hash": ""
   },
   "app/Scoring/Tabulator.php": {
-    "mtime": 1790671032.4627743,
-    "seen": 1790671111.4623601,
-    "ast_hash": "82714b93bf2447270c906a05f8490d96",
+    "mtime": 1790652437.0775461,
+    "seen": 1790653697.76977,
+    "ast_hash": "4852cded955279c4d2493e468242b073",
     "semantic_hash": ""
   },
   "config/pageant.php": {
-    "mtime": 1790671002.3752036,
-    "seen": 1790671111.462368,
-    "ast_hash": "44745e8be8c002b56299b154795ac86f",
+    "mtime": 1790652360.1867425,
+    "seen": 1790653697.769779,
+    "ast_hash": "6024c1e3da862ea31565a402648d3fe7",
     "semantic_hash": ""
   },
   "database/migrations/0001_01_01_000000_create_users_table.php": {
@@ -810,9 +810,9 @@
     "semantic_hash": ""
   },
   "resources/views/admin/results/pdf/segment.blade.php": {
-    "mtime": 1790671053.8360171,
-    "seen": 1790671111.462386,
-    "ast_hash": "df843dbaf42e1ea17d7755edf7c81b7b",
+    "mtime": 1790653590.7467272,
+    "seen": 1790653697.7697961,
+    "ast_hash": "f89968a9060e6f5737ef346422f682a0",
     "semantic_hash": ""
   },
   "resources/views/admin/results/pdf/signatures.blade.php": {
@@ -828,9 +828,9 @@
     "semantic_hash": ""
   },
   "resources/views/admin/results/segment.blade.php": {
-    "mtime": 1790671053.8357623,
-    "seen": 1790671111.4623868,
-    "ast_hash": "b8511d845afa3901b1b10e66c7c68ae7",
+    "mtime": 1790665598.832546,
+    "seen": 1790665671.64215,
+    "ast_hash": "4c49696fca71e99b004383909f823f37",
     "semantic_hash": ""
   },
   "resources/views/admin/results/tables/judge.blade.php": {
@@ -852,9 +852,9 @@
     "semantic_hash": ""
   },
   "resources/views/admin/results/tables/segment.blade.php": {
-    "mtime": 1790671044.113557,
-    "seen": 1790671111.46239,
-    "ast_hash": "c3749247d5120871d032ebd82dd30214",
+    "mtime": 1790658815.894916,
+    "seen": 1790658855.014368,
+    "ast_hash": "7fc0534bed819952acfcd23a57014400",
     "semantic_hash": ""
   },
   "resources/views/admin/results/tables/value.blade.php": {
@@ -900,15 +900,15 @@
     "semantic_hash": ""
   },
   "tests/Feature/ScoringConfigTest.php": {
-    "mtime": 1790671075.9759567,
-    "seen": 1790671111.462406,
-    "ast_hash": "16ca9d7e4820de7f82ac239f97807c13",
+    "mtime": 1790653036.5765536,
+    "seen": 1790653697.769814,
+    "ast_hash": "a1d9f6a8541722ba4e8f8313df85c0d6",
     "semantic_hash": ""
   },
   "tests/Feature/TabulatorTest.php": {
-    "mtime": 1790671075.975612,
-    "seen": 1790671111.462406,
-    "ast_hash": "c71d71c5855ccf15271a1827484f72aa",
+    "mtime": 1790653063.3387458,
+    "seen": 1790653697.769814,
+    "ast_hash": "eab540bb5e3a512c51f63fd67264ea4c",
     "semantic_hash": ""
   },
   "tests/Unit/ScoringRulesTest.php": {

@@ -246,10 +246,10 @@
     "semantic_hash": "24e00ccca17634d028fbbfdafd9e7461"
   },
   "database/factories/UserFactory.php": {
-    "mtime": 1790729095.7279918,
-    "seen": 1790729111.528915,
-    "ast_hash": "d8b5f06356e805e95d19ef85a43902aa",
-    "semantic_hash": ""
+    "mtime": 1790209791.3313615,
+    "seen": 1790220155.5854578,
+    "ast_hash": "5757b66856e0f657f0fdd844b1843265",
+    "semantic_hash": "5757b66856e0f657f0fdd844b1843265"
   },
   "database/seeders/DatabaseSeeder.php": {
     "mtime": 1790652456.4061148,
