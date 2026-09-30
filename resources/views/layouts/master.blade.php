@@ -7,7 +7,7 @@
 </head>
 
 @php
-    $activeStages = \App\Models\Stage::where('is_active', 1)->pluck('stage_name');
+    $openSegments = \App\Scoring\Segment::open()->pluck('short');
 @endphp
 
 <body class="min-h-dvh">
@@ -41,12 +41,10 @@
             </button>
 
             <p class="min-w-0 truncate text-sm text-ink-2">
-                Judges are scoring:
-                @if ($activeStages->isNotEmpty())
-                    <a href="{{ route('settings') }}" class="font-semibold text-ink underline-offset-4 hover:underline">{{ $activeStages->join(', ') }}</a>
-                @else
-                    <a href="{{ route('settings') }}" class="font-semibold text-danger underline-offset-4 hover:underline">no stage is open</a>
-                @endif
+                Open to judges:
+                <a href="{{ route('home') }}" class="font-semibold underline-offset-4 hover:underline {{ $openSegments->isEmpty() ? 'text-ink-2' : 'text-ink' }}">
+                    {{ $openSegments->isEmpty() ? 'nothing' : $openSegments->join(', ') }}
+                </a>
             </p>
 
             <div class="ml-auto flex items-center gap-1">

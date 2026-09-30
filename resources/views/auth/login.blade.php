@@ -7,11 +7,12 @@
         @csrf
 
         <div>
-            <label for="email" class="label">Email</label>
-            <input id="email" name="email" type="email" value="{{ old('email') }}" required autofocus
-                autocomplete="username" class="input mt-1.5" @error('email') aria-invalid="true" aria-describedby="email-error" @enderror>
-            @error('email')
-                <p id="email-error" class="field-error">{{ $message }}</p>
+            <label for="username" class="label">Username</label>
+            <input id="username" name="username" type="text" value="{{ old('username') }}" required autofocus
+                autocomplete="username" autocapitalize="none" spellcheck="false" class="input mt-1.5"
+                @error('username') aria-invalid="true" aria-describedby="username-error" @enderror>
+            @error('username')
+                <p id="username-error" class="field-error">{{ $message }}</p>
             @enderror
         </div>
 

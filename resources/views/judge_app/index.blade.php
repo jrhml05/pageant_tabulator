@@ -1,36 +1,35 @@
 @extends('judge_app.layouts.app')
 
-@section('title', 'Home')
+@section('title', 'Waiting')
+@section('waiting', 'true')
 
 @section('content')
-    @php
-        $stage = \App\Models\Stage::where('is_active', 1)->orderBy('id')->first();
-        $boardRoutes = [1 => '', 2 => '.prelim', 3 => '.final'];
-    @endphp
+    <div class="mx-auto mt-10 max-w-xl text-center">
+        @if (! $judge->panel)
+            <h1 class="text-2xl font-semibold tracking-tight">You're not on a judging panel yet</h1>
+            <p class="mt-2 text-ink-2">Ask the tabulator to assign you to the pre-pageant or pageant night panel, then reload this page.</p>
+            <a href="{{ route('judge.app') }}" class="btn btn-secondary btn-lg mt-6">Reload</a>
+        @else
+            <i class="fa-solid fa-hourglass-half text-3xl text-ink-2" aria-hidden="true"></i>
+            <h1 class="mt-4 text-2xl font-semibold tracking-tight">Nothing to score right now</h1>
+            <p class="mt-2 text-ink-2">
+                This screen opens the score sheet by itself as soon as the tabulator starts a segment. Keep it open.
+            </p>
 
-    <h1 class="text-2xl font-semibold tracking-tight">Welcome, {{ Auth::user()->name }}</h1>
-
-    @if (! $stage || ! isset($boardRoutes[$stage->id]))
-        <div class="card mt-6 max-w-xl px-5 py-8">
-            <p class="font-medium">No stage is open for scoring yet.</p>
-            <p class="mt-1 text-ink-2">The tabulator opens a stage when the segment starts. Reload this page then.</p>
-            <a href="{{ route('judge.app') }}" class="btn btn-secondary btn-lg mt-5">Reload</a>
-        </div>
-    @else
-        <p class="mt-1 text-ink-2">{{ $stage->stage_name }} is open. Pick the division you are scoring.</p>
-
-        <div class="mt-6 grid gap-4 sm:grid-cols-2">
-            @foreach (['ms' => ['Ms. LCUAA', \App\Models\Ms_candidate::class], 'mr' => ['Mr. LCUAA', \App\Models\Mr_candidate::class]] as $d => [$label, $model])
-                @php $count = $stage->id == 3 ? $model::where('is_active', 1)->count() : $model::count(); @endphp
-                <a href="{{ route("judge.app.{$d}{$boardRoutes[$stage->id]}.score", $stage->id) }}"
-                    class="card group flex items-center justify-between gap-4 p-6 transition-colors hover:border-accent">
-                    <span>
-                        <span class="block text-xl font-semibold">{{ $label }}</span>
-                        <span class="text-ink-2">{{ $count }} {{ $stage->id == 3 ? 'finalists' : 'candidates' }}</span>
-                    </span>
-                    <i class="fa-solid fa-chevron-right text-ink-2 group-hover:text-accent" aria-hidden="true"></i>
-                </a>
-            @endforeach
-        </div>
-    @endif
+            <ul class="card mt-8 divide-y divide-line text-left">
+                @foreach ($segments as $segment)
+                    <li class="flex min-h-12 items-center justify-between gap-3 px-4 py-2">
+                        <span class="font-medium">{{ $segment->label }}</span>
+                        <span class="shrink-0 text-sm text-ink-2">
+                            @if ($locked->contains($segment->key))
+                                <i class="fa-solid fa-lock" aria-hidden="true"></i> Locked in
+                            @else
+                                Not started
+                            @endif
+                        </span>
+                    </li>
+                @endforeach
+            </ul>
+        @endif
+    </div>
 @endsection

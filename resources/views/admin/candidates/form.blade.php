@@ -13,7 +13,7 @@
         <div>
             @if ($candidate)
                 <p class="label">Number</p>
-                <p class="mt-1.5 text-lg font-semibold tabular-nums">No. {{ $candidate->id }}</p>
+                <p class="mt-1.5 text-lg font-semibold tabular-nums">No. {{ $candidate->number }}</p>
                 <p class="mt-1.5 text-sm text-ink-2">Scores and the photo file are tied to the number, so it can't be changed. To renumber, delete this candidate and add them again.</p>
             @else
                 <label for="number" class="label">Number</label>
@@ -29,19 +29,19 @@
         </div>
 
         <div>
-            <label for="department" class="label">Department <span class="font-normal text-ink-2">(optional)</span></label>
-            <input id="department" name="department" type="text" autocomplete="off"
-                value="{{ old('department', $candidate?->department) }}" class="input mt-1.5"
-                @error('department') aria-invalid="true" aria-errormessage="department-error" @enderror>
-            @error('department')
-                <p id="department-error" class="field-error">{{ $message }}</p>
+            <label for="school" class="label">College/University <span class="font-normal text-ink-2">(optional)</span></label>
+            <input id="school" name="school" type="text" autocomplete="off"
+                value="{{ old('school', $candidate?->school) }}" class="input mt-1.5"
+                @error('school') aria-invalid="true" aria-errormessage="school-error" @enderror>
+            @error('school')
+                <p id="school-error" class="field-error">{{ $message }}</p>
             @enderror
         </div>
 
         <div>
             <label for="photo" class="label">{{ $candidate ? 'Replace photo' : 'Photo' }} <span class="font-normal text-ink-2">(optional)</span></label>
             @if ($candidate)
-                <x-candidate-photo :division="$data['division']" :number="$candidate->id" class="mt-1.5 w-32 rounded-md border border-line" />
+                <x-candidate-photo :division="$data['division']" :number="$candidate->number" class="mt-1.5 w-32 rounded-md border border-line" />
             @endif
             <input id="photo" name="photo" type="file" accept="image/jpeg,image/png,image/webp"
                 class="mt-1.5 block w-full text-sm text-ink-2 file:mr-3 file:min-h-10 file:cursor-pointer file:rounded-md file:border file:border-line-strong file:bg-surface file:px-3.5 file:text-sm file:font-medium file:text-ink hover:file:bg-surface-2"
