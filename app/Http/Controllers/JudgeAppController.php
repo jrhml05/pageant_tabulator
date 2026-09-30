@@ -2,112 +2,57 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ScoreLock;
+use App\Scoring\Segment;
 use Illuminate\Http\Request;
 
 class JudgeAppController extends Controller
 {
-    public function index()
+    /** Straight to the first open segment this judge hasn't locked; a waiting screen when none is open. */
+    public function index(Request $request)
     {
-        return view('judge_app.index');
+        $judge = $request->user();
+        $open = $judge->panel ? Segment::open($judge->panel) : collect();
+        $locked = ScoreLock::where('judge_id', $judge->id)->pluck('segment');
+
+        if ($open->isNotEmpty()) {
+            $next = $open->first(fn (Segment $segment) => ! $locked->contains($segment->key)) ?? $open->first();
+
+            return redirect()->route('judge.sheet', $next->key);
+        }
+
+        return view('judge_app.index', [
+            'judge' => $judge,
+            'segments' => Segment::all()->where('panel', $judge->panel),
+            'locked' => $locked,
+        ]);
     }
 
-    public function msScoreBoard($stage)
+    /** Polled by the judge pages so a tablet notices when the tabulator opens or closes a segment. */
+    public function status(Request $request)
     {
-        return view('judge_app.prepageant.ms.score-board-screen', compact('stage'));
+        $panel = $request->user()->panel;
+
+        return response()->json([
+            'open' => $panel ? Segment::open($panel)->pluck('short')->values()->all() : [],
+        ]);
     }
 
-    public function msRavewearScoreBoard($stage)
+    public function show(Request $request, string $segment)
     {
-        return view('judge_app.prepageant.ms.ravewear-score-board-screen', compact('stage'));
-    }
+        $judge = $request->user();
+        $segment = Segment::findOrFail($segment);
 
-    public function msTalentScoreBoard($stage)
-    {
-        return view('judge_app.prepageant.ms.talent-score-board-screen', compact('stage'));
-    }
+        if ($segment->panel !== $judge->panel || ! $segment->isOpen()) {
+            session()->flash('error', "{$segment->short} isn't open for your panel right now.");
 
-    public function mrScoreBoard($stage)
-    {
-        return view('judge_app.prepageant.mr.score-board-screen', compact('stage'));
-    }
+            return redirect()->route('judge.app');
+        }
 
-    public function mrRavewearScoreBoard($stage)
-    {
-        return view('judge_app.prepageant.mr.ravewear-score-board-screen', compact('stage'));
-    }
-
-    public function mrTalentScoreBoard($stage)
-    {
-        return view('judge_app.prepageant.mr.talent-score-board-screen', compact('stage'));
-    }
-
-    public function mrPrelimScoreBoard($stage)
-    {
-        return view('judge_app.preliminaries.mr.score-board-screen', compact('stage'));
-    }
-
-    public function mrSwimwearScoreBoard($stage)
-    {
-        return view('judge_app.preliminaries.mr.swimwear-score-board-screen', compact('stage'));
-    }
-
-    public function mrNationalcostumeScoreBoard($stage)
-    {
-        return view('judge_app.preliminaries.mr.nationalcostume-score-board-screen', compact('stage'));
-    }
-
-    public function mrDepartmentaluniformScoreBoard($stage)
-    {
-        return view('judge_app.preliminaries.mr.departmentaluniform-score-board-screen', compact('stage'));
-    }
-
-    public function mrFormalwearScoreBoard($stage)
-    {
-        return view('judge_app.preliminaries.mr.formalwear-score-board-screen', compact('stage'));
-    }
-
-    public function mrQnaScoreBoard($stage)
-    {
-        return view('judge_app.preliminaries.mr.qna-score-board-screen', compact('stage'));
-    }
-
-    public function msPrelimScoreBoard($stage)
-    {
-        return view('judge_app.preliminaries.ms.score-board-screen', compact('stage'));
-    }
-
-    public function msSwimwearScoreBoard($stage)
-    {
-        return view('judge_app.preliminaries.ms.swimwear-score-board-screen', compact('stage'));
-    }
-
-    public function msNationalcostumeScoreBoard($stage)
-    {
-        return view('judge_app.preliminaries.ms.nationalcostume-score-board-screen', compact('stage'));
-    }
-
-    public function msDepartmentaluniformScoreBoard($stage)
-    {
-        return view('judge_app.preliminaries.ms.departmentaluniform-score-board-screen', compact('stage'));
-    }
-
-    public function msFormalwearScoreBoard($stage)
-    {
-        return view('judge_app.preliminaries.ms.formalwear-score-board-screen', compact('stage'));
-    }
-
-    public function msQnaScoreBoard($stage)
-    {
-        return view('judge_app.preliminaries.ms.qna-score-board-screen', compact('stage'));
-    }
-
-    public function mrFinalScoreBoard($stage)
-    {
-        return view('judge_app.final.mr.score-board-screen', compact('stage'));
-    }
-
-    public function msFinalScoreBoard($stage)
-    {
-        return view('judge_app.final.ms.score-board-screen', compact('stage'));
+        return view('judge_app.sheet', [
+            'segment' => $segment,
+            'open' => Segment::open($judge->panel),
+            'locked' => ScoreLock::where('judge_id', $judge->id)->pluck('segment'),
+        ]);
     }
 }

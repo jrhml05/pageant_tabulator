@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -39,29 +39,26 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    public function username()
+    {
+        return 'username';
+    }
+
     public function login(Request $request)
     {
-        $input = $request->all();
-
-        $this->validate($request, [
-            'email' => 'required|email',
+        $credentials = $request->validate([
+            'username' => 'required|string',
             'password' => 'required',
         ]);
 
-        if(auth()->attempt(array('email' => $input['email'], 'password' => $input['password'])))
-        {
-            if (auth()->user()->role == 'admin') {
-                return redirect()->route('home');
-            }else if (auth()->user()->role == 'judge') {
-                return redirect()->route('judge.app');
-            }else{
-                return redirect()->route('home');
-            }
-        }else{
+        if (! auth()->attempt($credentials, $request->boolean('remember'))) {
             return redirect()->route('login')
-                ->withInput($request->only('email'))
-                ->with('error', "That email and password don't match an account.");
+                ->withInput($request->only('username'))
+                ->with('error', "That username and password don't match an account.");
         }
 
+        $request->session()->regenerate();
+
+        return redirect()->route(auth()->user()->isJudge() ? 'judge.app' : 'home');
     }
 }

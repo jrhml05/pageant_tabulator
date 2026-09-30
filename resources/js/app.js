@@ -56,7 +56,7 @@ let refreshTimer = null;
 async function refreshTables() {
     const seq = ++refreshSeq;
     const html = await (await request(window.location.href)).text();
-    // A later refresh (e.g. one started by an action) already won.
+    // A later refresh already won.
     if (seq !== refreshSeq) return;
 
     const fresh = new DOMParser().parseFromString(html, 'text/html').querySelectorAll('[data-refresh-region]');
@@ -94,48 +94,6 @@ async function pollTables() {
     refreshTimer = setTimeout(pollTables, REFRESH_MS);
 }
 
-// Ranking and seeding endpoints are plain GETs that rewrite tables server-side,
-// so the tables are refreshed in place once the request succeeds.
-async function runAction(button) {
-    const status = document.getElementById(button.dataset.statusTarget ?? 'action-status');
-    if (button.dataset.confirm && !window.confirm(button.dataset.confirm)) return;
-
-    const label = button.querySelector('[data-label]');
-    const idleText = label?.textContent;
-    button.disabled = true;
-    button.setAttribute('aria-busy', 'true');
-    if (label) label.textContent = button.dataset.busyLabel ?? 'Working…';
-    if (status) status.textContent = '';
-
-    try {
-        await request(button.dataset.actionUrl);
-    } catch (error) {
-        restoreButton(button, label, idleText);
-        if (status) status.textContent = `${button.dataset.errorLabel ?? 'That action'} failed (${error.message}). Nothing was changed on this page; try again.`;
-        return;
-    }
-
-    if (!document.querySelector('[data-live-report]')) {
-        window.location.reload();
-        return;
-    }
-    try {
-        await refreshTables();
-        setLiveNote(`${button.dataset.doneLabel ?? 'Done'}.`);
-    } catch {
-        // The action itself succeeded; only the redraw failed.
-        window.location.reload();
-        return;
-    }
-    restoreButton(button, label, idleText);
-}
-
-function restoreButton(button, label, idleText) {
-    button.disabled = false;
-    button.removeAttribute('aria-busy');
-    if (label) label.textContent = idleText;
-}
-
 document.addEventListener('click', (event) => {
     const themeButton = event.target.closest('[data-theme-toggle]');
     if (themeButton) {
@@ -163,21 +121,23 @@ document.addEventListener('click', (event) => {
         dismiss.closest('[data-dismissible]')?.remove();
         return;
     }
-
-    const action = event.target.closest('[data-action-url]');
-    if (action && !action.disabled) {
-        event.preventDefault();
-        runAction(action);
-    }
 });
 
-// Destructive forms (deleting a candidate) ask first.
+// Forms that delete or close something ask first.
 document.addEventListener('submit', (event) => {
     const message = event.target.dataset?.confirm;
     if (message && !window.confirm(message)) event.preventDefault();
 });
 
 document.addEventListener('keydown', (event) => {
+    // On the score sheet, Enter (the tablet keyboard's "next" key) moves to the next score box.
+    if (event.key === 'Enter' && event.target.matches?.('[data-score-input]')) {
+        event.preventDefault();
+        const inputs = [...document.querySelectorAll('[data-score-input]:not(:disabled)')];
+        inputs[inputs.indexOf(event.target) + 1]?.focus();
+        return;
+    }
+
     if (event.key !== 'Escape') return;
     const drawer = document.getElementById('admin-drawer');
     if (drawer?.dataset.open === 'true') {
@@ -197,3 +157,43 @@ if (document.querySelector('[data-live-report]')) {
         if (!document.hidden) pollTables();
     });
 }
+
+// Judge tablets: notice when the tabulator opens or closes a segment. The waiting screen
+// jumps straight to the new sheet; a sheet in progress shows a banner instead, so a judge
+// is never pulled away mid-entry.
+const JUDGE_POLL_MS = 4000;
+const watch = document.body.dataset.judgeWatch;
+
+async function pollSegments() {
+    try {
+        const { open } = await (await request(watch)).json();
+        const shown = JSON.parse(document.body.dataset.open || '[]');
+        const waiting = document.body.dataset.judgeWaiting;
+
+        if (waiting && open.length) {
+            window.location.assign(waiting);
+            return;
+        }
+
+        const banner = document.querySelector('[data-segment-banner]');
+        const text = document.querySelector('[data-segment-banner-text]');
+        const opened = open.filter((name) => !shown.includes(name));
+        const closed = shown.filter((name) => !open.includes(name));
+
+        if (banner && text && !waiting && (opened.length || closed.length)) {
+            text.textContent = opened.length
+                ? `${opened.join(' and ')} ${opened.length > 1 ? 'are' : 'is'} now open.`
+                : `The tabulator closed ${closed.join(' and ')}.`;
+            banner.hidden = false;
+        }
+    } catch (error) {
+        if (error instanceof SignedOutError) {
+            window.location.reload();
+            return;
+        }
+        // Network blips are shown by Livewire's offline notice; keep polling.
+    }
+    setTimeout(pollSegments, JUDGE_POLL_MS);
+}
+
+if (watch) setTimeout(pollSegments, JUDGE_POLL_MS);

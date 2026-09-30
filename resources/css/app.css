@@ -186,6 +186,41 @@
     .data-table td.data-table-empty {
         @apply static py-10 text-center font-normal text-ink-2;
     }
+
+    /* Row headers: the candidate number leads every row. */
+    .data-table tbody th {
+        @apply border-b border-line bg-surface px-3 py-2.5 text-sm text-ink;
+    }
+
+    .data-table tbody tr:last-child th {
+        @apply border-b-0;
+    }
+
+    .data-table tbody tr:hover th {
+        @apply bg-surface-2;
+    }
+
+    .data-table .sub {
+        @apply block text-xs font-normal text-ink-2;
+    }
+
+    .data-table .strong {
+        @apply font-semibold;
+    }
+
+    /* Tie and finalist tags carry a word, not just color. */
+    .tie,
+    .finalist {
+        @apply ml-1.5 inline-block rounded px-1.5 py-px align-middle text-xs font-semibold;
+    }
+
+    .tie {
+        @apply bg-danger-soft text-danger;
+    }
+
+    .finalist {
+        @apply bg-accent-soft text-accent-soft-ink;
+    }
 }
 
 /* SweetAlert (judge confirmations) themed to match both modes. */

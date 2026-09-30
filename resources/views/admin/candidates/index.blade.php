@@ -6,12 +6,12 @@
     <x-page-header title="Candidates" />
 
     <p class="-mt-3 mb-6 max-w-prose text-sm text-ink-2">
-        Judges see each candidate by number and photo. Adding a candidate also creates their empty score sheets for every judge.
+        Judges see each candidate by number and photo, with Ms. and Mr. candidates of the same number side by side.
     </p>
 
     <x-flash />
 
-    @foreach (['ms' => 'Ms. LCUAA', 'mr' => 'Mr. LCUAA'] as $division => $label)
+    @foreach (config('pageant.divisions') as $division => $label)
         <section aria-labelledby="{{ $division }}-heading" class="mb-10">
             <div class="mb-3 flex flex-wrap items-center justify-between gap-3">
                 <h2 id="{{ $division }}-heading" class="text-lg font-semibold">
@@ -28,16 +28,16 @@
                 <ul class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6">
                     @foreach ($data[$division] as $candidate)
                         <li class="card overflow-hidden">
-                            <x-candidate-photo :division="$division" :number="$candidate->id" />
+                            <x-candidate-photo :division="$division" :number="$candidate->number" />
                             <div class="flex items-center justify-between gap-1 py-1 pr-1 pl-3">
-                                <p class="font-semibold tabular-nums">No. {{ $candidate->name }}</p>
-                                <a href="{{ route('candidates.edit', [$division, $candidate->id]) }}" class="btn btn-ghost px-2.5">
+                                <p class="font-semibold tabular-nums">No. {{ $candidate->number }}</p>
+                                <a href="{{ route('candidates.edit', [$division, $candidate->number]) }}" class="btn btn-ghost px-2.5">
                                     <i class="fa-solid fa-pen" aria-hidden="true"></i>
-                                    <span class="sr-only">Edit {{ $label }} No. {{ $candidate->id }}</span>
+                                    <span class="sr-only">Edit {{ $label }} No. {{ $candidate->number }}</span>
                                 </a>
                             </div>
-                            @if ($candidate->department)
-                                <p class="-mt-1 px-3 pb-2.5 text-sm text-ink-2">{{ $candidate->department }}</p>
+                            @if ($candidate->school)
+                                <p class="-mt-1 px-3 pb-2.5 text-sm text-ink-2">{{ $candidate->school }}</p>
                             @endif
                         </li>
                     @endforeach
