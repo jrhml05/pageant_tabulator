@@ -3,6 +3,7 @@
         ['Scoring control', 'home', 'fa-sliders', ['home']],
         ['Candidates', 'candidates.index', 'fa-id-badge', ['candidates.*']],
         ['Judges', 'judges.index', 'fa-user-tie', ['judges.*']],
+        ['Reset scores', 'reset.index', 'fa-rotate-left', ['reset.*']],
     ];
 
     // Results open in the division on screen, else the last one viewed; each page has its own Ms./Mr. switch.

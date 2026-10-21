@@ -6,6 +6,7 @@ use App\Models\Candidate;
 use App\Models\Score;
 use App\Models\ScoreLock;
 use App\Scoring\Points;
+use App\Scoring\ScoreReset;
 use App\Scoring\Segment;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -32,12 +33,17 @@ class ScoreSheet extends Component
     #[Locked]
     public string $viewMode = 'pairs';
 
+    /** The segment's reset mark when the sheet loaded (see ScoreReset). */
+    #[Locked]
+    public ?string $resetMark = null;
+
     private const VIEW_SESSION_KEY = 'judge.view_mode';
 
     public function mount(string $segment): void
     {
         $this->segmentKey = $segment;
         $this->points = $this->savedPoints();
+        $this->resetMark = ScoreReset::mark($segment);
         $this->viewMode = in_array(session(self::VIEW_SESSION_KEY), self::viewModes(), true) ? session(self::VIEW_SESSION_KEY) : 'pairs';
     }
 
@@ -82,6 +88,10 @@ class ScoreSheet extends Component
      */
     public function updatedPoints(): void
     {
+        if ($this->reloadAfterReset()) {
+            return;
+        }
+
         if ($this->locked || ! $this->isScorable()) {
             $this->points = $this->savedPoints();
             $this->notice = $this->locked
@@ -117,7 +127,7 @@ class ScoreSheet extends Component
 
     public function lock(): void
     {
-        if ($this->locked) {
+        if ($this->reloadAfterReset() || $this->locked) {
             return;
         }
 
@@ -231,6 +241,25 @@ class ScoreSheet extends Component
             // Divisions out of view that still need scores, for the "go to" button: [division => count].
             'unscoredElsewhere' => $this->viewMode === 'pairs' ? collect() : $rest,
         ]);
+    }
+
+    /**
+     * After the tabulator resets the segment, the entries on screen are stale: saving the sheet
+     * would put the deleted scores back. Reload what is saved instead.
+     */
+    private function reloadAfterReset(): bool
+    {
+        $mark = ScoreReset::mark($this->segmentKey);
+        if ($mark === $this->resetMark) {
+            return false;
+        }
+
+        $this->resetMark = $mark;
+        $this->points = $this->savedPoints();
+        unset($this->locked);
+        $this->notice = "The tabulator reset scores in {$this->segment->short}. Your sheet now shows what is saved; enter that change again.";
+
+        return true;
     }
 
     /** Open, and scored by this judge's panel. */

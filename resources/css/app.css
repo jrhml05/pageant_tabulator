@@ -107,7 +107,7 @@
         @apply border-line-strong bg-surface text-ink hover:bg-surface-2;
     }
 
-    /* Only for deleting a candidate, which also wipes their scores. */
+    /* Only for deleting a candidate and clearing every score: both wipe scores wholesale. */
     .btn-danger {
         @apply border-danger bg-surface text-danger hover:bg-danger-soft;
     }

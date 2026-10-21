@@ -4,6 +4,7 @@ use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JudgeAppController;
 use App\Http\Controllers\ResultsController;
+use App\Http\Controllers\ScoreResetController;
 use App\Http\Controllers\SegmentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -35,6 +36,15 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () use ($divisi
             Route::post('/open', 'open')->name('open');
             Route::post('/close', 'close')->name('close');
             Route::delete('/locks/{judge}', 'unlock')->whereNumber('judge')->name('unlock');
+        });
+
+    Route::controller(ScoreResetController::class)->prefix('reset-scores')->name('reset.')
+        ->group(function () use ($segments) {
+            Route::get('/', 'index')->name('index');
+            Route::delete('/', 'everything')->name('everything');
+            Route::delete('/round/{round}', 'round')->whereIn('round', array_keys(config('pageant.rounds')))->name('round');
+            Route::delete('/{segment}', 'segment')->whereIn('segment', $segments)->name('segment');
+            Route::delete('/{segment}/{criterion}', 'criterion')->whereIn('segment', $segments)->name('criterion');
         });
 
     Route::get('/candidates', [CandidateController::class, 'index'])->name('candidates.index');

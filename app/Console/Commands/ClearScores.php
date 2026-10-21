@@ -2,12 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Candidate;
-use App\Models\OpenSegment;
-use App\Models\Score;
-use App\Models\ScoreLock;
+use App\Scoring\ScoreReset;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
 
 class ClearScores extends Command
 {
@@ -21,12 +17,7 @@ class ClearScores extends Command
             return self::FAILURE;
         }
 
-        DB::transaction(function () {
-            Score::query()->delete();
-            ScoreLock::query()->delete();
-            OpenSegment::query()->delete();
-            Candidate::query()->update(['is_finalist' => false]);
-        });
+        ScoreReset::everything();
 
         $this->info('Scores cleared. Every segment is closed.');
 
