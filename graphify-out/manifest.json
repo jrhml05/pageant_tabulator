@@ -324,9 +324,9 @@
     "semantic_hash": ""
   },
   "resources/views/layouts/navigation.blade.php": {
-    "mtime": 1790665588.0573,
-    "seen": 1790665671.6421618,
-    "ast_hash": "8069b4a269ba03bd25fe44edc0dc1687",
+    "mtime": 1792563583.5161288,
+    "seen": 1792563722.7758331,
+    "ast_hash": "c0cbdbc02422652b3c7ad3dd7a194e4f",
     "semantic_hash": ""
   },
   "routes/channels.php": {
@@ -342,9 +342,9 @@
     "semantic_hash": "62bfb59371c073b4ec966528fdd9c3f9"
   },
   "routes/web.php": {
-    "mtime": 1792036699.6416657,
-    "seen": 1792036772.178525,
-    "ast_hash": "a0a78ebf12e9467424e6523c1ce9f060",
+    "mtime": 1792563583.5157526,
+    "seen": 1792563722.775837,
+    "ast_hash": "cde3ca8d3dedde74f34fe7667e9ab468",
     "semantic_hash": ""
   },
   "artisan": {
@@ -468,9 +468,9 @@
     "semantic_hash": ""
   },
   "CLAUDE.md": {
-    "mtime": 1792563053.3661482,
-    "seen": 1792563054.089552,
-    "ast_hash": "9f0fee722fdce8793a95a893825a4546",
+    "mtime": 1792563729.3626332,
+    "seen": 1792563793.6984801,
+    "ast_hash": "150cebd1290bbd87b3b32be8f0dcd934",
     "semantic_hash": ""
   },
   "README.md": {
@@ -666,9 +666,9 @@
     "semantic_hash": ""
   },
   "DESIGN.md": {
-    "mtime": 1792035663.2877011,
-    "seen": 1792035781.823638,
-    "ast_hash": "3cfa12263871b0c89c427651f8fe759d",
+    "mtime": 1792563634.5134673,
+    "seen": 1792563722.775845,
+    "ast_hash": "9934630947588cea4231fd131cb95383",
     "semantic_hash": ""
   },
   "resources/views/admin/candidates/create.blade.php": {
@@ -696,9 +696,9 @@
     "semantic_hash": ""
   },
   "app/Console/Commands/ClearScores.php": {
-    "mtime": 1790652456.4112985,
-    "seen": 1790653697.7697449,
-    "ast_hash": "461e150a06cea12980e15ae00081c75d",
+    "mtime": 1792563544.0883446,
+    "seen": 1792563722.775758,
+    "ast_hash": "40201588924df3a040e04e038a2c0364",
     "semantic_hash": ""
   },
   "app/Http/Controllers/ResultsController.php": {
@@ -714,9 +714,9 @@
     "semantic_hash": ""
   },
   "app/Http/Livewire/Judge/ScoreSheet.php": {
-    "mtime": 1790659240.7367048,
-    "seen": 1790659355.872577,
-    "ast_hash": "acb89e7a9ecda46ed7e5a2a5743220e6",
+    "mtime": 1792563555.444913,
+    "seen": 1792563722.775771,
+    "ast_hash": "c7672d14bed8bb2efa379006eadd76c0",
     "semantic_hash": ""
   },
   "app/Models/Candidate.php": {
@@ -939,6 +939,30 @@
     "mtime": 1792562959.993451,
     "seen": 1792563054.0895302,
     "ast_hash": "f97ac7407937d28165a3385f82c6db56",
+    "semantic_hash": ""
+  },
+  "app/Http/Controllers/ScoreResetController.php": {
+    "mtime": 1792563627.1443803,
+    "seen": 1792563722.775768,
+    "ast_hash": "c478819e696119712f18a69e7560371b",
+    "semantic_hash": ""
+  },
+  "app/Scoring/ScoreReset.php": {
+    "mtime": 1792563544.0727782,
+    "seen": 1792563722.775785,
+    "ast_hash": "7e0b23be22dbfd775e071c83f57d87ba",
+    "semantic_hash": ""
+  },
+  "resources/views/admin/reset.blade.php": {
+    "mtime": 1792563615.803553,
+    "seen": 1792563722.7758138,
+    "ast_hash": "50f562bfff00fc2ad4bd41aa58a95350",
+    "semantic_hash": ""
+  },
+  "tests/Feature/ScoreResetTest.php": {
+    "mtime": 1792563675.5658603,
+    "seen": 1792563722.77584,
+    "ast_hash": "61ae29b5c37eccd72bc0b70685054868",
     "semantic_hash": ""
   }
 }
