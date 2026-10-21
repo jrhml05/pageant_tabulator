@@ -4,6 +4,7 @@ namespace App\Scoring;
 
 use App\Models\Candidate;
 use App\Models\OpenSegment;
+use App\Models\Score;
 use App\Models\User;
 use Illuminate\Support\Collection;
 
@@ -22,7 +23,7 @@ final class Segment
         public readonly int $round,
         public readonly string $panel,
         public readonly array $criteria,
-        public readonly string $ranking = 'average',
+        public readonly string $ranking = 'rank_sum',
     ) {}
 
     /** @return Collection<string, self> */
@@ -35,7 +36,7 @@ final class Segment
             $segment['round'],
             $segment['panel'],
             collect($segment['criteria'])->map(fn (array $c) => ['label' => $c[0], 'max' => (float) $c[1]])->all(),
-            $segment['ranking'] ?? 'average',
+            $segment['ranking'] ?? 'rank_sum',
         ));
     }
 
@@ -91,6 +92,12 @@ final class Segment
         return $this->ranking === 'rank_sum';
     }
 
+    /** Round 1 shows the rank sum averaged over the judges, the way it counts toward the round. */
+    public function showsAverageRank(): bool
+    {
+        return $this->ranksBySum() && $this->round === 1;
+    }
+
     /** Only Round 1's finalists go on to be scored in later rounds. */
     public function forFinalistsOnly(): bool
     {
@@ -101,6 +108,28 @@ final class Segment
     public function judges(): Collection
     {
         return User::onPanel($this->panel)->get();
+    }
+
+    /**
+     * Candidates some judge on the panel hasn't scored on every criterion, by division (only
+     * divisions with any). A lock-in doesn't cover a finalist saved after it, so this is how a
+     * stale lock shows.
+     *
+     * @return Collection<string, Collection<int, Candidate>>
+     */
+    public function unscored(): Collection
+    {
+        $judges = $this->judges()->pluck('id');
+        $needed = $judges->count() * count($this->criteria);
+        $scored = Score::where('segment', $this->key)->whereIn('judge_id', $judges)
+            ->whereIn('criterion', array_keys($this->criteria))->whereNotNull('points')
+            ->selectRaw('candidate_id, count(*) as entries')->groupBy('candidate_id')
+            ->pluck('entries', 'candidate_id');
+
+        return collect(config('pageant.divisions'))
+            ->map(fn ($label, string $division) => $this->candidates($division)
+                ->filter(fn (Candidate $candidate) => ($scored[$candidate->id] ?? 0) < $needed)->values())
+            ->filter(fn (Collection $candidates) => $candidates->isNotEmpty());
     }
 
     /** @return Collection<int, Candidate> */

@@ -61,6 +61,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () use ($divisi
             Route::post('/finalists/shuffle', 'shuffleAnnouncement')->name('finalists.shuffle');
             Route::get('/{segment}', 'segment')->whereIn('segment', $segments)->name('segment');
             Route::get('/{segment}/print', 'segmentPdf')->whereIn('segment', $segments)->name('segment.pdf');
+            Route::get('/{segment}/winner', 'segmentWinnerPdf')->whereIn('segment', $segments)->name('segment.winner');
         });
 });
 

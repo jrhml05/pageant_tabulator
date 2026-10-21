@@ -19,12 +19,20 @@ class HomeController extends Controller
         $groups = Segment::all()->groupBy(fn (Segment $segment) => $segment->panel === 'prepageant'
             ? $segment->panelLabel()
             : "{$segment->panelLabel()}, {$segment->roundLabel()}")
-            ->map(fn ($segments) => $segments->map(fn (Segment $segment) => [
-                'segment' => $segment,
-                'open' => $open->contains($segment->key),
-                'judges' => $judges->where('panel', $segment->panel)->values(),
-                'locked' => ($locks[$segment->key] ?? collect())->pluck('judge_id'),
-            ]));
+            ->map(fn ($segments) => $segments->map(function (Segment $segment) use ($judges, $locks, $open) {
+                $panel = $judges->where('panel', $segment->panel)->values();
+                $locked = ($locks[$segment->key] ?? collect())->pluck('judge_id');
+                $allLocked = $panel->isNotEmpty() && $panel->every(fn ($judge) => $locked->contains($judge->id));
+
+                return [
+                    'segment' => $segment,
+                    'open' => $open->contains($segment->key),
+                    'judges' => $panel,
+                    'locked' => $locked,
+                    // Locked in, yet someone (a finalist saved after the lock-in) isn't fully scored.
+                    'unscored' => $allLocked ? $segment->unscored() : collect(),
+                ];
+            }));
 
         $data['title'] = 'Scoring control';
         $data['groups'] = $groups;

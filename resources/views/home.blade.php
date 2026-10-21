@@ -47,6 +47,7 @@
                             $judges = $row['judges'];
                             $lockedCount = $judges->whereIn('id', $row['locked'])->count();
                             $allLocked = $judges->isNotEmpty() && $lockedCount === $judges->count();
+                            $unscored = $row['unscored']->flatMap(fn ($candidates, $division) => $candidates->map(fn ($c) => ($division === 'mr' ? 'Mr.' : 'Ms.').' No. '.$c->number));
                         @endphp
                         <li class="px-5 py-4">
                             <div class="flex flex-wrap items-start justify-between gap-x-6 gap-y-3">
@@ -88,10 +89,12 @@
                             </div>
 
                             <div class="mt-3">
-                                <p class="text-sm font-medium {{ $allLocked ? 'text-success-ink' : '' }}">
-                                    <i class="fa-solid {{ $allLocked ? 'fa-lock' : 'fa-lock-open text-ink-2' }}" aria-hidden="true"></i>
+                                <p class="text-sm font-medium {{ $unscored->isNotEmpty() ? 'text-danger' : ($allLocked ? 'text-success-ink' : '') }}">
+                                    <i class="fa-solid {{ $unscored->isNotEmpty() ? 'fa-triangle-exclamation' : ($allLocked ? 'fa-lock' : 'fa-lock-open text-ink-2') }}" aria-hidden="true"></i>
                                     @if ($judges->isEmpty())
                                         No judges on the {{ $segment->panelLabel() }} panel
+                                    @elseif ($unscored->isNotEmpty())
+                                        All {{ $judges->count() }} judges locked in, but {{ $unscored->join(', ', ' and ') }} {{ $unscored->count() === 1 ? "isn't" : "aren't" }} scored by every judge. Unlock their sheets so they can score.
                                     @elseif ($allLocked)
                                         All {{ $judges->count() }} judges locked in
                                     @else

@@ -7,7 +7,10 @@ use App\Models\OpenSegment;
 use App\Models\Score;
 use App\Models\ScoreLock;
 use App\Models\User;
+use App\Scoring\Segment;
+use App\Scoring\Tabulator;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Collection;
 use Tests\TestCase;
 
 class PagesTest extends TestCase
@@ -60,6 +63,7 @@ class PagesTest extends TestCase
                 $this->get("/results/{$division}/{$segment}?judge=1")->assertOk();
                 $this->get("/results/{$division}/{$segment}/print")->assertOk()->assertHeader('content-type', 'application/pdf');
                 $this->get("/results/{$division}/{$segment}/print?judge=1")->assertOk();
+                $this->get("/results/{$division}/{$segment}/winner")->assertOk()->assertHeader('content-type', 'application/pdf');
             }
         }
 
@@ -147,6 +151,134 @@ class PagesTest extends TestCase
         $this->actingAs($this->admin)->put('/results/ms/finalists', ['finalists' => [$mr->id]])->assertSessionHasErrors('finalists.0');
     }
 
+    public function test_round_one_flags_saved_finalists_that_differ_from_the_top_five(): void
+    {
+        // Mr. No. 1 to 7, ranked in number order by both panels.
+        Candidate::division('mr')->where('number', '>', 7)->delete();
+        $mr = Candidate::division('mr')->orderBy('number')->get()->keyBy('number');
+        $this->scoreRoundOne($mr, [1 => 0.9, 2 => 0.85, 3 => 0.8, 4 => 0.75, 5 => 0.7, 6 => 0.65, 7 => 0.6]);
+        $this->actingAs($this->admin);
+        $save = fn (array $numbers) => $this->put('/results/mr/finalists', ['finalists' => $mr->whereIn('number', $numbers)->pluck('id')->all()]);
+
+        // Nothing saved yet: no notice.
+        $this->assertNull($this->finalistsNotice());
+
+        $save([1, 2, 3, 4, 6]);
+        $this->assertSame("Saved finalists don't match the current top 5: No. 5 is now in, No. 6 is out. Update the ticks under Top 5 finalists and save.", $this->finalistsNotice());
+
+        $save([1, 2, 3, 4, 5]);
+        $this->assertNull($this->finalistsNotice());
+
+        // No. 5 and No. 6 tie at the cut: either one is the board's call, not a mismatch.
+        Score::query()->delete();
+        $this->scoreRoundOne($mr, [1 => 0.9, 2 => 0.85, 3 => 0.8, 4 => 0.75, 5 => 0.7, 6 => 0.7, 7 => 0.6]);
+        $this->assertNull($this->finalistsNotice());
+        $save([1, 2, 3, 4, 6]);
+        $this->assertNull($this->finalistsNotice());
+
+        $save([1, 2, 3, 4, 7]);
+        $this->assertSame("Saved finalists don't match the current top 5: No. 7 is out. No. 5 and No. 6 are tied at the cut, so the board decides between them. Update the ticks under Top 5 finalists and save.", $this->finalistsNotice());
+    }
+
+    public function test_changing_finalists_after_round_two_unlocks_it_for_the_new_finalist(): void
+    {
+        $ms = Candidate::division('ms')->orderBy('number')->get()->keyBy('number');
+        $this->roundTwoScoredAndLocked($ms, [1, 2, 3, 4, 5]);
+        $this->actingAs($this->admin);
+
+        // Confirm first: Round 2 is under way.
+        $this->get('/results/ms/round-1')->assertSee('data-confirm="Round 2 is already scored.', false);
+
+        // No. 6 replaces No. 5.
+        $this->put('/results/ms/finalists', ['finalists' => $ms->only([1, 2, 3, 4, 6])->pluck('id')->all()])
+            ->assertSessionHas('success', '5 Ms. LCUAA finalists saved. Round 2 sheets are unlocked so the judges can score No. 6 once you open Round 2. '
+                .'They lock in again when done. No. 5 has Round 2 scores that no longer count. They are kept and count again if you tick that candidate again.');
+
+        $this->assertSame(0, ScoreLock::where('segment', 'final')->count());
+        // Round 1 locks are untouched, and No. 5's Round 2 scores are kept.
+        $this->assertSame(1, ScoreLock::where('segment', 'wit')->count());
+        $this->assertSame(10, Score::where('segment', 'final')->where('candidate_id', $ms[5]->id)->count());
+    }
+
+    public function test_saving_finalists_who_are_all_scored_keeps_round_two_locks(): void
+    {
+        $ms = Candidate::division('ms')->orderBy('number')->get()->keyBy('number');
+        $this->roundTwoScoredAndLocked($ms, [1, 2, 3, 4, 5]);
+
+        // The same set again, then one fewer: every finalist left is already scored.
+        $this->actingAs($this->admin)->put('/results/ms/finalists', ['finalists' => $ms->only([1, 2, 3, 4, 5])->pluck('id')->all()])
+            ->assertSessionHas('success', '5 Ms. LCUAA finalists saved.');
+        $this->put('/results/ms/finalists', ['finalists' => $ms->only([1, 2, 3, 4])->pluck('id')->all()]);
+
+        $this->assertSame(5, ScoreLock::where('segment', 'final')->count());
+    }
+
+    public function test_round_one_saves_finalists_without_a_confirm_before_round_two(): void
+    {
+        $this->actingAs($this->admin)->get('/results/ms/round-1')->assertDontSee('data-confirm="Round 2', false);
+    }
+
+    public function test_a_locked_sheet_missing_a_finalist_is_not_reported_as_final(): void
+    {
+        $ms = Candidate::division('ms')->orderBy('number')->get()->keyBy('number');
+        $this->roundTwoScoredAndLocked($ms, [1, 2, 3, 4, 5]);
+        // No. 6 became a finalist after the judges locked in.
+        $ms[6]->update(['is_finalist' => true]);
+
+        $this->assertSame([6], Segment::find('final')->unscored()->get('ms')->pluck('number')->all());
+        $this->assertFalse(Segment::find('final')->unscored()->has('mr'));
+
+        $this->actingAs($this->admin);
+        $this->get('/results/ms/final')
+            ->assertSeeInOrder(['All 5 judges locked in, but No. 6', "isn't scored by every judge, so ranks wait for them."])
+            ->assertDontSee('These results are final');
+        $this->get('/home')->assertSee("All 5 judges locked in, but Ms. No. 6 isn't scored by every judge");
+        $this->get('/results/ms/final/winner')->assertOk();
+    }
+
+    /** The pageant night judges score these finalists (by number) in Round 2 and lock in. */
+    private function roundTwoScoredAndLocked(Collection $candidates, array $numbers): void
+    {
+        $judges = User::onPanel('pageant')->get();
+        foreach ($numbers as $i => $number) {
+            $candidates[$number]->update(['is_finalist' => true]);
+            foreach ($judges as $j => $judge) {
+                foreach (['impression' => 40 - $i, 'intelligence' => 40 - $j] as $criterion => $points) {
+                    Score::create(['segment' => 'final', 'candidate_id' => $candidates[$number]->id, 'judge_id' => $judge->id, 'criterion' => $criterion, 'points' => $points]);
+                }
+            }
+        }
+        foreach ($judges as $judge) {
+            ScoreLock::create(['segment' => 'final', 'judge_id' => $judge->id]);
+        }
+        ScoreLock::create(['segment' => 'wit', 'judge_id' => $judges[0]->id]);
+    }
+
+    /** The finalists notice in the live-refreshed region of Mr. Round 1, as plain text, or null. */
+    private function finalistsNotice(): ?string
+    {
+        $html = $this->get('/results/mr/round-1')->assertOk()->getContent();
+        $start = strpos($html, 'data-refresh-region');
+        $region = substr($html, $start, strpos($html, '</div>', $start) - $start);
+        $text = trim(preg_replace('/\s+/', ' ', html_entity_decode(strip_tags('<'.$region), ENT_QUOTES)));
+
+        return preg_match('/Saved finalists .*? and save\./', $text, $match) ? $match[0] : null;
+    }
+
+    /** Every Round 1 judge gives each candidate (by number) that share of the points on every criterion. */
+    private function scoreRoundOne(Collection $candidates, array $shares): void
+    {
+        foreach (Segment::inRound(1) as $segment) {
+            foreach (User::onPanel($segment->panel)->get() as $judge) {
+                foreach ($shares as $number => $share) {
+                    foreach ($segment->criteria as $criterion => $c) {
+                        Score::create(['segment' => $segment->key, 'candidate_id' => $candidates[$number]->id, 'judge_id' => $judge->id, 'criterion' => $criterion, 'points' => round($c['max'] * $share, 2)]);
+                    }
+                }
+            }
+        }
+    }
+
     public function test_judge_accounts_use_a_username_and_a_panel(): void
     {
         $this->actingAs($this->admin)->post('/judges', [
@@ -183,6 +315,55 @@ class PagesTest extends TestCase
         $this->actingAs($this->admin)->delete("/candidates/mr/{$candidate->number}")->assertRedirect(route('candidates.index'));
 
         $this->assertSame(0, Score::count());
+    }
+
+    public function test_segment_sheets_show_each_judges_rank_under_their_total(): void
+    {
+        $judges = User::onPanel('prepageant')->get();
+        // Judge 1 scores every Ms. candidate, rising with the number; judge 2 scores only No. 1.
+        foreach (Candidate::division('ms')->get() as $candidate) {
+            foreach (['skill' => $candidate->number / 2, 'performance' => 0] as $criterion => $points) {
+                Score::create(['segment' => 'talent', 'candidate_id' => $candidate->id, 'judge_id' => $judges[0]->id, 'criterion' => $criterion, 'points' => $points]);
+            }
+        }
+        $first = Candidate::division('ms')->where('number', 1)->first();
+        Score::create(['segment' => 'talent', 'candidate_id' => $first->id, 'judge_id' => $judges[1]->id, 'criterion' => 'skill', 'points' => 7]);
+        Score::create(['segment' => 'talent', 'candidate_id' => $first->id, 'judge_id' => $judges[1]->id, 'criterion' => 'performance', 'points' => 7]);
+        $last = Candidate::division('ms')->count();
+
+        $page = $this->actingAs($this->admin)->get('/results/ms/talent')->assertOk()->assertSee('rank 1')->assertSee("rank {$last}");
+        // Judge 2 hasn't scored everyone, so only judge 1's ranks appear: one per candidate.
+        $this->assertSame($last, substr_count($page->getContent(), '<span class="sub">rank '));
+    }
+
+    public function test_segment_sheets_list_candidates_by_number_and_print_the_winner(): void
+    {
+        $candidates = Candidate::division('ms')->orderBy('number')->take(3)->get();
+        Candidate::division('ms')->whereNotIn('id', $candidates->pluck('id'))->delete();
+        // Every pageant-night judge scores No. 3 highest and No. 1 lowest.
+        foreach (User::onPanel('pageant')->get() as $judge) {
+            foreach ($candidates as $candidate) {
+                foreach (['substance' => 4 * $candidate->number, 'delivery' => 2 * $candidate->number] as $criterion => $points) {
+                    Score::create(['segment' => 'wit', 'candidate_id' => $candidate->id, 'judge_id' => $judge->id, 'criterion' => $criterion, 'points' => $points]);
+                }
+            }
+        }
+        $this->actingAs($this->admin);
+
+        $this->get('/results/ms/wit')->assertOk()
+            ->assertSeeInOrder(['No. 1', 'No. 2', 'No. 3'])
+            ->assertSee('href="'.route('results.segment.winner', ['ms', 'wit']).'"', false);
+        $this->get('/results/ms/wit?judge=1')->assertOk()->assertDontSee(route('results.segment.winner', ['ms', 'wit']));
+
+        $result = (new Tabulator)->segment(Segment::find('wit'), 'ms');
+        $html = view('admin.results.pdf.winner', [
+            'label' => 'Ms. LCUAA',
+            'result' => $result,
+            'winners' => collect($result['rows'])->where('rank', 1)->values(),
+        ])->render();
+        $this->assertStringContainsString('No. 3', $html);
+        $this->assertStringNotContainsString('No. 1<', $html);
+        $this->assertStringContainsString('0 of 5 judges have locked in', $html);
     }
 
     private function seedSomeScores(): void

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Candidate;
+use App\Models\Score;
+use App\Models\ScoreLock;
 use App\Models\User;
 use App\Scoring\Announcement;
 use App\Scoring\Segment;
@@ -42,6 +44,8 @@ class ResultsController extends Controller
             'finalists.required' => 'Tick at least one finalist.',
         ]);
 
+        $before = Candidate::where('division', $division)->where('is_finalist', true)->get();
+
         DB::transaction(function () use ($division, $validated) {
             Candidate::where('division', $division)->whereNotIn('id', $validated['finalists'])
                 ->update(['is_finalist' => false, 'announce_order' => null]);
@@ -54,9 +58,36 @@ class ResultsController extends Controller
         $count = count($validated['finalists']);
         $expected = (int) config('pageant.finalists');
         $label = config("pageant.divisions.{$division}");
+        $messages = ["{$count} {$label} finalists saved."
+            .($count === $expected ? '' : " The usual number is {$expected}; change the ticks if that wasn't intended.")];
 
-        session()->flash('success', "{$count} {$label} finalists saved."
-            .($count === $expected ? '' : " The usual number is {$expected}; change the ticks if that wasn't intended."));
+        $names = fn ($candidates) => $candidates->sortBy('number')->map(fn ($c) => "No. {$c->number}")->join(', ', ' and ');
+        $later = Segment::all()->filter(fn (Segment $segment) => $segment->forFinalistsOnly());
+        $scoredLater = fn ($candidates) => $candidates->filter(fn (Candidate $c) => Score::whereIn('segment', $later->keys())
+            ->where('candidate_id', $c->id)->whereNotNull('points')->exists());
+
+        foreach ($later as $segment) {
+            $unscored = $segment->unscored()->get($division, collect());
+            $locks = ScoreLock::where('segment', $segment->key);
+            // A lock-in covers the finalists at the time, so judges are let back in to score the new ones.
+            if ($unscored->isNotEmpty() && $locks->exists()) {
+                $locks->delete();
+                $messages[] = "{$segment->short} sheets are unlocked so the judges can score {$names($unscored)}"
+                    .($segment->isOpen() ? '' : " once you open {$segment->short}").'. They lock in again when done.';
+            } elseif ($unscored->isNotEmpty() && Score::where('segment', $segment->key)->whereNotNull('points')->exists()) {
+                $messages[] = "{$names($unscored)} still need {$segment->short} scores.";
+            }
+        }
+
+        // Kept, so ticking them again brings their scores back.
+        $dropped = $scoredLater($before->whereNotIn('id', $validated['finalists']));
+        if ($dropped->isNotEmpty()) {
+            $one = $dropped->count() === 1;
+            $messages[] = "{$names($dropped)} ".($one ? 'has' : 'have').' Round 2 scores that no longer count. '
+                .'They are kept and count again if you tick '.($one ? 'that candidate' : 'them').' again.';
+        }
+
+        session()->flash('success', implode(' ', $messages));
 
         return redirect()->route('results.round1', $division);
     }
@@ -97,6 +128,20 @@ class ResultsController extends Controller
             ->stream("{$name}.pdf");
     }
 
+    /** The segment's rank 1 for the emcee: every candidate tied for first, if there is a tie. */
+    public function segmentWinnerPdf(string $division, string $segment)
+    {
+        $result = $this->tabulator->segment(Segment::findOrFail($segment), $division);
+
+        return Pdf::loadView('admin.results.pdf.winner', [
+            'label' => config("pageant.divisions.{$division}"),
+            'result' => $result,
+            'winners' => collect($result['rows'])->where('rank', 1)->sortBy('candidate.number')->values(),
+        ])
+            ->setPaper(self::PAPER, 'landscape')
+            ->stream("{$division}_{$segment}_winner.pdf");
+    }
+
     /** The sidebar's results links open this division next. */
     private function rememberDivision(string $division): void
     {
@@ -111,6 +156,10 @@ class ResultsController extends Controller
             'result' => $this->tabulator->roundOne($division),
             'finalists' => Candidate::where('division', $division)->where('is_finalist', true)->pluck('id'),
             'announcement' => Announcement::order($division),
+            // Round 2 already has scores or lock-ins, so changing the finalists needs a confirm.
+            'laterStarted' => Segment::all()->filter(fn (Segment $segment) => $segment->forFinalistsOnly())
+                ->contains(fn (Segment $segment) => Score::where('segment', $segment->key)->whereNotNull('points')->exists()
+                    || ScoreLock::where('segment', $segment->key)->exists()),
             'judges' => Segment::inRound(1)->map->panel->unique()
                 ->flatMap(fn (string $panel) => User::onPanel($panel)->get()),
         ];

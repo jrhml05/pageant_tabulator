@@ -6,6 +6,7 @@ use App\Models\Candidate;
 use App\Models\Score;
 use App\Models\User;
 use App\Scoring\Announcement;
+use App\Scoring\Segment;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -15,7 +16,7 @@ class AnnouncementTest extends TestCase
 
     private User $admin;
 
-    /** Ms. finalists Nos. 8–12; Q&A totals rise with the number, so the ranking is 12, 11, 10, 9, 8. */
+    /** Ms. finalists Nos. 8–12; one judge's pageant-night totals rise with the number, so the ranking is 12, 11, 10, 9, 8. */
     private array $finalists;
 
     protected function setUp(): void
@@ -25,9 +26,14 @@ class AnnouncementTest extends TestCase
         $this->admin = User::where('username', 'admin1')->first();
 
         $judge = User::where('username', 'judge1')->first();
-        foreach (Candidate::division('ms')->get() as $candidate) {
-            Score::create(['segment' => 'wit', 'candidate_id' => $candidate->id, 'judge_id' => $judge->id, 'criterion' => 'substance', 'points' => $candidate->number / 2]);
-            Score::create(['segment' => 'wit', 'candidate_id' => $candidate->id, 'judge_id' => $judge->id, 'criterion' => 'delivery', 'points' => 0]);
+        $candidates = Candidate::division('ms')->get();
+        foreach (Segment::inRound(1)->where('panel', 'pageant') as $segment) {
+            foreach ($candidates as $candidate) {
+                foreach ($segment->criteria as $criterion => $c) {
+                    Score::create(['segment' => $segment->key, 'candidate_id' => $candidate->id, 'judge_id' => $judge->id,
+                        'criterion' => $criterion, 'points' => round($c['max'] * $candidate->number / $candidates->max('number'), 2)]);
+                }
+            }
         }
         $this->finalists = Candidate::division('ms')->where('number', '>=', 8)->pluck('id')->all();
     }

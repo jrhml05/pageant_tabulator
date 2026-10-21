@@ -1,6 +1,7 @@
 {{--
-    All judges' totals for one segment, sorted by rank. Shared by the results page and its PDF ($print).
-    Rank-sum segments (Round 2) also show each judge's rank of the candidate and the sum of those ranks.
+    All judges' totals for one segment, in candidate number order. Shared by the results page and its PDF ($print).
+    Under each judge's total is that judge's rank of the candidate, once the judge has scored every candidate.
+    Rank-sum segments also show the sum of those ranks, averaged over the judges in Round 1.
 --}}
 @use('App\Scoring\Points')
 @use('App\Scoring\Tabulator')
@@ -8,9 +9,10 @@
     $segment = $result['segment'];
     $judges = $result['judges'];
     $placements = $segment->forFinalistsOnly();
-    $rows = collect($result['rows'])->sortBy(fn ($row) => [$row['rank'] ?? PHP_INT_MAX, $row['candidate']->number]);
+    $rows = collect($result['rows'])->sortBy(fn ($row) => $row['candidate']->number);
     $max = Points::plain($segment->maxPoints());
     $bySum = $segment->ranksBySum();
+    $averaged = $segment->showsAverageRank();
 @endphp
 
 <table class="{{ $print ? 'sheet' : 'data-table data-table-ranked' }}">
@@ -20,7 +22,9 @@
             @foreach ($judges as $judge)
                 <th scope="col">Judge {{ $loop->iteration }}@if ($judge->name !== "Judge {$loop->iteration}")<span class="sub">{{ $judge->name }}</span>@endif</th>
             @endforeach
-            @if ($bySum)
+            @if ($averaged)
+                <th scope="col">Avg rank<span class="sub">lowest wins</span></th>
+            @elseif ($bySum)
                 <th scope="col">Rank sum<span class="sub">lowest wins</span></th>
             @else
                 <th scope="col">Average<span class="sub">of {{ $max }}</span></th>
@@ -38,12 +42,14 @@
                 @foreach ($judges as $judge)
                     <td>
                         @include('admin.results.tables.value', ['value' => $row['totals'][$judge->id]])
-                        @if ($bySum && $result['rank_judges']->contains($judge->id))
+                        @if ($result['rank_judges']->contains($judge->id))
                             <span class="sub">rank {{ $row['judge_ranks'][$judge->id] }}</span>
                         @endif
                     </td>
                 @endforeach
-                @if ($bySum)
+                @if ($averaged)
+                    <td class="strong">@if ($row['average_rank'] === null)–<span class="sr-only"> not ranked</span>@else{{ Points::format($row['average_rank']) }}@endif</td>
+                @elseif ($bySum)
                     <td class="strong">@if ($row['rank_sum'] === null)–<span class="sr-only"> not ranked</span>@else{{ $row['rank_sum'] }}@endif</td>
                 @else
                     <td class="strong">@include('admin.results.tables.value', ['value' => $row['average']])</td>

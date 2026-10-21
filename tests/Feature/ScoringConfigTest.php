@@ -22,7 +22,9 @@ class ScoringConfigTest extends TestCase
             'beauty_of_face' => 20, 'wit' => 20, 'final' => 100,
         ], $weights);
 
-        $this->assertSame(['final'], Segment::all()->filter->ranksBySum()->keys()->all());
+        $this->assertTrue(Segment::all()->every->ranksBySum());
+        // Round 1 ties go to the highest-weighted segments: Beauty of face, then Q&A.
+        $this->assertSame(['beauty_of_face', 'wit'], config('pageant.tie_break'));
         $this->assertSame(['talent', 'thematic_wear'], Segment::all()->where('panel', 'prepageant')->keys()->all());
         $this->assertSame(
             ['swim_wear', 'formal_wear', 'beauty_of_face', 'wit', 'final'],

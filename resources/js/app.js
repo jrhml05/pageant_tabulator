@@ -67,12 +67,35 @@ async function refreshTables() {
         return;
     }
     regions.forEach((region, i) => {
-        if (region.innerHTML !== fresh[i].innerHTML) region.innerHTML = fresh[i].innerHTML;
+        if (region.innerHTML !== fresh[i].innerHTML) swapRegion(region, fresh[i]);
     });
 
     const time = document.querySelector('[data-live-time]');
     if (time) time.textContent = `Updated ${new Date().toLocaleTimeString()}`;
 }
+
+// A form marked data-keep-ticks keeps the ticks the tabulator has changed (and focus) when its
+// list refreshes, so new ranks never undo an unsaved choice.
+function swapRegion(region, fresh) {
+    const form = region.closest('form[data-keep-ticks]');
+    if (!form?.dataset.changed) {
+        region.innerHTML = fresh.innerHTML;
+        return;
+    }
+    const key = (input) => `${input.name}=${input.value}`;
+    const ticks = new Map([...region.querySelectorAll('input[type=checkbox]')].map((input) => [key(input), input.checked]));
+    const focused = region.contains(document.activeElement) ? key(document.activeElement) : null;
+    region.innerHTML = fresh.innerHTML;
+    region.querySelectorAll('input[type=checkbox]').forEach((input) => {
+        if (ticks.has(key(input))) input.checked = ticks.get(key(input));
+        if (focused === key(input)) input.focus();
+    });
+}
+
+document.addEventListener('change', (event) => {
+    const form = event.target.closest?.('form[data-keep-ticks]');
+    if (form) form.dataset.changed = 'true';
+});
 
 let pollFailing = false;
 

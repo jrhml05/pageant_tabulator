@@ -3,11 +3,24 @@
 @use('App\Scoring\Points')
 @php
     $rows = collect($result['rows'])->sortBy(fn ($row) => [$row['rank'] ?? PHP_INT_MAX, $row['candidate']->number]);
-    $incomplete = $rows->where('complete', false)->isNotEmpty();
+    // Only judges who have scored every candidate count toward a panel's ranks.
+    $incomplete = $result['panels']->contains(fn ($panel) => $panel['rank_judges']->count() < $panel['judges']->count());
+    $weights = $result['panels']->map(fn ($panel) => mb_strtolower($panel['label']).' '.$panel['weight'].'%')->join(', ');
+    $tieBreak = $result['tie_break']->map(fn ($key) => $result['criteria'][$key]['segment']->short)->join(', then ');
     $tied = $rows->where('tied', true)->groupBy('rank')->sortKeys();
     $expected = (int) config('pageant.finalists');
     // Until finalists are saved, the form starts from the current top of the ranking.
     $checked = old('finalists', $finalists->isNotEmpty() ? $finalists->all() : $result['suggested']);
+
+    // Saved finalists against the current top of the ranking (they may predate a scoring change).
+    $top = $rows->whereIn('candidate.id', $result['suggested']);
+    // Candidates tied across the cut are the board's call, so they count as neither in nor out.
+    $atCut = $result['cutoff_tie'] ? $top->where('rank', $top->max('rank')) : collect();
+    $comingIn = $top->whereNotIn('candidate.id', $finalists->merge($atCut->pluck('candidate.id'))->all());
+    $goingOut = $rows->whereIn('candidate.id', $finalists->all())->whereNotIn('candidate.id', $result['suggested']);
+    $mismatch = $finalists->isNotEmpty() && $top->isNotEmpty() && ($comingIn->isNotEmpty() || $goingOut->isNotEmpty());
+    $names = fn ($group) => $group->sortBy('candidate.number')->map(fn ($row) => 'No. '.$row['candidate']->number)->join(', ', ' and ');
+    $verb = fn ($group) => $group->count() === 1 ? 'is' : 'are';
 @endphp
 
 @section('title', "Round 1 · {$label}")
@@ -16,12 +29,28 @@
     <x-results-header title="Round 1 results" eyebrow="Overall and finalists" :print="route('results.round1.pdf', $division)" />
 
     <p class="-mt-2 mb-4 max-w-prose text-sm text-ink-2">
-        Each column is the segment's average across its judges. The total adds those averages up, out of 100.
+        Each judge ranks the candidates by their total across the panel's segments. The ranks are averaged over
+        the panel's judges and weighted ({{ $weights }}), and the lowest total ranks first. A tie on the total
+        goes to the better average rank in {{ $tieBreak }}; a tie left after that is the board's call.
     </p>
 
     <div data-refresh-region class="mb-4 flex flex-col gap-2 text-sm">
+        @if ($mismatch)
+            <p @unless ($incomplete) role="alert" @endunless
+                class="{{ $incomplete ? 'text-ink-2' : 'rounded-md bg-danger-soft px-3 py-2 font-medium text-danger' }}">
+                Saved finalists don't match the {{ $incomplete ? 'top '.$expected.' so far' : 'current top '.$expected }}:
+                {{ collect([
+                    $comingIn->isNotEmpty() ? $names($comingIn).' '.$verb($comingIn).' now in' : null,
+                    $goingOut->isNotEmpty() ? $names($goingOut).' '.$verb($goingOut).' out' : null,
+                ])->filter()->join(', ') }}.
+                @if ($atCut->isNotEmpty())
+                    {{ $names($atCut) }} are tied at the cut, so the board decides between them.
+                @endif
+                Update the ticks under Top {{ $expected }} finalists and save.
+            </p>
+        @endif
         @if ($incomplete)
-            <p class="text-ink-2"><i class="fa-solid fa-hourglass-half" aria-hidden="true"></i> Some segments have no scores yet (shown as –), so totals and ranks will change.</p>
+            <p class="text-ink-2"><i class="fa-solid fa-hourglass-half" aria-hidden="true"></i> Some judges haven't scored every candidate yet. A judge counts toward their panel's ranks once they have scored every candidate in all of its segments (a rank shows under their total), so totals and ranks will change.</p>
         @endif
         @if ($tied->isNotEmpty())
             <p @if ($result['cutoff_tie']) role="alert" @endif
@@ -40,7 +69,8 @@
     </x-table-card>
 
     <section aria-labelledby="finalists-heading" class="card mt-8 max-w-2xl">
-        <form method="POST" action="{{ route('results.finalists', $division) }}">
+        <form method="POST" action="{{ route('results.finalists', $division) }}" data-keep-ticks
+            @if ($laterStarted) data-confirm="Round 2 is already scored. If the finalists change, judges get their Round 2 sheets back to score any new finalist, and a removed finalist's Round 2 scores stop counting (they are kept). Save these finalists?" @endif>
             @csrf
             @method('PUT')
             <div class="p-5 sm:p-6">
@@ -62,7 +92,8 @@
                     <p class="field-error">{{ $message }}</p>
                 @enderror
 
-                <ul class="mt-4 grid gap-2 sm:grid-cols-2">
+                {{-- Refreshes with the scores; app.js keeps any ticks changed since the page loaded. --}}
+                <ul data-refresh-region class="mt-4 grid gap-2 sm:grid-cols-2">
                     @foreach ($rows as $row)
                         @php $candidate = $row['candidate']; @endphp
                         <li>

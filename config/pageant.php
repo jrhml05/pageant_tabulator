@@ -4,10 +4,16 @@
  * Scoring rules for Mr. & Ms. LCUAA 2026.
  *
  * Criteria are scored in points, and each segment's points add up to its weight in the round,
- * so a candidate's round total is the sum of the segment averages (out of 100).
+ * so each round totals 100.
  *
- * A segment's `ranking` is "average" (default: mean of the judges' totals, highest wins) or
- * "rank_sum" (each judge ranks the candidates by total, ranks are added up, lowest sum wins).
+ * Round 1 is placed by ranks, per panel: each judge's totals across the panel's Round 1 segments
+ * are added up and ranked, the ranks are averaged over the panel's judges (3 pre-pageant,
+ * 5 pageant night), and the average is weighted by the panel's points (pre-pageant 30, so 30%;
+ * pageant night 70, so 70%). The lowest weighted total wins. Each segment also ranks on its own,
+ * for that segment's winner.
+ *
+ * A segment's `ranking` is "rank_sum" (default: each judge ranks the candidates by total, the
+ * ranks are added up, lowest sum wins) or "average" (mean of the judges' totals, highest wins).
  */
 
 return [
@@ -31,6 +37,10 @@ return [
 
     // Round 2 is scored by the top candidates of Round 1, per division.
     'finalists' => 5,
+
+    // A Round 1 tie on the total goes to the lower average rank in these segments, in order.
+    // Candidates still level after the last one stay tied for the board to decide.
+    'tie_break' => ['beauty_of_face', 'wit'],
 
     // Placement titles for Round 2, by rank. `{division}` becomes "Mr. LCUAA" or "Ms. LCUAA".
     'placements' => [
@@ -104,7 +114,6 @@ return [
             'short' => 'Round 2',
             'round' => 2,
             'panel' => 'pageant',
-            'ranking' => 'rank_sum',
             'criteria' => [
                 'impression' => ['Beauty of face, poise, grace & overall impression', 50],
                 'intelligence' => ['Intelligence', 50],
