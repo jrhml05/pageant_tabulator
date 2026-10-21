@@ -8,6 +8,7 @@
 .env.backup
 .env.production
 .phpunit.result.cache
+/.phpunit.cache
 Homestead.json
 Homestead.yaml
 auth.json
@@ -17,3 +18,4 @@ yarn-error.log
 /.idea
 /.vscode
 .DS_Store
+/public/assets/img/*/web

@@ -1,0 +1,75 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## What this is
+
+A Laravel 13 + Livewire 4 (PHP 8.3+) tabulation system for the Mr. & Ms. LCUAA 2026 pageant (branch `lcuaa-2026-scoring`, built on `lcuaa-pageant`, which was adapted from the UEP 2024 build on `2024-UEP-Pageant`). Judges score candidates on tablets over the local network; the tabulator opens segments, watches judges lock in, and prints results.
+
+## Commands
+
+```bash
+composer install
+cp .env.example .env            # then set the DB (MySQL or SQLite both work)
+php artisan key:generate
+php artisan migrate:fresh --seed
+npm install && npm run dev      # Vite 8 + Tailwind CSS 4; npm run build for production
+php artisan event:serve         # for the event: resizes photos, 4 workers, 0.0.0.0:80 (--port to change)
+php artisan candidates:photos   # web-sized photo copies in public/assets/img/{mr,ms}/web (gitignored)
+php artisan scores:clear        # after a rehearsal: deletes scores, locks, open segments, finalist marks
+vendor/bin/pint                 # formatter
+php artisan test                # in-memory SQLite (phpunit.xml)
+php artisan test --filter=TabulatorTest
+```
+
+Seeded accounts sign in with a username; each password equals the username: admins `admin1`, `admin2`; pre-pageant panel `prejudge1`–`prejudge3`; pageant night panel `judge1`–`judge5`.
+
+Candidate photos live in `public/assets/img/mr/` and `public/assets/img/ms/`, named by candidate number (e.g. `1.jpg`).
+
+## Scoring rules
+
+All of it is in `config/pageant.php`: divisions, panels, rounds, the finalist count (5), placement titles, and each segment's criteria as `[label, max points]`. A segment's points add up to its weight, so each round totals 100.
+
+- Round 1: Talent 15 and Thematic wear 15 (pre-pageant panel, 3 judges); Swim wear 15, Formal / evening wear 15, Beauty of face 20, Wit & verbal ability 20 (pageant night panel, 5 judges).
+- Round 2 (`final`): the saved finalists only, scored fresh by the pageant night panel: impression 50 + intelligence 50. Placed by rank sum, not average (see below).
+- Both rounds place by judges' ranks, not average points (see below). The point weights still matter: they set each panel's share of Round 1.
+
+`App\Scoring\Tabulator` does the maths, in hundredths (ints) so sums and tie checks are exact:
+- A judge's total counts only when every criterion has points. A segment average is the mean of the counted totals, rounded to 2 decimals; it is still computed, but segments place by rank sum (a segment's `'ranking' => 'average'` switches it back).
+- Ranks are competition ranks (1, 2, 2, 4). Ties are flagged for the board; the only automatic tie-break is Round 1's (below).
+- Rank sums (every segment): each judge ranks the candidates by total (equal totals share a rank), the ranks are added, and the lowest sum places first. Only judges who have scored every candidate count (`rank_judges`), so every sum covers the same judges. One unscored candidate (a no-show) blocks the sum until they are scored or deleted.
+- Each segment ranks on its own (its rank sum) for that segment's winner; Round 1 segment pages show it averaged over the judges (`Segment::showsAverageRank()`).
+- Round 1 is placed by weighted average ranks, per panel. A judge's panel total adds up their totals for the panel's Round 1 segments (pre-pageant: talent + thematic wear; pageant night: swim + formal + beauty of face + Q&A), and each judge ranks the candidates by it. A panel's rank sum is divided by its judges who count (3 pre-pageant, 5 pageant night) and multiplied by its weight (pre-pageant 30%: a sum of 6 → 2.00 → 0.60). The Round 1 total adds the two; lowest wins. Averaging, not summing, matters: summed ranks would give the 5-judge panel about 80% of the round instead of 70%. The total is compared exactly over a common denominator (`roundOne()`), shown to 2 decimals.
+- A Round 1 tie on the total goes to the lower average rank in `config('pageant.tie_break')` (Beauty of face, then Q&A); the row's `tie_break` lists the segments it took. Still level after that: tied, for the board. `cutoff_tie` flags a tie left across the last finalist spot.
+- Round 2 is the `final` segment's rank sum.
+
+## Architecture
+
+- **Data:** `users` (`username`, `role` admin/judge, `panel` prepageant/pageant), `candidates` (`division` + `number`, unique together; `is_finalist`; `announce_order`), `open_segments` (a row means open), `scores` (one row per segment × candidate × judge × criterion, `points` decimal(5,2) nullable), `score_locks` (segment × judge; one lock covers both divisions). Score rows are created as judges type; nothing is pre-seeded.
+- **`App\Scoring\Segment`** wraps a config entry: `open($panel)`, `judges()` (panel members by id; seat order is Judge 1, 2, ...), `candidates($division)` (finalists only after Round 1).
+- **Judge sheet:** `App\Http\Livewire\Judge\ScoreSheet` serves every segment. Round 1 rows pair Ms. and Mr. candidates by number; Round 2 lines finalists up side by side. `viewMode` switches between that side-by-side view and one division (`showView()`); it is kept in the session so the next segment opens the same way. `points` is keyed `c{candidate id}` then criterion. The browser sends updates per field *or per whole candidate* (`points.c3` → array), so `updatedPoints()` diffs the whole sheet against saved rows instead of trusting the key. Invalid entries are saved as null. It refuses changes when the segment is closed, belongs to another panel, or is locked. `lock()` checks the saved rows, not only the screen.
+- **Judge flow:** `/judge-app` redirects to the first open segment the judge hasn't locked, or shows a waiting screen. `app.js` polls `/judge-app/status` every 4 s: the waiting screen jumps to the sheet; an open sheet shows a banner instead of navigating away.
+- **Admin:** `/home` is scoring control (open/close segments, lock status, unlock a judge). Results are live, with no rank buttons: `/results/{division}/round-1` (with the finalists form) and `/results/{division}/{segment}` (`?judge=N` for a judge's sheet). Round 2's page adds placements. Segment sheets list candidates by number; `/results/{division}/{segment}/winner` prints the segment's rank 1 (every tied candidate, if there is a tie). The sidebar has one results list; each results page switches Ms./Mr. in place (`<x-results-header>`, keeping `?judge=`), and the sidebar opens the division last viewed (`session('results.division')`). Report pages poll themselves: `app.js` swaps each `[data-refresh-region]` whose markup changed.
+- **Reset scores** (`/reset-scores`, `App\Scoring\ScoreReset`): deletes a criterion's, a segment's or a round's scores plus the segment's lock-ins, for clearing a dry run; "Clear everything" is `scores:clear`. Open state and finalists are left alone. Each reset changes a per-segment mark in the cache; a judge's open sheet compares it on every edit and reloads from the saved rows instead of saving its stale entries back.
+- **Finalists:** saved on each Round 1 results page. A lock-in covers the finalists at the time: if saving changes the set and a finalist isn't fully scored in Round 2 (`Segment::unscored()`), the Round 2 locks are deleted so judges can score them (the form asks first once Round 2 has scores or locks). A dropped finalist's Round 2 scores are kept and count again if re-ticked. Scoring control, segment pages and the winner PDF don't call a fully locked segment final while someone is unscored. The finalists list refreshes with the scores; `app.js` keeps ticks changed since load (`data-keep-ticks`).
+- **Top 5 announcement:** `App\Scoring\Announcement` gives each division's finalists a random call order when they are saved (kept if the same set is saved again) or on Reshuffle. A draw that matches number order, Round 1 rank order, or the previous order is redrawn (3+ finalists). `/announcement/print` prints both divisions with no ranks or scores.
+- **Auth:** `LoginController::username()` is `username`. `user-access:<role>` middleware sends the wrong role to its own start page. Registration, password reset and email verification are off.
+
+## UI
+
+`DESIGN.md` records the design direction and the reason for each visual choice. Read it before changing the look.
+
+Tailwind CSS 4 through `@tailwindcss/vite`; there is no `tailwind.config.js`. Design tokens and the few shared classes (`.btn`, `.card`, `.input`, `.data-table`, `.tie`, `.finalist`) are in `resources/css/app.css`. Dark mode is a `dark` class on `<html>`, set before paint by `partials/head.blade.php` and toggled by `resources/js/app.js`. IBM Plex Sans and Font Awesome are bundled by Vite, so the app works on a LAN with no internet.
+
+- Admin layout: `layouts/master` with the sidebar in `layouts/navigation`. Judge layout: `judge_app/layouts/app`. Login: `layouts/app`.
+- Results tables live in `admin/results/tables/*` and are shared by the page and its PDF through a `$print` flag, so they can't drift apart. PDFs extend `admin/results/pdf/layout.blade.php` (plain CSS, because dompdf can't render Tailwind).
+
+## Serving
+
+`server.php` in the project root replaces Laravel's router for `php artisan serve`. PHP's built-in server sends public files without caching headers, so this router sends them itself with ETag/Last-Modified, 304s, and a max-age (a year for `/build/assets`, a day for `?v=` photo URLs, 5 minutes otherwise). `<x-candidate-photo>` uses the `web/` copy when it is newer than the original and adds `?v=<mtime>`.
+
+## Gotchas
+
+- Changing a segment key in `config/pageant.php` orphans its saved scores and open state, which reference the key as a string.
+- Don't declare PHP functions inside Blade `@php` blocks: re-rendering a view in one process, as Livewire tests do, fatals on redeclare. Import classes with `@use`, not `use` inside `@php`.
+- Livewire tests send per-field updates, the browser often sends per-candidate ones; cover both (see `ScoreSheetTest`).

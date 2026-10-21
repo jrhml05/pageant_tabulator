@@ -1,61 +1,48 @@
 @extends('layouts.master')
 
+@section('title', 'Candidates')
+
 @section('content')
-    <style>
-        #card {
-            cursor: pointer;
-            transition: transform .2s;
-            /* Animation */
-            margin: 0 auto;
-        }
+    <x-page-header title="Candidates" />
 
-        #card:hover {
-            transform: scale(1.3);
-            z-index: 1;
-        }
+    <p class="-mt-3 mb-6 max-w-prose text-sm text-ink-2">
+        Judges see each candidate by number and photo, with Ms. and Mr. candidates of the same number side by side.
+    </p>
 
-        .modal .modal-dialog-aside {
-            width: 350px;
-            max-width: 80%;
-            height: 100%;
-            margin: 0;
-            transform: translate(0);
-            transition: transform .2s;
-        }
+    <x-flash />
 
-        .modal .modal-dialog-aside .modal-content {
-            height: inherit;
-            border: 0;
-            border-radius: 0;
-        }
+    @foreach (config('pageant.divisions') as $division => $label)
+        <section aria-labelledby="{{ $division }}-heading" class="mb-10">
+            <div class="mb-3 flex flex-wrap items-center justify-between gap-3">
+                <h2 id="{{ $division }}-heading" class="text-lg font-semibold">
+                    {{ $label }} <span class="font-normal text-ink-2">({{ $data[$division]->count() }})</span>
+                </h2>
+                <a href="{{ route('candidates.create', $division) }}" class="btn btn-secondary">
+                    <i class="fa-solid fa-plus" aria-hidden="true"></i> Add {{ $division === 'mr' ? 'Mr.' : 'Ms.' }} candidate
+                </a>
+            </div>
 
-        .modal .modal-dialog-aside .modal-content .modal-body {
-            overflow-y: auto
-        }
-
-        .modal.fixed-left .modal-dialog-aside {
-            margin-left: auto;
-            transform: translateX(100%);
-        }
-
-        .modal.fixed-right .modal-dialog-aside {
-            margin-right: auto;
-            transform: translateX(-100%);
-        }
-
-        .modal.show .modal-dialog-aside {
-            transform: translateX(0);
-        }
-    </style>
-
-    <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Candidates</h1>
-        {{-- <a href="#" class="d-none d-sm-inline-block btn btn-primary shadow"><i
-                class="fas fa-plus fa-sm text-white-50"></i> ADD NEW</a> --}}
-    </div>
-
-
-    @livewire('admin.candidates-component')
-
+            @if ($data[$division]->isEmpty())
+                <div class="card px-5 py-8 text-center text-ink-2">No {{ $label }} candidates yet.</div>
+            @else
+                <ul class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6">
+                    @foreach ($data[$division] as $candidate)
+                        <li class="card overflow-hidden">
+                            <x-candidate-photo :division="$division" :number="$candidate->number" />
+                            <div class="flex items-center justify-between gap-1 py-1 pr-1 pl-3">
+                                <p class="font-semibold tabular-nums">No. {{ $candidate->number }}</p>
+                                <a href="{{ route('candidates.edit', [$division, $candidate->number]) }}" class="btn btn-ghost px-2.5">
+                                    <i class="fa-solid fa-pen" aria-hidden="true"></i>
+                                    <span class="sr-only">Edit {{ $label }} No. {{ $candidate->number }}</span>
+                                </a>
+                            </div>
+                            @if ($candidate->school)
+                                <p class="-mt-1 px-3 pb-2.5 text-sm text-ink-2">{{ $candidate->school }}</p>
+                            @endif
+                        </li>
+                    @endforeach
+                </ul>
+            @endif
+        </section>
+    @endforeach
 @endsection

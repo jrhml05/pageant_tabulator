@@ -1,140 +1,128 @@
 @extends('layouts.master')
 
+@section('title', 'Scoring control')
+
 @section('content')
- <!-- Page Heading -->
- <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-            class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
-</div>
+    {{-- The tabulator's run sheet: open the segment on stage, watch the locks come in, close it. --}}
+    <x-page-header title="Scoring control" />
 
- <!-- Content Row -->
- <div class="row">
-
-    <!-- Earnings (Monthly) Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                            Total Barangays</div>
-                        {{-- <div class="h5 mb-0 font-weight-bold text-gray-800">{{ \App\Models\Barangay::get()->count(); }}</div> --}}
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="-mt-3 mb-6 flex flex-wrap items-end justify-between gap-x-6 gap-y-2">
+        <p class="max-w-prose text-sm text-ink-2">
+            Open a segment when it starts on stage; that panel's tablets switch to it within a few seconds.
+            Close it once every judge has locked in.
+            <span class="mt-2 block">
+                <a href="{{ route('candidates.index') }}" class="font-medium text-ink underline-offset-4 hover:underline">
+                    @foreach (config('pageant.divisions') as $division => $label)
+                        {{ (int) ($data['counts'][$division]->total ?? 0) }} {{ $division === 'mr' ? 'Mr.' : 'Ms.' }}{{ $loop->last ? '' : ' and' }}
+                    @endforeach
+                    candidates</a>
+                ·
+                <a href="{{ route('judges.index') }}" class="font-medium text-ink underline-offset-4 hover:underline">{{ $data['judges']->count() }} {{ Str::plural('judge', $data['judges']->count()) }}</a>
+            </span>
+        </p>
+        <p data-live-report class="text-sm text-ink-2">
+            <span data-live-note role="status" class="font-medium text-ink empty:hidden"></span>
+            <span data-live-time>Locks refresh automatically.</span>
+        </p>
     </div>
 
-    <!-- Earnings (Monthly) Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-success shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                            Total Candidates</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ \App\Models\Ms_candidate::get()->count(); }}</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-users fa-2x text-gray-300"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <x-flash />
 
-    <!-- Earnings (Monthly) Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-info shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks
-                        </div>
-                        <div class="row no-gutters align-items-center">
-                            <div class="col-auto">
-                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
-                            </div>
-                            <div class="col">
-                                <div class="progress progress-sm mr-2">
-                                    <div class="progress-bar bg-info" role="progressbar"
-                                        style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                                        aria-valuemax="100"></div>
+    @if ($data['unassigned']->isNotEmpty())
+        <div role="alert" class="mb-5 rounded-md bg-danger-soft px-4 py-3 text-sm font-medium text-danger">
+            {{ $data['unassigned']->pluck('name')->join(', ', ' and ') }}
+            {{ $data['unassigned']->count() === 1 ? 'is' : 'are' }} not on a panel and can't score.
+            <a href="{{ route('judges.index') }}" class="underline underline-offset-4">Assign a panel</a>
+        </div>
+    @endif
+
+    <div class="flex flex-col gap-6" data-refresh-region>
+        @foreach ($data['groups'] as $groupLabel => $rows)
+            <section aria-labelledby="group-{{ $loop->index }}" class="card overflow-hidden">
+                <h2 id="group-{{ $loop->index }}" class="border-b border-line bg-surface-2 px-5 py-3 font-semibold">{{ $groupLabel }}</h2>
+                <ul class="divide-y divide-line">
+                    @foreach ($rows as $row)
+                        @php
+                            $segment = $row['segment'];
+                            $judges = $row['judges'];
+                            $lockedCount = $judges->whereIn('id', $row['locked'])->count();
+                            $allLocked = $judges->isNotEmpty() && $lockedCount === $judges->count();
+                            $unscored = $row['unscored']->flatMap(fn ($candidates, $division) => $candidates->map(fn ($c) => ($division === 'mr' ? 'Mr.' : 'Ms.').' No. '.$c->number));
+                        @endphp
+                        <li class="px-5 py-4">
+                            <div class="flex flex-wrap items-start justify-between gap-x-6 gap-y-3">
+                                <div>
+                                    <p class="font-semibold">{{ $segment->label }}</p>
+                                    <p class="text-sm text-ink-2">
+                                        {{ \App\Scoring\Points::plain($segment->maxPoints()) }} points
+                                        @if ($segment->forFinalistsOnly())
+                                            · finalists only
+                                        @endif
+                                    </p>
+                                    <p class="mt-1.5">
+                                        @if ($row['open'])
+                                            <span class="inline-flex items-center gap-1.5 rounded bg-accent-soft px-2 py-0.5 text-xs font-medium text-accent-soft-ink">
+                                                <i class="fa-solid fa-circle-play" aria-hidden="true"></i> Open to judges
+                                            </span>
+                                        @else
+                                            <span class="inline-flex items-center gap-1.5 rounded bg-surface-2 px-2 py-0.5 text-xs font-medium text-ink-2">
+                                                <i class="fa-solid fa-circle-stop" aria-hidden="true"></i> Closed
+                                            </span>
+                                        @endif
+                                    </p>
+                                </div>
+                                <div class="flex flex-wrap items-center gap-2">
+                                    @foreach (config('pageant.divisions') as $division => $label)
+                                        <a href="{{ route('results.segment', [$division, $segment->key]) }}" class="btn btn-ghost">
+                                            {{ $division === 'mr' ? 'Mr.' : 'Ms.' }} results
+                                        </a>
+                                    @endforeach
+                                    <form method="POST" action="{{ route($row['open'] ? 'segments.close' : 'segments.open', $segment->key) }}"
+                                        @if ($row['open'] && ! $allLocked) data-confirm="Not every judge has locked in {{ $segment->short }}. Close it anyway? Judges can't change its scores once it's closed." @endif>
+                                        @csrf
+                                        <button type="submit" class="btn btn-secondary min-w-24">
+                                            <i class="fa-solid {{ $row['open'] ? 'fa-stop' : 'fa-play' }}" aria-hidden="true"></i>
+                                            {{ $row['open'] ? 'Close' : 'Open' }}<span class="sr-only"> {{ $segment->short }}</span>
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Pending Requests Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-warning shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                            Total Judges</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ \App\Models\User::where('role', 'judge')->get()->count(); }}</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-users fa-2x text-gray-300"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
+                            <div class="mt-3">
+                                <p class="text-sm font-medium {{ $unscored->isNotEmpty() ? 'text-danger' : ($allLocked ? 'text-success-ink' : '') }}">
+                                    <i class="fa-solid {{ $unscored->isNotEmpty() ? 'fa-triangle-exclamation' : ($allLocked ? 'fa-lock' : 'fa-lock-open text-ink-2') }}" aria-hidden="true"></i>
+                                    @if ($judges->isEmpty())
+                                        No judges on the {{ $segment->panelLabel() }} panel
+                                    @elseif ($unscored->isNotEmpty())
+                                        All {{ $judges->count() }} judges locked in, but {{ $unscored->join(', ', ' and ') }} {{ $unscored->count() === 1 ? "isn't" : "aren't" }} scored by every judge. Unlock their sheets so they can score.
+                                    @elseif ($allLocked)
+                                        All {{ $judges->count() }} judges locked in
+                                    @else
+                                        {{ $lockedCount }} of {{ $judges->count() }} judges locked in
+                                    @endif
+                                </p>
+                                <ul class="mt-2 flex flex-wrap gap-1.5">
+                                    @foreach ($judges as $judge)
+                                        @php $locked = $row['locked']->contains($judge->id); @endphp
+                                        <li class="inline-flex min-h-9 items-center whitespace-nowrap gap-1.5 rounded-md border border-line py-0.5 pl-2.5 text-sm {{ $locked ? 'pr-1' : 'pr-2.5 text-ink-2' }}">
+                                            <i class="fa-solid {{ $locked ? 'fa-lock' : 'fa-pen' }} text-xs" aria-hidden="true"></i>
+                                            <span>{{ $judge->name }}<span class="sr-only">{{ $locked ? ', locked in' : ', still scoring' }}</span></span>
+                                            @if ($locked)
+                                                <form method="POST" action="{{ route('segments.unlock', [$segment->key, $judge->id]) }}"
+                                                    data-confirm="Unlock {{ $judge->name }}'s {{ $segment->short }} sheet? They can change their scores again while the segment is open.">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-ghost min-h-8 px-2 text-xs">Unlock<span class="sr-only"> {{ $judge->name }}</span></button>
+                                                </form>
+                                            @endif
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+            </section>
+        @endforeach
     </div>
-</div>
-
-<div class="row">
-    <div class="col-xl-12 col-lg-12">
-        <div class="card shadow mb-4">
-            <div class="card">
-                <div class="card-header">
-                    <h5>Top 10 (No Particular Orders)</h5>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th style="width:5%">#</th>
-                                    <th style="width:10%">Image</th>
-                                    <th style="width:20%">Barangay</th>
-                                    <th>Candidate Name</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($data['top_ten'] as $data)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td></td>
-                                        {{-- <td>{{ $data->barangay->name  }}</td> --}}
-                                        <td>{{ $data->first_name }}</td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="4">
-                                            <center>No Data Found</center>
-                                        </td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</div>
 @endsection

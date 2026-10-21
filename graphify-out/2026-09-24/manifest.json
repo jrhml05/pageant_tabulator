@@ -1,0 +1,2378 @@
+{
+  "app/Console/Commands/FinalScoreGenerator.php": {
+    "mtime": 1790209791.3233202,
+    "seen": 1790220155.5854049,
+    "ast_hash": "20b239c64bb04c14371abee754271cff",
+    "semantic_hash": "20b239c64bb04c14371abee754271cff"
+  },
+  "app/Console/Kernel.php": {
+    "mtime": 1790209791.3233998,
+    "seen": 1790220155.585407,
+    "ast_hash": "1ce1d77f70052683f75133889accff9c",
+    "semantic_hash": "1ce1d77f70052683f75133889accff9c"
+  },
+  "app/Exceptions/Handler.php": {
+    "mtime": 1790209791.3235009,
+    "seen": 1790220155.585407,
+    "ast_hash": "5f6ef611918d74d8df793dc581740f8f",
+    "semantic_hash": "5f6ef611918d74d8df793dc581740f8f"
+  },
+  "app/Http/Controllers/Auth/ConfirmPasswordController.php": {
+    "mtime": 1790209791.3236513,
+    "seen": 1790220155.585408,
+    "ast_hash": "7ba90f3a612c2c1b4d3e8a160064c213",
+    "semantic_hash": "7ba90f3a612c2c1b4d3e8a160064c213"
+  },
+  "app/Http/Controllers/Auth/ForgotPasswordController.php": {
+    "mtime": 1790209791.3237073,
+    "seen": 1790220155.585408,
+    "ast_hash": "63d41ded0abaaf1a2e53288827e90ce6",
+    "semantic_hash": "63d41ded0abaaf1a2e53288827e90ce6"
+  },
+  "app/Http/Controllers/Auth/LoginController.php": {
+    "mtime": 1790209791.3237524,
+    "seen": 1790220155.585409,
+    "ast_hash": "2a95335eb27da1279057d9c3868f50a1",
+    "semantic_hash": "2a95335eb27da1279057d9c3868f50a1"
+  },
+  "app/Http/Controllers/Auth/RegisterController.php": {
+    "mtime": 1790209791.3238006,
+    "seen": 1790220155.585409,
+    "ast_hash": "f56d031531574fb0002326302bb294a6",
+    "semantic_hash": "f56d031531574fb0002326302bb294a6"
+  },
+  "app/Http/Controllers/Auth/ResetPasswordController.php": {
+    "mtime": 1790209791.323853,
+    "seen": 1790220155.58541,
+    "ast_hash": "5080f096813500e7cd8b7dc6219d1d0e",
+    "semantic_hash": "5080f096813500e7cd8b7dc6219d1d0e"
+  },
+  "app/Http/Controllers/Auth/VerificationController.php": {
+    "mtime": 1790209791.3239014,
+    "seen": 1790220155.58541,
+    "ast_hash": "fd61de1da45caf8e8a962288285f211e",
+    "semantic_hash": "fd61de1da45caf8e8a962288285f211e"
+  },
+  "app/Http/Controllers/CandidateController.php": {
+    "mtime": 1790209791.3240042,
+    "seen": 1790220155.585411,
+    "ast_hash": "df3415be6bf525c6662c1375b566d3da",
+    "semantic_hash": "df3415be6bf525c6662c1375b566d3da"
+  },
+  "app/Http/Controllers/CategoryController.php": {
+    "mtime": 1790209791.3240488,
+    "seen": 1790220155.585411,
+    "ast_hash": "105354992c304fa229ecaeecd001c3cd",
+    "semantic_hash": "105354992c304fa229ecaeecd001c3cd"
+  },
+  "app/Http/Controllers/Controller.php": {
+    "mtime": 1790209791.3240983,
+    "seen": 1790220155.585412,
+    "ast_hash": "a0af384fdf2cfddc6d036acea021da97",
+    "semantic_hash": "a0af384fdf2cfddc6d036acea021da97"
+  },
+  "app/Http/Controllers/HomeController.php": {
+    "mtime": 1790209791.3241463,
+    "seen": 1790220155.585412,
+    "ast_hash": "211b2c421d45946d5d63c456331bfb0b",
+    "semantic_hash": "211b2c421d45946d5d63c456331bfb0b"
+  },
+  "app/Http/Controllers/JudgeAppController.php": {
+    "mtime": 1790209805.9515567,
+    "seen": 1790220155.5854132,
+    "ast_hash": "13284494d0794f52ef5e847c1e07c1df",
+    "semantic_hash": "13284494d0794f52ef5e847c1e07c1df"
+  },
+  "app/Http/Controllers/MrUepFinalReportsController.php": {
+    "mtime": 1790209805.9516635,
+    "seen": 1790220155.5854132,
+    "ast_hash": "6f5be9e85578f0ea201c3f6c46958495",
+    "semantic_hash": "6f5be9e85578f0ea201c3f6c46958495"
+  },
+  "app/Http/Controllers/MrUepPrePageantReportsController.php": {
+    "mtime": 1790209805.9517555,
+    "seen": 1790220155.5854132,
+    "ast_hash": "8468da3cbf6a40cefbdb6bae8f035951",
+    "semantic_hash": "8468da3cbf6a40cefbdb6bae8f035951"
+  },
+  "app/Http/Controllers/MrUepPrelimReportsController.php": {
+    "mtime": 1790209805.9518669,
+    "seen": 1790220155.585414,
+    "ast_hash": "02fb064f80220457d376eae6ffa0011a",
+    "semantic_hash": "02fb064f80220457d376eae6ffa0011a"
+  },
+  "app/Http/Controllers/MsUepFinalReportsController.php": {
+    "mtime": 1790209805.9519699,
+    "seen": 1790220155.585414,
+    "ast_hash": "8827688435dfeeb92edf1469604c27a3",
+    "semantic_hash": "8827688435dfeeb92edf1469604c27a3"
+  },
+  "app/Http/Controllers/MsUepPrePageantReportsController.php": {
+    "mtime": 1790209805.9520419,
+    "seen": 1790220155.585415,
+    "ast_hash": "41e1971e7425d4b77346d45d1aea8e0c",
+    "semantic_hash": "41e1971e7425d4b77346d45d1aea8e0c"
+  },
+  "app/Http/Controllers/MsUepPrelimReportsController.php": {
+    "mtime": 1790209805.9521487,
+    "seen": 1790220155.585415,
+    "ast_hash": "aa711d3fc937ca0f7b5cd430c69ee21e",
+    "semantic_hash": "aa711d3fc937ca0f7b5cd430c69ee21e"
+  },
+  "app/Http/Controllers/ReportsController.php": {
+    "mtime": 1790209791.3247514,
+    "seen": 1790220155.5854158,
+    "ast_hash": "5c7b3987eb22eb92df1c45a844ecc2d5",
+    "semantic_hash": "5c7b3987eb22eb92df1c45a844ecc2d5"
+  },
+  "app/Http/Controllers/StageController.php": {
+    "mtime": 1790209791.3248127,
+    "seen": 1790220155.5854158,
+    "ast_hash": "e4d874b6b5b20c36f57a6c29141fa4d8",
+    "semantic_hash": "e4d874b6b5b20c36f57a6c29141fa4d8"
+  },
+  "app/Http/Controllers/UserController.php": {
+    "mtime": 1790209791.3248572,
+    "seen": 1790220155.585417,
+    "ast_hash": "bbf3b2a946a963c3a302ab3e4b03f6fe",
+    "semantic_hash": "bbf3b2a946a963c3a302ab3e4b03f6fe"
+  },
+  "app/Http/Kernel.php": {
+    "mtime": 1790219982.2636037,
+    "seen": 1790220155.585417,
+    "ast_hash": "93b34c3f42692424f8787fe8e29a684b",
+    "semantic_hash": "93b34c3f42692424f8787fe8e29a684b"
+  },
+  "app/Http/Livewire/Admin/ActiveStatusComponent.php": {
+    "mtime": 1790209791.3250225,
+    "seen": 1790220155.585418,
+    "ast_hash": "894c765cf00ff116b58d0c8a10c3993a",
+    "semantic_hash": "894c765cf00ff116b58d0c8a10c3993a"
+  },
+  "app/Http/Livewire/Admin/CandidatesComponent.php": {
+    "mtime": 1790219982.26383,
+    "seen": 1790220155.585418,
+    "ast_hash": "f8b1ae4f084c1a9c5bd29840ae954b9f",
+    "semantic_hash": "f8b1ae4f084c1a9c5bd29840ae954b9f"
+  },
+  "app/Http/Livewire/Admin/CategoryComponent.php": {
+    "mtime": 1790209791.3251233,
+    "seen": 1790220155.585419,
+    "ast_hash": "602134b27eacbc526411da5f5a58506d",
+    "semantic_hash": "602134b27eacbc526411da5f5a58506d"
+  },
+  "app/Http/Livewire/Admin/StageControllerComponent.php": {
+    "mtime": 1790209791.325178,
+    "seen": 1790220155.585419,
+    "ast_hash": "d8184c6f4775a8fe82b98a2e9d1052d5",
+    "semantic_hash": "d8184c6f4775a8fe82b98a2e9d1052d5"
+  },
+  "app/Http/Livewire/Admin/SubCategoryComponent.php": {
+    "mtime": 1790209791.3252506,
+    "seen": 1790220155.5854201,
+    "ast_hash": "812b65a8b2948be78b1d55f98bb8ced8",
+    "semantic_hash": "812b65a8b2948be78b1d55f98bb8ced8"
+  },
+  "app/Http/Livewire/Judge/Final/Mr/ScoreBoardComponent.php": {
+    "mtime": 1790219982.2640097,
+    "seen": 1790220155.5854201,
+    "ast_hash": "4574b81139c598bbea47e1b99d7aeb8f",
+    "semantic_hash": "4574b81139c598bbea47e1b99d7aeb8f"
+  },
+  "app/Http/Livewire/Judge/Final/Ms/ScoreBoardComponent.php": {
+    "mtime": 1790219982.264185,
+    "seen": 1790220155.585421,
+    "ast_hash": "8f38b00f8d2049b26ea153f21821f1a9",
+    "semantic_hash": "8f38b00f8d2049b26ea153f21821f1a9"
+  },
+  "app/Http/Livewire/Judge/FinalScoreBoardComponent.php": {
+    "mtime": 1790219982.2644064,
+    "seen": 1790220155.585421,
+    "ast_hash": "a84c9189a81da5fa4072583460a23e52",
+    "semantic_hash": "a84c9189a81da5fa4072583460a23e52"
+  },
+  "app/Http/Livewire/Judge/Preliminaries/Mr/DepartmentaluniformScoreBoardComponent.php": {
+    "mtime": 1790219982.2646048,
+    "seen": 1790220155.585421,
+    "ast_hash": "bbf4ecacf6e0b3783ccb0a1fba876287",
+    "semantic_hash": "bbf4ecacf6e0b3783ccb0a1fba876287"
+  },
+  "app/Http/Livewire/Judge/Preliminaries/Mr/FormalwearScoreBoardComponent.php": {
+    "mtime": 1790219982.2649221,
+    "seen": 1790220155.585422,
+    "ast_hash": "9c11ee274ea3d4829157b05d947beda6",
+    "semantic_hash": "9c11ee274ea3d4829157b05d947beda6"
+  },
+  "app/Http/Livewire/Judge/Preliminaries/Mr/NationalcostumeScoreBoardComponent.php": {
+    "mtime": 1790219982.2651553,
+    "seen": 1790220155.585422,
+    "ast_hash": "f7f7d155aa28456b03a0dad757689a2c",
+    "semantic_hash": "f7f7d155aa28456b03a0dad757689a2c"
+  },
+  "app/Http/Livewire/Judge/Preliminaries/Mr/QnaScoreBoardComponent.php": {
+    "mtime": 1790219982.2653532,
+    "seen": 1790220155.585423,
+    "ast_hash": "fd8c874dc60a15631492b71352e1de62",
+    "semantic_hash": "fd8c874dc60a15631492b71352e1de62"
+  },
+  "app/Http/Livewire/Judge/Preliminaries/Mr/ScoreBoardComponent.php": {
+    "mtime": 1790219982.2655756,
+    "seen": 1790220155.585423,
+    "ast_hash": "265232339e67ab57ac3f128bfa3a83dd",
+    "semantic_hash": "265232339e67ab57ac3f128bfa3a83dd"
+  },
+  "app/Http/Livewire/Judge/Preliminaries/Mr/SwimwearScoreBoardComponent.php": {
+    "mtime": 1790219982.2657866,
+    "seen": 1790220155.585424,
+    "ast_hash": "0842f4c5733f1c4bb11c87a37123f111",
+    "semantic_hash": "0842f4c5733f1c4bb11c87a37123f111"
+  },
+  "app/Http/Livewire/Judge/Preliminaries/Ms/DepartmentaluniformScoreBoardComponent.php": {
+    "mtime": 1790219982.2661216,
+    "seen": 1790220155.585424,
+    "ast_hash": "27d6a8f3c8775546aa51e08b3b6577ed",
+    "semantic_hash": "27d6a8f3c8775546aa51e08b3b6577ed"
+  },
+  "app/Http/Livewire/Judge/Preliminaries/Ms/FormalwearScoreBoardComponent.php": {
+    "mtime": 1790219982.2663078,
+    "seen": 1790220155.585425,
+    "ast_hash": "26bad783f2b0e2a44fc435409a1b8e6f",
+    "semantic_hash": "26bad783f2b0e2a44fc435409a1b8e6f"
+  },
+  "app/Http/Livewire/Judge/Preliminaries/Ms/NationalcostumeScoreBoardComponent.php": {
+    "mtime": 1790219982.2664914,
+    "seen": 1790220155.5854259,
+    "ast_hash": "15ed186b3367ad836a19d88716a4c7c8",
+    "semantic_hash": "15ed186b3367ad836a19d88716a4c7c8"
+  },
+  "app/Http/Livewire/Judge/Preliminaries/Ms/QnaScoreBoardComponent.php": {
+    "mtime": 1790219982.2666755,
+    "seen": 1790220155.5854259,
+    "ast_hash": "0e96b6d652e1abfe6ae678e9cc772dd1",
+    "semantic_hash": "0e96b6d652e1abfe6ae678e9cc772dd1"
+  },
+  "app/Http/Livewire/Judge/Preliminaries/Ms/ScoreBoardComponent.php": {
+    "mtime": 1790219982.2668831,
+    "seen": 1790220155.585427,
+    "ast_hash": "0833e68fdceb6dcfe0ccb629abc9ffe7",
+    "semantic_hash": "0833e68fdceb6dcfe0ccb629abc9ffe7"
+  },
+  "app/Http/Livewire/Judge/Preliminaries/Ms/SwimwearScoreBoardComponent.php": {
+    "mtime": 1790219982.2670798,
+    "seen": 1790220155.585427,
+    "ast_hash": "735d1772fefd44edbd50261808fcff14",
+    "semantic_hash": "735d1772fefd44edbd50261808fcff14"
+  },
+  "app/Http/Livewire/Judge/Prepageant/Mr/RavewearScoreBoardComponent.php": {
+    "mtime": 1790219982.2673986,
+    "seen": 1790220155.585428,
+    "ast_hash": "9aa2f29f4df9767f8889761ff0ab0f72",
+    "semantic_hash": "9aa2f29f4df9767f8889761ff0ab0f72"
+  },
+  "app/Http/Livewire/Judge/Prepageant/Mr/ScoreBoardComponent.php": {
+    "mtime": 1790219982.2675927,
+    "seen": 1790220155.585428,
+    "ast_hash": "1edd07dbf0c103af63aabaa4fe1c1ea0",
+    "semantic_hash": "1edd07dbf0c103af63aabaa4fe1c1ea0"
+  },
+  "app/Http/Livewire/Judge/Prepageant/Mr/TalentScoreBoardComponent.php": {
+    "mtime": 1790219982.2678106,
+    "seen": 1790220155.585429,
+    "ast_hash": "9acae46a9951562ff701a0ee52aff86b",
+    "semantic_hash": "9acae46a9951562ff701a0ee52aff86b"
+  },
+  "app/Http/Livewire/Judge/Prepageant/Ms/RavewearScoreBoardComponent.php": {
+    "mtime": 1790219982.2680132,
+    "seen": 1790220155.585429,
+    "ast_hash": "5def96dc72e9e623e8d98b7ac7085591",
+    "semantic_hash": "5def96dc72e9e623e8d98b7ac7085591"
+  },
+  "app/Http/Livewire/Judge/Prepageant/Ms/ScoreBoardComponent.php": {
+    "mtime": 1790219982.2682035,
+    "seen": 1790220155.585429,
+    "ast_hash": "f0a6b8b4d8d1a9b35613184fa52858b5",
+    "semantic_hash": "f0a6b8b4d8d1a9b35613184fa52858b5"
+  },
+  "app/Http/Livewire/Judge/Prepageant/Ms/TalentScoreBoardComponent.php": {
+    "mtime": 1790219982.2683842,
+    "seen": 1790220155.58543,
+    "ast_hash": "733404c6c52a161d38a861a6d2f106de",
+    "semantic_hash": "733404c6c52a161d38a861a6d2f106de"
+  },
+  "app/Http/Livewire/Judge/ScoreBoardComponent.php": {
+    "mtime": 1790219982.2686179,
+    "seen": 1790220155.58543,
+    "ast_hash": "66a2d25bd4085af0f65e336daf577565",
+    "semantic_hash": "66a2d25bd4085af0f65e336daf577565"
+  },
+  "app/Http/Livewire/Judge/Semifinal/ScoreBoardComponent.php": {
+    "mtime": 1790219982.2688994,
+    "seen": 1790220155.585431,
+    "ast_hash": "721773129558424e17e8ea5a71a83f29",
+    "semantic_hash": "721773129558424e17e8ea5a71a83f29"
+  },
+  "app/Http/Livewire/Judge/TalentScoreBoardComponent.php": {
+    "mtime": 1790219982.269159,
+    "seen": 1790220155.585431,
+    "ast_hash": "505ac132f555cf4d795f83b1e604cd5f",
+    "semantic_hash": "505ac132f555cf4d795f83b1e604cd5f"
+  },
+  "app/Http/Middleware/Authenticate.php": {
+    "mtime": 1790209791.327204,
+    "seen": 1790220155.585432,
+    "ast_hash": "1a28ab8a480d33b5e262412c084e77b2",
+    "semantic_hash": "1a28ab8a480d33b5e262412c084e77b2"
+  },
+  "app/Http/Middleware/EncryptCookies.php": {
+    "mtime": 1790209791.3272965,
+    "seen": 1790220155.585432,
+    "ast_hash": "aa3be31badc36cd9d7a5ea08eef245e7",
+    "semantic_hash": "aa3be31badc36cd9d7a5ea08eef245e7"
+  },
+  "app/Http/Middleware/IsAdmin.php": {
+    "mtime": 1790209791.3273478,
+    "seen": 1790220155.585433,
+    "ast_hash": "ff0c97bb66bb55ee1e32121ec9f00a13",
+    "semantic_hash": "ff0c97bb66bb55ee1e32121ec9f00a13"
+  },
+  "app/Http/Middleware/PreventRequestsDuringMaintenance.php": {
+    "mtime": 1790209791.3274128,
+    "seen": 1790220155.585433,
+    "ast_hash": "9bf727a4eeaabad8fde5110106356d60",
+    "semantic_hash": "9bf727a4eeaabad8fde5110106356d60"
+  },
+  "app/Http/Middleware/RedirectIfAuthenticated.php": {
+    "mtime": 1790209791.3274817,
+    "seen": 1790220155.585433,
+    "ast_hash": "993d02efa79a5b4243e1a69cef0d8e77",
+    "semantic_hash": "993d02efa79a5b4243e1a69cef0d8e77"
+  },
+  "app/Http/Middleware/TrimStrings.php": {
+    "mtime": 1790209791.3275416,
+    "seen": 1790220155.5854342,
+    "ast_hash": "016f82bc302a0b8801eeb48edea87cdf",
+    "semantic_hash": "016f82bc302a0b8801eeb48edea87cdf"
+  },
+  "app/Http/Middleware/TrustHosts.php": {
+    "mtime": 1790209791.3276064,
+    "seen": 1790220155.5854342,
+    "ast_hash": "c4e3014f785c6c1752713695bb8fa486",
+    "semantic_hash": "c4e3014f785c6c1752713695bb8fa486"
+  },
+  "app/Http/Middleware/TrustProxies.php": {
+    "mtime": 1790209791.327664,
+    "seen": 1790220155.585435,
+    "ast_hash": "61c0573d9bc4297f266b808eba9280b8",
+    "semantic_hash": "61c0573d9bc4297f266b808eba9280b8"
+  },
+  "app/Http/Middleware/UserAccess.php": {
+    "mtime": 1790209791.3277364,
+    "seen": 1790220155.585435,
+    "ast_hash": "581d3d4823129bcee226aa23b1e9a078",
+    "semantic_hash": "581d3d4823129bcee226aa23b1e9a078"
+  },
+  "app/Http/Middleware/ValidateSignature.php": {
+    "mtime": 1790209791.327805,
+    "seen": 1790220155.5854359,
+    "ast_hash": "77676d93770a50e14db60bb5e06a8c86",
+    "semantic_hash": "77676d93770a50e14db60bb5e06a8c86"
+  },
+  "app/Http/Middleware/VerifyCsrfToken.php": {
+    "mtime": 1790209791.3278766,
+    "seen": 1790220155.5854359,
+    "ast_hash": "f940a35a715b792ecc6c36e1da1adbc1",
+    "semantic_hash": "f940a35a715b792ecc6c36e1da1adbc1"
+  },
+  "app/Models/Mr_candidate.php": {
+    "mtime": 1790209805.9535651,
+    "seen": 1790220155.5854359,
+    "ast_hash": "abc93526d19ed3627e3016b662172a0d",
+    "semantic_hash": "abc93526d19ed3627e3016b662172a0d"
+  },
+  "app/Models/Mr_deptuni_score.php": {
+    "mtime": 1790209805.9536119,
+    "seen": 1790220155.5854368,
+    "ast_hash": "01ad7756738ed9b8f37db095fd76e964",
+    "semantic_hash": "01ad7756738ed9b8f37db095fd76e964"
+  },
+  "app/Models/Mr_final_rank.php": {
+    "mtime": 1790209805.9536753,
+    "seen": 1790220155.5854368,
+    "ast_hash": "bf3367e2167b67e1904353930558a345",
+    "semantic_hash": "bf3367e2167b67e1904353930558a345"
+  },
+  "app/Models/Mr_final_score.php": {
+    "mtime": 1790209805.9537334,
+    "seen": 1790220155.585438,
+    "ast_hash": "503c7de25c6d4086a4024a8995031c96",
+    "semantic_hash": "503c7de25c6d4086a4024a8995031c96"
+  },
+  "app/Models/Mr_formalwear_score.php": {
+    "mtime": 1790209805.9537938,
+    "seen": 1790220155.585438,
+    "ast_hash": "9a2bc2c73a5ede8077ff346a6a4aa1a5",
+    "semantic_hash": "9a2bc2c73a5ede8077ff346a6a4aa1a5"
+  },
+  "app/Models/Mr_natlcost_score.php": {
+    "mtime": 1790209805.9538374,
+    "seen": 1790220155.585439,
+    "ast_hash": "cb65aefb6d85991791a036da002268ef",
+    "semantic_hash": "cb65aefb6d85991791a036da002268ef"
+  },
+  "app/Models/Mr_prelim_score.php": {
+    "mtime": 1790209805.953901,
+    "seen": 1790220155.585439,
+    "ast_hash": "4bccf9c2e35de36fee97d9a27f8f96b5",
+    "semantic_hash": "4bccf9c2e35de36fee97d9a27f8f96b5"
+  },
+  "app/Models/Mr_prepageant_score.php": {
+    "mtime": 1790209805.9539688,
+    "seen": 1790220155.585439,
+    "ast_hash": "ab06f2403eb4baa6a6a5c9e1bde94fc0",
+    "semantic_hash": "ab06f2403eb4baa6a6a5c9e1bde94fc0"
+  },
+  "app/Models/Mr_qna_score.php": {
+    "mtime": 1790209805.9540136,
+    "seen": 1790220155.58544,
+    "ast_hash": "d3a81b7ac25fc2484551f6b26d9cea67",
+    "semantic_hash": "d3a81b7ac25fc2484551f6b26d9cea67"
+  },
+  "app/Models/Mr_ranking.php": {
+    "mtime": 1790209805.9540937,
+    "seen": 1790220155.58544,
+    "ast_hash": "d9bea9060ce26b75df9038a5a989b146",
+    "semantic_hash": "d9bea9060ce26b75df9038a5a989b146"
+  },
+  "app/Models/Mr_ravewear_score.php": {
+    "mtime": 1790209805.9541519,
+    "seen": 1790220155.585441,
+    "ast_hash": "1dded2c18143bf6ac142f1c51ae80802",
+    "semantic_hash": "1dded2c18143bf6ac142f1c51ae80802"
+  },
+  "app/Models/Mr_swimwear_score.php": {
+    "mtime": 1790209805.9542096,
+    "seen": 1790220155.585441,
+    "ast_hash": "1602593f6109bcb41e213aace7eaa140",
+    "semantic_hash": "1602593f6109bcb41e213aace7eaa140"
+  },
+  "app/Models/Mr_talent_score.php": {
+    "mtime": 1790209805.9542983,
+    "seen": 1790220155.585441,
+    "ast_hash": "f097a8b384f175b92737c3448d24f77b",
+    "semantic_hash": "f097a8b384f175b92737c3448d24f77b"
+  },
+  "app/Models/Ms_candidate.php": {
+    "mtime": 1790209805.9543815,
+    "seen": 1790220155.585442,
+    "ast_hash": "4858deeeacfb25969b6b94582f502297",
+    "semantic_hash": "4858deeeacfb25969b6b94582f502297"
+  },
+  "app/Models/Ms_deptuni_score.php": {
+    "mtime": 1790209805.954429,
+    "seen": 1790220155.585442,
+    "ast_hash": "975e3298044749d5797151b62901afff",
+    "semantic_hash": "975e3298044749d5797151b62901afff"
+  },
+  "app/Models/Ms_final_rank.php": {
+    "mtime": 1790209805.9545054,
+    "seen": 1790220155.585443,
+    "ast_hash": "d04b59f50db75926c7c7dc9bc4e256c2",
+    "semantic_hash": "d04b59f50db75926c7c7dc9bc4e256c2"
+  },
+  "app/Models/Ms_final_score.php": {
+    "mtime": 1790209805.9545898,
+    "seen": 1790220155.585443,
+    "ast_hash": "242cf51c3c89fddb54576b929ffc6bae",
+    "semantic_hash": "242cf51c3c89fddb54576b929ffc6bae"
+  },
+  "app/Models/Ms_formalwear_score.php": {
+    "mtime": 1790209805.954672,
+    "seen": 1790220155.5854442,
+    "ast_hash": "fe86835d34db637c37ad97b0c4dac3d1",
+    "semantic_hash": "fe86835d34db637c37ad97b0c4dac3d1"
+  },
+  "app/Models/Ms_natlcost_score.php": {
+    "mtime": 1790209805.954727,
+    "seen": 1790220155.5854442,
+    "ast_hash": "b3b3c3c9bd8a124626deaca6166fca90",
+    "semantic_hash": "b3b3c3c9bd8a124626deaca6166fca90"
+  },
+  "app/Models/Ms_prelim_score.php": {
+    "mtime": 1790209805.9548037,
+    "seen": 1790220155.5854442,
+    "ast_hash": "3c1bf4f6b7fc526c7e395bc634bb3c9d",
+    "semantic_hash": "3c1bf4f6b7fc526c7e395bc634bb3c9d"
+  },
+  "app/Models/Ms_prepageant_score.php": {
+    "mtime": 1790209805.9548752,
+    "seen": 1790220155.5854452,
+    "ast_hash": "ef25230e54ad18dba68faf6df7ee4626",
+    "semantic_hash": "ef25230e54ad18dba68faf6df7ee4626"
+  },
+  "app/Models/Ms_qna_score.php": {
+    "mtime": 1790209805.954925,
+    "seen": 1790220155.5854452,
+    "ast_hash": "24805b2940a6e602856d19efe74e9ad2",
+    "semantic_hash": "24805b2940a6e602856d19efe74e9ad2"
+  },
+  "app/Models/Ms_ranking.php": {
+    "mtime": 1790209805.9549985,
+    "seen": 1790220155.585446,
+    "ast_hash": "6127638856b7e8547216d192d741f492",
+    "semantic_hash": "6127638856b7e8547216d192d741f492"
+  },
+  "app/Models/Ms_ravewear_score.php": {
+    "mtime": 1790209805.9550505,
+    "seen": 1790220155.5854468,
+    "ast_hash": "f7888474102610d73958e30248632cf7",
+    "semantic_hash": "f7888474102610d73958e30248632cf7"
+  },
+  "app/Models/Ms_swimwear_score.php": {
+    "mtime": 1790209805.9551063,
+    "seen": 1790220155.5854468,
+    "ast_hash": "863144c3d1a151ffc1fc6aadcbdd4b24",
+    "semantic_hash": "863144c3d1a151ffc1fc6aadcbdd4b24"
+  },
+  "app/Models/Ms_talent_score.php": {
+    "mtime": 1790209805.9551775,
+    "seen": 1790220155.585448,
+    "ast_hash": "af98b9da90192597c947d75e66b001af",
+    "semantic_hash": "af98b9da90192597c947d75e66b001af"
+  },
+  "app/Models/Stage.php": {
+    "mtime": 1790209791.329308,
+    "seen": 1790220155.585448,
+    "ast_hash": "dba2eebbfee483ca5b8559739f6d1ef6",
+    "semantic_hash": "dba2eebbfee483ca5b8559739f6d1ef6"
+  },
+  "app/Models/User.php": {
+    "mtime": 1790209791.3293664,
+    "seen": 1790220155.585448,
+    "ast_hash": "06953046e09dd2c4f2ee551aea5b7e9c",
+    "semantic_hash": "06953046e09dd2c4f2ee551aea5b7e9c"
+  },
+  "app/Providers/AppServiceProvider.php": {
+    "mtime": 1790209791.329446,
+    "seen": 1790220155.585449,
+    "ast_hash": "2472f6584237b1d5f7e91e450bebefa5",
+    "semantic_hash": "2472f6584237b1d5f7e91e450bebefa5"
+  },
+  "app/Providers/AuthServiceProvider.php": {
+    "mtime": 1790209791.3295062,
+    "seen": 1790220155.585449,
+    "ast_hash": "4fb76d597913194904cf889a91c4c3ab",
+    "semantic_hash": "4fb76d597913194904cf889a91c4c3ab"
+  },
+  "app/Providers/BroadcastServiceProvider.php": {
+    "mtime": 1790209791.329564,
+    "seen": 1790220155.58545,
+    "ast_hash": "66addd4b8d63de202681078a53159174",
+    "semantic_hash": "66addd4b8d63de202681078a53159174"
+  },
+  "app/Providers/EventServiceProvider.php": {
+    "mtime": 1790209791.3296256,
+    "seen": 1790220155.58545,
+    "ast_hash": "40bd54b54172d16af8faecd3141d68b4",
+    "semantic_hash": "40bd54b54172d16af8faecd3141d68b4"
+  },
+  "app/Providers/RouteServiceProvider.php": {
+    "mtime": 1790209791.3296874,
+    "seen": 1790220155.58545,
+    "ast_hash": "26301e4755938a43fe72b38cb9d48319",
+    "semantic_hash": "26301e4755938a43fe72b38cb9d48319"
+  },
+  "app/helpers.php": {
+    "mtime": 1790219982.269471,
+    "seen": 1790220155.5854511,
+    "ast_hash": "cd3511e9bc6f7febc68328b757b57552",
+    "semantic_hash": "cd3511e9bc6f7febc68328b757b57552"
+  },
+  "config/app.php": {
+    "mtime": 1790219982.2706988,
+    "seen": 1790220155.5854511,
+    "ast_hash": "11d85d85e10576efc32b199ac834a830",
+    "semantic_hash": "11d85d85e10576efc32b199ac834a830"
+  },
+  "config/auth.php": {
+    "mtime": 1790209791.3304644,
+    "seen": 1790220155.585452,
+    "ast_hash": "7729674f5efcbbb7a2ada057581d44ae",
+    "semantic_hash": "7729674f5efcbbb7a2ada057581d44ae"
+  },
+  "config/broadcasting.php": {
+    "mtime": 1790209791.3305168,
+    "seen": 1790220155.585452,
+    "ast_hash": "72104302086b3618ad7fd6ff4ffc7942",
+    "semantic_hash": "72104302086b3618ad7fd6ff4ffc7942"
+  },
+  "config/cache.php": {
+    "mtime": 1790209791.330574,
+    "seen": 1790220155.585453,
+    "ast_hash": "667d28ee9e7b182b2b8ec23343a98c85",
+    "semantic_hash": "667d28ee9e7b182b2b8ec23343a98c85"
+  },
+  "config/cors.php": {
+    "mtime": 1790209791.3306253,
+    "seen": 1790220155.585453,
+    "ast_hash": "7e46f4152490ce5bf22fe42d2b57a63a",
+    "semantic_hash": "7e46f4152490ce5bf22fe42d2b57a63a"
+  },
+  "config/database.php": {
+    "mtime": 1790209791.330691,
+    "seen": 1790220155.585453,
+    "ast_hash": "11aa0eb530d24574ca19a443b175e80f",
+    "semantic_hash": "11aa0eb530d24574ca19a443b175e80f"
+  },
+  "config/filesystems.php": {
+    "mtime": 1790209791.3307414,
+    "seen": 1790220155.585454,
+    "ast_hash": "8809cb5fe264a0df2b2e40f55b50b0cd",
+    "semantic_hash": "8809cb5fe264a0df2b2e40f55b50b0cd"
+  },
+  "config/hashing.php": {
+    "mtime": 1790209791.3307912,
+    "seen": 1790220155.585454,
+    "ast_hash": "7f0c219eabd21347095bc9263dbfd882",
+    "semantic_hash": "7f0c219eabd21347095bc9263dbfd882"
+  },
+  "config/livewire.php": {
+    "mtime": 1790219982.2708538,
+    "seen": 1790220155.5854552,
+    "ast_hash": "d6ab6001ee2b5a814b901e12dbf3881e",
+    "semantic_hash": "d6ab6001ee2b5a814b901e12dbf3881e"
+  },
+  "config/logging.php": {
+    "mtime": 1790209791.330852,
+    "seen": 1790220155.5854552,
+    "ast_hash": "425a680326072a202054020a2d3e9165",
+    "semantic_hash": "425a680326072a202054020a2d3e9165"
+  },
+  "config/mail.php": {
+    "mtime": 1790209791.3309028,
+    "seen": 1790220155.5854561,
+    "ast_hash": "dbb9174e18e35bdeb5ca8b70e94db8c4",
+    "semantic_hash": "dbb9174e18e35bdeb5ca8b70e94db8c4"
+  },
+  "config/permission.php": {
+    "mtime": 1790209791.3309636,
+    "seen": 1790220155.5854561,
+    "ast_hash": "40d59b34401e7278766d96ed27c980bf",
+    "semantic_hash": "40d59b34401e7278766d96ed27c980bf"
+  },
+  "config/queue.php": {
+    "mtime": 1790209791.3310099,
+    "seen": 1790220155.5854561,
+    "ast_hash": "e5f7535f46f1db6a22a4332e532fbb51",
+    "semantic_hash": "e5f7535f46f1db6a22a4332e532fbb51"
+  },
+  "config/sanctum.php": {
+    "mtime": 1790209791.331058,
+    "seen": 1790220155.5854568,
+    "ast_hash": "cbb6b4208f604062f892f7cbd1981d70",
+    "semantic_hash": "cbb6b4208f604062f892f7cbd1981d70"
+  },
+  "config/services.php": {
+    "mtime": 1790209791.3311076,
+    "seen": 1790220155.5854568,
+    "ast_hash": "1146126dd89fa5a45a7b8fe980859d20",
+    "semantic_hash": "1146126dd89fa5a45a7b8fe980859d20"
+  },
+  "config/session.php": {
+    "mtime": 1790209791.3311746,
+    "seen": 1790220155.5854578,
+    "ast_hash": "cb96a2aa1f8ebe33e66f1b8959c01add",
+    "semantic_hash": "cb96a2aa1f8ebe33e66f1b8959c01add"
+  },
+  "config/view.php": {
+    "mtime": 1790209791.3312223,
+    "seen": 1790220155.5854578,
+    "ast_hash": "24e00ccca17634d028fbbfdafd9e7461",
+    "semantic_hash": "24e00ccca17634d028fbbfdafd9e7461"
+  },
+  "database/factories/UserFactory.php": {
+    "mtime": 1790209791.3313615,
+    "seen": 1790220155.5854578,
+    "ast_hash": "5757b66856e0f657f0fdd844b1843265",
+    "semantic_hash": "5757b66856e0f657f0fdd844b1843265"
+  },
+  "database/migrations/2014_10_12_000000_create_users_table.php": {
+    "mtime": 1790209791.331436,
+    "seen": 1790220155.585459,
+    "ast_hash": "b6cf4b18c25ba39486e7fec0157a5dde",
+    "semantic_hash": "b6cf4b18c25ba39486e7fec0157a5dde"
+  },
+  "database/migrations/2014_10_12_100000_create_password_resets_table.php": {
+    "mtime": 1790209791.3314834,
+    "seen": 1790220155.585459,
+    "ast_hash": "8140e093301bd098178bf3ce40c516e6",
+    "semantic_hash": "8140e093301bd098178bf3ce40c516e6"
+  },
+  "database/migrations/2019_08_19_000000_create_failed_jobs_table.php": {
+    "mtime": 1790209791.3315282,
+    "seen": 1790220155.58546,
+    "ast_hash": "440c4685c47fca3a47efb09749abd27b",
+    "semantic_hash": "440c4685c47fca3a47efb09749abd27b"
+  },
+  "database/migrations/2019_12_14_000001_create_personal_access_tokens_table.php": {
+    "mtime": 1790209791.3315744,
+    "seen": 1790220155.58546,
+    "ast_hash": "dc7febb20a7c32f445d681a46908668c",
+    "semantic_hash": "dc7febb20a7c32f445d681a46908668c"
+  },
+  "database/migrations/2023_01_25_134110_create_permission_tables.php": {
+    "mtime": 1790219982.2711236,
+    "seen": 1790220155.585461,
+    "ast_hash": "cb670e6b44a2f4f5f07bbc0b137fb4e1",
+    "semantic_hash": "cb670e6b44a2f4f5f07bbc0b137fb4e1"
+  },
+  "database/migrations/2023_01_26_132018_create_stages_table.php": {
+    "mtime": 1790209791.3316908,
+    "seen": 1790220155.585461,
+    "ast_hash": "4f16f4984aa2b23336ee71c449aea74c",
+    "semantic_hash": "4f16f4984aa2b23336ee71c449aea74c"
+  },
+  "database/migrations/2023_11_21_063032_create_mr_candidates_table.php": {
+    "mtime": 1790209791.3317459,
+    "seen": 1790220155.585462,
+    "ast_hash": "d518ccacd7e871605e7ed0d4b5920997",
+    "semantic_hash": "d518ccacd7e871605e7ed0d4b5920997"
+  },
+  "database/migrations/2023_11_21_063044_create_ms_candidates_table.php": {
+    "mtime": 1790209791.3317904,
+    "seen": 1790220155.585462,
+    "ast_hash": "8ef215ef3a99ca741cc5a3ddd51b13ad",
+    "semantic_hash": "8ef215ef3a99ca741cc5a3ddd51b13ad"
+  },
+  "database/migrations/2023_11_21_072331_create_mr_talent_scores_table.php": {
+    "mtime": 1790209805.9552805,
+    "seen": 1790220155.585463,
+    "ast_hash": "bf48552c498ee021567076d9e7696598",
+    "semantic_hash": "bf48552c498ee021567076d9e7696598"
+  },
+  "database/migrations/2023_11_21_072654_create_ms_talent_scores_table.php": {
+    "mtime": 1790209805.9553556,
+    "seen": 1790220155.585463,
+    "ast_hash": "2858d4cb043f82d0649eada079679eff",
+    "semantic_hash": "2858d4cb043f82d0649eada079679eff"
+  },
+  "database/migrations/2024_11_27_074301_create_mr_prepageant_scores_table.php": {
+    "mtime": 1790219982.2713327,
+    "seen": 1790220155.585463,
+    "ast_hash": "26a22805122911c4bd6672689340637e",
+    "semantic_hash": "26a22805122911c4bd6672689340637e"
+  },
+  "database/migrations/2024_11_27_074312_create_ms_prepageant_scores_table.php": {
+    "mtime": 1790209805.9554622,
+    "seen": 1790220155.585464,
+    "ast_hash": "e22ac2059acda549c33179c163780cf6",
+    "semantic_hash": "e22ac2059acda549c33179c163780cf6"
+  },
+  "database/migrations/2024_11_28_034442_create_mr_ravewear_scores_table.php": {
+    "mtime": 1790209805.9555156,
+    "seen": 1790220155.585464,
+    "ast_hash": "17a62d2088c4f5af68e1fe647da9a1cd",
+    "semantic_hash": "17a62d2088c4f5af68e1fe647da9a1cd"
+  },
+  "database/migrations/2024_11_29_061835_create_ms_ravewear_scores_table.php": {
+    "mtime": 1790209805.9555662,
+    "seen": 1790220155.5854652,
+    "ast_hash": "3ba7610976cc02f80ec070483ccccbcb",
+    "semantic_hash": "3ba7610976cc02f80ec070483ccccbcb"
+  },
+  "database/migrations/2024_11_29_071421_create_mr_rankings_table.php": {
+    "mtime": 1790209805.9556174,
+    "seen": 1790220155.5854652,
+    "ast_hash": "2dc8f09b87469e6185a84014c84c9416",
+    "semantic_hash": "2dc8f09b87469e6185a84014c84c9416"
+  },
+  "database/migrations/2024_11_29_071531_create_mr_final_ranks_table.php": {
+    "mtime": 1790209805.9556649,
+    "seen": 1790220155.5854661,
+    "ast_hash": "c901af560d51f6de89056e298e90a2a8",
+    "semantic_hash": "c901af560d51f6de89056e298e90a2a8"
+  },
+  "database/migrations/2024_12_02_041417_create_ms_rankings_table.php": {
+    "mtime": 1790209805.955716,
+    "seen": 1790220155.5854661,
+    "ast_hash": "68286b9697d3d4cd641191a29592b207",
+    "semantic_hash": "68286b9697d3d4cd641191a29592b207"
+  },
+  "database/migrations/2024_12_02_041450_create_ms_final_ranks_table.php": {
+    "mtime": 1790209805.9557662,
+    "seen": 1790220155.5854669,
+    "ast_hash": "4d3d541577b2d0ee619a21e2f06e2766",
+    "semantic_hash": "4d3d541577b2d0ee619a21e2f06e2766"
+  },
+  "database/migrations/2024_12_02_132610_create_mr_natlcost_scores_table.php": {
+    "mtime": 1790209805.9558213,
+    "seen": 1790220155.5854669,
+    "ast_hash": "334bf2aa11d7940b34424e498209a26b",
+    "semantic_hash": "334bf2aa11d7940b34424e498209a26b"
+  },
+  "database/migrations/2024_12_02_133700_create_mr_prelim_scores_table.php": {
+    "mtime": 1790209805.9558747,
+    "seen": 1790220155.5854678,
+    "ast_hash": "352381a068727ca1e5789c7d2f61d4dc",
+    "semantic_hash": "352381a068727ca1e5789c7d2f61d4dc"
+  },
+  "database/migrations/2024_12_03_003202_create_mr_deptuni_scores_table.php": {
+    "mtime": 1790209805.9559293,
+    "seen": 1790220155.5854678,
+    "ast_hash": "0bd78e837f5ce24c653c96bcfeebbc7e",
+    "semantic_hash": "0bd78e837f5ce24c653c96bcfeebbc7e"
+  },
+  "database/migrations/2024_12_03_014933_create_mr_swimwear_scores_table.php": {
+    "mtime": 1790209805.9559853,
+    "seen": 1790220155.585469,
+    "ast_hash": "681fd07da2c5c402364d68e081c62b0d",
+    "semantic_hash": "681fd07da2c5c402364d68e081c62b0d"
+  },
+  "database/migrations/2024_12_03_024720_create_mr_formalwear_scores_table.php": {
+    "mtime": 1790209805.9560363,
+    "seen": 1790220155.585469,
+    "ast_hash": "10dcb00ddfa688bdf8a8ae5743246653",
+    "semantic_hash": "10dcb00ddfa688bdf8a8ae5743246653"
+  },
+  "database/migrations/2024_12_03_032552_create_mr_qna_scores_table.php": {
+    "mtime": 1790209805.9560862,
+    "seen": 1790220155.585469,
+    "ast_hash": "5a4a6a9ad2655e07967f589bc7a0b9c3",
+    "semantic_hash": "5a4a6a9ad2655e07967f589bc7a0b9c3"
+  },
+  "database/migrations/2024_12_03_054219_create_ms_prelim_scores_table.php": {
+    "mtime": 1790209805.9563024,
+    "seen": 1790220155.58547,
+    "ast_hash": "0673968c6e4cc4d655441b7cb9ae0766",
+    "semantic_hash": "0673968c6e4cc4d655441b7cb9ae0766"
+  },
+  "database/migrations/2024_12_03_055015_create_ms_natlcost_scores_table.php": {
+    "mtime": 1790209805.956402,
+    "seen": 1790220155.58547,
+    "ast_hash": "caec19dbe2f0f8fbf8af30d424b4f73c",
+    "semantic_hash": "caec19dbe2f0f8fbf8af30d424b4f73c"
+  },
+  "database/migrations/2024_12_03_061601_create_ms_deptuni_scores_table.php": {
+    "mtime": 1790209805.9564712,
+    "seen": 1790220155.585471,
+    "ast_hash": "d63e50865891e9315c309a1f2d9357cc",
+    "semantic_hash": "d63e50865891e9315c309a1f2d9357cc"
+  },
+  "database/migrations/2024_12_03_062342_create_ms_swimwear_scores_table.php": {
+    "mtime": 1790209805.9565275,
+    "seen": 1790220155.585471,
+    "ast_hash": "e6080e231331e68de0afa2e9955145e8",
+    "semantic_hash": "e6080e231331e68de0afa2e9955145e8"
+  },
+  "database/migrations/2024_12_03_063358_create_ms_formalwear_scores_table.php": {
+    "mtime": 1790209805.9565809,
+    "seen": 1790220155.585472,
+    "ast_hash": "13daebfc0b535ca6d79fb050afc000bd",
+    "semantic_hash": "13daebfc0b535ca6d79fb050afc000bd"
+  },
+  "database/migrations/2024_12_03_063829_create_ms_qna_scores_table.php": {
+    "mtime": 1790209805.9566343,
+    "seen": 1790220155.585472,
+    "ast_hash": "f5017200f26204cf86080986f3112f05",
+    "semantic_hash": "f5017200f26204cf86080986f3112f05"
+  },
+  "database/migrations/2024_12_04_124846_add_is_active_to_mr_candidates_table.php": {
+    "mtime": 1790209805.9566886,
+    "seen": 1790220155.585473,
+    "ast_hash": "619e4f5cf9f864c86fe1463cb92ca150",
+    "semantic_hash": "619e4f5cf9f864c86fe1463cb92ca150"
+  },
+  "database/migrations/2024_12_04_125151_add_is_active_to_ms_candidates_table.php": {
+    "mtime": 1790209805.9567382,
+    "seen": 1790220155.585473,
+    "ast_hash": "3d397389290b6cfdbeec6aff8283b768",
+    "semantic_hash": "3d397389290b6cfdbeec6aff8283b768"
+  },
+  "database/migrations/2024_12_04_141816_create_mr_final_scores_table.php": {
+    "mtime": 1790209805.9567876,
+    "seen": 1790220155.585474,
+    "ast_hash": "4da75190e362e2ad7282503719d78b04",
+    "semantic_hash": "4da75190e362e2ad7282503719d78b04"
+  },
+  "database/migrations/2024_12_04_142552_create_ms_final_scores_table.php": {
+    "mtime": 1790209805.9568388,
+    "seen": 1790220155.585474,
+    "ast_hash": "0091389819c2abe8aaf7223e69f121bb",
+    "semantic_hash": "0091389819c2abe8aaf7223e69f121bb"
+  },
+  "database/seeders/AdminUserSeeder.php": {
+    "mtime": 1790209791.3329313,
+    "seen": 1790220155.585474,
+    "ast_hash": "28c8e57e65fd8a4a18dad8bcc5a07d34",
+    "semantic_hash": "28c8e57e65fd8a4a18dad8bcc5a07d34"
+  },
+  "database/seeders/DatabaseSeeder.php": {
+    "mtime": 1790209805.9569583,
+    "seen": 1790220155.585475,
+    "ast_hash": "1ea096bbada9c46670fa4a34624fa455",
+    "semantic_hash": "1ea096bbada9c46670fa4a34624fa455"
+  },
+  "database/seeders/JudgeSeeder.php": {
+    "mtime": 1790209805.9570339,
+    "seen": 1790220155.585475,
+    "ast_hash": "ccb621dfae14f7646fad3b6e45a5c36d",
+    "semantic_hash": "ccb621dfae14f7646fad3b6e45a5c36d"
+  },
+  "database/seeders/MrCandidateSeeder.php": {
+    "mtime": 1790209805.9570932,
+    "seen": 1790220155.5854762,
+    "ast_hash": "ba8b2296de91926b71e748230a7dae57",
+    "semantic_hash": "ba8b2296de91926b71e748230a7dae57"
+  },
+  "database/seeders/MrDeptUniScoreSeeder.php": {
+    "mtime": 1790209805.9571385,
+    "seen": 1790220155.5854762,
+    "ast_hash": "9e9590385c7b40e6ca894812594df0c6",
+    "semantic_hash": "9e9590385c7b40e6ca894812594df0c6"
+  },
+  "database/seeders/MrFinalRankingSeeder.php": {
+    "mtime": 1790209805.9572103,
+    "seen": 1790220155.585477,
+    "ast_hash": "a153e9fac27f93e3286c22f6a66e12ad",
+    "semantic_hash": "a153e9fac27f93e3286c22f6a66e12ad"
+  },
+  "database/seeders/MrFinalScoreSeeder.php": {
+    "mtime": 1790209805.9572806,
+    "seen": 1790220155.585477,
+    "ast_hash": "c746fa9cbdd8544a7af243964b2a324e",
+    "semantic_hash": "c746fa9cbdd8544a7af243964b2a324e"
+  },
+  "database/seeders/MrFormalWearScoreSeeder.php": {
+    "mtime": 1790209805.9573226,
+    "seen": 1790220155.5854778,
+    "ast_hash": "b07b3e09916f653d27694a58ac6dccf7",
+    "semantic_hash": "b07b3e09916f653d27694a58ac6dccf7"
+  },
+  "database/seeders/MrNatlCostScoreSeeder.php": {
+    "mtime": 1790209805.957366,
+    "seen": 1790220155.5854778,
+    "ast_hash": "de4f7c607d8124d5c0a43cd96db4bacb",
+    "semantic_hash": "de4f7c607d8124d5c0a43cd96db4bacb"
+  },
+  "database/seeders/MrPrelimScoreSeeder.php": {
+    "mtime": 1790209805.9574382,
+    "seen": 1790220155.5854778,
+    "ast_hash": "fb9f2b23d5ba14511faf6c18fb07e829",
+    "semantic_hash": "fb9f2b23d5ba14511faf6c18fb07e829"
+  },
+  "database/seeders/MrPrepageantScoreSeeder.php": {
+    "mtime": 1790209805.9575138,
+    "seen": 1790220155.585479,
+    "ast_hash": "250524c0f52bab44cecf90874febbd47",
+    "semantic_hash": "250524c0f52bab44cecf90874febbd47"
+  },
+  "database/seeders/MrQnaScoreSeeder.php": {
+    "mtime": 1790209805.9575603,
+    "seen": 1790220155.585479,
+    "ast_hash": "0af3baf270a0aa4a64bc2ebe616c388e",
+    "semantic_hash": "0af3baf270a0aa4a64bc2ebe616c388e"
+  },
+  "database/seeders/MrRankingSeeder.php": {
+    "mtime": 1790209805.957625,
+    "seen": 1790220155.58548,
+    "ast_hash": "23d1dae24d08f82abbd3763aba1f70c5",
+    "semantic_hash": "23d1dae24d08f82abbd3763aba1f70c5"
+  },
+  "database/seeders/MrRavewearScoreSeeder.php": {
+    "mtime": 1790209805.9576724,
+    "seen": 1790220155.58548,
+    "ast_hash": "9295ed8e7cd95389449036bd36712a11",
+    "semantic_hash": "9295ed8e7cd95389449036bd36712a11"
+  },
+  "database/seeders/MrSwimWearScoreSeeder.php": {
+    "mtime": 1790209805.9577165,
+    "seen": 1790220155.585481,
+    "ast_hash": "5524a9753a9eb41fa134989e8083f9bb",
+    "semantic_hash": "5524a9753a9eb41fa134989e8083f9bb"
+  },
+  "database/seeders/MrTalentScoreSeeder.php": {
+    "mtime": 1790209791.3336904,
+    "seen": 1790220155.585481,
+    "ast_hash": "15a3e5d7ea0dcaa0a22f086372065bad",
+    "semantic_hash": "15a3e5d7ea0dcaa0a22f086372065bad"
+  },
+  "database/seeders/MsCandidateSeeder.php": {
+    "mtime": 1790209805.957758,
+    "seen": 1790220155.585482,
+    "ast_hash": "606742c768d09cba2e3a7b747a87ea00",
+    "semantic_hash": "606742c768d09cba2e3a7b747a87ea00"
+  },
+  "database/seeders/MsDeptUniScoreSeeder.php": {
+    "mtime": 1790209805.9578006,
+    "seen": 1790220155.585482,
+    "ast_hash": "786fcca671fcf2d008341f9945d83c87",
+    "semantic_hash": "786fcca671fcf2d008341f9945d83c87"
+  },
+  "database/seeders/MsFinalRankingSeeder.php": {
+    "mtime": 1790209805.9579387,
+    "seen": 1790220155.585482,
+    "ast_hash": "2db3c5aeae4918967ec4816781e254ca",
+    "semantic_hash": "2db3c5aeae4918967ec4816781e254ca"
+  },
+  "database/seeders/MsFinalScoreSeeder.php": {
+    "mtime": 1790209805.9580286,
+    "seen": 1790220155.585483,
+    "ast_hash": "fffea05c715826c9795ea63eb83d65c8",
+    "semantic_hash": "fffea05c715826c9795ea63eb83d65c8"
+  },
+  "database/seeders/MsFormalWearScoreSeeder.php": {
+    "mtime": 1790209805.9580805,
+    "seen": 1790220155.585483,
+    "ast_hash": "f481387d3e5cc80c7ae42ed81f6b2b31",
+    "semantic_hash": "f481387d3e5cc80c7ae42ed81f6b2b31"
+  },
+  "database/seeders/MsNatlCostScoreSeeder.php": {
+    "mtime": 1790209805.9581246,
+    "seen": 1790220155.585484,
+    "ast_hash": "6094dec0da0ec6c4b5130eed6adb3c40",
+    "semantic_hash": "6094dec0da0ec6c4b5130eed6adb3c40"
+  },
+  "database/seeders/MsPrelimScoreSeeder.php": {
+    "mtime": 1790209805.9582002,
+    "seen": 1790220155.585485,
+    "ast_hash": "3b24e0ebe66b06a27af718f3af63a124",
+    "semantic_hash": "3b24e0ebe66b06a27af718f3af63a124"
+  },
+  "database/seeders/MsPrepageantScoreSeeder.php": {
+    "mtime": 1790209805.958266,
+    "seen": 1790220155.585485,
+    "ast_hash": "5ab0f9ebcc70a1803f8bee1308fea196",
+    "semantic_hash": "5ab0f9ebcc70a1803f8bee1308fea196"
+  },
+  "database/seeders/MsQnaScoreSeeder.php": {
+    "mtime": 1790209805.958313,
+    "seen": 1790220155.5854862,
+    "ast_hash": "8d85096804734d3965fec9b45fd8fe90",
+    "semantic_hash": "8d85096804734d3965fec9b45fd8fe90"
+  },
+  "database/seeders/MsRankingSeeder.php": {
+    "mtime": 1790209805.9583752,
+    "seen": 1790220155.5854862,
+    "ast_hash": "233cd21b2453e47843465d3008f3304c",
+    "semantic_hash": "233cd21b2453e47843465d3008f3304c"
+  },
+  "database/seeders/MsRavewearScoreSeeder.php": {
+    "mtime": 1790209805.9584148,
+    "seen": 1790220155.5854862,
+    "ast_hash": "b2eb20827bd47cc765bc0916d12b0e7b",
+    "semantic_hash": "b2eb20827bd47cc765bc0916d12b0e7b"
+  },
+  "database/seeders/MsSwimWearScoreSeeder.php": {
+    "mtime": 1790209805.958454,
+    "seen": 1790220155.5854871,
+    "ast_hash": "866d015622d7a45425b7af9a1c3d6d3a",
+    "semantic_hash": "866d015622d7a45425b7af9a1c3d6d3a"
+  },
+  "database/seeders/MsTalentScoreSeeder.php": {
+    "mtime": 1790209791.3342218,
+    "seen": 1790220155.5854871,
+    "ast_hash": "d6dec70e5aef58a73293c75b25e66bff",
+    "semantic_hash": "d6dec70e5aef58a73293c75b25e66bff"
+  },
+  "database/seeders/PrelimSeeder.php": {
+    "mtime": 1790209805.95849,
+    "seen": 1790220155.5854878,
+    "ast_hash": "f67ee9b14743d3f5775dbb7497f64fa0",
+    "semantic_hash": "f67ee9b14743d3f5775dbb7497f64fa0"
+  },
+  "database/seeders/StageSeeder.php": {
+    "mtime": 1790209805.9585545,
+    "seen": 1790220155.5854878,
+    "ast_hash": "eb177ddb91c36eb3f80a02f323947983",
+    "semantic_hash": "eb177ddb91c36eb3f80a02f323947983"
+  },
+  "resources/js/app.js": {
+    "mtime": 1790209791.5270634,
+    "seen": 1790220155.5854888,
+    "ast_hash": "1ccf2b9101110f40ecaab1608a6f91cf",
+    "semantic_hash": "1ccf2b9101110f40ecaab1608a6f91cf"
+  },
+  "resources/js/bootstrap.js": {
+    "mtime": 1790209791.527107,
+    "seen": 1790220155.5854888,
+    "ast_hash": "c9e8431e0435d2d7379c9984e2170340",
+    "semantic_hash": "c9e8431e0435d2d7379c9984e2170340"
+  },
+  "resources/views/admin/barangays/create.blade.php": {
+    "mtime": 1790209791.5273218,
+    "seen": 1790220155.5854888,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "resources/views/admin/barangays/index.blade.php": {
+    "mtime": 1790209791.5273795,
+    "seen": 1790220155.58549,
+    "ast_hash": "160b8386fc9b4b293d698b039156f62d",
+    "semantic_hash": "160b8386fc9b4b293d698b039156f62d"
+  },
+  "resources/views/admin/candidates/create.blade.php": {
+    "mtime": 1790209791.5274262,
+    "seen": 1790220155.58549,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "resources/views/admin/candidates/edit.blade.php": {
+    "mtime": 1790209791.5274546,
+    "seen": 1790220155.585491,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "resources/views/admin/candidates/index.blade.php": {
+    "mtime": 1790209791.527518,
+    "seen": 1790220155.585491,
+    "ast_hash": "7e46db606f095cc42722669dd66d4d6c",
+    "semantic_hash": "7e46db606f095cc42722669dd66d4d6c"
+  },
+  "resources/views/admin/categories/index.blade.php": {
+    "mtime": 1790209791.5276,
+    "seen": 1790220155.585492,
+    "ast_hash": "46b325117925ca0fa83aa9bc8658e75c",
+    "semantic_hash": "46b325117925ca0fa83aa9bc8658e75c"
+  },
+  "resources/views/admin/categories/subcategory.blade.php": {
+    "mtime": 1790209791.5276456,
+    "seen": 1790220155.585492,
+    "ast_hash": "63624761372fe125e1e91e80c079c206",
+    "semantic_hash": "63624761372fe125e1e91e80c079c206"
+  },
+  "resources/views/admin/judges/create.blade.php": {
+    "mtime": 1790209791.5277212,
+    "seen": 1790220155.585493,
+    "ast_hash": "ad597ad5380ed93a02dd8d9fbcf05f35",
+    "semantic_hash": "ad597ad5380ed93a02dd8d9fbcf05f35"
+  },
+  "resources/views/admin/judges/edit.blade.php": {
+    "mtime": 1790209791.527771,
+    "seen": 1790220155.585493,
+    "ast_hash": "6f7a9ccf8ca82d432cf3836c0af05b43",
+    "semantic_hash": "6f7a9ccf8ca82d432cf3836c0af05b43"
+  },
+  "resources/views/admin/judges/index.blade.php": {
+    "mtime": 1790209791.5278213,
+    "seen": 1790220155.585493,
+    "ast_hash": "e17b1f7b1a1b5d6fd474b97c06edad66",
+    "semantic_hash": "e17b1f7b1a1b5d6fd474b97c06edad66"
+  },
+  "resources/views/admin/reports/Final/Mr/final.blade.php": {
+    "mtime": 1790209806.0361311,
+    "seen": 1790220155.585494,
+    "ast_hash": "75b0b127c33232567b50f79ae5b23d72",
+    "semantic_hash": "75b0b127c33232567b50f79ae5b23d72"
+  },
+  "resources/views/admin/reports/Final/Mr/finaljudge1.blade.php": {
+    "mtime": 1790209806.0361972,
+    "seen": 1790220155.585494,
+    "ast_hash": "4311bf4ca4cdf6b8b7cc847e0740d912",
+    "semantic_hash": "4311bf4ca4cdf6b8b7cc847e0740d912"
+  },
+  "resources/views/admin/reports/Final/Mr/finaljudge2.blade.php": {
+    "mtime": 1790209806.036249,
+    "seen": 1790220155.585495,
+    "ast_hash": "d998fd10769180dbcea08c6161bccb91",
+    "semantic_hash": "d998fd10769180dbcea08c6161bccb91"
+  },
+  "resources/views/admin/reports/Final/Mr/finaljudge3.blade.php": {
+    "mtime": 1790209806.0363033,
+    "seen": 1790220155.585495,
+    "ast_hash": "4cf924fde98393b6e1750a962ea577af",
+    "semantic_hash": "4cf924fde98393b6e1750a962ea577af"
+  },
+  "resources/views/admin/reports/Final/Mr/pdffinal.blade.php": {
+    "mtime": 1790209806.036448,
+    "seen": 1790220155.585496,
+    "ast_hash": "32b8b911a3d0bfe470dfcc49707b0822",
+    "semantic_hash": "32b8b911a3d0bfe470dfcc49707b0822"
+  },
+  "resources/views/admin/reports/Final/Ms/final.blade.php": {
+    "mtime": 1790209806.036585,
+    "seen": 1790220155.585496,
+    "ast_hash": "6902f148a6b9796b9e53036c41b73fcf",
+    "semantic_hash": "6902f148a6b9796b9e53036c41b73fcf"
+  },
+  "resources/views/admin/reports/Final/Ms/finaljudge1.blade.php": {
+    "mtime": 1790209806.036639,
+    "seen": 1790220155.5854971,
+    "ast_hash": "92d0712ec49f27c6e008b027f7af426a",
+    "semantic_hash": "92d0712ec49f27c6e008b027f7af426a"
+  },
+  "resources/views/admin/reports/Final/Ms/finaljudge2.blade.php": {
+    "mtime": 1790209806.0366883,
+    "seen": 1790220155.5854971,
+    "ast_hash": "b3a0921cbe69dc6c97e0f34961695c36",
+    "semantic_hash": "b3a0921cbe69dc6c97e0f34961695c36"
+  },
+  "resources/views/admin/reports/Final/Ms/finaljudge3.blade.php": {
+    "mtime": 1790209806.03674,
+    "seen": 1790220155.5854971,
+    "ast_hash": "9d6f78b85d131c71be2b7b4d4e87a9d3",
+    "semantic_hash": "9d6f78b85d131c71be2b7b4d4e87a9d3"
+  },
+  "resources/views/admin/reports/Final/Ms/pdffinal.blade.php": {
+    "mtime": 1790209806.0368888,
+    "seen": 1790220155.585498,
+    "ast_hash": "51864f1f15665b36535bb8313e48691e",
+    "semantic_hash": "51864f1f15665b36535bb8313e48691e"
+  },
+  "resources/views/admin/reports/Prelim/Mr/departmental_uniform/departmental_uniform.blade.php": {
+    "mtime": 1790209806.0370455,
+    "seen": 1790220155.585498,
+    "ast_hash": "9f89d0480ae600be0253a8a8b230e696",
+    "semantic_hash": "9f89d0480ae600be0253a8a8b230e696"
+  },
+  "resources/views/admin/reports/Prelim/Mr/departmental_uniform/departmental_uniformjudge1.blade.php": {
+    "mtime": 1790209806.037108,
+    "seen": 1790220155.5854988,
+    "ast_hash": "40e9c3de40d37983ee874ad025321998",
+    "semantic_hash": "40e9c3de40d37983ee874ad025321998"
+  },
+  "resources/views/admin/reports/Prelim/Mr/departmental_uniform/departmental_uniformjudge2.blade.php": {
+    "mtime": 1790209806.0371625,
+    "seen": 1790220155.5854988,
+    "ast_hash": "6efdfcd695930f5162e175b6d43bb830",
+    "semantic_hash": "6efdfcd695930f5162e175b6d43bb830"
+  },
+  "resources/views/admin/reports/Prelim/Mr/departmental_uniform/departmental_uniformjudge3.blade.php": {
+    "mtime": 1790209806.0372221,
+    "seen": 1790220155.5855,
+    "ast_hash": "f760bc603bb016108746ab5addbdbd1e",
+    "semantic_hash": "f760bc603bb016108746ab5addbdbd1e"
+  },
+  "resources/views/admin/reports/Prelim/Mr/departmental_uniform/pdfdepartmental_uniform.blade.php": {
+    "mtime": 1790209806.037338,
+    "seen": 1790220155.5855,
+    "ast_hash": "53cd2d3cafbe089636e4f00121ca3708",
+    "semantic_hash": "53cd2d3cafbe089636e4f00121ca3708"
+  },
+  "resources/views/admin/reports/Prelim/Mr/formal_wear/formal_wear.blade.php": {
+    "mtime": 1790209806.0374787,
+    "seen": 1790220155.585501,
+    "ast_hash": "ad1280c52e544e2a2e81f210e391cf40",
+    "semantic_hash": "ad1280c52e544e2a2e81f210e391cf40"
+  },
+  "resources/views/admin/reports/Prelim/Mr/formal_wear/formal_wearjudge1.blade.php": {
+    "mtime": 1790209806.0375595,
+    "seen": 1790220155.585501,
+    "ast_hash": "525de8f248751e86606695f0ac621b09",
+    "semantic_hash": "525de8f248751e86606695f0ac621b09"
+  },
+  "resources/views/admin/reports/Prelim/Mr/formal_wear/formal_wearjudge2.blade.php": {
+    "mtime": 1790209806.0376391,
+    "seen": 1790220155.585502,
+    "ast_hash": "99bf36840307dc66dd46c86a809e0f31",
+    "semantic_hash": "99bf36840307dc66dd46c86a809e0f31"
+  },
+  "resources/views/admin/reports/Prelim/Mr/formal_wear/formal_wearjudge3.blade.php": {
+    "mtime": 1790209806.0377192,
+    "seen": 1790220155.585502,
+    "ast_hash": "4593a7b96674f4d7dc22d705c8fe8538",
+    "semantic_hash": "4593a7b96674f4d7dc22d705c8fe8538"
+  },
+  "resources/views/admin/reports/Prelim/Mr/formal_wear/pdfformal_wear.blade.php": {
+    "mtime": 1790209806.037853,
+    "seen": 1790220155.5855029,
+    "ast_hash": "e2755c9d2b7c06a7ae892a3a5af4b5bb",
+    "semantic_hash": "e2755c9d2b7c06a7ae892a3a5af4b5bb"
+  },
+  "resources/views/admin/reports/Prelim/Mr/national_costume/national_costume.blade.php": {
+    "mtime": 1790209806.03799,
+    "seen": 1790220155.5855029,
+    "ast_hash": "6b24824809352b6bd26109e3d0e5e457",
+    "semantic_hash": "6b24824809352b6bd26109e3d0e5e457"
+  },
+  "resources/views/admin/reports/Prelim/Mr/national_costume/national_costumejudge1.blade.php": {
+    "mtime": 1790209806.0380566,
+    "seen": 1790220155.5855029,
+    "ast_hash": "53010d13fc89e3748d98d6bb9ce4682d",
+    "semantic_hash": "53010d13fc89e3748d98d6bb9ce4682d"
+  },
+  "resources/views/admin/reports/Prelim/Mr/national_costume/national_costumejudge2.blade.php": {
+    "mtime": 1790209806.0381112,
+    "seen": 1790220155.585504,
+    "ast_hash": "7edd3553db7d9990ae4cbed9abe68809",
+    "semantic_hash": "7edd3553db7d9990ae4cbed9abe68809"
+  },
+  "resources/views/admin/reports/Prelim/Mr/national_costume/national_costumejudge3.blade.php": {
+    "mtime": 1790209806.0381722,
+    "seen": 1790220155.585504,
+    "ast_hash": "87f284f586bce7a5c3d10f4bcb207a02",
+    "semantic_hash": "87f284f586bce7a5c3d10f4bcb207a02"
+  },
+  "resources/views/admin/reports/Prelim/Mr/national_costume/pdfnational_costume.blade.php": {
+    "mtime": 1790209806.038288,
+    "seen": 1790220155.585505,
+    "ast_hash": "36aaf20515154b75ec6d95edb6c4fc84",
+    "semantic_hash": "36aaf20515154b75ec6d95edb6c4fc84"
+  },
+  "resources/views/admin/reports/Prelim/Mr/national_costume/pdfnational_costumejudge1.blade.php": {
+    "mtime": 1790209806.0383658,
+    "seen": 1790220155.585505,
+    "ast_hash": "074298fcd2bdda8788ddcc67db01a184",
+    "semantic_hash": "074298fcd2bdda8788ddcc67db01a184"
+  },
+  "resources/views/admin/reports/Prelim/Mr/pdfprelim.blade.php": {
+    "mtime": 1790209806.0384965,
+    "seen": 1790220155.585506,
+    "ast_hash": "3e5a40f7775be6bd80bb9840af959894",
+    "semantic_hash": "3e5a40f7775be6bd80bb9840af959894"
+  },
+  "resources/views/admin/reports/Prelim/Mr/pdftop5.blade.php": {
+    "mtime": 1790209806.0385554,
+    "seen": 1790220155.585506,
+    "ast_hash": "3496496f23026eb0160098d42e19e4a6",
+    "semantic_hash": "3496496f23026eb0160098d42e19e4a6"
+  },
+  "resources/views/admin/reports/Prelim/Mr/prelim.blade.php": {
+    "mtime": 1790209806.03869,
+    "seen": 1790220155.5855072,
+    "ast_hash": "952fbf147ee59a6304a42bb14c428a5f",
+    "semantic_hash": "952fbf147ee59a6304a42bb14c428a5f"
+  },
+  "resources/views/admin/reports/Prelim/Mr/prelimjudge1.blade.php": {
+    "mtime": 1790209806.0387754,
+    "seen": 1790220155.5855072,
+    "ast_hash": "e24db9e60c5b313dce847d2317528602",
+    "semantic_hash": "e24db9e60c5b313dce847d2317528602"
+  },
+  "resources/views/admin/reports/Prelim/Mr/prelimjudge2.blade.php": {
+    "mtime": 1790209806.0388489,
+    "seen": 1790220155.585508,
+    "ast_hash": "9a7f67911486fe39448ead8420227436",
+    "semantic_hash": "9a7f67911486fe39448ead8420227436"
+  },
+  "resources/views/admin/reports/Prelim/Mr/prelimjudge3.blade.php": {
+    "mtime": 1790209806.038929,
+    "seen": 1790220155.585508,
+    "ast_hash": "b131b2861f960ab7e757f940c590cea9",
+    "semantic_hash": "b131b2861f960ab7e757f940c590cea9"
+  },
+  "resources/views/admin/reports/Prelim/Mr/qna/pdfqna.blade.php": {
+    "mtime": 1790209806.0390577,
+    "seen": 1790220155.585508,
+    "ast_hash": "730e970bbdef3c89864c7cd7fa1aa26f",
+    "semantic_hash": "730e970bbdef3c89864c7cd7fa1aa26f"
+  },
+  "resources/views/admin/reports/Prelim/Mr/qna/qna.blade.php": {
+    "mtime": 1790209806.0391197,
+    "seen": 1790220155.585509,
+    "ast_hash": "73832d29e0c986af257f593cd0f6fa2e",
+    "semantic_hash": "73832d29e0c986af257f593cd0f6fa2e"
+  },
+  "resources/views/admin/reports/Prelim/Mr/qna/qnajudge1.blade.php": {
+    "mtime": 1790209806.0391798,
+    "seen": 1790220155.585509,
+    "ast_hash": "eb5cd53f13a53669448083802a54c0fd",
+    "semantic_hash": "eb5cd53f13a53669448083802a54c0fd"
+  },
+  "resources/views/admin/reports/Prelim/Mr/qna/qnajudge2.blade.php": {
+    "mtime": 1790209806.0392368,
+    "seen": 1790220155.5855098,
+    "ast_hash": "1ae7dbcd7be5c606b3993928cfda2ef9",
+    "semantic_hash": "1ae7dbcd7be5c606b3993928cfda2ef9"
+  },
+  "resources/views/admin/reports/Prelim/Mr/qna/qnajudge3.blade.php": {
+    "mtime": 1790209806.0392923,
+    "seen": 1790220155.5855098,
+    "ast_hash": "f6736d89982418b1042231e162448134",
+    "semantic_hash": "f6736d89982418b1042231e162448134"
+  },
+  "resources/views/admin/reports/Prelim/Mr/swim_wear/pdfswim_wear.blade.php": {
+    "mtime": 1790209806.039426,
+    "seen": 1790220155.585511,
+    "ast_hash": "1f0bb8220f1d4f1cd47b9a8870e63b61",
+    "semantic_hash": "1f0bb8220f1d4f1cd47b9a8870e63b61"
+  },
+  "resources/views/admin/reports/Prelim/Mr/swim_wear/swim_wear.blade.php": {
+    "mtime": 1790209806.0394886,
+    "seen": 1790220155.585511,
+    "ast_hash": "bb333c399281e919ff305d62e2075ed1",
+    "semantic_hash": "bb333c399281e919ff305d62e2075ed1"
+  },
+  "resources/views/admin/reports/Prelim/Mr/swim_wear/swim_wearjudge1.blade.php": {
+    "mtime": 1790209806.039556,
+    "seen": 1790220155.585512,
+    "ast_hash": "258519c14341026ca06ff169796938a2",
+    "semantic_hash": "258519c14341026ca06ff169796938a2"
+  },
+  "resources/views/admin/reports/Prelim/Mr/swim_wear/swim_wearjudge2.blade.php": {
+    "mtime": 1790209806.0396247,
+    "seen": 1790220155.585512,
+    "ast_hash": "79e9e874cee32fab82ed08ddf94f9c07",
+    "semantic_hash": "79e9e874cee32fab82ed08ddf94f9c07"
+  },
+  "resources/views/admin/reports/Prelim/Mr/swim_wear/swim_wearjudge3.blade.php": {
+    "mtime": 1790209806.0397074,
+    "seen": 1790220155.5855129,
+    "ast_hash": "6039635e8f5838940cb3256dbafb9d4e",
+    "semantic_hash": "6039635e8f5838940cb3256dbafb9d4e"
+  },
+  "resources/views/admin/reports/Prelim/Mr/top5.blade.php": {
+    "mtime": 1790209806.0397718,
+    "seen": 1790220155.5855129,
+    "ast_hash": "f2e26a06f6f142db73657ff0196258d1",
+    "semantic_hash": "f2e26a06f6f142db73657ff0196258d1"
+  },
+  "resources/views/admin/reports/Prelim/Ms/departmental_uniform/departmental_uniform.blade.php": {
+    "mtime": 1790209806.039968,
+    "seen": 1790220155.5855129,
+    "ast_hash": "0614defd2314e71ccc6eb7475f029310",
+    "semantic_hash": "0614defd2314e71ccc6eb7475f029310"
+  },
+  "resources/views/admin/reports/Prelim/Ms/departmental_uniform/departmental_uniformjudge1.blade.php": {
+    "mtime": 1790209806.040036,
+    "seen": 1790220155.585514,
+    "ast_hash": "565b63b4488056f1360af31eacfb90e2",
+    "semantic_hash": "565b63b4488056f1360af31eacfb90e2"
+  },
+  "resources/views/admin/reports/Prelim/Ms/departmental_uniform/departmental_uniformjudge2.blade.php": {
+    "mtime": 1790209806.0401049,
+    "seen": 1790220155.585514,
+    "ast_hash": "da959c3965f63abd1b515c7565767f93",
+    "semantic_hash": "da959c3965f63abd1b515c7565767f93"
+  },
+  "resources/views/admin/reports/Prelim/Ms/departmental_uniform/departmental_uniformjudge3.blade.php": {
+    "mtime": 1790209806.0401802,
+    "seen": 1790220155.585515,
+    "ast_hash": "24a93e87cce540c008e41c58292cde3e",
+    "semantic_hash": "24a93e87cce540c008e41c58292cde3e"
+  },
+  "resources/views/admin/reports/Prelim/Ms/departmental_uniform/pdfdepartmental_uniform.blade.php": {
+    "mtime": 1790209806.0403106,
+    "seen": 1790220155.585515,
+    "ast_hash": "3e3a491384093b8b99f3d97efa13c4d4",
+    "semantic_hash": "3e3a491384093b8b99f3d97efa13c4d4"
+  },
+  "resources/views/admin/reports/Prelim/Ms/formal_wear/formal_wear.blade.php": {
+    "mtime": 1790209806.0404766,
+    "seen": 1790220155.585516,
+    "ast_hash": "3d108a03086bdeaa9408fe6d44013b58",
+    "semantic_hash": "3d108a03086bdeaa9408fe6d44013b58"
+  },
+  "resources/views/admin/reports/Prelim/Ms/formal_wear/formal_wearjudge1.blade.php": {
+    "mtime": 1790209806.040575,
+    "seen": 1790220155.585516,
+    "ast_hash": "b920c18249b7c1999e8266487c5dc1f1",
+    "semantic_hash": "b920c18249b7c1999e8266487c5dc1f1"
+  },
+  "resources/views/admin/reports/Prelim/Ms/formal_wear/formal_wearjudge2.blade.php": {
+    "mtime": 1790209806.0406604,
+    "seen": 1790220155.5855172,
+    "ast_hash": "252fcc7b138f5b34d0887dce01fb8b27",
+    "semantic_hash": "252fcc7b138f5b34d0887dce01fb8b27"
+  },
+  "resources/views/admin/reports/Prelim/Ms/formal_wear/formal_wearjudge3.blade.php": {
+    "mtime": 1790209806.040739,
+    "seen": 1790220155.5855172,
+    "ast_hash": "dab4c6099179c8994447e9f8c79f8e28",
+    "semantic_hash": "dab4c6099179c8994447e9f8c79f8e28"
+  },
+  "resources/views/admin/reports/Prelim/Ms/formal_wear/pdfformal_wear.blade.php": {
+    "mtime": 1790209806.0408764,
+    "seen": 1790220155.5855181,
+    "ast_hash": "a6e2116c07211be9ae7ad82367d406ba",
+    "semantic_hash": "a6e2116c07211be9ae7ad82367d406ba"
+  },
+  "resources/views/admin/reports/Prelim/Ms/national_costume/national_costume.blade.php": {
+    "mtime": 1790209806.0410225,
+    "seen": 1790220155.5855181,
+    "ast_hash": "b05d038e62d312c6375e46f0c88835d0",
+    "semantic_hash": "b05d038e62d312c6375e46f0c88835d0"
+  },
+  "resources/views/admin/reports/Prelim/Ms/national_costume/national_costumejudge1.blade.php": {
+    "mtime": 1790209806.04109,
+    "seen": 1790220155.585519,
+    "ast_hash": "9207483a34d28411acc4cea72135e1c6",
+    "semantic_hash": "9207483a34d28411acc4cea72135e1c6"
+  },
+  "resources/views/admin/reports/Prelim/Ms/national_costume/national_costumejudge2.blade.php": {
+    "mtime": 1790209806.0411563,
+    "seen": 1790220155.585519,
+    "ast_hash": "8b8ce5433ba22bfeeececde176e30439",
+    "semantic_hash": "8b8ce5433ba22bfeeececde176e30439"
+  },
+  "resources/views/admin/reports/Prelim/Ms/national_costume/national_costumejudge3.blade.php": {
+    "mtime": 1790209806.0412183,
+    "seen": 1790220155.58552,
+    "ast_hash": "3735d55bfa4c5ff55b9ef25389842ecc",
+    "semantic_hash": "3735d55bfa4c5ff55b9ef25389842ecc"
+  },
+  "resources/views/admin/reports/Prelim/Ms/national_costume/pdfnational_costume.blade.php": {
+    "mtime": 1790209806.0413427,
+    "seen": 1790220155.58552,
+    "ast_hash": "eec0f070a4290b0dba421ceb1e88b74b",
+    "semantic_hash": "eec0f070a4290b0dba421ceb1e88b74b"
+  },
+  "resources/views/admin/reports/Prelim/Ms/national_costume/pdfnational_costumejudge1.blade.php": {
+    "mtime": 1790209806.0414102,
+    "seen": 1790220155.58552,
+    "ast_hash": "074298fcd2bdda8788ddcc67db01a184",
+    "semantic_hash": "074298fcd2bdda8788ddcc67db01a184"
+  },
+  "resources/views/admin/reports/Prelim/Ms/pdfprelim.blade.php": {
+    "mtime": 1790209806.0415509,
+    "seen": 1790220155.585521,
+    "ast_hash": "8b0ce70580c34ca2a102eaeb52ccca09",
+    "semantic_hash": "8b0ce70580c34ca2a102eaeb52ccca09"
+  },
+  "resources/views/admin/reports/Prelim/Ms/pdfprelimjudge1.blade.php": {
+    "mtime": 1790209791.5332525,
+    "seen": 1790220155.585521,
+    "ast_hash": "425e60847916dd28f8ad44c07c51780b",
+    "semantic_hash": "425e60847916dd28f8ad44c07c51780b"
+  },
+  "resources/views/admin/reports/Prelim/Ms/pdfprelimjudge2.blade.php": {
+    "mtime": 1790209791.5333242,
+    "seen": 1790220155.585522,
+    "ast_hash": "86d617df42b83119b8802aa5d4b30f7b",
+    "semantic_hash": "86d617df42b83119b8802aa5d4b30f7b"
+  },
+  "resources/views/admin/reports/Prelim/Ms/pdfprelimjudge3.blade.php": {
+    "mtime": 1790209791.5333931,
+    "seen": 1790220155.585522,
+    "ast_hash": "2ea6850bbfb83e231307ee9abd608976",
+    "semantic_hash": "2ea6850bbfb83e231307ee9abd608976"
+  },
+  "resources/views/admin/reports/Prelim/Ms/pdftop5.blade.php": {
+    "mtime": 1790209806.0416155,
+    "seen": 1790220155.585523,
+    "ast_hash": "fcc48a99e21f726dbe514c9e790e792d",
+    "semantic_hash": "fcc48a99e21f726dbe514c9e790e792d"
+  },
+  "resources/views/admin/reports/Prelim/Ms/prelim.blade.php": {
+    "mtime": 1790209806.0417583,
+    "seen": 1790220155.585523,
+    "ast_hash": "58340a111485ef0b68fda315424b5a55",
+    "semantic_hash": "58340a111485ef0b68fda315424b5a55"
+  },
+  "resources/views/admin/reports/Prelim/Ms/prelimjudge1.blade.php": {
+    "mtime": 1790209806.041844,
+    "seen": 1790220155.585524,
+    "ast_hash": "e24db9e60c5b313dce847d2317528602",
+    "semantic_hash": "e24db9e60c5b313dce847d2317528602"
+  },
+  "resources/views/admin/reports/Prelim/Ms/prelimjudge2.blade.php": {
+    "mtime": 1790209806.0419397,
+    "seen": 1790220155.585524,
+    "ast_hash": "6bd68b7208822458e1796ae87d00ca77",
+    "semantic_hash": "6bd68b7208822458e1796ae87d00ca77"
+  },
+  "resources/views/admin/reports/Prelim/Ms/prelimjudge3.blade.php": {
+    "mtime": 1790209806.042031,
+    "seen": 1790220155.585524,
+    "ast_hash": "2e5acbf1c5bc1c3aaf4cfea2be9e06bd",
+    "semantic_hash": "2e5acbf1c5bc1c3aaf4cfea2be9e06bd"
+  },
+  "resources/views/admin/reports/Prelim/Ms/qna/pdfqna.blade.php": {
+    "mtime": 1790209806.0421796,
+    "seen": 1790220155.585525,
+    "ast_hash": "9951a907f1932566f0be1d42be4c5cbb",
+    "semantic_hash": "9951a907f1932566f0be1d42be4c5cbb"
+  },
+  "resources/views/admin/reports/Prelim/Ms/qna/qna.blade.php": {
+    "mtime": 1790209806.0422463,
+    "seen": 1790220155.585525,
+    "ast_hash": "2fc3c958c0edad774de9d2dcaea33f7c",
+    "semantic_hash": "2fc3c958c0edad774de9d2dcaea33f7c"
+  },
+  "resources/views/admin/reports/Prelim/Ms/qna/qnajudge1.blade.php": {
+    "mtime": 1790209806.0423145,
+    "seen": 1790220155.585526,
+    "ast_hash": "39872b45c4dff7c8541261c3b4f710c3",
+    "semantic_hash": "39872b45c4dff7c8541261c3b4f710c3"
+  },
+  "resources/views/admin/reports/Prelim/Ms/qna/qnajudge2.blade.php": {
+    "mtime": 1790209806.0423868,
+    "seen": 1790220155.585526,
+    "ast_hash": "ef2930d7206eb3634e92c8e26720192e",
+    "semantic_hash": "ef2930d7206eb3634e92c8e26720192e"
+  },
+  "resources/views/admin/reports/Prelim/Ms/qna/qnajudge3.blade.php": {
+    "mtime": 1790209806.042449,
+    "seen": 1790220155.585527,
+    "ast_hash": "c071c1fe15db2172385696193bb116ef",
+    "semantic_hash": "c071c1fe15db2172385696193bb116ef"
+  },
+  "resources/views/admin/reports/Prelim/Ms/swim_wear/pdfswim_wear.blade.php": {
+    "mtime": 1790209806.042597,
+    "seen": 1790220155.585527,
+    "ast_hash": "26dc9386e90534d657b11104304d0ab1",
+    "semantic_hash": "26dc9386e90534d657b11104304d0ab1"
+  },
+  "resources/views/admin/reports/Prelim/Ms/swim_wear/swim_wear.blade.php": {
+    "mtime": 1790209806.0426612,
+    "seen": 1790220155.5855281,
+    "ast_hash": "143150f3806951ce9477d4e817587c3f",
+    "semantic_hash": "143150f3806951ce9477d4e817587c3f"
+  },
+  "resources/views/admin/reports/Prelim/Ms/swim_wear/swim_wearjudge1.blade.php": {
+    "mtime": 1790209806.0427246,
+    "seen": 1790220155.5855281,
+    "ast_hash": "47513ebd5eed627b07e5ac2c43f6423f",
+    "semantic_hash": "47513ebd5eed627b07e5ac2c43f6423f"
+  },
+  "resources/views/admin/reports/Prelim/Ms/swim_wear/swim_wearjudge2.blade.php": {
+    "mtime": 1790209806.042794,
+    "seen": 1790220155.585529,
+    "ast_hash": "0d9fa926ca8feb4de443f4ed4bb9ad7f",
+    "semantic_hash": "0d9fa926ca8feb4de443f4ed4bb9ad7f"
+  },
+  "resources/views/admin/reports/Prelim/Ms/swim_wear/swim_wearjudge3.blade.php": {
+    "mtime": 1790209806.042865,
+    "seen": 1790220155.585529,
+    "ast_hash": "112dff673548319865e9475d7ed9b6fa",
+    "semantic_hash": "112dff673548319865e9475d7ed9b6fa"
+  },
+  "resources/views/admin/reports/Prelim/Ms/top5.blade.php": {
+    "mtime": 1790209806.042922,
+    "seen": 1790220155.585529,
+    "ast_hash": "bb7d587b9746ca72d552f1ba1d017c63",
+    "semantic_hash": "bb7d587b9746ca72d552f1ba1d017c63"
+  },
+  "resources/views/admin/reports/Prepageant/Mr/pdfprepageant.blade.php": {
+    "mtime": 1790209806.0430694,
+    "seen": 1790220155.58553,
+    "ast_hash": "7c0cc65477a8efa8b0cb297b36f3aaa5",
+    "semantic_hash": "7c0cc65477a8efa8b0cb297b36f3aaa5"
+  },
+  "resources/views/admin/reports/Prepageant/Mr/pdfprepageantjudge1.blade.php": {
+    "mtime": 1790209806.0431595,
+    "seen": 1790220155.58553,
+    "ast_hash": "edcc54c9d45518abc39e93a6b13c2c8e",
+    "semantic_hash": "edcc54c9d45518abc39e93a6b13c2c8e"
+  },
+  "resources/views/admin/reports/Prepageant/Mr/pdfprepageantjudge2.blade.php": {
+    "mtime": 1790209806.0432446,
+    "seen": 1790220155.585531,
+    "ast_hash": "9e51c1cbfcd25004417de8a4ced227ba",
+    "semantic_hash": "9e51c1cbfcd25004417de8a4ced227ba"
+  },
+  "resources/views/admin/reports/Prepageant/Mr/pdfprepageantjudge3.blade.php": {
+    "mtime": 1790209806.0433254,
+    "seen": 1790220155.585531,
+    "ast_hash": "1716c9502987a29178b18701c20157f1",
+    "semantic_hash": "1716c9502987a29178b18701c20157f1"
+  },
+  "resources/views/admin/reports/Prepageant/Mr/prepageant.blade.php": {
+    "mtime": 1790209806.0434752,
+    "seen": 1790220155.585532,
+    "ast_hash": "6d0ec4c595311251726262a10877550b",
+    "semantic_hash": "6d0ec4c595311251726262a10877550b"
+  },
+  "resources/views/admin/reports/Prepageant/Mr/prepageantjudge1.blade.php": {
+    "mtime": 1790209806.0435703,
+    "seen": 1790220155.585532,
+    "ast_hash": "103e0894e80dae3a273fdfb6bb05160b",
+    "semantic_hash": "103e0894e80dae3a273fdfb6bb05160b"
+  },
+  "resources/views/admin/reports/Prepageant/Mr/prepageantjudge2.blade.php": {
+    "mtime": 1790209806.043676,
+    "seen": 1790220155.585533,
+    "ast_hash": "b5fa69a47b72cec6e27d12952a122c1d",
+    "semantic_hash": "b5fa69a47b72cec6e27d12952a122c1d"
+  },
+  "resources/views/admin/reports/Prepageant/Mr/prepageantjudge3.blade.php": {
+    "mtime": 1790209806.0437691,
+    "seen": 1790220155.585533,
+    "ast_hash": "e2dbc82e9699fef9791b62ee26bc4f96",
+    "semantic_hash": "e2dbc82e9699fef9791b62ee26bc4f96"
+  },
+  "resources/views/admin/reports/Prepageant/Mr/rave_wear/pdfrave_wear.blade.php": {
+    "mtime": 1790209806.0439167,
+    "seen": 1790220155.5855339,
+    "ast_hash": "a0d11a16f6fc4fc88913d21533bf41ec",
+    "semantic_hash": "a0d11a16f6fc4fc88913d21533bf41ec"
+  },
+  "resources/views/admin/reports/Prepageant/Mr/rave_wear/pdfrave_wearjudge1.blade.php": {
+    "mtime": 1790209806.0439913,
+    "seen": 1790220155.5855339,
+    "ast_hash": "c9e9b01a323d1c6ffc4c37d0b655fb5f",
+    "semantic_hash": "c9e9b01a323d1c6ffc4c37d0b655fb5f"
+  },
+  "resources/views/admin/reports/Prepageant/Mr/rave_wear/pdfrave_wearjudge2.blade.php": {
+    "mtime": 1790209806.0440624,
+    "seen": 1790220155.5855339,
+    "ast_hash": "1eaba5f6584a7234f704095da9f04e9e",
+    "semantic_hash": "1eaba5f6584a7234f704095da9f04e9e"
+  },
+  "resources/views/admin/reports/Prepageant/Mr/rave_wear/pdfrave_wearjudge3.blade.php": {
+    "mtime": 1790209806.044129,
+    "seen": 1790220155.585535,
+    "ast_hash": "817ecf477a194128e296d49f6cd10819",
+    "semantic_hash": "817ecf477a194128e296d49f6cd10819"
+  },
+  "resources/views/admin/reports/Prepageant/Mr/rave_wear/rave_wear.blade.php": {
+    "mtime": 1790209806.0442364,
+    "seen": 1790220155.585535,
+    "ast_hash": "f10afb0f305f2691568159611beb2261",
+    "semantic_hash": "f10afb0f305f2691568159611beb2261"
+  },
+  "resources/views/admin/reports/Prepageant/Mr/rave_wear/rave_wearjudge1.blade.php": {
+    "mtime": 1790209806.0442984,
+    "seen": 1790220155.585536,
+    "ast_hash": "f859f7170cacd2e47f52c6419d545a69",
+    "semantic_hash": "f859f7170cacd2e47f52c6419d545a69"
+  },
+  "resources/views/admin/reports/Prepageant/Mr/rave_wear/rave_wearjudge2.blade.php": {
+    "mtime": 1790209806.0443614,
+    "seen": 1790220155.585536,
+    "ast_hash": "3819d4c8cb483ee493190d00b98ba0ef",
+    "semantic_hash": "3819d4c8cb483ee493190d00b98ba0ef"
+  },
+  "resources/views/admin/reports/Prepageant/Mr/rave_wear/rave_wearjudge3.blade.php": {
+    "mtime": 1790209806.044426,
+    "seen": 1790220155.585537,
+    "ast_hash": "0805b7e36a544faafb4af8641c65d717",
+    "semantic_hash": "0805b7e36a544faafb4af8641c65d717"
+  },
+  "resources/views/admin/reports/Prepageant/Mr/talent/pdftalent.blade.php": {
+    "mtime": 1790209806.0445774,
+    "seen": 1790220155.585537,
+    "ast_hash": "2d5feef50e463bf454ac89ea97e4dd92",
+    "semantic_hash": "2d5feef50e463bf454ac89ea97e4dd92"
+  },
+  "resources/views/admin/reports/Prepageant/Mr/talent/pdftalentjudge1.blade.php": {
+    "mtime": 1790209806.0446641,
+    "seen": 1790220155.5855381,
+    "ast_hash": "313c623961d6aaf5ec44bfe7bff134d3",
+    "semantic_hash": "313c623961d6aaf5ec44bfe7bff134d3"
+  },
+  "resources/views/admin/reports/Prepageant/Mr/talent/pdftalentjudge2.blade.php": {
+    "mtime": 1790209806.044749,
+    "seen": 1790220155.5855381,
+    "ast_hash": "6a7c66a2a7d9622797a24486210911dc",
+    "semantic_hash": "6a7c66a2a7d9622797a24486210911dc"
+  },
+  "resources/views/admin/reports/Prepageant/Mr/talent/pdftalentjudge3.blade.php": {
+    "mtime": 1790209806.044835,
+    "seen": 1790220155.585539,
+    "ast_hash": "d1c541b0db1ec90b3577ae51ce0ade26",
+    "semantic_hash": "d1c541b0db1ec90b3577ae51ce0ade26"
+  },
+  "resources/views/admin/reports/Prepageant/Mr/talent/talent.blade.php": {
+    "mtime": 1790209806.0449767,
+    "seen": 1790220155.585539,
+    "ast_hash": "9df422fbd20fb101458e611d446bca38",
+    "semantic_hash": "9df422fbd20fb101458e611d446bca38"
+  },
+  "resources/views/admin/reports/Prepageant/Mr/talent/talentjudge1.blade.php": {
+    "mtime": 1790209806.0450664,
+    "seen": 1790220155.585539,
+    "ast_hash": "650b5b9da384f42e254443030ae4171a",
+    "semantic_hash": "650b5b9da384f42e254443030ae4171a"
+  },
+  "resources/views/admin/reports/Prepageant/Mr/talent/talentjudge2.blade.php": {
+    "mtime": 1790209806.0451424,
+    "seen": 1790220155.58554,
+    "ast_hash": "7131aa1d60a5523ddf643cbe9295ffa4",
+    "semantic_hash": "7131aa1d60a5523ddf643cbe9295ffa4"
+  },
+  "resources/views/admin/reports/Prepageant/Mr/talent/talentjudge3.blade.php": {
+    "mtime": 1790209806.045227,
+    "seen": 1790220155.58554,
+    "ast_hash": "3f6bffddcc629e71c31afb21f9999f50",
+    "semantic_hash": "3f6bffddcc629e71c31afb21f9999f50"
+  },
+  "resources/views/admin/reports/Prepageant/Ms/pdfprepageant.blade.php": {
+    "mtime": 1790209806.045353,
+    "seen": 1790220155.585541,
+    "ast_hash": "1223a6cd8d681be668cf7ba665c756f5",
+    "semantic_hash": "1223a6cd8d681be668cf7ba665c756f5"
+  },
+  "resources/views/admin/reports/Prepageant/Ms/pdfprepageantjudge1.blade.php": {
+    "mtime": 1790209806.0454512,
+    "seen": 1790220155.585541,
+    "ast_hash": "4b3c11e49a4a3782ca872aad828f851e",
+    "semantic_hash": "4b3c11e49a4a3782ca872aad828f851e"
+  },
+  "resources/views/admin/reports/Prepageant/Ms/pdfprepageantjudge2.blade.php": {
+    "mtime": 1790209806.045532,
+    "seen": 1790220155.585542,
+    "ast_hash": "e03bb98f88a7efe2304c8d1f588a65b3",
+    "semantic_hash": "e03bb98f88a7efe2304c8d1f588a65b3"
+  },
+  "resources/views/admin/reports/Prepageant/Ms/pdfprepageantjudge3.blade.php": {
+    "mtime": 1790209806.0456078,
+    "seen": 1790220155.585542,
+    "ast_hash": "12b39ceff1accc64c457216acb649839",
+    "semantic_hash": "12b39ceff1accc64c457216acb649839"
+  },
+  "resources/views/admin/reports/Prepageant/Ms/prepageant.blade.php": {
+    "mtime": 1790209806.045742,
+    "seen": 1790220155.585543,
+    "ast_hash": "810a0d384a299ccc62488a892a270ddf",
+    "semantic_hash": "810a0d384a299ccc62488a892a270ddf"
+  },
+  "resources/views/admin/reports/Prepageant/Ms/prepageantjudge1.blade.php": {
+    "mtime": 1790209806.0458555,
+    "seen": 1790220155.585543,
+    "ast_hash": "098163e072441f310d0d9afe09130a0c",
+    "semantic_hash": "098163e072441f310d0d9afe09130a0c"
+  },
+  "resources/views/admin/reports/Prepageant/Ms/prepageantjudge2.blade.php": {
+    "mtime": 1790209806.0459359,
+    "seen": 1790220155.5855439,
+    "ast_hash": "3e6b39595f92f58c9b031df15adf00e3",
+    "semantic_hash": "3e6b39595f92f58c9b031df15adf00e3"
+  },
+  "resources/views/admin/reports/Prepageant/Ms/prepageantjudge3.blade.php": {
+    "mtime": 1790209806.0460443,
+    "seen": 1790220155.5855439,
+    "ast_hash": "49080efb3c784906766f1a7672aa47bc",
+    "semantic_hash": "49080efb3c784906766f1a7672aa47bc"
+  },
+  "resources/views/admin/reports/Prepageant/Ms/rave_wear/pdfrave_wear.blade.php": {
+    "mtime": 1790209806.0461822,
+    "seen": 1790220155.5855439,
+    "ast_hash": "7f9c82c579fc83dbb54bf04d0dd51f81",
+    "semantic_hash": "7f9c82c579fc83dbb54bf04d0dd51f81"
+  },
+  "resources/views/admin/reports/Prepageant/Ms/rave_wear/pdfrave_wearjudge1.blade.php": {
+    "mtime": 1790209806.0462391,
+    "seen": 1790220155.585545,
+    "ast_hash": "b4dcf5d6db4881d49d83eeda1b985d21",
+    "semantic_hash": "b4dcf5d6db4881d49d83eeda1b985d21"
+  },
+  "resources/views/admin/reports/Prepageant/Ms/rave_wear/pdfrave_wearjudge2.blade.php": {
+    "mtime": 1790209806.0462947,
+    "seen": 1790220155.585545,
+    "ast_hash": "c641573795ed42506fbc2948ca1785d0",
+    "semantic_hash": "c641573795ed42506fbc2948ca1785d0"
+  },
+  "resources/views/admin/reports/Prepageant/Ms/rave_wear/pdfrave_wearjudge3.blade.php": {
+    "mtime": 1790209806.046355,
+    "seen": 1790220155.585546,
+    "ast_hash": "e824eac0593156caa09f4022ed1c1bec",
+    "semantic_hash": "e824eac0593156caa09f4022ed1c1bec"
+  },
+  "resources/views/admin/reports/Prepageant/Ms/rave_wear/rave_wear.blade.php": {
+    "mtime": 1790209806.046462,
+    "seen": 1790220155.585546,
+    "ast_hash": "2c292e8b82f072418412953a3667cfdb",
+    "semantic_hash": "2c292e8b82f072418412953a3667cfdb"
+  },
+  "resources/views/admin/reports/Prepageant/Ms/rave_wear/rave_wearjudge1.blade.php": {
+    "mtime": 1790209806.0465205,
+    "seen": 1790220155.585547,
+    "ast_hash": "f38f6f3b6300bff0095f1b755f05fe61",
+    "semantic_hash": "f38f6f3b6300bff0095f1b755f05fe61"
+  },
+  "resources/views/admin/reports/Prepageant/Ms/rave_wear/rave_wearjudge2.blade.php": {
+    "mtime": 1790209806.046578,
+    "seen": 1790220155.585547,
+    "ast_hash": "672152398ae3c81b3fc9e90d389938aa",
+    "semantic_hash": "672152398ae3c81b3fc9e90d389938aa"
+  },
+  "resources/views/admin/reports/Prepageant/Ms/rave_wear/rave_wearjudge3.blade.php": {
+    "mtime": 1790209806.0466344,
+    "seen": 1790220155.585548,
+    "ast_hash": "932a2297638c6985ebd786005fd9ea5f",
+    "semantic_hash": "932a2297638c6985ebd786005fd9ea5f"
+  },
+  "resources/views/admin/reports/Prepageant/Ms/talent/pdftalent.blade.php": {
+    "mtime": 1790209806.0467606,
+    "seen": 1790220155.585548,
+    "ast_hash": "1d689380f305a8a438af34bde53aa906",
+    "semantic_hash": "1d689380f305a8a438af34bde53aa906"
+  },
+  "resources/views/admin/reports/Prepageant/Ms/talent/pdftalentjudge1.blade.php": {
+    "mtime": 1790209806.0468397,
+    "seen": 1790220155.585549,
+    "ast_hash": "36e26339bb09306ea58ad28d4b19283d",
+    "semantic_hash": "36e26339bb09306ea58ad28d4b19283d"
+  },
+  "resources/views/admin/reports/Prepageant/Ms/talent/pdftalentjudge2.blade.php": {
+    "mtime": 1790209806.046921,
+    "seen": 1790220155.585549,
+    "ast_hash": "a424bb551ff4c504071b9e6502e1ef81",
+    "semantic_hash": "a424bb551ff4c504071b9e6502e1ef81"
+  },
+  "resources/views/admin/reports/Prepageant/Ms/talent/pdftalentjudge3.blade.php": {
+    "mtime": 1790209806.047007,
+    "seen": 1790220155.58555,
+    "ast_hash": "c154020c02d0a6b6f1b6b4103c2362de",
+    "semantic_hash": "c154020c02d0a6b6f1b6b4103c2362de"
+  },
+  "resources/views/admin/reports/Prepageant/Ms/talent/talent.blade.php": {
+    "mtime": 1790209806.0471284,
+    "seen": 1790220155.58555,
+    "ast_hash": "d8f4846d92208e07b16d718057789b5d",
+    "semantic_hash": "d8f4846d92208e07b16d718057789b5d"
+  },
+  "resources/views/admin/reports/Prepageant/Ms/talent/talentjudge1.blade.php": {
+    "mtime": 1790209806.0472033,
+    "seen": 1790220155.585551,
+    "ast_hash": "3c27453c7fd43cfad50055a35ca5ff79",
+    "semantic_hash": "3c27453c7fd43cfad50055a35ca5ff79"
+  },
+  "resources/views/admin/reports/Prepageant/Ms/talent/talentjudge2.blade.php": {
+    "mtime": 1790209806.047311,
+    "seen": 1790220155.585551,
+    "ast_hash": "9088e51e042c0f6f14b334686ef2d01a",
+    "semantic_hash": "9088e51e042c0f6f14b334686ef2d01a"
+  },
+  "resources/views/admin/reports/Prepageant/Ms/talent/talentjudge3.blade.php": {
+    "mtime": 1790209806.0473974,
+    "seen": 1790220155.585551,
+    "ast_hash": "3415f6446e4af980c7a1468306ccf775",
+    "semantic_hash": "3415f6446e4af980c7a1468306ccf775"
+  },
+  "resources/views/admin/reports/rank.blade.php": {
+    "mtime": 1790209791.5389555,
+    "seen": 1790220155.585552,
+    "ast_hash": "ab98a866c61b0d94980916954303e81f",
+    "semantic_hash": "ab98a866c61b0d94980916954303e81f"
+  },
+  "resources/views/admin/settings/index.blade.php": {
+    "mtime": 1790209791.53904,
+    "seen": 1790220155.585552,
+    "ast_hash": "3abda3323e1cdb54838049edc57dd5b7",
+    "semantic_hash": "3abda3323e1cdb54838049edc57dd5b7"
+  },
+  "resources/views/auth/login.blade.php": {
+    "mtime": 1790209791.5391293,
+    "seen": 1790220155.585553,
+    "ast_hash": "f88411ea0a077fd41adec95f66f00915",
+    "semantic_hash": "f88411ea0a077fd41adec95f66f00915"
+  },
+  "resources/views/auth/passwords/confirm.blade.php": {
+    "mtime": 1790209791.5392091,
+    "seen": 1790220155.585553,
+    "ast_hash": "033dc6f6d014f174aee631ebd206af82",
+    "semantic_hash": "033dc6f6d014f174aee631ebd206af82"
+  },
+  "resources/views/auth/passwords/email.blade.php": {
+    "mtime": 1790209791.5392601,
+    "seen": 1790220155.585554,
+    "ast_hash": "806c4f3696777e78a10767a9f923f374",
+    "semantic_hash": "806c4f3696777e78a10767a9f923f374"
+  },
+  "resources/views/auth/passwords/reset.blade.php": {
+    "mtime": 1790209791.5393174,
+    "seen": 1790220155.585554,
+    "ast_hash": "5dc51f8ef305d30fc44853c89450f2fc",
+    "semantic_hash": "5dc51f8ef305d30fc44853c89450f2fc"
+  },
+  "resources/views/auth/register.blade.php": {
+    "mtime": 1790209791.539375,
+    "seen": 1790220155.585554,
+    "ast_hash": "4b887d1c3cc2806ded515907a1f7ea35",
+    "semantic_hash": "4b887d1c3cc2806ded515907a1f7ea35"
+  },
+  "resources/views/auth/verify.blade.php": {
+    "mtime": 1790209791.5394328,
+    "seen": 1790220155.5855548,
+    "ast_hash": "03367aeabd3cf0561832c8e7f9d71afa",
+    "semantic_hash": "03367aeabd3cf0561832c8e7f9d71afa"
+  },
+  "resources/views/home.blade.php": {
+    "mtime": 1790209791.5395052,
+    "seen": 1790220155.5855548,
+    "ast_hash": "9c33c9f5ef8e6c5698a34659344f923e",
+    "semantic_hash": "9c33c9f5ef8e6c5698a34659344f923e"
+  },
+  "resources/views/judge_app/category-screen.blade.php": {
+    "mtime": 1790209791.539598,
+    "seen": 1790220155.585556,
+    "ast_hash": "b050721149f7cc506d43d6f74af7e5c2",
+    "semantic_hash": "b050721149f7cc506d43d6f74af7e5c2"
+  },
+  "resources/views/judge_app/final-score-board-screen.blade.php": {
+    "mtime": 1790209791.539653,
+    "seen": 1790220155.585556,
+    "ast_hash": "1039d123261aa77795e506e31bbe2506",
+    "semantic_hash": "1039d123261aa77795e506e31bbe2506"
+  },
+  "resources/views/judge_app/final/index.blade.php": {
+    "mtime": 1790209791.5397353,
+    "seen": 1790220155.585557,
+    "ast_hash": "6b9162dfbf35e9dff0e9c1abbae1777b",
+    "semantic_hash": "6b9162dfbf35e9dff0e9c1abbae1777b"
+  },
+  "resources/views/judge_app/final/mr/score-board-screen.blade.php": {
+    "mtime": 1790209806.0474756,
+    "seen": 1790220155.585557,
+    "ast_hash": "bc5f9136703f0dbc65dffb769a0c106d",
+    "semantic_hash": "bc5f9136703f0dbc65dffb769a0c106d"
+  },
+  "resources/views/judge_app/final/ms/score-board-screen.blade.php": {
+    "mtime": 1790209806.047568,
+    "seen": 1790220155.585558,
+    "ast_hash": "1d61458af358c2bdb5170c8def512540",
+    "semantic_hash": "1d61458af358c2bdb5170c8def512540"
+  },
+  "resources/views/judge_app/index.blade.php": {
+    "mtime": 1790209806.0477185,
+    "seen": 1790220155.585558,
+    "ast_hash": "3b2564539078aa54d388c568db430c58",
+    "semantic_hash": "3b2564539078aa54d388c568db430c58"
+  },
+  "resources/views/judge_app/layouts/app.blade.php": {
+    "mtime": 1790209791.5400372,
+    "seen": 1790220155.585558,
+    "ast_hash": "392ae9e1b5235521ff07ac777878bd28",
+    "semantic_hash": "392ae9e1b5235521ff07ac777878bd28"
+  },
+  "resources/views/judge_app/layouts/final_app.blade.php": {
+    "mtime": 1790209791.540094,
+    "seen": 1790220155.5855591,
+    "ast_hash": "9bd34c3d11baa391dd07422b9e77481b",
+    "semantic_hash": "9bd34c3d11baa391dd07422b9e77481b"
+  },
+  "resources/views/judge_app/preliminaries/index.blade.php": {
+    "mtime": 1790209791.5401843,
+    "seen": 1790220155.5855591,
+    "ast_hash": "6b9162dfbf35e9dff0e9c1abbae1777b",
+    "semantic_hash": "6b9162dfbf35e9dff0e9c1abbae1777b"
+  },
+  "resources/views/judge_app/preliminaries/mr/departmentaluniform-score-board-screen.blade.php": {
+    "mtime": 1790209806.0477889,
+    "seen": 1790220155.58556,
+    "ast_hash": "01cd858534a1ba0442fad15d39d3af6a",
+    "semantic_hash": "01cd858534a1ba0442fad15d39d3af6a"
+  },
+  "resources/views/judge_app/preliminaries/mr/formalwear-score-board-screen.blade.php": {
+    "mtime": 1790209791.540324,
+    "seen": 1790220155.58556,
+    "ast_hash": "16d0a494b320ad1e0f749506027c4855",
+    "semantic_hash": "16d0a494b320ad1e0f749506027c4855"
+  },
+  "resources/views/judge_app/preliminaries/mr/nationalcostume-score-board-screen.blade.php": {
+    "mtime": 1790209806.047845,
+    "seen": 1790220155.585561,
+    "ast_hash": "d1c763e63152d0fd6177b747cb187d83",
+    "semantic_hash": "d1c763e63152d0fd6177b747cb187d83"
+  },
+  "resources/views/judge_app/preliminaries/mr/qna-score-board-screen.blade.php": {
+    "mtime": 1790209806.0478928,
+    "seen": 1790220155.585561,
+    "ast_hash": "fe2583a394631cacd57372bad499c1e5",
+    "semantic_hash": "fe2583a394631cacd57372bad499c1e5"
+  },
+  "resources/views/judge_app/preliminaries/mr/score-board-screen.blade.php": {
+    "mtime": 1790209791.5403628,
+    "seen": 1790220155.585564,
+    "ast_hash": "e3b126446e27777202ce2b5f358cf18a",
+    "semantic_hash": "e3b126446e27777202ce2b5f358cf18a"
+  },
+  "resources/views/judge_app/preliminaries/mr/swimwear-score-board-screen.blade.php": {
+    "mtime": 1790209806.0479398,
+    "seen": 1790220155.5855649,
+    "ast_hash": "dfadda8930a8e134b68aaafaf4ed8a9e",
+    "semantic_hash": "dfadda8930a8e134b68aaafaf4ed8a9e"
+  },
+  "resources/views/judge_app/preliminaries/ms/departmentaluniform-score-board-screen.blade.php": {
+    "mtime": 1790209806.0480046,
+    "seen": 1790220155.5855649,
+    "ast_hash": "203a7c055956b114545f2bf66d58372d",
+    "semantic_hash": "203a7c055956b114545f2bf66d58372d"
+  },
+  "resources/views/judge_app/preliminaries/ms/formalwear-score-board-screen.blade.php": {
+    "mtime": 1790209791.540482,
+    "seen": 1790220155.5855649,
+    "ast_hash": "387cf2b353d8838aa2810ddc3acdba0e",
+    "semantic_hash": "387cf2b353d8838aa2810ddc3acdba0e"
+  },
+  "resources/views/judge_app/preliminaries/ms/nationalcostume-score-board-screen.blade.php": {
+    "mtime": 1790209806.0480626,
+    "seen": 1790220155.585566,
+    "ast_hash": "623822c406aab1669e3e1f2820bac6f2",
+    "semantic_hash": "623822c406aab1669e3e1f2820bac6f2"
+  },
+  "resources/views/judge_app/preliminaries/ms/qna-score-board-screen.blade.php": {
+    "mtime": 1790209806.0481167,
+    "seen": 1790220155.585566,
+    "ast_hash": "bc6bc654db9be301cfc39d53220c30de",
+    "semantic_hash": "bc6bc654db9be301cfc39d53220c30de"
+  },
+  "resources/views/judge_app/preliminaries/ms/score-board-screen.blade.php": {
+    "mtime": 1790209806.0482004,
+    "seen": 1790220155.585567,
+    "ast_hash": "e6403f6e4e6c45f59a4a30e662e12876",
+    "semantic_hash": "e6403f6e4e6c45f59a4a30e662e12876"
+  },
+  "resources/views/judge_app/preliminaries/ms/swimwear-score-board-screen.blade.php": {
+    "mtime": 1790209806.0482469,
+    "seen": 1790220155.585567,
+    "ast_hash": "ec29f13d0ca5ce19ba5a6d58e71cad8b",
+    "semantic_hash": "ec29f13d0ca5ce19ba5a6d58e71cad8b"
+  },
+  "resources/views/judge_app/prepageant/mr/ravewear-score-board-screen.blade.php": {
+    "mtime": 1790209806.0483022,
+    "seen": 1790220155.585568,
+    "ast_hash": "d04e7877a5f16c84e820315bf761df51",
+    "semantic_hash": "d04e7877a5f16c84e820315bf761df51"
+  },
+  "resources/views/judge_app/prepageant/mr/score-board-screen.blade.php": {
+    "mtime": 1790209791.540657,
+    "seen": 1790220155.585568,
+    "ast_hash": "97a001d7483edbf6db2baa6044a6fedb",
+    "semantic_hash": "97a001d7483edbf6db2baa6044a6fedb"
+  },
+  "resources/views/judge_app/prepageant/mr/talent-score-board-screen.blade.php": {
+    "mtime": 1790209791.5407393,
+    "seen": 1790220155.585569,
+    "ast_hash": "2cb87c84182814ea85e94920d0b1a7d4",
+    "semantic_hash": "2cb87c84182814ea85e94920d0b1a7d4"
+  },
+  "resources/views/judge_app/prepageant/ms/ravewear-score-board-screen.blade.php": {
+    "mtime": 1790209806.048356,
+    "seen": 1790220155.585569,
+    "ast_hash": "59506ddbd1d74a0a51a91a7fc2c11ef5",
+    "semantic_hash": "59506ddbd1d74a0a51a91a7fc2c11ef5"
+  },
+  "resources/views/judge_app/prepageant/ms/score-board-screen.blade.php": {
+    "mtime": 1790209791.5408545,
+    "seen": 1790220155.58557,
+    "ast_hash": "f42f28137f9b0c0512fedcc3afc2957d",
+    "semantic_hash": "f42f28137f9b0c0512fedcc3afc2957d"
+  },
+  "resources/views/judge_app/prepageant/ms/talent-score-board-screen.blade.php": {
+    "mtime": 1790209791.5410185,
+    "seen": 1790220155.58557,
+    "ast_hash": "03687017993b310017c289637d1f5568",
+    "semantic_hash": "03687017993b310017c289637d1f5568"
+  },
+  "resources/views/judge_app/score-board-screen.blade.php": {
+    "mtime": 1790209791.5410662,
+    "seen": 1790220155.58557,
+    "ast_hash": "c94f117d927a8c3c113b329b88cc79b7",
+    "semantic_hash": "c94f117d927a8c3c113b329b88cc79b7"
+  },
+  "resources/views/judge_app/semifinal/index.blade.php": {
+    "mtime": 1790209791.5411334,
+    "seen": 1790220155.585571,
+    "ast_hash": "6b9162dfbf35e9dff0e9c1abbae1777b",
+    "semantic_hash": "6b9162dfbf35e9dff0e9c1abbae1777b"
+  },
+  "resources/views/judge_app/talent-score-board-screen.blade.php": {
+    "mtime": 1790209791.5411794,
+    "seen": 1790220155.585571,
+    "ast_hash": "0b2a55be25b2efee8358e255286377ce",
+    "semantic_hash": "0b2a55be25b2efee8358e255286377ce"
+  },
+  "resources/views/layouts/app.blade.php": {
+    "mtime": 1790209806.0484436,
+    "seen": 1790220155.585572,
+    "ast_hash": "187f1ef243a7b10a11e70e532a0cd118",
+    "semantic_hash": "187f1ef243a7b10a11e70e532a0cd118"
+  },
+  "resources/views/layouts/master.blade.php": {
+    "mtime": 1790209806.0485315,
+    "seen": 1790220155.585572,
+    "ast_hash": "033dcf53dde582b4ead6f84125592c1f",
+    "semantic_hash": "033dcf53dde582b4ead6f84125592c1f"
+  },
+  "resources/views/layouts/navigation.blade.php": {
+    "mtime": 1790209806.048641,
+    "seen": 1790220155.5855732,
+    "ast_hash": "10da65f5ff3c1642168f791adf1deeff",
+    "semantic_hash": "10da65f5ff3c1642168f791adf1deeff"
+  },
+  "resources/views/livewire/admin/active-status-component.blade.php": {
+    "mtime": 1790209791.5414877,
+    "seen": 1790220155.5855732,
+    "ast_hash": "6820375cf17357694a4acfd57d993a30",
+    "semantic_hash": "6820375cf17357694a4acfd57d993a30"
+  },
+  "resources/views/livewire/admin/candidates-component.blade.php": {
+    "mtime": 1790219982.271706,
+    "seen": 1790220155.5855732,
+    "ast_hash": "4d17f8a55c96de94d4ba1dbde11d5bac",
+    "semantic_hash": "4d17f8a55c96de94d4ba1dbde11d5bac"
+  },
+  "resources/views/livewire/admin/category-component.blade.php": {
+    "mtime": 1790219982.2718632,
+    "seen": 1790220155.585574,
+    "ast_hash": "591ab78afe8ae3d2c7dbdfd37d018043",
+    "semantic_hash": "591ab78afe8ae3d2c7dbdfd37d018043"
+  },
+  "resources/views/livewire/admin/stage-controller-component.blade.php": {
+    "mtime": 1790209791.541702,
+    "seen": 1790220155.585574,
+    "ast_hash": "ad85c45588309dcf7f5a0bd1c4f48ad3",
+    "semantic_hash": "ad85c45588309dcf7f5a0bd1c4f48ad3"
+  },
+  "resources/views/livewire/admin/sub-category-component.blade.php": {
+    "mtime": 1790219982.2720609,
+    "seen": 1790220155.5855749,
+    "ast_hash": "fd36e28a9820fc667c1398a242803285",
+    "semantic_hash": "fd36e28a9820fc667c1398a242803285"
+  },
+  "resources/views/livewire/judge/final-score-board-component.blade.php": {
+    "mtime": 1790219982.27233,
+    "seen": 1790220155.5855749,
+    "ast_hash": "e3b6ffb5fd9cd2a85cd5ff0472f26dd3",
+    "semantic_hash": "e3b6ffb5fd9cd2a85cd5ff0472f26dd3"
+  },
+  "resources/views/livewire/judge/final/mr/score-board-component.blade.php": {
+    "mtime": 1790219982.2725303,
+    "seen": 1790220155.5855758,
+    "ast_hash": "57da9861a54ab28f3cdd56917d153161",
+    "semantic_hash": "57da9861a54ab28f3cdd56917d153161"
+  },
+  "resources/views/livewire/judge/final/ms/score-board-component.blade.php": {
+    "mtime": 1790219982.2727344,
+    "seen": 1790220155.5855758,
+    "ast_hash": "da769860f9fc0f452208424b9e8a09e4",
+    "semantic_hash": "da769860f9fc0f452208424b9e8a09e4"
+  },
+  "resources/views/livewire/judge/preliminaries/mr/departmentaluniform-score-board-component.blade.php": {
+    "mtime": 1790219982.2729552,
+    "seen": 1790220155.585577,
+    "ast_hash": "02196559dc7dad8014214ce8802f1977",
+    "semantic_hash": "02196559dc7dad8014214ce8802f1977"
+  },
+  "resources/views/livewire/judge/preliminaries/mr/formalwear-score-board-component.blade.php": {
+    "mtime": 1790219982.2731159,
+    "seen": 1790220155.585577,
+    "ast_hash": "6d0d6d2942bb89498b2078620db1e79a",
+    "semantic_hash": "6d0d6d2942bb89498b2078620db1e79a"
+  },
+  "resources/views/livewire/judge/preliminaries/mr/nationalcostume-score-board-component.blade.php": {
+    "mtime": 1790219982.2732923,
+    "seen": 1790220155.585578,
+    "ast_hash": "360e4911941bb65b4f2fed2dd28bc4c9",
+    "semantic_hash": "360e4911941bb65b4f2fed2dd28bc4c9"
+  },
+  "resources/views/livewire/judge/preliminaries/mr/qna-score-board-component.blade.php": {
+    "mtime": 1790219982.273464,
+    "seen": 1790220155.585578,
+    "ast_hash": "83913c0fe0e752f9b5b955bc6d71b0a7",
+    "semantic_hash": "83913c0fe0e752f9b5b955bc6d71b0a7"
+  },
+  "resources/views/livewire/judge/preliminaries/mr/score-board-component.blade.php": {
+    "mtime": 1790219982.2737203,
+    "seen": 1790220155.585578,
+    "ast_hash": "b7cf0cead55e5fbc69de388da0f4c019",
+    "semantic_hash": "b7cf0cead55e5fbc69de388da0f4c019"
+  },
+  "resources/views/livewire/judge/preliminaries/mr/swimwear-score-board-component.blade.php": {
+    "mtime": 1790219982.2739677,
+    "seen": 1790220155.585579,
+    "ast_hash": "e412fa7c7886bc50c8419183d77f7694",
+    "semantic_hash": "e412fa7c7886bc50c8419183d77f7694"
+  },
+  "resources/views/livewire/judge/preliminaries/ms/departmentaluniform-score-board-component.blade.php": {
+    "mtime": 1790219982.2741477,
+    "seen": 1790220155.585579,
+    "ast_hash": "9057d3ccd301fb77e35f538747080b9e",
+    "semantic_hash": "9057d3ccd301fb77e35f538747080b9e"
+  },
+  "resources/views/livewire/judge/preliminaries/ms/formalwear-score-board-component.blade.php": {
+    "mtime": 1790219982.2743282,
+    "seen": 1790220155.58558,
+    "ast_hash": "1fbbbefddd5c8bf008803f1821332a27",
+    "semantic_hash": "1fbbbefddd5c8bf008803f1821332a27"
+  },
+  "resources/views/livewire/judge/preliminaries/ms/nationalcostume-score-board-component.blade.php": {
+    "mtime": 1790219982.274503,
+    "seen": 1790220155.58558,
+    "ast_hash": "4b11a149a7d0cae61e5f9a87040cc47e",
+    "semantic_hash": "4b11a149a7d0cae61e5f9a87040cc47e"
+  },
+  "resources/views/livewire/judge/preliminaries/ms/qna-score-board-component.blade.php": {
+    "mtime": 1790219982.2747176,
+    "seen": 1790220155.585581,
+    "ast_hash": "2a81c48518da7d2b0c6b397afbad6f05",
+    "semantic_hash": "2a81c48518da7d2b0c6b397afbad6f05"
+  },
+  "resources/views/livewire/judge/preliminaries/ms/score-board-component.blade.php": {
+    "mtime": 1790219982.2749128,
+    "seen": 1790220155.585581,
+    "ast_hash": "2cd2daa0c5acfc541212c6bba500fb20",
+    "semantic_hash": "2cd2daa0c5acfc541212c6bba500fb20"
+  },
+  "resources/views/livewire/judge/preliminaries/ms/swimwear-score-board-component.blade.php": {
+    "mtime": 1790219982.2751055,
+    "seen": 1790220155.585582,
+    "ast_hash": "7ddb49b757a7337a4be17ba3ced43c9f",
+    "semantic_hash": "7ddb49b757a7337a4be17ba3ced43c9f"
+  },
+  "resources/views/livewire/judge/prepageant/mr/ravewear-score-board-component.blade.php": {
+    "mtime": 1790219982.2752898,
+    "seen": 1790220155.585582,
+    "ast_hash": "cdc4e3267f3c2deb3cc88ea95ff13657",
+    "semantic_hash": "cdc4e3267f3c2deb3cc88ea95ff13657"
+  },
+  "resources/views/livewire/judge/prepageant/mr/score-board-component.blade.php": {
+    "mtime": 1790219982.275519,
+    "seen": 1790220155.5855832,
+    "ast_hash": "36de22362585618c96ebd642e7bb73dc",
+    "semantic_hash": "36de22362585618c96ebd642e7bb73dc"
+  },
+  "resources/views/livewire/judge/prepageant/mr/talent-score-board-component.blade.php": {
+    "mtime": 1790219982.2757082,
+    "seen": 1790220155.5855832,
+    "ast_hash": "2067423dd0c0c63c605ee00522612c2e",
+    "semantic_hash": "2067423dd0c0c63c605ee00522612c2e"
+  },
+  "resources/views/livewire/judge/prepageant/ms/ravewear-score-board-component.blade.php": {
+    "mtime": 1790219982.2759337,
+    "seen": 1790220155.5855842,
+    "ast_hash": "0ee4b0a50c7e9b0eaa780d1652d4dfbd",
+    "semantic_hash": "0ee4b0a50c7e9b0eaa780d1652d4dfbd"
+  },
+  "resources/views/livewire/judge/prepageant/ms/score-board-component.blade.php": {
+    "mtime": 1790219982.276166,
+    "seen": 1790220155.5855842,
+    "ast_hash": "9b54938d3394caad6510c6f76b31b988",
+    "semantic_hash": "9b54938d3394caad6510c6f76b31b988"
+  },
+  "resources/views/livewire/judge/prepageant/ms/talent-score-board-component.blade.php": {
+    "mtime": 1790219982.2763448,
+    "seen": 1790220155.5855842,
+    "ast_hash": "1162acbfa1fe86def531209cfc285ccf",
+    "semantic_hash": "1162acbfa1fe86def531209cfc285ccf"
+  },
+  "resources/views/livewire/judge/score-board-component.blade.php": {
+    "mtime": 1790219982.276517,
+    "seen": 1790220155.5855849,
+    "ast_hash": "a65d027ab2b05c0aefddc884d7cf3f9d",
+    "semantic_hash": "a65d027ab2b05c0aefddc884d7cf3f9d"
+  },
+  "resources/views/livewire/judge/semifinal/score-board-component.blade.php": {
+    "mtime": 1790219982.2767236,
+    "seen": 1790220155.5855849,
+    "ast_hash": "c30905cba16a91a6d3805f5e54eddde5",
+    "semantic_hash": "c30905cba16a91a6d3805f5e54eddde5"
+  },
+  "resources/views/livewire/judge/talent-score-board-component.blade.php": {
+    "mtime": 1790219982.2769012,
+    "seen": 1790220155.5855858,
+    "ast_hash": "0e3545bcad0109c71ccad742fdf6cc03",
+    "semantic_hash": "0e3545bcad0109c71ccad742fdf6cc03"
+  },
+  "resources/views/welcome.blade.php": {
+    "mtime": 1790209791.5433397,
+    "seen": 1790220155.5855858,
+    "ast_hash": "0db3e592346c0450ed390b5d3dc23d03",
+    "semantic_hash": "0db3e592346c0450ed390b5d3dc23d03"
+  },
+  "routes/api.php": {
+    "mtime": 1790209791.5434334,
+    "seen": 1790220155.585587,
+    "ast_hash": "d494d8545ef2cbea526a5013d67eb79b",
+    "semantic_hash": "d494d8545ef2cbea526a5013d67eb79b"
+  },
+  "routes/channels.php": {
+    "mtime": 1790209791.5434744,
+    "seen": 1790220155.585587,
+    "ast_hash": "5edf0b9faf77f23d5bb0474740fe651d",
+    "semantic_hash": "5edf0b9faf77f23d5bb0474740fe651d"
+  },
+  "routes/console.php": {
+    "mtime": 1790209791.5435147,
+    "seen": 1790220155.585587,
+    "ast_hash": "62bfb59371c073b4ec966528fdd9c3f9",
+    "semantic_hash": "62bfb59371c073b4ec966528fdd9c3f9"
+  },
+  "routes/web.php": {
+    "mtime": 1790209806.0503118,
+    "seen": 1790220155.585588,
+    "ast_hash": "99b55cefb87a544a336c60023ca130aa",
+    "semantic_hash": "99b55cefb87a544a336c60023ca130aa"
+  }
+}
