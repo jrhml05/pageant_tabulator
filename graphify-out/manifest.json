@@ -1,13 +1,13 @@
 {
   "app/Console/Kernel.php": {
-    "mtime": 1790209791.3233998,
-    "seen": 1790220155.585407,
+    "mtime": 1792474728.4144661,
+    "seen": 1792474948.429141,
     "ast_hash": "1ce1d77f70052683f75133889accff9c",
     "semantic_hash": "1ce1d77f70052683f75133889accff9c"
   },
   "app/Exceptions/Handler.php": {
-    "mtime": 1790209791.3235009,
-    "seen": 1790220155.585407,
+    "mtime": 1792474728.4146361,
+    "seen": 1792474948.429141,
     "ast_hash": "5f6ef611918d74d8df793dc581740f8f",
     "semantic_hash": "5f6ef611918d74d8df793dc581740f8f"
   },
@@ -36,9 +36,9 @@
     "semantic_hash": "a0af384fdf2cfddc6d036acea021da97"
   },
   "app/Http/Controllers/HomeController.php": {
-    "mtime": 1790652527.584085,
-    "seen": 1790653697.769753,
-    "ast_hash": "8c9ec95072c65518df143e1619cac1ac",
+    "mtime": 1792562938.5106087,
+    "seen": 1792563054.0894852,
+    "ast_hash": "8d0820d12bd61e7f28ee4792d62b587a",
     "semantic_hash": ""
   },
   "app/Http/Controllers/JudgeAppController.php": {
@@ -60,8 +60,8 @@
     "semantic_hash": ""
   },
   "app/Http/Middleware/Authenticate.php": {
-    "mtime": 1790209791.327204,
-    "seen": 1790220155.585432,
+    "mtime": 1792474728.4147654,
+    "seen": 1792474948.429151,
     "ast_hash": "1a28ab8a480d33b5e262412c084e77b2",
     "semantic_hash": "1a28ab8a480d33b5e262412c084e77b2"
   },
@@ -156,14 +156,14 @@
     "semantic_hash": ""
   },
   "config/app.php": {
-    "mtime": 1790219982.2706988,
-    "seen": 1790220155.5854511,
+    "mtime": 1792474728.415023,
+    "seen": 1792474948.429167,
     "ast_hash": "11d85d85e10576efc32b199ac834a830",
     "semantic_hash": "11d85d85e10576efc32b199ac834a830"
   },
   "config/auth.php": {
-    "mtime": 1790209791.3304644,
-    "seen": 1790220155.585452,
+    "mtime": 1792474728.4151266,
+    "seen": 1792474948.4291682,
     "ast_hash": "7729674f5efcbbb7a2ada057581d44ae",
     "semantic_hash": "7729674f5efcbbb7a2ada057581d44ae"
   },
@@ -258,9 +258,9 @@
     "semantic_hash": ""
   },
   "resources/js/app.js": {
-    "mtime": 1790653011.6311042,
-    "seen": 1790653697.76979,
-    "ast_hash": "973e46014864836d5bdf2dca25b74cf5",
+    "mtime": 1792562922.6346512,
+    "seen": 1792563054.089522,
+    "ast_hash": "10c862939a1d377231eefd9f34987784",
     "semantic_hash": ""
   },
   "resources/views/admin/candidates/index.blade.php": {
@@ -294,9 +294,9 @@
     "semantic_hash": ""
   },
   "resources/views/home.blade.php": {
-    "mtime": 1790653180.2055295,
-    "seen": 1790653697.769805,
-    "ast_hash": "ee96b76cdd346a216b007eba9ee5f1fb",
+    "mtime": 1792562938.5109997,
+    "seen": 1792563054.08954,
+    "ast_hash": "6c8bd6bb2861bbf696ba594fdde2c648",
     "semantic_hash": ""
   },
   "resources/views/judge_app/index.blade.php": {
@@ -342,9 +342,9 @@
     "semantic_hash": "62bfb59371c073b4ec966528fdd9c3f9"
   },
   "routes/web.php": {
-    "mtime": 1790654511.425068,
-    "seen": 1790654669.317556,
-    "ast_hash": "9739f0d5b0697edfcd48109781fd65fc",
+    "mtime": 1792036699.6416657,
+    "seen": 1792036772.178525,
+    "ast_hash": "a0a78ebf12e9467424e6523c1ce9f060",
     "semantic_hash": ""
   },
   "artisan": {
@@ -450,8 +450,8 @@
     "semantic_hash": ""
   },
   "tests/CreatesApplication.php": {
-    "mtime": 1790209791.5442894,
-    "seen": 1790221873.4078772,
+    "mtime": 1792474728.4152682,
+    "seen": 1792474948.429215,
     "ast_hash": "cb2f21cebfcc89f2c0d910dcc8c98815",
     "semantic_hash": ""
   },
@@ -468,9 +468,9 @@
     "semantic_hash": ""
   },
   "CLAUDE.md": {
-    "mtime": 1790671110.7160773,
-    "seen": 1790671111.462409,
-    "ast_hash": "9c9744a99adcaa96aba25650e500b3d7",
+    "mtime": 1792563053.3661482,
+    "seen": 1792563054.089552,
+    "ast_hash": "9f0fee722fdce8793a95a893825a4546",
     "semantic_hash": ""
   },
   "README.md": {
@@ -666,9 +666,9 @@
     "semantic_hash": ""
   },
   "DESIGN.md": {
-    "mtime": 1790665671.0374258,
-    "seen": 1790665671.6421728,
-    "ast_hash": "cd33d9a19f8f11755e3d4a35eca18046",
+    "mtime": 1792035663.2877011,
+    "seen": 1792035781.823638,
+    "ast_hash": "3cfa12263871b0c89c427651f8fe759d",
     "semantic_hash": ""
   },
   "resources/views/admin/candidates/create.blade.php": {
@@ -690,9 +690,9 @@
     "semantic_hash": ""
   },
   ".claude/launch.json": {
-    "mtime": 1790653146.5369852,
-    "seen": 1790653697.769744,
-    "ast_hash": "596576e76eec71abdc5e7314c9079db3",
+    "mtime": 1792036771.5088072,
+    "seen": 1792036772.178455,
+    "ast_hash": "4a7d2b081c5388542b4b7cac050a56a6",
     "semantic_hash": ""
   },
   "app/Console/Commands/ClearScores.php": {
@@ -702,9 +702,9 @@
     "semantic_hash": ""
   },
   "app/Http/Controllers/ResultsController.php": {
-    "mtime": 1790665598.832988,
-    "seen": 1790665671.6421041,
-    "ast_hash": "cf5a7af6833f18655195e75976663e67",
+    "mtime": 1792562910.1528404,
+    "seen": 1792563054.0894861,
+    "ast_hash": "7729a71a0d5dcfc6439cdc719da394ac",
     "semantic_hash": ""
   },
   "app/Http/Controllers/SegmentController.php": {
@@ -750,21 +750,21 @@
     "semantic_hash": ""
   },
   "app/Scoring/Segment.php": {
-    "mtime": 1790671002.3752925,
-    "seen": 1790671111.462359,
-    "ast_hash": "9e1982d7bd8bb54bc0f022b3ad606783",
+    "mtime": 1792562886.0270643,
+    "seen": 1792563054.0895019,
+    "ast_hash": "035c78b296605d7e9576395da0275221",
     "semantic_hash": ""
   },
   "app/Scoring/Tabulator.php": {
-    "mtime": 1790671032.4627743,
-    "seen": 1790671111.4623601,
-    "ast_hash": "82714b93bf2447270c906a05f8490d96",
+    "mtime": 1792546636.9580536,
+    "seen": 1792546843.584537,
+    "ast_hash": "3c3428f546a696325ba530a5d1c59b97",
     "semantic_hash": ""
   },
   "config/pageant.php": {
-    "mtime": 1790671002.3752036,
-    "seen": 1790671111.462368,
-    "ast_hash": "44745e8be8c002b56299b154795ac86f",
+    "mtime": 1792546667.0940306,
+    "seen": 1792546843.584546,
+    "ast_hash": "d216115c811a6e41677e4b8b1a80fc34",
     "semantic_hash": ""
   },
   "database/migrations/0001_01_01_000000_create_users_table.php": {
@@ -804,15 +804,15 @@
     "semantic_hash": ""
   },
   "resources/views/admin/results/pdf/round1.blade.php": {
-    "mtime": 1790652771.276774,
-    "seen": 1790653697.7697952,
-    "ast_hash": "e6884b257a4e1be2b95795e104e6496a",
+    "mtime": 1792546667.0939362,
+    "seen": 1792546843.584565,
+    "ast_hash": "44b39a0aea68652180483988c9ecfa81",
     "semantic_hash": ""
   },
   "resources/views/admin/results/pdf/segment.blade.php": {
-    "mtime": 1790671053.8360171,
-    "seen": 1790671111.462386,
-    "ast_hash": "df843dbaf42e1ea17d7755edf7c81b7b",
+    "mtime": 1792474596.3203151,
+    "seen": 1792474948.429195,
+    "ast_hash": "cdc893f3c7eb78693990253a7280b18e",
     "semantic_hash": ""
   },
   "resources/views/admin/results/pdf/signatures.blade.php": {
@@ -822,15 +822,15 @@
     "semantic_hash": ""
   },
   "resources/views/admin/results/round1.blade.php": {
-    "mtime": 1790665598.8328197,
-    "seen": 1790665671.6421492,
-    "ast_hash": "f67585998b7f372787fb96a9c693532f",
+    "mtime": 1792562922.6340604,
+    "seen": 1792563054.089531,
+    "ast_hash": "4176c31cd40ba81340b192017e817c3b",
     "semantic_hash": ""
   },
   "resources/views/admin/results/segment.blade.php": {
-    "mtime": 1790671053.8357623,
-    "seen": 1790671111.4623868,
-    "ast_hash": "b8511d845afa3901b1b10e66c7c68ae7",
+    "mtime": 1792562951.7243133,
+    "seen": 1792563054.089531,
+    "ast_hash": "7a91b944bd4aaeec3d89a63e99aa9aa4",
     "semantic_hash": ""
   },
   "resources/views/admin/results/tables/judge.blade.php": {
@@ -846,15 +846,15 @@
     "semantic_hash": ""
   },
   "resources/views/admin/results/tables/round1.blade.php": {
-    "mtime": 1790658815.89254,
-    "seen": 1790658855.0143669,
-    "ast_hash": "cd1b5e23feb0ce748c30c2376e562301",
+    "mtime": 1792546650.263481,
+    "seen": 1792546843.5845702,
+    "ast_hash": "26dc373231946c719f54b1fae940b024",
     "semantic_hash": ""
   },
   "resources/views/admin/results/tables/segment.blade.php": {
-    "mtime": 1790671044.113557,
-    "seen": 1790671111.46239,
-    "ast_hash": "c3749247d5120871d032ebd82dd30214",
+    "mtime": 1792474596.319525,
+    "seen": 1792474948.4291992,
+    "ast_hash": "80ad9a39ba7593228c6880b3b7f52b77",
     "semantic_hash": ""
   },
   "resources/views/admin/results/tables/value.blade.php": {
@@ -888,9 +888,9 @@
     "semantic_hash": ""
   },
   "tests/Feature/PagesTest.php": {
-    "mtime": 1790665625.8020372,
-    "seen": 1790665671.642168,
-    "ast_hash": "4fe3d996c0527e0262c0850dc5e7f8c3",
+    "mtime": 1792563009.938561,
+    "seen": 1792563054.089548,
+    "ast_hash": "f6fb12b8d7cf759841ed2643c2157e2c",
     "semantic_hash": ""
   },
   "tests/Feature/ScoreSheetTest.php": {
@@ -900,15 +900,15 @@
     "semantic_hash": ""
   },
   "tests/Feature/ScoringConfigTest.php": {
-    "mtime": 1790671075.9759567,
-    "seen": 1790671111.462406,
-    "ast_hash": "16ca9d7e4820de7f82ac239f97807c13",
+    "mtime": 1792474709.3118987,
+    "seen": 1792474948.429217,
+    "ast_hash": "59d992aca94f4d9b03868669dc848e89",
     "semantic_hash": ""
   },
   "tests/Feature/TabulatorTest.php": {
-    "mtime": 1790671075.975612,
-    "seen": 1790671111.462406,
-    "ast_hash": "c71d71c5855ccf15271a1827484f72aa",
+    "mtime": 1792546723.0850043,
+    "seen": 1792546843.584589,
+    "ast_hash": "299194789a32c3152196469b73d9d6cf",
     "semantic_hash": ""
   },
   "tests/Unit/ScoringRulesTest.php": {
@@ -930,9 +930,15 @@
     "semantic_hash": ""
   },
   "tests/Feature/AnnouncementTest.php": {
-    "mtime": 1790654577.6003006,
-    "seen": 1790654669.317558,
-    "ast_hash": "702743d998c607e536eb3a8366464270",
+    "mtime": 1792029177.1577523,
+    "seen": 1792029277.590104,
+    "ast_hash": "4a1fb139ddaca2cd0bd706263c9ad301",
+    "semantic_hash": ""
+  },
+  "resources/views/admin/results/pdf/winner.blade.php": {
+    "mtime": 1792562959.993451,
+    "seen": 1792563054.0895302,
+    "ast_hash": "f97ac7407937d28165a3385f82c6db56",
     "semantic_hash": ""
   }
 }

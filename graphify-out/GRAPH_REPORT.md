@@ -1,21 +1,21 @@
-# Graph Report - pageant_tabulator  (2026-09-30)
+# Graph Report - pageant_tabulator  (2026-10-21)
 
 ## Corpus Check
-- 128 files · ~1,640,303 words
+- 129 files · ~1,645,559 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 546 nodes · 838 edges · 82 communities (24 shown, 18 thin omitted)
-- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 7 edges (avg confidence: 0.85)
+- 579 nodes · 967 edges · 84 communities (23 shown, 21 thin omitted)
+- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 9 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `e10b5086`
+- Built from commit: `db6fe3f7`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
-- Segment
+- CreatesApplication
 - score-sheet.blade.php
 - composer.json
 - pdf/round1.blade.php
@@ -26,19 +26,21 @@
 - Candidate
 - Illuminate\Database\Seeder
 - results/round1.blade.php
+- Tabulator
 - judge.blade.php
+- ScoreSheet
 - Controller
 - CLAUDE.md
-- ScoreSheet
+- Segment
 - CandidateController
 - README.md
 - AppServiceProvider
 - 0001_01_01_000000_create_users_table.php
 - announcement.blade.php
-- ResizeCandidatePhotos
+- Illuminate\Console\Command
+- AnnouncementTest
 - Illuminate\Http\Request
-- ResultsController
-- CreatesApplication
+- winner.blade.php
 - Illuminate\Support\Str
 - EventServiceProvider.php
 - Kernel
@@ -59,16 +61,16 @@
 - views/layouts/app.blade.php
 
 ## God Nodes (most connected - your core abstractions)
-1. `Candidate` - 52 edges
-2. `User` - 45 edges
-3. `Segment` - 40 edges
-4. `Score` - 25 edges
-5. `ScoreLock` - 20 edges
-6. `Tabulator` - 19 edges
-7. `PagesTest` - 19 edges
-8. `ScoreSheet` - 18 edges
-9. `ScoreSheetTest` - 18 edges
-10. `OpenSegment` - 17 edges
+1. `Candidate` - 60 edges
+2. `User` - 54 edges
+3. `Segment` - 54 edges
+4. `Score` - 37 edges
+5. `Tabulator` - 34 edges
+6. `PagesTest` - 29 edges
+7. `ScoreLock` - 26 edges
+8. `TabulatorTest` - 25 edges
+9. `ScoreSheet` - 18 edges
+10. `ScoreSheetTest` - 18 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `AnnouncementTest` --references--> `User`  [EXTRACTED]
@@ -85,11 +87,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (82 total, 18 thin omitted)
-
-### Community 0 - "Segment"
-Cohesion: 0.09
-Nodes (6): Segment, Tabulator, Illuminate\Support\Collection, self, ScoringConfigTest, TabulatorTest
+## Communities (84 total, 21 thin omitted)
 
 ### Community 1 - "score-sheet.blade.php"
 Cohesion: 0.50
@@ -104,12 +102,16 @@ Cohesion: 0.11
 Nodes (18): devDependencies, @fontsource-variable/ibm-plex-sans, @fortawesome/fontawesome-free, laravel-vite-plugin, tailwindcss, @tailwindcss/vite, vite, private (+10 more)
 
 ### Community 8 - "Candidate"
-Cohesion: 0.06
-Nodes (20): ClearScores, SegmentController, Candidate, OpenSegment, Score, User, Illuminate\Database\Eloquent\Builder, Illuminate\Database\Eloquent\Factories\HasFactory (+12 more)
+Cohesion: 0.05
+Nodes (22): ClearScores, HomeController, SegmentController, Candidate, OpenSegment, Score, ScoreLock, User (+14 more)
 
 ### Community 9 - "Illuminate\Database\Seeder"
-Cohesion: 0.19
-Nodes (6): CandidateSeeder, DatabaseSeeder, UserSeeder, Illuminate\Database\Seeder, Illuminate\Support\Facades\Hash, Illuminate\Validation\Rule
+Cohesion: 0.24
+Nodes (5): CandidateSeeder, DatabaseSeeder, UserSeeder, Illuminate\Database\Seeder, Illuminate\Support\Facades\Hash
+
+### Community 14 - "ScoreSheet"
+Cohesion: 0.10
+Nodes (8): ScoreSheet, Points, Livewire\Attributes\Computed, Livewire\Attributes\Locked, Livewire\Component, PHPUnit\Framework\Attributes\DataProvider, PHPUnit\Framework\TestCase, ScoringRulesTest
 
 ### Community 15 - "Controller"
 Cohesion: 0.15
@@ -119,9 +121,9 @@ Nodes (11): ConfirmPasswordController, LoginController, Controller, RouteService
 Cohesion: 0.22
 Nodes (7): Architecture, Commands, Gotchas, Scoring rules, Serving, UI, What this is
 
-### Community 20 - "ScoreSheet"
-Cohesion: 0.10
-Nodes (8): ScoreSheet, Points, Livewire\Attributes\Computed, Livewire\Attributes\Locked, Livewire\Component, PHPUnit\Framework\Attributes\DataProvider, PHPUnit\Framework\TestCase, ScoringRulesTest
+### Community 20 - "Segment"
+Cohesion: 0.12
+Nodes (4): Segment, Illuminate\Support\Collection, self, ScoringConfigTest
 
 ### Community 21 - "CandidateController"
 Cohesion: 0.16
@@ -139,17 +141,13 @@ Nodes (4): AppServiceProvider, BroadcastServiceProvider, Illuminate\Support\Faca
 Cohesion: 0.23
 Nodes (3): Illuminate\Database\Migrations\Migration, Illuminate\Database\Schema\Blueprint, Illuminate\Support\Facades\Schema
 
-### Community 31 - "ResizeCandidatePhotos"
+### Community 31 - "Illuminate\Console\Command"
 Cohesion: 0.33
 Nodes (3): ResizeCandidatePhotos, ServeForEvent, Illuminate\Console\Command
 
-### Community 32 - "Illuminate\Http\Request"
-Cohesion: 0.09
-Nodes (16): HomeController, JudgeAppController, UserController, RedirectIfAuthenticated, UserAccess, ScoreLock, Closure, Illuminate\Cache\RateLimiting\Limit (+8 more)
-
-### Community 33 - "ResultsController"
-Cohesion: 0.14
-Nodes (4): ResultsController, Announcement, Barryvdh\DomPDF\Facade\Pdf, AnnouncementTest
+### Community 33 - "Illuminate\Http\Request"
+Cohesion: 0.07
+Nodes (18): JudgeAppController, ResultsController, UserController, RedirectIfAuthenticated, UserAccess, Announcement, Barryvdh\DomPDF\Facade\Pdf, Closure (+10 more)
 
 ### Community 36 - "Illuminate\Support\Str"
 Cohesion: 0.29
@@ -176,32 +174,32 @@ Cohesion: 0.50
 Nodes (3): Monolog\Handler\NullHandler, Monolog\Handler\StreamHandler, Monolog\Handler\SyslogUdpHandler
 
 ### Community 132 - "app.js"
-Cohesion: 0.27
-Nodes (6): pollSegments(), pollTables(), refreshTables(), request(), setLiveNote(), SignedOutError
+Cohesion: 0.26
+Nodes (7): pollSegments(), pollTables(), refreshTables(), request(), setLiveNote(), SignedOutError, swapRegion()
 
 ### Community 287 - "Design: Mr. & Ms. LCUAA 2026 Tabulation"
 Cohesion: 0.50
 Nodes (3): Decisions and reasons, Design: Mr. & Ms. LCUAA 2026 Tabulation, Identity motif
 
 ## Knowledge Gaps
-- **81 isolated node(s):** `name`, `type`, `description`, `keywords`, `license` (+76 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 249 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **18 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **82 isolated node(s):** `name`, `type`, `description`, `keywords`, `license` (+77 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 254 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **21 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Candidate` connect `Candidate` to `Illuminate\Http\Request`, `ResultsController`, `Segment`, `Illuminate\Database\Seeder`, `ScoreSheet`, `CandidateController`?**
-  _High betweenness centrality (0.081) - this node is a cross-community bridge._
-- **Why does `User` connect `Candidate` to `Illuminate\Http\Request`, `ResultsController`, `Illuminate\Database\Seeder`, `Segment`?**
+- **Why does `Candidate` connect `Candidate` to `AnnouncementTest`, `Illuminate\Http\Request`, `Illuminate\Database\Seeder`, `Tabulator`, `ScoreSheet`, `Segment`, `CandidateController`?**
+  _High betweenness centrality (0.079) - this node is a cross-community bridge._
+- **Why does `User` connect `Candidate` to `AnnouncementTest`, `Illuminate\Http\Request`, `Illuminate\Database\Seeder`, `Tabulator`, `Segment`?**
   _High betweenness centrality (0.063) - this node is a cross-community bridge._
-- **Why does `Segment` connect `Segment` to `Illuminate\Http\Request`, `ResultsController`, `ScoreSheet`, `Candidate`?**
-  _High betweenness centrality (0.045) - this node is a cross-community bridge._
+- **Why does `Segment` connect `Segment` to `Candidate`, `Illuminate\Http\Request`, `Tabulator`, `ScoreSheet`?**
+  _High betweenness centrality (0.053) - this node is a cross-community bridge._
 - **What connects `name`, `type`, `description` to the rest of the system?**
-  _81 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `Segment` be split into smaller, more focused modules?**
-  _Cohesion score 0.09487179487179487 - nodes in this community are weakly interconnected._
+  _82 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `composer.json` be split into smaller, more focused modules?**
   _Cohesion score 0.045454545454545456 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.11052631578947368 - nodes in this community are weakly interconnected._
+- **Should `Candidate` be split into smaller, more focused modules?**
+  _Cohesion score 0.05399719495091164 - nodes in this community are weakly interconnected._
