@@ -48,7 +48,9 @@ class PagesTest extends TestCase
         $this->seedSomeScores();
         $this->actingAs($this->admin);
 
-        $this->get('/home')->assertOk()->assertSee('Talent')->assertSee('Round 2 (top 5)');
+        $this->get('/home')->assertOk()->assertSee('Talent')->assertSee('Round 2 (top 5)')
+            ->assertSee('Pageant night, Special award')->assertSee('Casual wear');
+        $this->get('/reset-scores')->assertOk()->assertSee('Special awards')->assertSee('Casual wear');
         $this->get('/candidates')->assertOk();
         $this->get('/candidates/ms/create')->assertOk();
         $this->get('/candidates/mr/3/edit')->assertOk()->assertSee('No. 3');
@@ -63,7 +65,7 @@ class PagesTest extends TestCase
                 $this->get("/results/{$division}/{$segment}?judge=1")->assertOk();
                 $this->get("/results/{$division}/{$segment}/print")->assertOk()->assertHeader('content-type', 'application/pdf');
                 $this->get("/results/{$division}/{$segment}/print?judge=1")->assertOk();
-                $this->get("/results/{$division}/{$segment}/winner")->assertOk()->assertHeader('content-type', 'application/pdf');
+                $this->get("/results/{$division}/{$segment}/winners")->assertOk()->assertHeader('content-type', 'application/pdf');
             }
         }
 
@@ -79,6 +81,7 @@ class PagesTest extends TestCase
         $this->assertSame(1, substr_count($sidebar, 'Overall and finalists'));
         $this->assertStringNotContainsString('Ms. LCUAA results', $sidebar);
         $this->assertStringContainsString('href="'.route('results.segment', ['ms', 'talent']).'"', $sidebar);
+        $this->assertStringContainsString('href="'.route('results.segment', ['ms', 'casual_wear']).'"', $sidebar);
 
         // The switch keeps the page and the judge tab, and marks the division shown.
         $this->get('/results/ms/talent?judge=2')->assertOk()
@@ -153,7 +156,7 @@ class PagesTest extends TestCase
 
     public function test_round_one_flags_saved_finalists_that_differ_from_the_top_five(): void
     {
-        // Mr. No. 1 to 7, ranked in number order by both panels.
+        // Mr. No. 1 to 7, scored highest to lowest in number order.
         Candidate::division('mr')->where('number', '>', 7)->delete();
         $mr = Candidate::division('mr')->orderBy('number')->get()->keyBy('number');
         $this->scoreRoundOne($mr, [1 => 0.9, 2 => 0.85, 3 => 0.8, 4 => 0.75, 5 => 0.7, 6 => 0.65, 7 => 0.6]);
@@ -230,10 +233,10 @@ class PagesTest extends TestCase
 
         $this->actingAs($this->admin);
         $this->get('/results/ms/final')
-            ->assertSeeInOrder(['All 5 judges locked in, but No. 6', "isn't scored by every judge, so ranks wait for them."])
+            ->assertSeeInOrder(['All 5 judges locked in, but No. 6', "isn't scored by every judge, so that average leaves judges out."])
             ->assertDontSee('These results are final');
         $this->get('/home')->assertSee("All 5 judges locked in, but Ms. No. 6 isn't scored by every judge");
-        $this->get('/results/ms/final/winner')->assertOk();
+        $this->get('/results/ms/final/winners')->assertOk()->assertHeader('content-type', 'application/pdf');
     }
 
     /** The pageant night judges score these finalists (by number) in Round 2 and lock in. */
@@ -317,23 +320,70 @@ class PagesTest extends TestCase
         $this->assertSame(0, Score::count());
     }
 
-    public function test_segment_sheets_show_each_judges_rank_under_their_total(): void
+    public function test_segment_sheets_show_judge_totals_and_their_average_without_judge_ranks(): void
     {
         $judges = User::onPanel('prepageant')->get();
-        // Judge 1 scores every Ms. candidate, rising with the number; judge 2 scores only No. 1.
-        foreach (Candidate::division('ms')->get() as $candidate) {
-            foreach (['skill' => $candidate->number / 2, 'performance' => 0] as $criterion => $points) {
-                Score::create(['segment' => 'talent', 'candidate_id' => $candidate->id, 'judge_id' => $judges[0]->id, 'criterion' => $criterion, 'points' => $points]);
-            }
-        }
         $first = Candidate::division('ms')->where('number', 1)->first();
-        Score::create(['segment' => 'talent', 'candidate_id' => $first->id, 'judge_id' => $judges[1]->id, 'criterion' => 'skill', 'points' => 7]);
-        Score::create(['segment' => 'talent', 'candidate_id' => $first->id, 'judge_id' => $judges[1]->id, 'criterion' => 'performance', 'points' => 7]);
-        $last = Candidate::division('ms')->count();
+        // Judge 1 gives No. 1 a total of 80, judge 2 a total of 90: an average of 85.
+        foreach ([[$judges[0], 40, 40], [$judges[1], 45, 45]] as [$judge, $skill, $performance]) {
+            Score::create(['segment' => 'talent', 'candidate_id' => $first->id, 'judge_id' => $judge->id, 'criterion' => 'skill', 'points' => $skill]);
+            Score::create(['segment' => 'talent', 'candidate_id' => $first->id, 'judge_id' => $judge->id, 'criterion' => 'performance', 'points' => $performance]);
+        }
+        $this->actingAs($this->admin);
 
-        $page = $this->actingAs($this->admin)->get('/results/ms/talent')->assertOk()->assertSee('rank 1')->assertSee("rank {$last}");
-        // Judge 2 hasn't scored everyone, so only judge 1's ranks appear: one per candidate.
-        $this->assertSame($last, substr_count($page->getContent(), '<span class="sub">rank '));
+        $this->get('/results/ms/talent')->assertOk()
+            ->assertSeeInOrder(['No. 1', '80.00', '90.00', '85.00'])
+            ->assertDontSee('<span class="sub">rank', false);
+        $this->get('/results/ms/talent?judge=1')->assertOk()->assertDontSee('<th scope="col">Rank</th>', false);
+    }
+
+    public function test_a_judges_talent_sheet_shows_what_each_total_adds_to_round_one(): void
+    {
+        $candidate = Candidate::division('ms')->orderBy('number')->first();
+        $judge = User::where('username', 'prejudge1')->first();
+        // 87.33 out of 100 counts 13.0995 of Talent's 15%.
+        foreach (['skill' => 43.33, 'performance' => 44] as $criterion => $points) {
+            Score::create(['segment' => 'talent', 'candidate_id' => $candidate->id, 'judge_id' => $judge->id, 'criterion' => $criterion, 'points' => $points]);
+        }
+        $this->actingAs($this->admin);
+
+        $this->get('/results/ms/talent?judge=1')->assertOk()
+            ->assertSeeInOrder(['Round 1 (15%)', 'of 15', 'No. '.$candidate->number, '87.33', '13.10']);
+        $this->get('/results/ms/talent/print?judge=1')->assertOk();
+        // A segment scored out of its own weight needs no extra column.
+        $this->get('/results/ms/thematic_wear?judge=1')->assertOk()->assertDontSee('Round 1 (');
+    }
+
+    public function test_the_seeder_gives_each_school_one_candidate_per_division(): void
+    {
+        foreach (array_keys(config('pageant.divisions')) as $division) {
+            $this->assertSame(range(1, 9), Candidate::division($division)->orderBy('number')->pluck('number')->all());
+            $this->assertSame('Pateros Technological College', Candidate::division($division)->where('number', 1)->value('school'));
+            $this->assertSame('City College of Angeles', Candidate::division($division)->where('number', 9)->value('school'));
+        }
+    }
+
+    public function test_schools_show_on_printed_results_only(): void
+    {
+        $this->actingAs($this->admin);
+        $school = 'Pateros Technological College';
+
+        $this->get('/results/ms/round-1')->assertOk()->assertDontSee($school);
+        $this->get('/results/ms/talent')->assertOk()->assertDontSee($school);
+        $this->get('/results/ms/talent?judge=1')->assertOk()->assertDontSee($school);
+
+        $tabulator = new Tabulator;
+        $segment = $tabulator->segment(Segment::find('talent'), 'ms');
+        $judge = $segment['judges']->first();
+        $tables = [
+            ['admin.results.tables.round1', ['result' => $tabulator->roundOne('ms')]],
+            ['admin.results.tables.segment', ['result' => $segment, 'division' => 'ms']],
+            ['admin.results.tables.judge', ['result' => $segment, 'judge' => $judge]],
+        ];
+        foreach ($tables as [$view, $data]) {
+            $this->assertStringContainsString($school, view($view, $data + ['print' => true])->render(), $view);
+            $this->assertStringNotContainsString($school, view($view, $data + ['print' => false])->render(), $view);
+        }
     }
 
     public function test_segment_sheets_list_candidates_by_number_and_print_the_winner(): void
@@ -352,18 +402,121 @@ class PagesTest extends TestCase
 
         $this->get('/results/ms/wit')->assertOk()
             ->assertSeeInOrder(['No. 1', 'No. 2', 'No. 3'])
-            ->assertSee('href="'.route('results.segment.winner', ['ms', 'wit']).'"', false);
-        $this->get('/results/ms/wit?judge=1')->assertOk()->assertDontSee(route('results.segment.winner', ['ms', 'wit']));
+            ->assertSee('href="'.route('results.segment.winners', ['ms', 'wit']).'"', false)
+            ->assertSee('Print winner')
+            ->assertDontSee('Announcement of winners');
+        $this->get('/results/ms/wit?judge=1')->assertOk()->assertDontSee(route('results.segment.winners', ['ms', 'wit']));
 
         $result = (new Tabulator)->segment(Segment::find('wit'), 'ms');
-        $html = view('admin.results.pdf.winner', [
+        $html = view('admin.results.pdf.winners', [
+            'division' => 'ms',
             'label' => 'Ms. LCUAA',
             'result' => $result,
-            'winners' => collect($result['rows'])->where('rank', 1)->values(),
+            'winners' => Tabulator::winners($result),
         ])->render();
-        $this->assertStringContainsString('No. 3', $html);
-        $this->assertStringNotContainsString('No. 1<', $html);
+        $this->assertStringContainsString('Wit &amp; verbal ability (Q&amp;A): winner', $html);
+        $this->assertStringContainsString('No. 3<', $html);
+        $this->assertStringNotContainsString('No. 2<', $html);
+        $this->assertStringNotContainsString('runner-up', $html);
         $this->assertStringContainsString('0 of 5 judges have locked in', $html);
+    }
+
+    public function test_round_two_prints_the_announcement_of_winners_from_the_4th_runner_up_to_the_winner(): void
+    {
+        $ms = Candidate::division('ms')->orderBy('number')->get()->keyBy('number');
+        // No. 1 places first, No. 6 sixth.
+        $this->roundTwoScoredAndLocked($ms, [1, 2, 3, 4, 5, 6]);
+        $this->actingAs($this->admin);
+
+        $this->get('/results/ms/final')->assertOk()
+            ->assertSee('href="'.route('results.segment.winners', ['ms', 'final']).'"', false)
+            ->assertSee('Announcement of winners')
+            ->assertDontSee('Print winner');
+
+        $result = (new Tabulator)->segment(Segment::find('final'), 'ms');
+        $html = view('admin.results.pdf.winners', [
+            'division' => 'ms',
+            'label' => 'Ms. LCUAA',
+            'result' => $result,
+            'winners' => Tabulator::winners($result),
+        ])->render();
+        $this->assertStringContainsString('Announcement of winners', $html);
+        $this->assertMatchesRegularExpression('/4th runner-up.*No\. 5<.*3rd runner-up.*No\. 4<.*2nd runner-up.*No\. 3<.*1st runner-up.*No\. 2<.*Ms\. LCUAA 2026.*No\. 1</s', $html);
+        $this->assertStringNotContainsString('No. 6<', $html);
+    }
+
+    public function test_casual_wear_results_show_each_judges_rank_and_the_rank_total(): void
+    {
+        $candidates = Candidate::division('ms')->orderBy('number')->take(2)->get();
+        Candidate::division('ms')->whereNotIn('id', $candidates->pluck('id'))->delete();
+        // Every judge ranks No. 2 first.
+        foreach (User::onPanel('pageant')->get() as $judge) {
+            foreach ($candidates as $candidate) {
+                Score::create(['segment' => 'casual_wear', 'candidate_id' => $candidate->id, 'judge_id' => $judge->id, 'criterion' => 'rank', 'points' => 3 - $candidate->number]);
+            }
+        }
+        $this->actingAs($this->admin);
+
+        $this->get('/results/ms/casual_wear')->assertOk()
+            ->assertSee('Rank total')->assertSee('lowest wins')
+            ->assertSee('The lowest total places first')
+            ->assertSeeInOrder(['No. 1', '2', '2', '2', '2', '2', '10', '2', 'No. 2', '1', '1', '1', '1', '1', '5', '1'])
+            ->assertDontSee('Average');
+        $this->get('/results/ms/casual_wear?judge=1')->assertOk()->assertSee('1 is the top pick')->assertDontSee('Total<');
+        $this->get('/home')->assertOk()->assertSee('Ranked by each judge, lowest total wins');
+        $this->get('/results/ms/casual_wear/print')->assertOk();
+
+        $result = (new Tabulator)->segment(Segment::find('casual_wear'), 'ms');
+        $html = view('admin.results.pdf.winners', [
+            'division' => 'ms',
+            'label' => 'Ms. LCUAA',
+            'result' => $result,
+            'winners' => Tabulator::winners($result),
+        ])->render();
+        $this->assertStringContainsString('Rank total', $html);
+        $this->assertStringContainsString('<td>5</td>', $html);
+    }
+
+    public function test_the_lcuaa_logo_is_the_favicon_and_heads_the_sidebar_judge_header_and_printouts(): void
+    {
+        $this->assertGreaterThan(0, filesize(public_path('favicon.ico')));
+
+        $this->actingAs($this->admin)->get('/home')->assertOk()
+            ->assertSee('<link rel="icon" href="'.asset('favicon.ico').'"', false)
+            ->assertSee('assets/img/lcuaa-logo.png?v=', false);
+
+        $this->actingAs(User::where('username', 'judge1')->first())->get('/judge-app')
+            ->assertSee('assets/img/lcuaa-logo.png?v=', false);
+
+        $html = view('admin.results.pdf.announcement', [
+            'divisions' => collect(config('pageant.divisions'))->map(fn ($l, $d) => collect()),
+        ])->render();
+        $this->assertStringContainsString('<td class="logo"><img src="data:image/png;base64,', $html);
+        $this->assertStringContainsString('<img src="data:image/jpeg;base64,', $html);
+    }
+
+    public function test_every_printed_sheet_has_a_line_for_the_national_board(): void
+    {
+        $tabulator = new Tabulator;
+        $talent = $tabulator->segment(Segment::find('talent'), 'ms');
+        $judges = User::where('role', 'judge')->get();
+        $sheets = [
+            'round1' => ['result' => $tabulator->roundOne('ms'), 'judges' => $judges],
+            'segment' => ['result' => $talent, 'judge' => null, 'seat' => null, 'division' => 'ms'],
+            'judge sheet' => ['result' => $talent, 'judge' => $talent['judges']->first(), 'seat' => 1, 'division' => 'ms'],
+            'winners' => ['result' => $talent, 'winners' => collect(), 'division' => 'ms'],
+        ];
+        foreach ($sheets as $name => $data) {
+            $view = $name === 'judge sheet' ? 'segment' : $name;
+            $html = view("admin.results.pdf.{$view}", $data + ['label' => 'Ms. LCUAA'])->render();
+            $this->assertStringContainsString('<div class="line">LCUAA National Board</div>', $html, $name);
+        }
+
+        $announcement = view('admin.results.pdf.announcement', [
+            'divisions' => collect(config('pageant.divisions'))->map(fn ($l, $d) => collect()),
+        ])->render();
+        $this->assertStringContainsString('<div class="line">Tabulator</div>', $announcement);
+        $this->assertStringContainsString('<div class="line">LCUAA National Board</div>', $announcement);
     }
 
     private function seedSomeScores(): void

@@ -128,18 +128,20 @@ class ResultsController extends Controller
             ->stream("{$name}.pdf");
     }
 
-    /** The segment's rank 1 for the emcee: every candidate tied for first, if there is a tie. */
-    public function segmentWinnerPdf(string $division, string $segment)
+    /** Round 2: the announcement of winners, 4th runner-up first and the winner last. Any other segment: its winner. */
+    public function segmentWinnersPdf(string $division, string $segment)
     {
         $result = $this->tabulator->segment(Segment::findOrFail($segment), $division);
+        $name = $result['segment']->forFinalistsOnly() ? 'winners' : 'winner';
 
-        return Pdf::loadView('admin.results.pdf.winner', [
+        return Pdf::loadView('admin.results.pdf.winners', [
+            'division' => $division,
             'label' => config("pageant.divisions.{$division}"),
             'result' => $result,
-            'winners' => collect($result['rows'])->where('rank', 1)->sortBy('candidate.number')->values(),
+            'winners' => Tabulator::winners($result),
         ])
             ->setPaper(self::PAPER, 'landscape')
-            ->stream("{$division}_{$segment}_winner.pdf");
+            ->stream("{$division}_{$segment}_{$name}.pdf");
     }
 
     /** The sidebar's results links open this division next. */

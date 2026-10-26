@@ -20,7 +20,7 @@ class TabulatorTest extends TestCase
         $this->seed();
     }
 
-    public function test_segment_average_is_the_mean_of_judge_totals_but_the_rank_sum_places(): void
+    public function test_a_segment_places_by_the_average_of_the_judges_totals(): void
     {
         [$a, $b, $c] = $this->only('ms', 3);
         $judges = User::onPanel('prepageant')->get();
@@ -46,17 +46,11 @@ class TabulatorTest extends TestCase
         $this->assertNull($rows[$c->id]['totals'][$judges[0]->id]);
         $this->assertSame(1, $rows[$c->id]['counted']);
         $this->assertSame(1000, $rows[$c->id]['average']);
-        // Only judge 2 has scored every candidate, so the rank sums are judge 2's ranks alone and
-        // break the tie in averages: judge 2 gave $a 14.5 and $b 14.
-        $this->assertSame([$judges[1]->id], $result['rank_judges']->all());
-        $this->assertSame([1, 2, 3], [$rows[$a->id]['rank_sum'], $rows[$b->id]['rank_sum'], $rows[$c->id]['rank_sum']]);
-        // Averaged over the 1 judge who counts.
-        $this->assertSame([100, 200, 300], [$rows[$a->id]['average_rank'], $rows[$b->id]['average_rank'], $rows[$c->id]['average_rank']]);
-        $this->assertSame([1, 2, 3], [$rows[$a->id]['rank'], $rows[$b->id]['rank'], $rows[$c->id]['rank']]);
-        $this->assertFalse($rows[$a->id]['tied']);
-        // Judge 3 ranked $a below $b.
-        $this->assertSame(2, $rows[$a->id]['judge_ranks'][$judges[2]->id]);
-        $this->assertSame(1, $rows[$b->id]['judge_ranks'][$judges[2]->id]);
+        // Equal averages share first place; judges' own orderings don't count.
+        $this->assertSame([1, 1, 3], [$rows[$a->id]['rank'], $rows[$b->id]['rank'], $rows[$c->id]['rank']]);
+        $this->assertSame([true, true, false], [$rows[$a->id]['tied'], $rows[$b->id]['tied'], $rows[$c->id]['tied']]);
+        $this->assertArrayNotHasKey('judge_ranks', $rows[$a->id]);
+        $this->assertArrayNotHasKey('rank_judges', $result);
     }
 
     public function test_ranks_are_competition_ranks(): void
@@ -64,94 +58,52 @@ class TabulatorTest extends TestCase
         $ranks = Tabulator::rank([1 => 90, 2 => 85, 3 => 85, 4 => 80, 5 => 75, 6 => 70, 7 => 70, 8 => 65]);
         $this->assertSame([1, 2, 2, 4, 5, 6, 6, 8], array_values(array_column($ranks, 'rank')));
         $this->assertSame([false, true, true, false, false, true, true, false], array_values(array_column($ranks, 'tied')));
-
-        $lowest = Tabulator::rank([1 => 6, 2 => 9, 3 => 9, 4 => 6, 5 => 12], lowestFirst: true);
-        $this->assertSame([1, 3, 3, 1, 5], array_values(array_column($lowest, 'rank')));
     }
 
-    public function test_round_one_matches_the_boards_worked_example(): void
-    {
-        $candidates = $this->only('ms', 5);
-
-        // Each judge's combined pre-pageant and pageant night score, per candidate (C1 to C5),
-        // spread over the panel's segments.
-        $this->scoreCombined('prepageant', $candidates, [
-            [29, 28.4, 29.2], [28, 29.2, 28], [28.4, 28, 29], [29.2, 29, 28.4], [28, 28, 28],
-        ]);
-        $this->scoreCombined('pageant', $candidates, [
-            [56.5, 67, 58, 51, 54], [65, 51, 52, 61, 68], [63, 69, 61, 59, 67], [58, 65, 58, 65, 55], [55, 50, 51, 62, 67],
-        ]);
-
-        $result = (new Tabulator)->roundOne('ms');
-        $rows = collect($result['rows'])->keyBy(fn ($r) => $r['candidate']->id);
-        $field = fn (string $panel, string $field) => array_map(fn ($c) => $rows[$c->id]['panels'][$panel][$field], $candidates);
-
-        // Each judge's talent + thematic wear total, and that judge's rank of it.
-        $this->assertSame([2900, 2840, 2920], array_values($rows[$candidates[0]->id]['panels']['prepageant']['totals']));
-        $this->assertSame([2, 3, 1], array_values($rows[$candidates[0]->id]['panels']['prepageant']['judge_ranks']));
-        $this->assertSame([5650, 6700, 5800, 5100, 5400], array_values($rows[$candidates[0]->id]['panels']['pageant']['totals']));
-        $this->assertSame([4, 2, 2, 5, 5], array_values($rows[$candidates[0]->id]['panels']['pageant']['judge_ranks']));
-
-        // Rank sums over 3 judges and over 5 (ties ranked 1, 2, 2, 4), then averaged.
-        $this->assertSame([6, 9, 9, 6, 12], $field('prepageant', 'rank_sum'));
-        $this->assertSame([200, 300, 300, 200, 400], $field('prepageant', 'average_rank'));
-        $this->assertSame([60, 90, 90, 60, 120], $field('prepageant', 'weighted'));
-        $this->assertSame([18, 13, 10, 13, 19], $field('pageant', 'rank_sum'));
-        $this->assertSame([360, 260, 200, 260, 380], $field('pageant', 'average_rank'));
-        $this->assertSame([252, 182, 140, 182, 266], $field('pageant', 'weighted'));
-
-        // C1: 2.00 × 30% + 3.60 × 70% = 3.12.
-        $this->assertSame([312, 272, 230, 242, 386], array_map(fn ($c) => $rows[$c->id]['total'], $candidates));
-        $this->assertSame([4, 3, 1, 2, 5], array_map(fn ($c) => $rows[$c->id]['rank'], $candidates));
-        $this->assertFalse(collect($rows)->contains('tied', true));
-        $this->assertTrue(collect($rows)->every('complete'));
-        $this->assertSame(30, (int) $result['panels']['prepageant']['weight']);
-        $this->assertSame(70, (int) $result['panels']['pageant']['weight']);
-    }
-
-    public function test_round_one_averages_ranks_over_each_panels_judges_instead_of_adding_them(): void
+    public function test_round_one_adds_each_segments_average_at_its_weight(): void
     {
         [$a, $b, $c] = $this->only('ms', 3);
 
-        // A: first with all 3 pre-pageant judges, ranks 2, 2, 2, 2, 1 on pageant night.
-        // B: third with all 3 pre-pageant judges, first with all 5 on pageant night.
-        $this->scoreCombined('prepageant', [$a, $b, $c], [[30, 30, 30], [28, 28, 28], [29, 29, 29]]);
-        $this->scoreCombined('pageant', [$a, $b, $c], [[60, 60, 60, 60, 70], [70, 70, 70, 70, 70], [50, 50, 50, 50, 50]]);
+        // Talent is out of 100 at 15%; the rest are scored out of their weight.
+        $this->scoreSegment('talent', [$a, $b, $c], [[90, 85, 80], [95, 95, 95], [70, 71, 73]]);
+        $this->scoreSegment('thematic_wear', [$a, $b, $c], [[12, 12, 12], [10, 10, 10], [14, 14, 14]]);
+        foreach (['swim_wear' => [12, 11, 13], 'formal_wear' => [12, 12, 12], 'beauty_of_face' => [16, 18, 15], 'wit' => [17, 16, 15]] as $segment => $points) {
+            $this->scoreSegment($segment, [$a, $b, $c], array_map(fn ($p) => array_fill(0, 5, $p), $points));
+        }
 
-        $rows = collect((new Tabulator)->roundOne('ms')['rows'])->keyBy(fn ($r) => $r['candidate']->id);
+        $result = (new Tabulator)->roundOne('ms');
+        $rows = collect($result['rows'])->keyBy(fn ($r) => $r['candidate']->id);
+        $talent = fn ($c) => $rows[$c->id]['segments']['talent'];
 
-        // Divided by 3 and by 5: A 3 / 3 = 1.00 and 9 / 5 = 1.80.
-        $this->assertSame([3, 100], [$rows[$a->id]['panels']['prepageant']['rank_sum'], $rows[$a->id]['panels']['prepageant']['average_rank']]);
-        $this->assertSame([9, 180], [$rows[$a->id]['panels']['pageant']['rank_sum'], $rows[$a->id]['panels']['pageant']['average_rank']]);
-        // A: 1.00 × 30% + 1.80 × 70% = 1.56. B: 3.00 × 30% + 1.00 × 70% = 1.60.
-        // Adding the ranks instead (A 3 × 30 + 9 × 70, B 9 × 30 + 5 × 70) would put B first.
-        $this->assertSame([156, 160, 270], [$rows[$a->id]['total'], $rows[$b->id]['total'], $rows[$c->id]['total']]);
-        $this->assertSame([1, 2, 3], [$rows[$a->id]['rank'], $rows[$b->id]['rank'], $rows[$c->id]['rank']]);
+        // A: talent averages 85.00, which counts 12.75 of its 15.
+        $this->assertSame([8500, 1275], [$talent($a)['average'], $talent($a)['weighted']]);
+        $this->assertSame([1200, 1200], [$rows[$a->id]['segments']['thematic_wear']['average'], $rows[$a->id]['segments']['thematic_wear']['weighted']]);
+        // C: talent averages 71.33 (71.333...), which counts 10.6995, shown as 10.70.
+        $this->assertSame([7133, 1070], [$talent($c)['average'], $talent($c)['weighted']]);
+
+        // A: 12.75 + 12 + 12 + 12 + 16 + 17 = 81.75. C: 10.6995 + 14 + 13 + 12 + 15 + 15 = 79.6995.
+        $this->assertSame([8175, 8125, 7970], array_map(fn ($c) => $rows[$c->id]['total'], [$a, $b, $c]));
+        $this->assertSame([1, 2, 3], array_map(fn ($c) => $rows[$c->id]['rank'], [$a, $b, $c]));
+        $this->assertFalse(collect($rows)->contains('tied', true));
+        $this->assertTrue(collect($rows)->every('complete'));
+        $this->assertSame(['talent' => 3, 'thematic_wear' => 3, 'swim_wear' => 5, 'formal_wear' => 5, 'beauty_of_face' => 5, 'wit' => 5], $result['judges']->all());
     }
 
-    public function test_round_one_ranks_each_judges_panel_total_while_segments_keep_their_own_winner(): void
+    public function test_round_one_places_by_weighted_score_while_segments_keep_their_own_winner(): void
     {
         [$a, $b] = $this->only('ms', 2);
-        $judges = User::onPanel('prepageant')->get();
 
-        // A wins talent and B wins thematic wear with every judge, but B's talent + thematic
-        // wear total is higher with every judge (26 to 25).
-        foreach ($judges as $judge) {
-            $this->score('talent', $a, $judge, ['skill' => 7.5, 'performance' => 7.5]);
-            $this->score('thematic_wear', $a, $judge, ['stage_presence' => 7, 'relevance' => 3]);
-            $this->score('talent', $b, $judge, ['skill' => 6, 'performance' => 6]);
-            $this->score('thematic_wear', $b, $judge, ['stage_presence' => 10, 'relevance' => 4]);
-        }
+        // A wins talent and B wins thematic wear with every judge, but B's weighted total is
+        // higher: talent's 100 and 80 count 15 and 12, so A has 15 + 10 and B 12 + 14.
+        $this->scoreSegment('talent', [$a, $b], [[100, 100, 100], [80, 80, 80]]);
+        $this->scoreSegment('thematic_wear', [$a, $b], [[10, 10, 10], [14, 14, 14]]);
         // Level on pageant night.
         $this->scorePanel('pageant', $a, 0.8);
         $this->scorePanel('pageant', $b, 0.8);
 
         $rows = collect((new Tabulator)->roundOne('ms')['rows'])->keyBy(fn ($r) => $r['candidate']->id);
 
-        $this->assertSame([2500, 2500, 2500], array_values($rows[$a->id]['panels']['prepageant']['totals']));
-        $this->assertSame([2, 2, 2], array_values($rows[$a->id]['panels']['prepageant']['judge_ranks']));
-        // Pre-pageant: A 2.00 × 30% = 0.60, B 1.00 × 30% = 0.30. Pageant night: both 0.70.
-        $this->assertSame([130, 100], [$rows[$a->id]['total'], $rows[$b->id]['total']]);
+        $this->assertSame([8100, 8200], [$rows[$a->id]['total'], $rows[$b->id]['total']]);
         $this->assertSame([2, 1], [$rows[$a->id]['rank'], $rows[$b->id]['rank']]);
 
         // Talent's own winner is still A.
@@ -159,7 +111,25 @@ class TabulatorTest extends TestCase
         $this->assertSame([1, 2], [$talent[$a->id]['rank'], $talent[$b->id]['rank']]);
     }
 
-    public function test_a_round_one_tie_goes_to_the_better_beauty_of_face_average_rank(): void
+    public function test_round_one_compares_totals_before_rounding(): void
+    {
+        [$a, $b] = $this->only('ms', 2);
+
+        // Talent 87.33 counts 13.0995 and 87.34 counts 13.101: both show as 13.10, but B is ahead.
+        $this->scoreSegment('talent', [$a, $b], [[87.33, 87.33, 87.33], [87.34, 87.34, 87.34]]);
+        $this->scoreSegment('thematic_wear', [$a, $b], [[12, 12, 12], [12, 12, 12]]);
+        $this->scorePanel('pageant', $a, 0.8);
+        $this->scorePanel('pageant', $b, 0.8);
+
+        $rows = collect((new Tabulator)->roundOne('ms')['rows'])->keyBy(fn ($r) => $r['candidate']->id);
+
+        $this->assertSame([1310, 1310], [$rows[$a->id]['segments']['talent']['weighted'], $rows[$b->id]['segments']['talent']['weighted']]);
+        $this->assertSame([8110, 8110], [$rows[$a->id]['total'], $rows[$b->id]['total']]);
+        $this->assertSame([2, 1], [$rows[$a->id]['rank'], $rows[$b->id]['rank']]);
+        $this->assertFalse($rows[$a->id]['tied']);
+    }
+
+    public function test_a_round_one_tie_goes_to_the_higher_beauty_of_face_average(): void
     {
         [$a, $b] = $this->only('ms', 2);
 
@@ -187,7 +157,7 @@ class TabulatorTest extends TestCase
 
         $this->scorePanel('prepageant', $a, 0.8);
         $this->scorePanel('prepageant', $b, 0.8);
-        // Pageant night totals are level with every judge (51), and so is beauty of face.
+        // Pageant night totals are level (51), and so is beauty of face.
         $this->scoreSegment('swim_wear', [$a, $b], [[9, 9, 9, 9, 9], [12, 12, 12, 12, 12]]);
         $this->scoreSegment('formal_wear', [$a, $b], [[12, 12, 12, 12, 12], [12, 12, 12, 12, 12]]);
         $this->scoreSegment('beauty_of_face', [$a, $b], [[12, 12, 12, 12, 12], [12, 12, 12, 12, 12]]);
@@ -196,7 +166,8 @@ class TabulatorTest extends TestCase
 
         $rows = collect((new Tabulator)->roundOne('ms')['rows'])->keyBy(fn ($r) => $r['candidate']->id);
 
-        $this->assertSame([100, 100], [$rows[$a->id]['total'], $rows[$b->id]['total']]);
+        // 24 pre-pageant and 51 on pageant night each.
+        $this->assertSame([7500, 7500], [$rows[$a->id]['total'], $rows[$b->id]['total']]);
         $this->assertSame([1, 2], [$rows[$a->id]['rank'], $rows[$b->id]['rank']]);
         $this->assertSame(['beauty_of_face', 'wit'], $rows[$a->id]['tie_break']);
     }
@@ -223,8 +194,7 @@ class TabulatorTest extends TestCase
     {
         [$a, $b, $c, $d, $e, $f] = $this->only('mr', 6);
 
-        // Every judge on a panel scores alike, so each judge ranks the same way.
-        // Pre-pageant: D, C, B, A, then E and F tied. Pageant night: A, B, C, D, then E and F tied.
+        // A 60% pre-pageant and 90% pageant night: 18 + 63 = 81. E and F: 15 + 35 = 50.
         foreach ([[$a, 0.6, 0.9], [$b, 0.7, 0.8], [$c, 0.8, 0.7], [$d, 0.9, 0.6], [$e, 0.5, 0.5], [$f, 0.5, 0.5]] as [$candidate, $pre, $night]) {
             $this->scorePanel('prepageant', $candidate, $pre);
             $this->scorePanel('pageant', $candidate, $night);
@@ -233,9 +203,7 @@ class TabulatorTest extends TestCase
         $result = (new Tabulator)->roundOne('mr');
         $rows = collect($result['rows'])->keyBy(fn ($r) => $r['candidate']->id);
 
-        // A: average rank 4 × 30% = 1.20, plus 1 × 70% = 0.70: 1.90.
-        $this->assertSame(120, $rows[$a->id]['panels']['prepageant']['weighted']);
-        $this->assertSame([190, 230, 270, 310, 500, 500], array_map(fn ($c) => $rows[$c->id]['total'], [$a, $b, $c, $d, $e, $f]));
+        $this->assertSame([8100, 7700, 7300, 6900, 5000, 5000], array_map(fn ($c) => $rows[$c->id]['total'], [$a, $b, $c, $d, $e, $f]));
         $this->assertSame([1, 2, 3, 4, 5, 5], array_map(fn ($c) => $rows[$c->id]['rank'], [$a, $b, $c, $d, $e, $f]));
         $this->assertTrue($rows[$a->id]['complete']);
         $this->assertTrue($rows[$e->id]['tied']);
@@ -251,47 +219,119 @@ class TabulatorTest extends TestCase
 
         $rows = collect((new Tabulator)->roundOne('ms')['rows'])->keyBy(fn ($r) => $r['candidate']->id);
 
-        $this->assertSame([30, 60], [$rows[$a->id]['total'], $rows[$b->id]['total']]);
+        $this->assertSame([2700, 2400], [$rows[$a->id]['total'], $rows[$b->id]['total']]);
         $this->assertSame([1, 2], [$rows[$a->id]['rank'], $rows[$b->id]['rank']]);
-        $this->assertNull($rows[$a->id]['panels']['pageant']['weighted']);
+        $this->assertNull($rows[$a->id]['segments']['swim_wear']['weighted']);
         $this->assertFalse($rows[$a->id]['complete']);
     }
 
-    public function test_a_judge_missing_one_segment_is_left_out_of_the_panel_average(): void
+    public function test_casual_wear_places_on_its_own_and_leaves_both_rounds_alone(): void
+    {
+        [$a, $b] = $this->only('ms', 2);
+        $this->scorePanel('prepageant', $a, 0.9);
+        $this->scorePanel('prepageant', $b, 0.8);
+        $finalists = [$a->id, $b->id];
+        Candidate::whereIn('id', $finalists)->update(['is_finalist' => true]);
+        $this->scoreSegment('final', [$a, $b], [[90, 90, 90, 90, 90], [80, 80, 80, 80, 80]]);
+        $roundOne = (new Tabulator)->roundOne('ms');
+        $roundTwo = (new Tabulator)->segment(Segment::find('final'), 'ms');
+
+        // $b is ranked first on every judge's sheet.
+        $this->rankSegment([$a, $b], [[2, 2, 2, 2, 2], [1, 1, 1, 1, 1]]);
+        $rows = $this->casualRows();
+
+        $this->assertSame([1000, 500], [$rows[$a->id]['rank_total'], $rows[$b->id]['rank_total']]);
+        $this->assertSame([2, 1], [$rows[$a->id]['rank'], $rows[$b->id]['rank']]);
+        $this->assertEquals($roundOne, (new Tabulator)->roundOne('ms'));
+        $this->assertEquals($roundTwo['rows'], (new Tabulator)->segment(Segment::find('final'), 'ms')['rows']);
+    }
+
+    public function test_casual_wear_places_by_the_lowest_rank_total_and_flags_ties(): void
+    {
+        [$a, $b, $c] = $this->only('ms', 3);
+        // Totals: $a 1+1+3+2+3 = 10, $b 2+3+1+1+2 = 9, $c 3+2+2+3+1 = 11.
+        $this->rankSegment([$a, $b, $c], [[1, 1, 3, 2, 3], [2, 3, 1, 1, 2], [3, 2, 2, 3, 1]]);
+        $rows = $this->casualRows();
+
+        $this->assertSame([1000, 900, 1100], [$rows[$a->id]['rank_total'], $rows[$b->id]['rank_total'], $rows[$c->id]['rank_total']]);
+        $this->assertSame([2, 1, 3], [$rows[$a->id]['rank'], $rows[$b->id]['rank'], $rows[$c->id]['rank']]);
+        $this->assertSame([100, 100, 300, 200, 300], array_values($rows[$a->id]['totals']));
+        $this->assertFalse($rows[$b->id]['tied']);
+
+        // Equal totals share the rank and are flagged for the board; there is no tie-break.
+        Score::where(['segment' => 'casual_wear', 'candidate_id' => $c->id])->delete();
+        $this->rankSegment([$c], [[3, 2, 2, 1, 1]]);
+        $rows = $this->casualRows();
+
+        $this->assertSame([900, 900], [$rows[$b->id]['rank_total'], $rows[$c->id]['rank_total']]);
+        $this->assertSame([1, 1, 3], [$rows[$b->id]['rank'], $rows[$c->id]['rank'], $rows[$a->id]['rank']]);
+        $this->assertTrue($rows[$b->id]['tied'] && $rows[$c->id]['tied']);
+    }
+
+    public function test_casual_wear_compares_average_ranks_until_every_judge_has_ranked(): void
+    {
+        [$a, $b] = $this->only('ms', 2);
+        // $a: 2 from every judge, total 10. $b: 1 from three judges so far, total 3 (but an average of 1).
+        $this->rankSegment([$a], [[2, 2, 2, 2, 2]]);
+        $judges = User::onPanel('pageant')->get();
+        foreach ($judges->take(3) as $judge) {
+            $this->score('casual_wear', $b, $judge, ['rank' => 1]);
+        }
+        $rows = $this->casualRows();
+
+        $this->assertSame(300, $rows[$b->id]['rank_total']);
+        $this->assertSame(3, $rows[$b->id]['counted']);
+        $this->assertSame([1, 2], [$rows[$b->id]['rank'], $rows[$a->id]['rank']]);
+
+        // A judge ranking $b 5th puts the averages at 2 and 2: level, even though the totals differ.
+        $this->score('casual_wear', $b, $judges[3], ['rank' => 5]);
+        $rows = $this->casualRows();
+        $this->assertSame([800, 1000], [$rows[$b->id]['rank_total'], $rows[$a->id]['rank_total']]);
+        $this->assertSame([1, 1], [$rows[$b->id]['rank'], $rows[$a->id]['rank']]);
+    }
+
+    public function test_casual_wear_scores_every_candidate_not_only_finalists(): void
+    {
+        $candidates = $this->candidates('ms', 3);
+        $candidates[1]->update(['is_finalist' => true]);
+
+        $this->assertSame(Candidate::division('ms')->count(), Segment::find('casual_wear')->candidates('ms')->count());
+    }
+
+    public function test_a_segment_average_counts_the_judges_who_have_scored_so_far(): void
     {
         [$a, $b] = $this->only('ms', 2);
         $judges = User::onPanel('prepageant')->get();
 
-        $this->scorePanel('prepageant', $a, 0.9);
-        $this->scorePanel('prepageant', $b, 0.8);
+        foreach ([[$a, 0.9], [$b, 0.8]] as [$candidate, $share]) {
+            $this->scorePanel('prepageant', $candidate, $share);
+            $this->scorePanel('pageant', $candidate, $share);
+        }
         // Judge 3 has no thematic wear score for B yet.
         Score::where('segment', 'thematic_wear')->where('candidate_id', $b->id)->where('judge_id', $judges[2]->id)->delete();
 
-        $result = (new Tabulator)->roundOne('ms');
-        $rows = collect($result['rows'])->keyBy(fn ($r) => $r['candidate']->id);
-        $pre = fn (Candidate $c) => $rows[$c->id]['panels']['prepageant'];
+        $rows = collect((new Tabulator)->roundOne('ms')['rows'])->keyBy(fn ($r) => $r['candidate']->id);
+        $thematic = $rows[$b->id]['segments']['thematic_wear'];
 
-        $this->assertSame($judges->take(2)->pluck('id')->all(), $result['panels']['prepageant']['rank_judges']->all());
-        $this->assertNull($pre($b)['totals'][$judges[2]->id]);
-        // Averaged over the 2 judges who count: B 4 / 2 = 2.00 → 0.60.
-        $this->assertSame([2, 4], [$pre($a)['rank_sum'], $pre($b)['rank_sum']]);
-        $this->assertSame([100, 200], [$pre($a)['average_rank'], $pre($b)['average_rank']]);
-        $this->assertSame([30, 60], [$pre($a)['weighted'], $pre($b)['weighted']]);
+        $this->assertSame([2, 1200, 1200], [$thematic['counted'], $thematic['average'], $thematic['weighted']]);
+        $this->assertSame(8000, $rows[$b->id]['total']);
+        $this->assertTrue($rows[$a->id]['complete']);
+        $this->assertFalse($rows[$b->id]['complete']);
     }
 
-    public function test_round_two_places_by_the_lowest_sum_of_judge_ranks_not_the_average(): void
+    public function test_round_two_places_by_the_average_of_the_judges_totals(): void
     {
         [$a, $b, $c] = $this->finalists(3);
         $judges = User::onPanel('pageant')->get();
 
-        // Totals per judge for A, B, C. By average A leads (78.6 vs 77 vs 75),
-        // but by ranks A and B both sum to 9 and C to 11.
+        // Totals per judge for A, B, C. Averages: A 78.6, B 77, C 75. Each judge's own order
+        // differs (judge 2 puts B first, judge 4 puts C first), but only the averages count.
         $sheets = [
-            [90, 80, 70],   // ranks 1, 2, 3
-            [70, 90, 80],   // 3, 1, 2
-            [85, 85, 60],   // 1, 1, 3 (equal totals share a rank)
-            [60, 70, 90],   // 3, 2, 1
-            [88, 60, 75],   // 1, 3, 2
+            [90, 80, 70],
+            [70, 90, 80],
+            [85, 85, 60],
+            [60, 70, 90],
+            [88, 60, 75],
         ];
         foreach ($sheets as $j => $totals) {
             foreach ([$a, $b, $c] as $i => $candidate) {
@@ -299,27 +339,21 @@ class TabulatorTest extends TestCase
             }
         }
 
-        $result = (new Tabulator)->segment(Segment::find('final'), 'ms');
-        $rows = collect($result['rows'])->keyBy(fn ($r) => $r['candidate']->id);
+        $rows = collect((new Tabulator)->segment(Segment::find('final'), 'ms')['rows'])->keyBy(fn ($r) => $r['candidate']->id);
 
-        $this->assertSame([1, 3, 1, 3, 1], array_values($rows[$a->id]['judge_ranks']));
-        $this->assertSame([2, 1, 1, 2, 3], array_values($rows[$b->id]['judge_ranks']));
-        $this->assertSame(9, $rows[$a->id]['rank_sum']);
-        $this->assertSame(9, $rows[$b->id]['rank_sum']);
-        $this->assertSame(11, $rows[$c->id]['rank_sum']);
-        $this->assertSame([1, 1, 3], [$rows[$a->id]['rank'], $rows[$b->id]['rank'], $rows[$c->id]['rank']]);
-        $this->assertTrue($rows[$a->id]['tied']);
-        $this->assertFalse($rows[$c->id]['tied']);
+        $this->assertSame([7860, 7700, 7500], [$rows[$a->id]['average'], $rows[$b->id]['average'], $rows[$c->id]['average']]);
+        $this->assertSame([1, 2, 3], [$rows[$a->id]['rank'], $rows[$b->id]['rank'], $rows[$c->id]['rank']]);
+        $this->assertFalse(collect($rows)->contains('tied', true));
+        $this->assertSame('Ms. LCUAA 2026', Tabulator::placement($rows[$a->id]['rank'], 'ms'));
         $this->assertSame('2nd runner-up', Tabulator::placement($rows[$c->id]['rank'], 'ms'));
-        $this->assertCount(5, $result['rank_judges']);
     }
 
-    public function test_rank_sums_leave_out_a_judge_who_has_not_scored_every_finalist(): void
+    public function test_an_average_counts_the_judges_who_have_scored_so_far(): void
     {
         [$a, $b, $c] = $this->finalists(3);
         $judges = User::onPanel('pageant')->get();
 
-        // Same sheets as above, but judge 5 has not scored C yet.
+        // Judge 5 has not scored C yet: C's 70 + 80 + 60 + 90 is divided by 4, not 5.
         $sheets = [[90, 80, 70], [70, 90, 80], [85, 85, 60], [60, 70, 90], [88, 60, null]];
         foreach ($sheets as $j => $totals) {
             foreach ([$a, $b, $c] as $i => $candidate) {
@@ -329,13 +363,11 @@ class TabulatorTest extends TestCase
             }
         }
 
-        $result = (new Tabulator)->segment(Segment::find('final'), 'ms');
-        $rows = collect($result['rows'])->keyBy(fn ($r) => $r['candidate']->id);
+        $rows = collect((new Tabulator)->segment(Segment::find('final'), 'ms')['rows'])->keyBy(fn ($r) => $r['candidate']->id);
 
-        $this->assertSame($judges->take(4)->pluck('id')->all(), $result['rank_judges']->all());
-        // Over judges 1 to 4: A 8, B 6, C 9.
-        $this->assertSame([8, 6, 9], [$rows[$a->id]['rank_sum'], $rows[$b->id]['rank_sum'], $rows[$c->id]['rank_sum']]);
-        $this->assertSame([2, 1, 3], [$rows[$a->id]['rank'], $rows[$b->id]['rank'], $rows[$c->id]['rank']]);
+        $this->assertSame([5, 5, 4], [$rows[$a->id]['counted'], $rows[$b->id]['counted'], $rows[$c->id]['counted']]);
+        $this->assertSame([7860, 7700, 7500], [$rows[$a->id]['average'], $rows[$b->id]['average'], $rows[$c->id]['average']]);
+        $this->assertSame([1, 2, 3], [$rows[$a->id]['rank'], $rows[$b->id]['rank'], $rows[$c->id]['rank']]);
     }
 
     public function test_round_two_scores_only_finalists_and_names_placements(): void
@@ -395,17 +427,20 @@ class TabulatorTest extends TestCase
         }
     }
 
-    /** Each judge's combined score for a panel, split over the panel's Round 1 segments by weight. */
-    private function scoreCombined(string $panel, array $candidates, array $sheets): void
+    /** Each judge's Casual wear rank, per candidate (one list of ranks each, in judge order). */
+    private function rankSegment(array $candidates, array $ranks): void
     {
-        $segments = Segment::inRound(1)->where('panel', $panel);
-        $weight = $segments->sum(fn (Segment $s) => $s->maxPoints());
-        foreach ($segments as $segment) {
-            $share = $segment->maxPoints() / $weight;
-            $this->scoreSegment($segment->key, $candidates, array_map(
-                fn ($totals) => array_map(fn ($total) => round($total * $share, 2), $totals), $sheets,
-            ));
+        $judges = User::onPanel('pageant')->get();
+        foreach ($candidates as $i => $candidate) {
+            foreach ($judges as $j => $judge) {
+                $this->score('casual_wear', $candidate, $judge, ['rank' => $ranks[$i][$j]]);
+            }
         }
+    }
+
+    private function casualRows()
+    {
+        return collect((new Tabulator)->segment(Segment::find('casual_wear'), 'ms')['rows'])->keyBy(fn ($r) => $r['candidate']->id);
     }
 
     private function candidates(string $division, int $count): array

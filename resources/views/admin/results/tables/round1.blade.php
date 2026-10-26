@@ -1,36 +1,35 @@
 {{--
-    Round 1 by panel and in total, sorted by rank. Shared by the results page and its PDF ($print).
-    Each judge cell is that judge's total across the panel's segments, with the judge's rank under it.
+    Round 1 by segment and in total, sorted by rank. Shared by the results page and its PDF ($print).
+    Each segment cell is the segment's average scaled to its weight. A scaled segment (Talent) shows its
+    own average under it; a segment some judges haven't scored yet shows how many have.
 --}}
 @use('App\Scoring\Points')
 @php
-    $panels = $result['panels'];
-    $criteria = $result['criteria'];
+    $segments = $result['segments'];
+    $judges = $result['judges'];
+    $panels = $segments->groupBy(fn ($segment) => $segment->panel, preserveKeys: true);
     $rows = collect($result['rows'])->sortBy(fn ($row) => [$row['rank'] ?? PHP_INT_MAX, $row['candidate']->number]);
-    $columns = 3 + $panels->sum(fn ($panel) => $panel['judges']->count() + 3);
+    $columns = 3 + $segments->count();
 @endphp
 
 <table class="{{ $print ? 'sheet' : 'data-table data-table-ranked' }}">
     <thead>
         <tr>
             <th aria-hidden="true"></th>
-            @foreach ($panels as $panel)
-                <th scope="colgroup" colspan="{{ $panel['judges']->count() + 3 }}">{{ $panel['label'] }}<span class="sub">{{ $panel['segments']->map->short->join(' + ') }}</span></th>
+            @foreach ($panels as $panel => $group)
+                <th scope="colgroup" colspan="{{ $group->count() }}">{{ config("pageant.panels.{$panel}") }}<span class="sub">{{ Points::plain($group->sum(fn ($s) => $s->weight())) }}%</span></th>
             @endforeach
             <th aria-hidden="true"></th>
             <th aria-hidden="true"></th>
         </tr>
         <tr>
             <th scope="col">Candidate</th>
-            @foreach ($panels as $panel)
-                @foreach ($panel['judges'] as $judge)
-                    <th scope="col">Judge {{ $loop->iteration }}@if ($judge->name !== "Judge {$loop->iteration}")<span class="sub">{{ $judge->name }}</span>@endif</th>
+            @foreach ($panels as $group)
+                @foreach ($group as $segment)
+                    <th scope="col">{{ $segment->short }}<span class="sub">{{ $segment->isScaled() ? 'of '.Points::plain($segment->maxPoints()).' at ' : '' }}{{ Points::plain($segment->weight()) }}%</span></th>
                 @endforeach
-                <th scope="col">Total rank</th>
-                <th scope="col">Avg rank</th>
-                <th scope="col">{{ Points::plain($panel['weight']) }}%</th>
             @endforeach
-            <th scope="col">Total<span class="sub">lowest wins</span></th>
+            <th scope="col">Total<span class="sub">of 100</span></th>
             <th scope="col">Rank</th>
         </tr>
     </thead>
@@ -42,27 +41,27 @@
                     @if ($row['candidate']->is_finalist)
                         <span class="finalist">Finalist</span>
                     @endif
-                    @if ($row['candidate']->school)<span class="sub">{{ $row['candidate']->school }}</span>@endif
+                    @if ($print && $row['candidate']->school)<span class="sub">{{ $row['candidate']->school }}</span>@endif
                 </th>
-                @foreach ($panels as $key => $panel)
-                    @php $scores = $row['panels'][$key]; @endphp
-                    @foreach ($panel['judges'] as $judge)
+                @foreach ($panels as $group)
+                    @foreach ($group as $key => $segment)
+                        @php $score = $row['segments'][$key]; @endphp
                         <td>
-                            @include('admin.results.tables.value', ['value' => $scores['totals'][$judge->id]])
-                            @if ($panel['rank_judges']->contains($judge->id))
-                                <span class="sub">rank {{ $scores['judge_ranks'][$judge->id] }}</span>
+                            @include('admin.results.tables.value', ['value' => $score['weighted']])
+                            @if ($score['average'] !== null && $segment->isScaled())
+                                <span class="sub">avg {{ Points::format($score['average']) }}</span>
+                            @endif
+                            @if ($score['counted'] > 0 && $score['counted'] < $judges[$key])
+                                <span class="sub">{{ $score['counted'] }} of {{ $judges[$key] }} judges</span>
                             @endif
                         </td>
                     @endforeach
-                    <td>@if ($scores['rank_sum'] === null)–<span class="sr-only"> not ranked</span>@else{{ $scores['rank_sum'] }}@endif</td>
-                    <td>@include('admin.results.tables.value', ['value' => $scores['average_rank']])</td>
-                    <td class="strong">@include('admin.results.tables.value', ['value' => $scores['weighted']])</td>
                 @endforeach
                 <td class="strong">@include('admin.results.tables.value', ['value' => $row['total']])</td>
                 <td>
                     @include('admin.results.tables.rank', ['row' => $row])
                     @if ($row['tie_break'])
-                        <span class="sub">tie broken on {{ collect($row['tie_break'])->map(fn ($key) => $criteria[$key]['segment']->short)->join(', then ') }}</span>
+                        <span class="sub">tie broken on {{ collect($row['tie_break'])->map(fn ($key) => $segments[$key]->short)->join(', then ') }}</span>
                     @endif
                 </td>
             </tr>

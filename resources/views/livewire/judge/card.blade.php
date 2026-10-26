@@ -1,4 +1,4 @@
-{{-- One candidate on the judge's sheet. $state comes from ScoreSheet::cardStates(). --}}
+{{-- One candidate on the judge's sheet. $state comes from ScoreSheet::cardStates(). Judges see no school, only the number. --}}
 @php
     $entry = "c{$candidate->id}";
     $max = $segment->maxPoints();
@@ -14,9 +14,6 @@
             <h3 id="card-{{ $candidate->id }}-title" class="leading-tight">
                 <span class="block text-sm font-medium text-ink-2">{{ $candidate->divisionLabel() }}</span>
                 <span class="block text-xl font-semibold tabular-nums">No. {{ $candidate->number }}</span>
-                @if ($candidate->school)
-                    <span class="block text-sm text-ink-2">{{ $candidate->school }}</span>
-                @endif
             </h3>
             @if ($state['invalid'])
                 <span class="inline-flex shrink-0 items-center gap-1 text-sm font-medium text-danger"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> Check</span>

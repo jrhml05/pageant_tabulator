@@ -10,6 +10,7 @@
     // Not scored by every judge: a lock-in from before they became a finalist doesn't cover them.
     $missing = collect($result['rows'])->filter(fn ($row) => $row['counted'] < $judges->count())->sortBy('candidate.number');
     $final = $waiting->isEmpty() && $missing->isEmpty();
+    $ranked = $segment->isRanked();
 @endphp
 
 @section('title', "{$segment->short} · {$label}")
@@ -22,8 +23,8 @@
         :print="route('results.segment.pdf', [$division, $segment->key]).($judge ? '?judge='.$seat : '')"
         :print-label="$judge ? 'Print judge '.$seat.' sheet' : 'Print results'">
         @unless ($judge)
-            <a href="{{ route('results.segment.winner', [$division, $segment->key]) }}" target="_blank" rel="noopener" class="btn btn-secondary">
-                <i class="fa-solid fa-trophy" aria-hidden="true"></i> Print winner
+            <a href="{{ route('results.segment.winners', [$division, $segment->key]) }}" target="_blank" rel="noopener" class="btn btn-secondary">
+                <i class="fa-solid fa-trophy" aria-hidden="true"></i> {{ $segment->forFinalistsOnly() ? 'Announcement of winners' : 'Print winner' }}
             </a>
         @endunless
     </x-results-header>
@@ -42,27 +43,22 @@
                 <i class="fa-solid {{ $final ? 'fa-lock' : ($waiting->isEmpty() ? 'fa-triangle-exclamation' : 'fa-lock-open') }}" aria-hidden="true"></i>
                 @if ($waiting->isEmpty() && $missing->isNotEmpty())
                     All {{ $judges->count() }} judges locked in, but {{ $missing->map(fn ($row) => 'No. '.$row['candidate']->number)->join(', ', ' and ') }}
-                    {{ $missing->count() === 1 ? "isn't" : "aren't" }} scored by every judge, so ranks wait for them.
-                    Unlock the judges' sheets on Scoring control so they can score.
+                    {{ $missing->count() === 1 ? "isn't" : "aren't" }} {{ $ranked ? 'ranked' : 'scored' }} by every judge, so {{ $missing->count() === 1 ? 'that '.($ranked ? 'total' : 'average').' leaves judges out' : 'those '.($ranked ? 'totals' : 'averages').' leave judges out' }}.
+                    Unlock the judges' sheets on Scoring control so they can {{ $ranked ? 'rank' : 'score' }}.
                 @elseif ($waiting->isEmpty())
                     All {{ $judges->count() }} judges locked in. These results are final unless a sheet is unlocked.
                 @else
                     {{ $judges->count() - $waiting->count() }} of {{ $judges->count() }} judges locked in. Waiting on {{ $waiting->pluck('name')->join(', ', ' and ') }}.
-                    @if ($segment->showsAverageRank())
-                        Average ranks count only judges who have scored every candidate ({{ $result['rank_judges']->count() }} so far).
-                    @elseif ($segment->ranksBySum())
-                        Rank sums count only judges who have scored every {{ $segment->forFinalistsOnly() ? 'finalist' : 'candidate' }} ({{ $result['rank_judges']->count() }} so far).
-                    @else
-                        Averages count only judges who scored every criterion.
-                    @endif
+                    {{ $ranked ? "A judge's rank counts once they give one." : "A judge's total counts toward the average once every criterion has points." }}
                 @endif
             </p>
-            @if ($segment->showsAverageRank())
-                <p class="text-ink-2">Each judge ranks the candidates by total score (equal totals share a rank). The ranks are averaged over the judges and the lowest average places first.</p>
-            @elseif ($segment->ranksBySum())
-                <p class="text-ink-2">Each judge ranks the {{ $segment->forFinalistsOnly() ? 'finalists' : 'candidates' }} by total score (equal totals share a rank). The ranks are added up and the lowest sum places first.</p>
+            @if ($ranked)
+                <p class="text-ink-2">@include('admin.results.ranked-method')</p>
             @else
-                <p class="text-ink-2">Under each judge's total is how that judge ranked the candidate (equal totals share a rank). It shows once the judge has scored every candidate.</p>
+                <p class="text-ink-2">The judges' totals for each {{ $segment->forFinalistsOnly() ? 'finalist' : 'candidate' }} are added up and divided by the number of judges. The highest average, rounded to 2 decimals, places first; equal averages share a {{ $segment->forFinalistsOnly() ? 'placement' : 'rank' }}.</p>
+            @endif
+            @if ($segment->isAward())
+                <p class="text-ink-2">A separate award: these {{ $ranked ? 'ranks' : 'scores' }} don't count toward Round 1 or Round 2.</p>
             @endif
             @if ($tied->isNotEmpty())
                 {{-- Ties are routine while sheets are open; they need the board only once every judge has locked in. --}}

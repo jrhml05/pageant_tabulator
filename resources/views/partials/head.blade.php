@@ -2,6 +2,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <title>{{ isset($title) && $title ? $title . ' · ' : '' }}Mr. & Ms. LCUAA 2026 Tabulation</title>
+<link rel="icon" href="{{ asset('favicon.ico') }}" sizes="16x16 32x32 48x48 64x64">
+<link rel="icon" href="{{ asset('assets/img/icon-192.png') }}" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}">
 <script>
     (() => {
         let theme = null;

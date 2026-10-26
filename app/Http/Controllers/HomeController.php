@@ -15,7 +15,7 @@ class HomeController extends Controller
         $locks = ScoreLock::all()->groupBy('segment');
         $open = Segment::open()->keys();
 
-        // Grouped the way the night runs: pre-pageant, then Round 1 and Round 2 on pageant night.
+        // Grouped the way the night runs: pre-pageant, then Round 1, Round 2 and the separate awards on pageant night.
         $groups = Segment::all()->groupBy(fn (Segment $segment) => $segment->panel === 'prepageant'
             ? $segment->panelLabel()
             : "{$segment->panelLabel()}, {$segment->roundLabel()}")

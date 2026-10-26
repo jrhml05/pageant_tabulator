@@ -21,21 +21,24 @@
     <x-flash />
 
     <div class="flex flex-col gap-6">
-        @foreach ($rounds as $round => $data)
-            <section aria-labelledby="round-{{ $round }}" class="card overflow-hidden">
+        @foreach ($groups as $key => $data)
+            @php $round = $data['round']; @endphp
+            <section aria-labelledby="round-{{ $key }}" class="card overflow-hidden">
                 <div class="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-b border-line bg-surface-2 px-5 py-3">
                     <div>
-                        <h2 id="round-{{ $round }}" class="font-semibold">{{ $data['label'] }}</h2>
+                        <h2 id="round-{{ $key }}" class="font-semibold">{{ $data['label'] }}</h2>
                         <p class="text-sm text-ink-2">{{ $summary($data['entries'], $data['locks']) }}</p>
                     </div>
-                    <form method="POST" action="{{ route('reset.round', $round) }}"
-                        data-confirm="Delete every {{ $data['label'] }} score and lock-in, from every judge in both divisions?{{ $round === 1 ? ' Saved finalists stay.' : '' }} This can't be undone.">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-secondary" @disabled(! $data['entries'] && ! $data['locks'])>
-                            <i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Reset {{ $data['label'] }}
-                        </button>
-                    </form>
+                    @if ($round)
+                        <form method="POST" action="{{ route('reset.round', $round) }}"
+                            data-confirm="Delete every {{ $data['label'] }} score and lock-in, from every judge in both divisions?{{ $round === 1 ? ' Saved finalists stay.' : '' }} This can't be undone.">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-secondary" @disabled(! $data['entries'] && ! $data['locks'])>
+                                <i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Reset {{ $data['label'] }}
+                            </button>
+                        </form>
+                    @endif
                 </div>
 
                 <ul class="divide-y divide-line">

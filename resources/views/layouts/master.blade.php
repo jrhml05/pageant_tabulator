@@ -19,9 +19,12 @@
         <aside
             class="invisible fixed inset-y-0 left-0 z-40 flex w-72 -translate-x-full flex-col border-r border-line bg-surface transition-transform group-data-[open=true]/drawer:visible group-data-[open=true]/drawer:translate-x-0 lg:visible lg:w-64 lg:translate-x-0">
             <div class="flex h-16 shrink-0 items-center justify-between gap-3 border-b border-line px-5">
-                <a href="{{ route('home') }}" class="flex flex-col leading-tight">
-                    <span class="font-semibold">Mr. & Ms. LCUAA 2026</span>
-                    <span class="text-xs text-ink-2">Tabulation</span>
+                <a href="{{ route('home') }}" class="flex min-w-0 items-center gap-3">
+                    <x-event-logo class="h-10" />
+                    <span class="flex flex-col leading-tight">
+                        <span class="font-semibold">Mr. & Ms. LCUAA 2026</span>
+                        <span class="text-xs text-ink-2">Tabulation</span>
+                    </span>
                 </a>
                 <button type="button" data-drawer-close class="btn btn-ghost size-11 px-0 lg:hidden" aria-label="Close menu">
                     <i class="fa-solid fa-xmark" aria-hidden="true"></i>

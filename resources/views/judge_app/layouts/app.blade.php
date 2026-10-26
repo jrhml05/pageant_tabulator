@@ -16,10 +16,13 @@
     @hasSection('waiting') data-judge-waiting="{{ route('judge.app') }}" @endif>
     <header class="sticky top-0 z-30 border-b border-line bg-surface">
         <div class="mx-auto flex min-h-16 max-w-screen-2xl items-center gap-x-4 px-4 py-2 sm:px-6">
-            <a href="{{ route('judge.app') }}" class="mr-auto flex min-w-0 flex-col leading-tight">
-                <span class="font-semibold">{{ config('pageant.event') }}</span>
-                <span class="truncate text-sm text-ink-2">
-                    {{ $judge->name }}{{ $judge->panel ? ' · '.config("pageant.panels.{$judge->panel}").' panel' : '' }}
+            <a href="{{ route('judge.app') }}" class="mr-auto flex min-w-0 items-center gap-3">
+                <x-event-logo class="h-10" />
+                <span class="flex min-w-0 flex-col leading-tight">
+                    <span class="font-semibold">{{ config('pageant.event') }}</span>
+                    <span class="truncate text-sm text-ink-2">
+                        {{ $judge->name }}{{ $judge->panel ? ' · '.config("pageant.panels.{$judge->panel}").' panel' : '' }}
+                    </span>
                 </span>
             </a>
 
