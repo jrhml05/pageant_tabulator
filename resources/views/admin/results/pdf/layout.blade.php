@@ -118,6 +118,7 @@
         }
 
         .tie,
+        .decided,
         .finalist {
             margin-left: 4pt;
             font-size: 7.5pt;
@@ -131,6 +132,10 @@
 
         .finalist {
             color: #8a0000;
+        }
+
+        .decided {
+            color: #5c4f50;
         }
 
         .sr-only {

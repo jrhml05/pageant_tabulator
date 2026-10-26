@@ -211,8 +211,9 @@
         @apply font-semibold;
     }
 
-    /* Tie and finalist tags carry a word, not just color. */
+    /* Tie, board and finalist tags carry a word, not just color. */
     .tie,
+    .decided,
     .finalist {
         @apply ml-1.5 inline-block rounded px-1.5 py-px align-middle text-xs font-semibold;
     }
@@ -223,6 +224,11 @@
 
     .finalist {
         @apply bg-accent-soft text-accent-soft-ink;
+    }
+
+    /* A rank the board set after a tie: settled, so outlined in neutral rather than flagged. */
+    .decided {
+        @apply text-ink-2 ring-1 ring-line-strong ring-inset;
     }
 
     /* The sign-in art panel wears the logo's own fill: crimson darkening toward the bottom. */

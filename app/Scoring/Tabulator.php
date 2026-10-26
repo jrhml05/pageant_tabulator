@@ -11,8 +11,10 @@ use Illuminate\Support\Collection;
  * Turns judges' points into averages and ranks.
  *
  * Every figure is in hundredths (int). Equal figures share a rank and are flagged as tied for
- * the board to settle. Outside a ranked segment judges don't rank anyone: a segment adds up
- * the judges' totals, divides by the number of judges, and ranks that average, highest first.
+ * the board to settle; the board's order for a Round 2 placement or a segment's first place is
+ * saved and applied by TieBreak. Outside a ranked segment judges don't rank anyone: a segment
+ * adds up the judges' totals, divides by the number of judges, and ranks that average, highest
+ * first.
  *
  * Round 1 is placed by weighted scores: each segment's average, scaled to its weight in the
  * round, added up out of 100. The highest total wins.
@@ -42,7 +44,9 @@ final class Tabulator
      *         rank_total: ?int,
      *         rank: ?int,
      *         tied: bool,
+     *         decided: bool,
      *     }>,
+     *     ties: list<array{rank: int, average: int, candidates: Collection, order: ?list<int>}>,
      * }
      */
     public function segment(Segment $segment, string $division): array
@@ -88,12 +92,26 @@ final class Tabulator
             $rows[$id] += $rank;
         }
 
+        // The board's saved orders for ties it settles here; `ties` lists those ties, settled or not.
+        [$rows, $ties] = TieBreak::apply($segment, $division, $rows);
+
         return [
             'segment' => $segment,
             'judges' => $judges,
             'locked' => ScoreLock::where('segment', $segment->key)->whereIn('judge_id', $judges->pluck('id'))->pluck('judge_id'),
             'rows' => array_values($rows),
+            'ties' => $ties,
         ];
+    }
+
+    /** Every judge has locked in and scored every candidate, so a segment's results won't move. */
+    public static function isFinal(array $result): bool
+    {
+        $judges = $result['judges'];
+
+        return $judges->isNotEmpty()
+            && $judges->pluck('id')->diff($result['locked'])->isEmpty()
+            && collect($result['rows'])->every(fn ($row) => $row['counted'] === $judges->count());
     }
 
     /**

@@ -1,15 +1,20 @@
 @extends('layouts.master')
 
+@use('App\Scoring\Tabulator')
+@use('App\Scoring\TieBreak')
 @php
     $segment = $result['segment'];
     $judges = $result['judges'];
     $base = route('results.segment', [$division, $segment->key]);
     $tabs = ['Overall' => $base] + $judges->values()->mapWithKeys(fn ($j, $i) => ['Judge '.($i + 1) => $base.'?judge='.($i + 1)])->all();
     $waiting = $judges->whereNotIn('id', $result['locked']);
-    $tied = collect($result['rows'])->where('tied', true)->sortBy('rank')->groupBy('rank');
     // Not scored by every judge: a lock-in from before they became a finalist doesn't cover them.
     $missing = collect($result['rows'])->filter(fn ($row) => $row['counted'] < $judges->count())->sortBy('candidate.number');
-    $final = $waiting->isEmpty() && $missing->isEmpty();
+    $final = Tabulator::isFinal($result);
+    // Ties the board settles on this page (Settle ties, below the table) get their own line once final.
+    $ties = collect($result['ties']);
+    $unsettled = $final ? $ties->whereNull('order') : collect();
+    $tied = collect($result['rows'])->where('tied', true)->whereNotIn('rank', $unsettled->pluck('rank'))->sortBy('rank')->groupBy('rank');
     $ranked = $segment->isRanked();
 @endphp
 
@@ -60,6 +65,15 @@
             @if ($segment->isAward())
                 <p class="text-ink-2">A separate award: these {{ $ranked ? 'ranks' : 'scores' }} don't count toward Round 1 or Round 2.</p>
             @endif
+            @if ($unsettled->isNotEmpty())
+                <p role="alert" class="rounded-md bg-danger-soft px-3 py-2 font-medium text-danger">
+                    {{ $unsettled->map(fn ($tie) => 'Tied for '.TieBreak::place($segment, $tie['rank'], $division).': '.$tie['candidates']->map(fn ($c) => 'No. '.$c->number)->join(', ', ' and '))->join('; ') }}.
+                    {{ $segment->forFinalistsOnly() ? 'Record the board\'s order' : 'Record the board\'s pick for the winner' }} under {{ $ties->count() === 1 ? 'Settle the tie' : 'Settle ties' }}, below the table.
+                </p>
+            @endif
+            @foreach ($ties->whereNotNull('order') as $tie)
+                <p class="text-ink-2"><i class="fa-solid fa-scale-balanced" aria-hidden="true"></i> {{ TieBreak::note($segment, $tie) }}</p>
+            @endforeach
             @if ($tied->isNotEmpty())
                 {{-- Ties are routine while sheets are open; they need the board only once every judge has locked in. --}}
                 <p @if ($final) role="alert" @endif
@@ -74,4 +88,8 @@
     <x-table-card>
         @include($judge ? 'admin.results.tables.judge' : 'admin.results.tables.segment', ['print' => false])
     </x-table-card>
+
+    @if (! $judge && $final && $ties->isNotEmpty())
+        @include('admin.results.settle-ties')
+    @endif
 @endsection

@@ -15,7 +15,7 @@
 
     <p class="-mt-3 mb-6 max-w-prose text-sm text-ink-2">
         For clearing a rehearsal or dry run. A reset deletes the scores of every judge in both divisions,
-        and the segment's lock-ins, so judges can score it again while it is open. It can't be undone.
+        and the segment's lock-ins and settled ties, so judges can score it again while it is open. It can't be undone.
     </p>
 
     <x-flash />

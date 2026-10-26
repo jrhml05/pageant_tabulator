@@ -2,6 +2,7 @@
 
 @use('App\Scoring\Points')
 @use('App\Scoring\Tabulator')
+@use('App\Scoring\TieBreak')
 @php
     $segment = $result['segment'];
     $judges = $result['judges'];
@@ -32,6 +33,9 @@
     @elseif ($winners->count() > 1)
         <p class="note"><strong>Tied for first.</strong> The board decides the winner.</p>
     @endif
+    @foreach (collect($result['ties'])->whereNotNull('order') as $tie)
+        <p class="note"><strong>Tie settled by the board:</strong> {{ TieBreak::note($segment, $tie) }}</p>
+    @endforeach
 
     <table class="sheet announce">
         <thead>
