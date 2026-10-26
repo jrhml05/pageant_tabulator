@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Scoring\Announcement;
 use App\Scoring\Segment;
 use App\Scoring\Tabulator;
+use App\Scoring\TieBreak;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -128,18 +129,80 @@ class ResultsController extends Controller
             ->stream("{$name}.pdf");
     }
 
-    /** The segment's rank 1 for the emcee: every candidate tied for first, if there is a tie. */
-    public function segmentWinnerPdf(string $division, string $segment)
+    /** Round 2: the announcement of winners, 4th runner-up first and the winner last. Any other segment: its winner. */
+    public function segmentWinnersPdf(string $division, string $segment)
     {
         $result = $this->tabulator->segment(Segment::findOrFail($segment), $division);
+        $name = $result['segment']->forFinalistsOnly() ? 'winners' : 'winner';
 
-        return Pdf::loadView('admin.results.pdf.winner', [
+        return Pdf::loadView('admin.results.pdf.winners', [
+            'division' => $division,
             'label' => config("pageant.divisions.{$division}"),
             'result' => $result,
-            'winners' => collect($result['rows'])->where('rank', 1)->sortBy('candidate.number')->values(),
+            'winners' => Tabulator::winners($result),
         ])
             ->setPaper(self::PAPER, 'landscape')
-            ->stream("{$division}_{$segment}_winner.pdf");
+            ->stream("{$division}_{$segment}_{$name}.pdf");
+    }
+
+    /**
+     * Saves the board's order for tied candidates, or clears one (`clear` = its rank). Only once
+     * every judge has locked in, so the averages can't move under the decision.
+     */
+    public function settleTies(Request $request, string $division, string $segment)
+    {
+        $segment = Segment::findOrFail($segment);
+        $result = $this->tabulator->segment($segment, $division);
+        $back = redirect()->route('results.segment', [$division, $segment->key]);
+        $names = fn (array $tie) => $tie['candidates']->map(fn (Candidate $c) => "No. {$c->number}")->join(', ', ' and ');
+
+        if (! Tabulator::isFinal($result)) {
+            return $back->with('error', 'A tie can be settled once every judge has locked in and scored every '
+                .($segment->forFinalistsOnly() ? 'finalist' : 'candidate').'.');
+        }
+
+        $ties = collect($result['ties'])->keyBy('rank');
+        $changed = 'The ties changed while this page was open. Check the results and choose again.';
+
+        if ($request->filled('clear')) {
+            $tie = $ties->get($request->integer('clear'));
+            if (! $tie) {
+                return $back->with('error', $changed);
+            }
+            TieBreak::clear($segment, $division, $tie['rank']);
+
+            return $back->with('success', "Cleared. {$names($tie)} are tied for ".TieBreak::place($segment, $tie['rank'], $division).' again.');
+        }
+
+        $picks = collect($request->input('ties', []))->map(fn ($order) => array_map('intval', array_values((array) $order)));
+        if ($picks->keys()->diff($ties->keys())->isNotEmpty()) {
+            return $back->with('error', $changed);
+        }
+        if ($picks->isEmpty()) {
+            return $back->with('error', $segment->forFinalistsOnly() ? 'Choose who places higher first.' : 'Choose the winner first.');
+        }
+
+        $orders = [];
+        foreach ($picks as $rank => $order) {
+            $tie = $ties[$rank];
+            $ids = $tie['candidates']->pluck('id')->all();
+            $count = TieBreak::picks($segment, count($ids));
+            if (count($order) !== $count || count(array_unique($order)) !== $count || array_diff($order, $ids)) {
+                return $back->with('error', 'In the tie for '.TieBreak::place($segment, $rank, $division)
+                    .', choose a different candidate for each place.');
+            }
+            // Round 2 orders the whole tie: the one left over takes the last place.
+            $orders[$rank] = $segment->forFinalistsOnly() ? [...$order, ...array_diff($ids, $order)] : $order;
+        }
+
+        DB::transaction(function () use ($segment, $division, $ties, $orders) {
+            foreach ($orders as $rank => $order) {
+                TieBreak::save($segment, $division, $ties[$rank], $order);
+            }
+        });
+
+        return $back->with('success', 'Saved. '.collect($orders)
+            ->map(fn ($order, $rank) => TieBreak::note($segment, ['order' => $order] + $ties[$rank]))->join(' '));
     }
 
     /** The sidebar's results links open this division next. */

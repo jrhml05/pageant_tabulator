@@ -9,13 +9,14 @@
     // Results open in the division on screen, else the last one viewed; each page has its own Ms./Mr. switch.
     $d = request()->route('division') ?? session('results.division', array_key_first(config('pageant.divisions')));
 
-    // [label, url], grouped by round.
+    // [label, url], grouped by round, then the separate awards.
     $reports = [
         'Round 1' => [
             ['Overall and finalists', route('results.round1', $d)],
             ...\App\Scoring\Segment::inRound(1)->map(fn ($s) => [$s->short, route('results.segment', [$d, $s->key])])->values(),
         ],
         'Round 2' => \App\Scoring\Segment::inRound(2)->map(fn ($s) => [$s->label, route('results.segment', [$d, $s->key])])->values()->all(),
+        'Special awards' => \App\Scoring\Segment::awards()->map(fn ($s) => [$s->short, route('results.segment', [$d, $s->key])])->values()->all(),
     ];
 
     // Per-judge tabs add ?judge=N, so compare paths only.

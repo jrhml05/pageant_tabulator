@@ -1,7 +1,7 @@
 # Graph Report - pageant_tabulator  (2026-10-21)
 
 ## Corpus Check
-- 133 files · ~1,647,076 words
+- 133 files · ~1,647,141 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary

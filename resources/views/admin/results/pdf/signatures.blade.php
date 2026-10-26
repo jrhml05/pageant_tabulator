@@ -1,4 +1,7 @@
-{{-- Signature lines, four to a row. `$signers` is a list of labels. --}}
+{{-- Signature lines, four to a row. `$signers` is a list of labels; the board signs last on every printed sheet. --}}
+@php
+    $signers = [...$signers, config('pageant.board')];
+@endphp
 <table class="signatures">
     @foreach (array_chunk($signers, 4) as $row)
         <tr>

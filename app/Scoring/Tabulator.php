@@ -5,46 +5,48 @@ namespace App\Scoring;
 use App\Models\Candidate;
 use App\Models\Score;
 use App\Models\ScoreLock;
-use App\Models\User;
 use Illuminate\Support\Collection;
 
 /**
  * Turns judges' points into averages and ranks.
  *
  * Every figure is in hundredths (int). Equal figures share a rank and are flagged as tied for
- * the board to settle.
+ * the board to settle; the board's order for a Round 2 placement or a segment's first place is
+ * saved and applied by TieBreak. Outside a ranked segment judges don't rank anyone: a segment
+ * adds up the judges' totals, divides by the number of judges, and ranks that average, highest
+ * first.
  *
- * A segment is placed by rank sum: each judge ranks the candidates by total (ties share a
- * rank), the ranks are added up, and the lowest sum places first. A segment set to "average"
- * ranks by the mean of the judges' totals, rounded to 2 decimals, instead.
+ * Round 1 is placed by weighted scores: each segment's average, scaled to its weight in the
+ * round, added up out of 100. The highest total wins.
  *
- * Round 1 is placed by ranks per panel: each judge ranks the candidates by their total across
- * the panel's segments, the ranks are averaged over the panel's judges (3 pre-pageant, 5 pageant
- * night) and weighted (30%, 70%), and the lowest total wins. Averaging, not summing, keeps the
- * 5-judge panel from outweighing its 70%.
+ * A ranked segment (Casual wear) is the exception: each judge ranks the candidates, and the
+ * lowest total of their ranks wins.
  */
 final class Tabulator
 {
     /**
-     * One segment for one division: each judge's points and total, the average, and ranks.
+     * One segment for one division: each judge's points and total, the average, and its rank.
+     *
+     * In a ranked segment a judge's total is the rank they gave, `rank_total` adds the judges'
+     * ranks up, and the lowest places first. Until every judge has ranked a candidate, candidates
+     * are compared by their average rank, so a missing judge doesn't lower anyone's total.
      *
      * @return array{
      *     segment: Segment,
      *     judges: Collection,
      *     locked: Collection,
-     *     rank_judges: Collection,
      *     rows: list<array{
      *         candidate: Candidate,
      *         points: array<int, array<string, ?int>>,
      *         totals: array<int, ?int>,
-     *         judge_ranks: array<int, ?int>,
      *         counted: int,
      *         average: ?int,
-     *         rank_sum: ?int,
-     *         average_rank: ?int,
+     *         rank_total: ?int,
      *         rank: ?int,
      *         tied: bool,
+     *         decided: bool,
      *     }>,
+     *     ties: list<array{rank: int, average: int, candidates: Collection, order: ?list<int>}>,
      * }
      */
     public function segment(Segment $segment, string $division): array
@@ -80,51 +82,58 @@ final class Tabulator
                 'totals' => $totals,
                 'counted' => count($counted),
                 'average' => $counted ? (int) round(array_sum($counted) / count($counted)) : null,
+                'rank_total' => $segment->isRanked() && $counted ? array_sum($counted) : null,
             ];
         }
 
-        $ranked = self::rankSums(array_map(fn ($row) => $row['totals'], $rows), $judges);
-        foreach ($rows as $id => $row) {
-            $rows[$id]['judge_ranks'] = $ranked['judge_ranks'][$id];
-            $rows[$id]['rank_sum'] = $ranked['rank_sums'][$id];
-            $rows[$id]['average_rank'] = self::averageRank($ranked['rank_sums'][$id], $ranked['rank_judges']->count());
+        // rank() places the highest first, so a ranked segment's averages are negated.
+        $sign = $segment->isRanked() ? -1 : 1;
+        foreach (self::rank(array_map(fn ($row) => $row['average'] === null ? null : $sign * $row['average'], $rows)) as $id => $rank) {
+            $rows[$id] += $rank;
         }
 
-        $rows = $segment->ranksBySum()
-            ? $this->withRanks($rows, 'rank_sum', lowestFirst: true)
-            : $this->withRanks($rows, 'average');
+        // The board's saved orders for ties it settles here; `ties` lists those ties, settled or not.
+        [$rows, $ties] = TieBreak::apply($segment, $division, $rows);
 
         return [
             'segment' => $segment,
             'judges' => $judges,
             'locked' => ScoreLock::where('segment', $segment->key)->whereIn('judge_id', $judges->pluck('id'))->pluck('judge_id'),
-            'rank_judges' => $ranked['rank_judges'],
             'rows' => array_values($rows),
+            'ties' => $ties,
         ];
     }
 
+    /** Every judge has locked in and scored every candidate, so a segment's results won't move. */
+    public static function isFinal(array $result): bool
+    {
+        $judges = $result['judges'];
+
+        return $judges->isNotEmpty()
+            && $judges->pluck('id')->diff($result['locked'])->isEmpty()
+            && collect($result['rows'])->every(fn ($row) => $row['counted'] === $judges->count());
+    }
+
     /**
-     * Round 1 for one division, placed by weighted average ranks per panel (lowest wins).
+     * Round 1 for one division, placed by weighted scores (highest wins).
      *
-     * Per panel, a judge's total for a candidate adds up the judge's totals for the panel's
-     * Round 1 segments (pre-pageant: talent + thematic wear), and counts only when every one of
-     * them is complete. Each judge ranks the candidates by that total; the ranks are added up
-     * (`rank_sum`), averaged over the judges who count, and multiplied by the panel's weight:
-     * an average rank of 2 at 30% is 60 (0.60). The total adds the panels up. It is compared
-     * exactly, over a common denominator, so a tie is a true tie and not two figures that round
-     * alike. Each segment still ranks on its own for its own winner (`segment()`).
+     * Each segment's score is its average (the mean of the judges' totals, to 2 decimals), scaled
+     * to the segment's weight: talent is judged out of 100 and counts 15, so an average of 87.33
+     * adds 13.0995. The total adds the segments up, out of 100, and counts whatever is scored so
+     * far. It is compared before rounding, so a tie is a true tie and not two figures that round
+     * alike. `weighted` and `total` are shown in hundredths.
      *
-     * A tie on the total goes to the lower average rank in the `tie_break` segments, in order
+     * A tie on the total goes to the higher average in the `tie_break` segments, in order
      * (`tie_break` on the row lists the ones it took). Candidates level on all of them share a
      * rank and are flagged.
      *
      * @return array{
-     *     panels: Collection<string, array{label: string, weight: float, segments: Collection, judges: Collection, rank_judges: Collection}>,
-     *     criteria: Collection<string, array{segment: Segment, rank_judges: Collection}>,
+     *     segments: Collection<string, Segment>,
+     *     judges: Collection<string, int>,
      *     tie_break: Collection<int, string>,
      *     rows: list<array{
      *         candidate: Candidate,
-     *         panels: array<string, array{totals: array<int, ?int>, judge_ranks: array<int, ?int>, rank_sum: ?int, average_rank: ?int, weighted: ?int}>,
+     *         segments: array<string, array{average: ?int, counted: int, weighted: ?int}>,
      *         total: ?int,
      *         complete: bool,
      *         rank: ?int,
@@ -138,74 +147,45 @@ final class Tabulator
     public function roundOne(string $division): array
     {
         $candidates = Candidate::division($division)->get();
+        $segments = Segment::inRound(1);
 
-        $sheets = Segment::inRound(1)->map(function (Segment $segment) use ($division) {
+        $sheets = $segments->map(function (Segment $segment) use ($division) {
             $sheet = $this->segment($segment, $division);
             $sheet['rows'] = collect($sheet['rows'])->keyBy(fn ($row) => $row['candidate']->id);
 
             return $sheet;
         });
-
-        $panels = $sheets->groupBy(fn ($sheet) => $sheet['segment']->panel, preserveKeys: true)
-            ->map(function (Collection $segments, string $panel) use ($candidates) {
-                $judges = User::onPanel($panel)->get();
-
-                $totals = [];
-                foreach ($candidates as $candidate) {
-                    foreach ($judges as $judge) {
-                        $parts = $segments->map(fn ($sheet) => $sheet['rows'][$candidate->id]['totals'][$judge->id]);
-                        $totals[$candidate->id][$judge->id] = $parts->containsStrict(null) ? null : $parts->sum();
-                    }
-                }
-
-                return [
-                    'label' => config("pageant.panels.{$panel}"),
-                    'weight' => $segments->sum(fn ($sheet) => $sheet['segment']->maxPoints()),
-                    'segments' => $segments->map(fn ($sheet) => $sheet['segment']),
-                    'judges' => $judges,
-                    'totals' => $totals,
-                    'ranked' => self::rankSums($totals, $judges),
-                ];
-            });
-
-        $denominator = $panels->map(fn ($panel) => $panel['ranked']['rank_judges']->count())->filter()
-            ->reduce(fn (int $lcm, int $judges) => self::lcm($lcm, $judges), 1);
-        // A tie-break segment no judge has finished can't separate anyone yet.
-        $tieBreak = collect(config('pageant.tie_break'))
-            ->filter(fn (string $key) => $sheets->has($key) && $sheets[$key]['rank_judges']->isNotEmpty())->values();
+        $judges = $sheets->map(fn ($sheet) => $sheet['judges']->count());
+        $tieBreak = collect(config('pageant.tie_break'))->filter(fn (string $key) => $sheets->has($key))->values();
 
         $rows = [];
         $keys = [];
         foreach ($candidates as $candidate) {
             $scores = [];
             $exact = null;
-            foreach ($panels as $key => $panel) {
-                $rankSum = $panel['ranked']['rank_sums'][$candidate->id];
-                $judges = $panel['ranked']['rank_judges']->count();
-                // The weight in hundredths of a percent: 30% is 3000.
-                $basis = (int) round($panel['weight'] * 100);
+            foreach ($segments as $key => $segment) {
+                $row = $sheets[$key]['rows'][$candidate->id];
+                // In ten-thousandths: 8733 (87.33) × 15 is 130995 (13.0995).
+                $weighted = $row['average'] === null ? null : $row['average'] * $segment->scale();
                 $scores[$key] = [
-                    'totals' => $panel['totals'][$candidate->id],
-                    'judge_ranks' => $panel['ranked']['judge_ranks'][$candidate->id],
-                    'rank_sum' => $rankSum,
-                    'average_rank' => self::averageRank($rankSum, $judges),
-                    'weighted' => $rankSum === null ? null : (int) round($rankSum * $basis / $judges / 100),
+                    'average' => $row['average'],
+                    'counted' => $row['counted'],
+                    'weighted' => $segment->weighted($row['average']),
                 ];
-                if ($rankSum !== null) {
-                    $exact = ($exact ?? 0) + $rankSum * $basis * intdiv($denominator, $judges);
+                if ($weighted !== null) {
+                    $exact = ($exact ?? 0) + $weighted;
                 }
             }
 
             $rows[$candidate->id] = [
                 'candidate' => $candidate,
-                'panels' => $scores,
-                'total' => $exact === null ? null : (int) round($exact / ($denominator * 100)),
-                'complete' => ! in_array(null, array_column($scores, 'rank_sum'), true),
+                'segments' => $scores,
+                'total' => $exact === null ? null : (int) round($exact / 100),
+                'complete' => $judges->every(fn (int $count, string $key) => $count > 0 && $scores[$key]['counted'] === $count),
             ];
-            // Every judge who counts in a segment ranked every candidate, so within a segment the
-            // rank sums compare the same way the average ranks do.
+            // Ranked lowest first, so the figures are negated; an unscored tie-break segment counts as below 0.
             $keys[$candidate->id] = $exact === null ? null
-                : [$exact, ...$tieBreak->map(fn ($key) => $sheets[$key]['rows'][$candidate->id]['rank_sum'])];
+                : [-$exact, ...$tieBreak->map(fn ($key) => -($scores[$key]['average'] ?? -1))];
         }
 
         foreach (self::rankLowestFirst($keys) as $id => $rank) {
@@ -218,15 +198,9 @@ final class Tabulator
         $afterCutoff = $ordered->get($finalists);
 
         return [
-            'panels' => $panels->map(fn ($panel) => [
-                'label' => $panel['label'],
-                'weight' => $panel['weight'],
-                'segments' => $panel['segments'],
-                'judges' => $panel['judges'],
-                'rank_judges' => $panel['ranked']['rank_judges'],
-            ]),
-            'criteria' => $sheets->map(fn ($sheet) => ['segment' => $sheet['segment'], 'rank_judges' => $sheet['rank_judges']]),
-            'tie_break' => collect(config('pageant.tie_break')),
+            'segments' => $segments,
+            'judges' => $judges,
+            'tie_break' => $tieBreak,
             'rows' => array_values($rows),
             // Candidates still tied across the last finalist spot: the board picks who goes through.
             'cutoff_tie' => $atCutoff && $afterCutoff && $atCutoff['rank'] === $afterCutoff['rank'],
@@ -243,21 +217,33 @@ final class Tabulator
     }
 
     /**
+     * Who a segment's winners sheet names. Round 2 announces everyone within the placement titles
+     * (top 5), lowest placement first so the winner is read out last; any other segment names its
+     * winner only. Tied candidates share a placement, in number order.
+     *
+     * @param  array{segment: Segment, rows: list<array{candidate: Candidate, rank: ?int}>}  $result  from segment()
+     */
+    public static function winners(array $result): Collection
+    {
+        $last = $result['segment']->forFinalistsOnly() ? count(config('pageant.placements')) : 1;
+
+        return collect($result['rows'])
+            ->filter(fn ($row) => $row['rank'] !== null && $row['rank'] <= $last)
+            ->sortBy([['rank', 'desc'], ['candidate.number', 'asc']])
+            ->values();
+    }
+
+    /**
      * Competition ranking, highest first: 90, 85, 85, 80 rank 1, 2, 2, 4. Nulls stay unranked.
-     * With $lowestFirst (rank sums), the smallest value ranks 1.
      *
      * @param  array<int, ?int>  $values
      * @return array<int, array{rank: ?int, tied: bool}>
      */
-    public static function rank(array $values, bool $lowestFirst = false): array
+    public static function rank(array $values): array
     {
         $scored = array_filter($values, fn ($value) => $value !== null);
         $counts = array_count_values($scored);
-        if ($lowestFirst) {
-            asort($scored);
-        } else {
-            arsort($scored);
-        }
+        arsort($scored);
 
         $ranks = array_map(fn () => ['rank' => null, 'tied' => false], $values);
         $position = 0;
@@ -273,32 +259,6 @@ final class Tabulator
         }
 
         return $ranks;
-    }
-
-    /**
-     * Each judge ranks the candidates by total, and a candidate's rank sum adds up those ranks.
-     * Only judges who have a total for every candidate count, so every sum covers the same judges.
-     *
-     * @param  array<int, array<int, ?int>>  $totals  candidate id => judge id => total
-     * @return array{judge_ranks: array<int, array<int, ?int>>, rank_sums: array<int, ?int>, rank_judges: Collection}
-     */
-    private static function rankSums(array $totals, Collection $judges): array
-    {
-        $judgeRanks = array_map(fn () => [], $totals);
-        foreach ($judges as $judge) {
-            foreach (self::rank(array_map(fn ($byJudge) => $byJudge[$judge->id], $totals)) as $id => $rank) {
-                $judgeRanks[$id][$judge->id] = $rank['rank'];
-            }
-        }
-
-        $rankJudges = $judges->filter(fn ($judge) => $totals && collect($totals)->every(fn ($byJudge) => $byJudge[$judge->id] !== null))
-            ->pluck('id')->values();
-
-        return [
-            'judge_ranks' => $judgeRanks,
-            'rank_sums' => array_map(fn ($ranks) => $rankJudges->isEmpty() ? null : $rankJudges->sum(fn ($id) => $ranks[$id]), $judgeRanks),
-            'rank_judges' => $rankJudges,
-        ];
     }
 
     /**
@@ -340,30 +300,5 @@ final class Tabulator
         }
 
         return $ranks;
-    }
-
-    /** A rank sum over its judges, in hundredths: 13 over 5 judges is 260 (2.60). */
-    private static function averageRank(?int $rankSum, int $judges): ?int
-    {
-        return $rankSum === null || $judges === 0 ? null : (int) round($rankSum * 100 / $judges);
-    }
-
-    private static function lcm(int $a, int $b): int
-    {
-        [$x, $y] = [$a, $b];
-        while ($y !== 0) {
-            [$x, $y] = [$y, $x % $y];
-        }
-
-        return intdiv($a * $b, $x);
-    }
-
-    private function withRanks(array $rows, string $field, bool $lowestFirst = false): array
-    {
-        foreach (self::rank(array_map(fn ($row) => $row[$field], $rows), $lowestFirst) as $id => $rank) {
-            $rows[$id] += $rank;
-        }
-
-        return $rows;
     }
 }

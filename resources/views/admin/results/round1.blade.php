@@ -3,10 +3,8 @@
 @use('App\Scoring\Points')
 @php
     $rows = collect($result['rows'])->sortBy(fn ($row) => [$row['rank'] ?? PHP_INT_MAX, $row['candidate']->number]);
-    // Only judges who have scored every candidate count toward a panel's ranks.
-    $incomplete = $result['panels']->contains(fn ($panel) => $panel['rank_judges']->count() < $panel['judges']->count());
-    $weights = $result['panels']->map(fn ($panel) => mb_strtolower($panel['label']).' '.$panel['weight'].'%')->join(', ');
-    $tieBreak = $result['tie_break']->map(fn ($key) => $result['criteria'][$key]['segment']->short)->join(', then ');
+    // Some judge hasn't scored every candidate in every segment, so totals will still move.
+    $incomplete = $rows->contains('complete', false);
     $tied = $rows->where('tied', true)->groupBy('rank')->sortKeys();
     $expected = (int) config('pageant.finalists');
     // Until finalists are saved, the form starts from the current top of the ranking.
@@ -29,9 +27,7 @@
     <x-results-header title="Round 1 results" eyebrow="Overall and finalists" :print="route('results.round1.pdf', $division)" />
 
     <p class="-mt-2 mb-4 max-w-prose text-sm text-ink-2">
-        Each judge ranks the candidates by their total across the panel's segments. The ranks are averaged over
-        the panel's judges and weighted ({{ $weights }}), and the lowest total ranks first. A tie on the total
-        goes to the better average rank in {{ $tieBreak }}; a tie left after that is the board's call.
+        @include('admin.results.round1-method') a tie left after that is the board's call.
     </p>
 
     <div data-refresh-region class="mb-4 flex flex-col gap-2 text-sm">
@@ -50,7 +46,7 @@
             </p>
         @endif
         @if ($incomplete)
-            <p class="text-ink-2"><i class="fa-solid fa-hourglass-half" aria-hidden="true"></i> Some judges haven't scored every candidate yet. A judge counts toward their panel's ranks once they have scored every candidate in all of its segments (a rank shows under their total), so totals and ranks will change.</p>
+            <p class="text-ink-2"><i class="fa-solid fa-hourglass-half" aria-hidden="true"></i> Some judges haven't scored every candidate yet. A segment's average counts the judges who have scored that candidate so far, so totals and ranks will change.</p>
         @endif
         @if ($tied->isNotEmpty())
             <p @if ($result['cutoff_tie']) role="alert" @endif

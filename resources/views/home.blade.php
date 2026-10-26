@@ -54,7 +54,14 @@
                                 <div>
                                     <p class="font-semibold">{{ $segment->label }}</p>
                                     <p class="text-sm text-ink-2">
-                                        {{ \App\Scoring\Points::plain($segment->maxPoints()) }} points
+                                        @if ($segment->isRanked())
+                                            Ranked by each judge, lowest total wins
+                                        @else
+                                            {{ \App\Scoring\Points::plain($segment->maxPoints()) }} points
+                                        @endif
+                                        @if ($segment->isScaled())
+                                            · counts {{ \App\Scoring\Points::plain($segment->weight()) }}% of {{ $segment->roundLabel() }}
+                                        @endif
                                         @if ($segment->forFinalistsOnly())
                                             · finalists only
                                         @endif

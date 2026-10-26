@@ -17,6 +17,7 @@ use Livewire\Component;
 /**
  * A judge's sheet for one segment: every Ms. and Mr. candidate, paired by number.
  * Entries are saved as they are typed; invalid ones are saved as blank so results never use them.
+ * A ranked segment has no inputs: the judge taps a rank on each card (rank()).
  */
 class ScoreSheet extends Component
 {
@@ -28,6 +29,9 @@ class ScoreSheet extends Component
 
     /** Why the last change or lock-in was refused, shown above the sheet. */
     public ?string $notice = null;
+
+    /** After a rank was taken from one candidate and given to another: which, so the judge re-ranks the first. */
+    public ?string $moved = null;
 
     /** "pairs" (Ms. and Mr. side by side) or one division. Kept in the session so it carries to the next segment. */
     #[Locked]
@@ -88,15 +92,13 @@ class ScoreSheet extends Component
      */
     public function updatedPoints(): void
     {
-        if ($this->reloadAfterReset()) {
+        if ($this->reloadAfterReset() || $this->refused()) {
             return;
         }
 
-        if ($this->locked || ! $this->isScorable()) {
+        // Ranks are only given through rank(), which keeps each rank on one candidate.
+        if ($this->segment->isRanked()) {
             $this->points = $this->savedPoints();
-            $this->notice = $this->locked
-                ? 'Your scores for this segment are locked in, so that change was not saved.'
-                : "The tabulator has closed {$this->segment->short}, so that change was not saved.";
 
             return;
         }
@@ -125,6 +127,63 @@ class ScoreSheet extends Component
         $this->notice = null;
     }
 
+    /**
+     * Gives a candidate a rank in their division. A rank another candidate holds moves: that
+     * candidate is left without one, and `moved` says so. Tapping the rank a candidate already
+     * has changes nothing, so a double tap never clears it.
+     */
+    public function rank(int $candidateId, int $rank): void
+    {
+        if ($this->reloadAfterReset() || $this->refused() || ! $this->segment->isRanked()) {
+            return;
+        }
+
+        $candidate = $this->candidates->flatten(1)->firstWhere('id', $candidateId);
+        if (! $candidate || $rank < 1 || $rank > $this->candidates[$candidate->division]->count()) {
+            return;
+        }
+
+        $saved = Score::where('segment', $this->segmentKey)->where('judge_id', Auth::id())
+            ->where('criterion', Segment::RANK)->whereNotNull('points')
+            ->whereIn('candidate_id', $this->candidates[$candidate->division]->pluck('id'))
+            ->pluck('points', 'candidate_id')->map(fn ($points) => (int) $points);
+
+        if ($saved->get($candidate->id) === $rank) {
+            return;
+        }
+
+        $this->moved = null;
+        foreach ($saved->filter(fn ($held, $id) => $held === $rank && $id !== $candidate->id)->keys() as $holderId) {
+            $this->saveRank($holderId, null);
+            $holder = $this->candidates[$candidate->division]->firstWhere('id', $holderId);
+            $this->moved = "Rank {$rank} moved from {$holder->shortName()} to {$candidate->shortName()}. Give {$holder->shortName()} a rank again.";
+        }
+
+        $this->saveRank($candidate->id, $rank);
+        $this->notice = null;
+    }
+
+    /**
+     * Clears this judge's ranks in the divisions on screen (both when side by side), so they can
+     * rank again from scratch. Other judges' ranks are left alone.
+     */
+    public function clearRanking(): void
+    {
+        if ($this->reloadAfterReset() || $this->refused() || ! $this->segment->isRanked()) {
+            return;
+        }
+
+        $candidates = ($this->viewMode === 'pairs' ? $this->candidates : $this->candidates->only($this->viewMode))->flatten(1);
+        Score::where('segment', $this->segmentKey)->where('judge_id', Auth::id())
+            ->whereIn('candidate_id', $candidates->pluck('id'))->delete();
+
+        foreach ($candidates as $candidate) {
+            $this->points["c{$candidate->id}"][Segment::RANK] = '';
+        }
+        $this->moved = null;
+        $this->notice = null;
+    }
+
     public function lock(): void
     {
         if ($this->reloadAfterReset() || $this->locked) {
@@ -145,8 +204,10 @@ class ScoreSheet extends Component
             ->whereNotNull('points')
             ->count();
 
-        if ($expected === 0 || $saved < $expected || $this->progress()['invalid'] > 0) {
-            $this->notice = 'Some scores are missing or out of range. Fix the cards marked below, then lock in again.';
+        if ($expected === 0 || $saved < $expected || $this->progress()['invalid'] > 0 || ! $this->savedRanksAreValid()) {
+            $this->notice = $this->segment->isRanked()
+                ? 'Some candidates have no rank or share one. Fix the cards marked below, then lock in again.'
+                : 'Some scores are missing or out of range. Fix the cards marked below, then lock in again.';
 
             return;
         }
@@ -158,11 +219,16 @@ class ScoreSheet extends Component
 
     /**
      * Per-candidate state from what is typed: entries filled, invalid entries, and the total.
+     * In a ranked segment the total is the rank, and a rank out of range or shared is invalid.
      *
      * @return array<int, array{filled: int, invalid: int, total: ?float, complete: bool}>
      */
     public function cardStates(): array
     {
+        if ($this->segment->isRanked()) {
+            return $this->rankStates();
+        }
+
         $criteria = $this->segment->criteria;
         $states = [];
 
@@ -184,6 +250,29 @@ class ScoreSheet extends Component
                 'total' => $filled ? $total : null,
                 'complete' => $filled === count($criteria),
             ];
+        }
+
+        return $states;
+    }
+
+    /** @return array<int, array{filled: int, invalid: int, total: ?float, complete: bool}> */
+    private function rankStates(): array
+    {
+        $states = [];
+        foreach ($this->candidates as $candidates) {
+            $ranks = $candidates->mapWithKeys(fn ($c) => [$c->id => $this->points["c{$c->id}"][Segment::RANK] ?? ''])
+                ->map(fn ($entry) => ctype_digit((string) $entry) ? (int) $entry : null);
+            $counts = $ranks->filter()->countBy();
+
+            foreach ($ranks as $id => $rank) {
+                $invalid = $rank !== null && ($rank < 1 || $rank > $candidates->count() || $counts[$rank] > 1);
+                $states[$id] = [
+                    'filled' => (int) ($rank !== null),
+                    'invalid' => (int) $invalid,
+                    'total' => $rank === null ? null : (float) $rank,
+                    'complete' => $rank !== null && ! $invalid,
+                ];
+            }
         }
 
         return $states;
@@ -256,10 +345,52 @@ class ScoreSheet extends Component
 
         $this->resetMark = $mark;
         $this->points = $this->savedPoints();
+        $this->moved = null;
         unset($this->locked);
         $this->notice = "The tabulator reset scores in {$this->segment->short}. Your sheet now shows what is saved; enter that change again.";
 
         return true;
+    }
+
+    /** Outside a ranked segment, always. In one, each division's saved ranks run 1 to its candidate count, once each. */
+    private function savedRanksAreValid(): bool
+    {
+        if (! $this->segment->isRanked()) {
+            return true;
+        }
+
+        $saved = Score::where('segment', $this->segmentKey)->where('judge_id', Auth::id())
+            ->where('criterion', Segment::RANK)->whereNotNull('points')->pluck('points', 'candidate_id');
+
+        return $this->candidates->every(function ($candidates) use ($saved) {
+            $ranks = $candidates->map(fn ($c) => (int) ($saved[$c->id] ?? 0))->sort()->values()->all();
+
+            return $candidates->isEmpty() || $ranks === range(1, $candidates->count());
+        });
+    }
+
+    /** Refuses a change when the sheet is locked or the segment closed, and puts the saved entries back. */
+    private function refused(): bool
+    {
+        if (! $this->locked && $this->isScorable()) {
+            return false;
+        }
+
+        $this->points = $this->savedPoints();
+        $this->notice = $this->locked
+            ? 'Your scores for this segment are locked in, so that change was not saved.'
+            : "The tabulator has closed {$this->segment->short}, so that change was not saved.";
+
+        return true;
+    }
+
+    private function saveRank(int $candidateId, ?int $rank): void
+    {
+        Score::updateOrCreate(
+            ['segment' => $this->segmentKey, 'candidate_id' => $candidateId, 'judge_id' => Auth::id(), 'criterion' => Segment::RANK],
+            ['points' => $rank],
+        );
+        $this->points["c{$candidateId}"][Segment::RANK] = $rank === null ? '' : (string) $rank;
     }
 
     /** Open, and scored by this judge's panel. */

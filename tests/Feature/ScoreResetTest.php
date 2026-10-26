@@ -77,6 +77,20 @@ class ScoreResetTest extends TestCase
         $this->assertTrue(ScoreLock::where('segment', 'formal_wear')->exists());
     }
 
+    public function test_casual_wear_resets_on_its_own(): void
+    {
+        $this->actingAs($this->admin)->get(route('reset.index'))->assertOk()
+            ->assertSee('Special awards')
+            ->assertSee(route('reset.segment', 'casual_wear'), false);
+
+        $this->actingAs($this->admin)->delete(route('reset.segment', 'casual_wear'));
+
+        $this->assertFalse(Score::where('segment', 'casual_wear')->exists());
+        $this->assertFalse(ScoreLock::where('segment', 'casual_wear')->exists());
+        $this->assertTrue(Score::where('segment', 'final')->exists());
+        $this->assertTrue(Score::where('segment', 'wit')->exists());
+    }
+
     public function test_a_round_reset_covers_its_segments_and_keeps_finalists(): void
     {
         Candidate::where('number', 1)->update(['is_finalist' => true]);
@@ -85,10 +99,13 @@ class ScoreResetTest extends TestCase
         $this->actingAs($this->admin)->delete(route('reset.round', 1))
             ->assertSessionHas('success', fn ($message) => str_contains($message, 'Saved finalists stay'));
 
-        $this->assertFalse(Score::where('segment', '!=', 'final')->exists());
-        $this->assertFalse(ScoreLock::where('segment', '!=', 'final')->exists());
-        $this->assertTrue(Score::where('segment', 'final')->exists());
-        $this->assertTrue(ScoreLock::where('segment', 'final')->exists());
+        $this->assertFalse(Score::whereNotIn('segment', ['final', 'casual_wear'])->exists());
+        $this->assertFalse(ScoreLock::whereNotIn('segment', ['final', 'casual_wear'])->exists());
+        // Round 2 and the separate Casual wear award are left alone.
+        foreach (['final', 'casual_wear'] as $segment) {
+            $this->assertTrue(Score::where('segment', $segment)->exists());
+            $this->assertTrue(ScoreLock::where('segment', $segment)->exists());
+        }
         $this->assertSame(2, Candidate::where('is_finalist', true)->count());
         $this->assertTrue(OpenSegment::whereKey('wit')->exists());
     }

@@ -36,9 +36,10 @@ The app loads nothing from the internet: fonts and icons are bundled by `npm run
 
 The rules live in `config/pageant.php`.
 
-- Round 1 (out of 100): Talent 15 and Thematic wear 15 are scored at the pre-pageant by 3 judges; Swim wear 15, Formal / evening wear 15, Beauty of face, poise, bearing & personality 20, and Wit & verbal ability (Q&A) 20 are scored on pageant night by 5 judges.
-- Each segment's result is the average of its judges' totals. The Round 1 total adds the six averages.
-- The top 5 of each division go to Round 2, scored fresh by the 5 pageant night judges: Beauty of face, poise, grace & overall impression 50 and Intelligence 50. Each judge ranks the five by their total (equal totals share a rank); the ranks from all judges are added up, and the lowest sum wins.
+- Round 1 (out of 100): Talent 15 (judged out of 100: Skills 50 + Performance 50, counted at 15%) and Thematic wear 15 are scored at the pre-pageant by 3 judges; Swim wear 15, Formal / evening wear 15, Beauty of face, poise, bearing & personality 20, and Wit & verbal ability (Q&A) 20 are scored on pageant night by 5 judges.
+- Each segment's result is the average of its judges' totals, counted at its weight (Talent's average out of 100 counts 15%). The Round 1 total adds the six, out of 100, and the highest total wins. A tie goes to the higher Beauty of face average, then Q&A. Each Round 1 segment's own winner is its highest average.
+- The top 5 of each division go to Round 2, scored fresh by the 5 pageant night judges: Beauty of face, poise, grace & overall impression 50 and Intelligence 50. The judges' totals are averaged and the highest average wins.
+- Casual wear is a separate award, ranked by the 5 pageant night judges: each judge ranks every Ms. candidate 1 to 9, and every Mr. candidate 1 to 9, each rank once. The ranks are added up and the lowest total wins. It never counts toward Round 1 or Round 2.
 - Tied candidates share a rank and are flagged for the board to decide.
 
 On the night: open a segment on **Scoring control** when it starts on stage, and close it when every judge has locked in. After Round 1, save each division's finalists on its **Round 1** results page before opening Round 2.

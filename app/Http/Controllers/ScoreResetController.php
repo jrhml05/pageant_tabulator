@@ -19,22 +19,28 @@ class ScoreResetController extends Controller
             ->map(fn ($rows) => $rows->pluck('total', 'criterion')->map(fn ($n) => (int) $n));
         $locks = ScoreLock::selectRaw('segment, count(*) as total')->groupBy('segment')->pluck('total', 'segment');
 
-        $rounds = collect(config('pageant.rounds'))->map(fn (string $label, int $round) => [
+        $group = fn (string $label, $segments) => [
             'label' => $label,
-            'segments' => Segment::inRound($round)->map(fn (Segment $segment) => [
+            'segments' => $segments->map(fn (Segment $segment) => [
                 'segment' => $segment,
                 'criteria' => collect($segment->criteria)->map(fn ($rule, $key) => (int) ($entries[$segment->key][$key] ?? 0)),
                 'entries' => (int) ($entries[$segment->key] ?? collect())->sum(),
                 'locks' => (int) ($locks[$segment->key] ?? 0),
             ]),
-        ])->map(fn (array $round) => $round + [
-            'entries' => $round['segments']->sum('entries'),
-            'locks' => $round['segments']->sum('locks'),
-        ]);
+        ];
+
+        // Each segment's own reset button covers the awards, so they get no group-wide one.
+        $groups = collect(config('pageant.rounds'))
+            ->map(fn (string $label, int $round) => $group($label, Segment::inRound($round)) + ['round' => $round])
+            ->when(Segment::awards()->isNotEmpty(), fn ($all) => $all->put('awards', $group('Special awards', Segment::awards()) + ['round' => null]))
+            ->map(fn (array $group) => $group + [
+                'entries' => $group['segments']->sum('entries'),
+                'locks' => $group['segments']->sum('locks'),
+            ]);
 
         return view('admin.reset', [
-            'rounds' => $rounds,
-            'anything' => $rounds->sum('entries') + $rounds->sum('locks') > 0
+            'groups' => $groups,
+            'anything' => $groups->sum('entries') + $groups->sum('locks') > 0
                 || OpenSegment::exists() || Candidate::where('is_finalist', true)->exists(),
         ]);
     }

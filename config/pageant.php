@@ -4,21 +4,30 @@
  * Scoring rules for Mr. & Ms. LCUAA 2026.
  *
  * Criteria are scored in points, and each segment's points add up to its weight in the round,
- * so each round totals 100.
+ * so each round totals 100. A segment with a `weight` is scored out of its own points instead
+ * (Talent: 100) and counts toward the round at that weight (15%), so a talent average of 90
+ * adds 13.5 to the Round 1 total. Its weight × 10,000 must divide by its points, so the scaled
+ * figures stay exact.
  *
- * Round 1 is placed by ranks, per panel: each judge's totals across the panel's Round 1 segments
- * are added up and ranked, the ranks are averaged over the panel's judges (3 pre-pageant,
- * 5 pageant night), and the average is weighted by the panel's points (pre-pageant 30, so 30%;
- * pageant night 70, so 70%). The lowest weighted total wins. Each segment also ranks on its own,
- * for that segment's winner.
+ * Apart from a ranked segment (below), judges don't rank candidates. Every segment adds up the
+ * judges' totals for a candidate, divides by the number of judges (an average, to 2 decimals),
+ * and ranks the averages, highest first. Round 1 scales each segment's average to its weight
+ * and adds them up out of 100; Round 2 is the `final` segment's average.
  *
- * A segment's `ranking` is "rank_sum" (default: each judge ranks the candidates by total, the
- * ranks are added up, lowest sum wins) or "average" (mean of the judges' totals, highest wins).
+ * A segment with no `round` is a separate award (Casual wear): placed on its own, and never
+ * counted in Round 1 or Round 2.
+ *
+ * A `ranked` segment (Casual wear) isn't scored in points: each judge ranks the candidates of a
+ * division 1, 2, 3... with each rank used once. The judges' ranks are added up and the lowest
+ * total wins. It has no criteria; each rank is saved as one `rank` entry.
  */
 
 return [
 
     'event' => 'Mr. & Ms. LCUAA 2026',
+
+    // Signs every printed sheet, after the judges and the tabulator.
+    'board' => 'LCUAA National Board',
 
     'divisions' => [
         'ms' => 'Ms. LCUAA',
@@ -38,7 +47,7 @@ return [
     // Round 2 is scored by the top candidates of Round 1, per division.
     'finalists' => 5,
 
-    // A Round 1 tie on the total goes to the lower average rank in these segments, in order.
+    // A Round 1 tie on the total goes to the higher average in these segments, in order.
     // Candidates still level after the last one stay tied for the board to decide.
     'tie_break' => ['beauty_of_face', 'wit'],
 
@@ -57,9 +66,10 @@ return [
             'label' => 'Talent',
             'round' => 1,
             'panel' => 'prepageant',
+            'weight' => 15,
             'criteria' => [
-                'skill' => ['Skill', 7.5],
-                'performance' => ['Performance', 7.5],
+                'skill' => ['Skills', 50],
+                'performance' => ['Performance', 50],
             ],
         ],
         'thematic_wear' => [
@@ -118,6 +128,11 @@ return [
                 'impression' => ['Beauty of face, poise, grace & overall impression', 50],
                 'intelligence' => ['Intelligence', 50],
             ],
+        ],
+        'casual_wear' => [
+            'label' => 'Casual wear',
+            'panel' => 'pageant',
+            'ranked' => true,
         ],
     ],
 

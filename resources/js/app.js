@@ -74,8 +74,8 @@ async function refreshTables() {
     if (time) time.textContent = `Updated ${new Date().toLocaleTimeString()}`;
 }
 
-// A form marked data-keep-ticks keeps the ticks the tabulator has changed (and focus) when its
-// list refreshes, so new ranks never undo an unsaved choice.
+// A form marked data-keep-ticks keeps the ticks and radio choices the tabulator has changed (and
+// focus) when its list refreshes, so new ranks never undo an unsaved choice.
 function swapRegion(region, fresh) {
     const form = region.closest('form[data-keep-ticks]');
     if (!form?.dataset.changed) {
@@ -83,10 +83,11 @@ function swapRegion(region, fresh) {
         return;
     }
     const key = (input) => `${input.name}=${input.value}`;
-    const ticks = new Map([...region.querySelectorAll('input[type=checkbox]')].map((input) => [key(input), input.checked]));
+    const choices = 'input[type=checkbox], input[type=radio]';
+    const ticks = new Map([...region.querySelectorAll(choices)].map((input) => [key(input), input.checked]));
     const focused = region.contains(document.activeElement) ? key(document.activeElement) : null;
     region.innerHTML = fresh.innerHTML;
-    region.querySelectorAll('input[type=checkbox]').forEach((input) => {
+    region.querySelectorAll(choices).forEach((input) => {
         if (ticks.has(key(input))) input.checked = ticks.get(key(input));
         if (focused === key(input)) input.focus();
     });

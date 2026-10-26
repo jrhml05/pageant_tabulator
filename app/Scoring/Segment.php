@@ -9,10 +9,14 @@ use App\Models\User;
 use Illuminate\Support\Collection;
 
 /**
- * One scored segment (Talent, Swim wear, Round 2...), read from config/pageant.php.
+ * One scored segment (Talent, Swim wear, Round 2...), read from config/pageant.php. A segment
+ * with no round is a separate award (Casual wear), placed on its own. A ranked segment is ranked
+ * by each judge instead of scored, and its one criterion is `rank`.
  */
 final class Segment
 {
+    public const RANK = 'rank';
+
     /**
      * @param  array<string, array{label: string, max: float}>  $criteria
      */
@@ -20,10 +24,11 @@ final class Segment
         public readonly string $key,
         public readonly string $label,
         public readonly string $short,
-        public readonly int $round,
+        public readonly ?int $round,
         public readonly string $panel,
         public readonly array $criteria,
-        public readonly string $ranking = 'rank_sum',
+        private readonly ?float $weight = null,
+        private readonly bool $ranked = false,
     ) {}
 
     /** @return Collection<string, self> */
@@ -33,10 +38,14 @@ final class Segment
             $key,
             $segment['label'],
             $segment['short'] ?? $segment['label'],
-            $segment['round'],
+            $segment['round'] ?? null,
             $segment['panel'],
-            collect($segment['criteria'])->map(fn (array $c) => ['label' => $c[0], 'max' => (float) $c[1]])->all(),
-            $segment['ranking'] ?? 'rank_sum',
+            // A rank's maximum is the number of candidates in the division (rankLimit()), not a fixed figure.
+            ($segment['ranked'] ?? false)
+                ? [self::RANK => ['label' => 'Rank', 'max' => 0.0]]
+                : collect($segment['criteria'])->map(fn (array $c) => ['label' => $c[0], 'max' => (float) $c[1]])->all(),
+            isset($segment['weight']) ? (float) $segment['weight'] : null,
+            $segment['ranked'] ?? false,
         ));
     }
 
@@ -54,6 +63,12 @@ final class Segment
     public static function inRound(int $round): Collection
     {
         return self::all()->where('round', $round);
+    }
+
+    /** @return Collection<string, self> */
+    public static function awards(): Collection
+    {
+        return self::all()->filter(fn (self $segment) => $segment->isAward());
     }
 
     /** Open segments in config order, optionally only those a panel scores. */
@@ -76,6 +91,33 @@ final class Segment
         return array_sum(array_column($this->criteria, 'max'));
     }
 
+    /** What the segment is worth in its round: its points, unless the config gives a `weight`. */
+    public function weight(): float
+    {
+        return $this->weight ?? $this->maxPoints();
+    }
+
+    /** Judged out of its own points (Talent: 100) and scaled to its weight in the round. */
+    public function isScaled(): bool
+    {
+        return $this->weight() != $this->maxPoints();
+    }
+
+    /**
+     * Turns a judge's total in hundredths into ten-thousandths of the segment's weight: 100 for
+     * an unscaled segment, 15 for Talent (90.00 points is 9000 → 135000, 13.5 of its 15).
+     */
+    public function scale(): int
+    {
+        return intdiv(Points::hundredths($this->weight()) * 100, Points::hundredths($this->maxPoints()));
+    }
+
+    /** A total or average in hundredths, at the segment's weight: Talent's 87.33 is 13.10 of its 15. */
+    public function weighted(?int $hundredths): ?int
+    {
+        return $hundredths === null ? null : (int) round($hundredths * $this->scale() / 100);
+    }
+
     public function panelLabel(): string
     {
         return config("pageant.panels.{$this->panel}");
@@ -83,25 +125,31 @@ final class Segment
 
     public function roundLabel(): string
     {
-        return config("pageant.rounds.{$this->round}");
+        return $this->isAward() ? 'Special award' : config("pageant.rounds.{$this->round}");
     }
 
-    /** Placed by the sum of each judge's ranks (lowest wins) rather than by average score. */
-    public function ranksBySum(): bool
+    /** Scored and placed on its own, outside Round 1 and Round 2. */
+    public function isAward(): bool
     {
-        return $this->ranking === 'rank_sum';
+        return $this->round === null;
     }
 
-    /** Round 1 shows the rank sum averaged over the judges, the way it counts toward the round. */
-    public function showsAverageRank(): bool
+    /** Ranked 1, 2, 3... by each judge instead of scored; the lowest rank total wins. */
+    public function isRanked(): bool
     {
-        return $this->ranksBySum() && $this->round === 1;
+        return $this->ranked;
+    }
+
+    /** The lowest rank a judge can give in a division: one rank per candidate. */
+    public function rankLimit(string $division): int
+    {
+        return $this->candidates($division)->count();
     }
 
     /** Only Round 1's finalists go on to be scored in later rounds. */
     public function forFinalistsOnly(): bool
     {
-        return $this->round > 1;
+        return ! $this->isAward() && $this->round > 1;
     }
 
     /** @return Collection<int, User> */

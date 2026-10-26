@@ -9,44 +9,46 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /*
- * Palette: one neutral scale plus one teal accent. Teal marks the single primary action
- * and the current location; it stays clear of the red used for out-of-range scores.
+ * Palette from the LCUAA logo: warm neutrals plus the logo's crimson as the one accent. Crimson
+ * marks the single primary action and the current location. Errors (out-of-range scores, ties
+ * for the board, destructive buttons) use signal orange, never crimson, so they still stand out
+ * against the brand; they also always carry an icon, a word or a tinted background.
  */
 :root {
-    --canvas: #f3f4f6;
+    --canvas: #f5f2f2;
     --surface: #ffffff;
-    --surface-2: #eceef1;
-    --line: #d8dce2;
-    --line-strong: #7f8995;
-    --ink: #141920;
-    --ink-2: #4a5360;
-    --accent: #0f766e;
-    --accent-hover: #115e59;
+    --surface-2: #f1ecec;
+    --line: #e2dada;
+    --line-strong: #8c7f80;
+    --ink: #1d1515;
+    --ink-2: #5c4f50;
+    --accent: #a50000;
+    --accent-hover: #850000;
     --accent-ink: #ffffff;
-    --accent-soft: #dff1ee;
-    --accent-soft-ink: #0b5953;
-    --danger: #b42318;
-    --danger-soft: #fdeceb;
+    --accent-soft: #fbe9e9;
+    --accent-soft-ink: #8a0000;
+    --danger: #b84a00;
+    --danger-soft: #fff3e0;
     --success-soft: #e6f4ea;
     --success-ink: #166534;
     color-scheme: light;
 }
 
 .dark {
-    --canvas: #0d1015;
-    --surface: #151a21;
-    --surface-2: #1c232c;
-    --line: #29313c;
-    --line-strong: #646f7e;
-    --ink: #e7eaee;
-    --ink-2: #a4aebb;
-    --accent: #2dd4bf;
-    --accent-hover: #5eead4;
-    --accent-ink: #04211e;
-    --accent-soft: #10302d;
-    --accent-soft-ink: #7ee8d8;
-    --danger: #f87171;
-    --danger-soft: #3a1719;
+    --canvas: #100c0c;
+    --surface: #181313;
+    --surface-2: #221b1b;
+    --line: #342a2a;
+    --line-strong: #78696a;
+    --ink: #f0eaea;
+    --ink-2: #b5a9a9;
+    --accent: #f25c5c;
+    --accent-hover: #f78585;
+    --accent-ink: #1f0405;
+    --accent-soft: #3d1517;
+    --accent-soft-ink: #fca5a5;
+    --danger: #fb923c;
+    --danger-soft: #3b2010;
     --success-soft: #11291a;
     --success-ink: #86efac;
     color-scheme: dark;
@@ -107,9 +109,10 @@
         @apply border-line-strong bg-surface text-ink hover:bg-surface-2;
     }
 
-    /* Only for deleting a candidate and clearing every score: both wipe scores wholesale. */
+    /* Only for deleting a candidate and clearing every score: both wipe scores wholesale. Tinted
+       orange, so it never reads as a crimson brand button. */
     .btn-danger {
-        @apply border-danger bg-surface text-danger hover:bg-danger-soft;
+        @apply border-danger bg-danger-soft text-danger hover:brightness-95 dark:hover:brightness-125;
     }
 
     .btn-ghost {
@@ -208,8 +211,9 @@
         @apply font-semibold;
     }
 
-    /* Tie and finalist tags carry a word, not just color. */
+    /* Tie, board and finalist tags carry a word, not just color. */
     .tie,
+    .decided,
     .finalist {
         @apply ml-1.5 inline-block rounded px-1.5 py-px align-middle text-xs font-semibold;
     }
@@ -220,6 +224,16 @@
 
     .finalist {
         @apply bg-accent-soft text-accent-soft-ink;
+    }
+
+    /* A rank the board set after a tie: settled, so outlined in neutral rather than flagged. */
+    .decided {
+        @apply text-ink-2 ring-1 ring-line-strong ring-inset;
+    }
+
+    /* The sign-in art panel wears the logo's own fill: crimson darkening toward the bottom. */
+    .brand-panel {
+        background: linear-gradient(180deg, #c40000, #5e0000);
     }
 }
 

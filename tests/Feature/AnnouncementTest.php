@@ -35,7 +35,7 @@ class AnnouncementTest extends TestCase
                 }
             }
         }
-        $this->finalists = Candidate::division('ms')->where('number', '>=', 8)->pluck('id')->all();
+        $this->finalists = Candidate::division('ms')->where('number', '>=', 5)->pluck('id')->all();
     }
 
     public function test_saving_finalists_draws_a_call_order_that_is_neither_ranking_nor_numbers(): void
@@ -43,9 +43,9 @@ class AnnouncementTest extends TestCase
         $this->saveFinalists($this->finalists);
 
         $order = $this->callOrder();
-        $this->assertEqualsCanonicalizing([8, 9, 10, 11, 12], $order);
-        $this->assertNotSame([8, 9, 10, 11, 12], $order);
-        $this->assertNotSame([12, 11, 10, 9, 8], $order);
+        $this->assertEqualsCanonicalizing([5, 6, 7, 8, 9], $order);
+        $this->assertNotSame([5, 6, 7, 8, 9], $order);
+        $this->assertNotSame([9, 8, 7, 6, 5], $order);
         $this->assertSame([1, 2, 3, 4, 5], Candidate::where('is_finalist', true)->orderBy('announce_order')->pluck('announce_order')->all());
     }
 
@@ -59,8 +59,8 @@ class AnnouncementTest extends TestCase
             $announcement->shuffle('ms', force: true);
             $after = $this->callOrder();
 
-            $this->assertNotSame([8, 9, 10, 11, 12], $after);
-            $this->assertNotSame([12, 11, 10, 9, 8], $after);
+            $this->assertNotSame([5, 6, 7, 8, 9], $after);
+            $this->assertNotSame([9, 8, 7, 6, 5], $after);
             $this->assertNotSame($before, $after);
         }
     }
@@ -79,12 +79,12 @@ class AnnouncementTest extends TestCase
     {
         $this->saveFinalists($this->finalists);
         $dropped = Candidate::find($this->finalists[0]);
-        $added = Candidate::division('ms')->where('number', 7)->first();
+        $added = Candidate::division('ms')->where('number', 4)->first();
 
         $this->saveFinalists([...array_slice($this->finalists, 1), $added->id]);
 
         $this->assertNull($dropped->fresh()->announce_order);
-        $this->assertEqualsCanonicalizing([7, 9, 10, 11, 12], $this->callOrder());
+        $this->assertEqualsCanonicalizing([4, 6, 7, 8, 9], $this->callOrder());
     }
 
     public function test_reshuffle_button_and_announcement_sheet(): void
