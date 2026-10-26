@@ -4123,7 +4123,7 @@
       "node_kind": "heading",
       "norm_label": "gotchas",
       "source_file": "CLAUDE.md",
-      "source_location": "L70"
+      "source_location": "L71"
     },
     {
       "id": "claude_scoring_rules",
@@ -4147,7 +4147,7 @@
       "node_kind": "heading",
       "norm_label": "serving",
       "source_file": "CLAUDE.md",
-      "source_location": "L66"
+      "source_location": "L67"
     },
     {
       "id": "claude_ui",
@@ -4159,7 +4159,7 @@
       "node_kind": "heading",
       "norm_label": "ui",
       "source_file": "CLAUDE.md",
-      "source_location": "L57"
+      "source_location": "L58"
     },
     {
       "id": "claude_what_this_is",
@@ -15176,7 +15176,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CLAUDE.md",
-      "source_location": "L57",
+      "source_location": "L58",
       "weight": 1.0
     },
     {
@@ -15187,7 +15187,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CLAUDE.md",
-      "source_location": "L66",
+      "source_location": "L67",
       "weight": 1.0
     },
     {
@@ -15198,7 +15198,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CLAUDE.md",
-      "source_location": "L70",
+      "source_location": "L71",
       "weight": 1.0
     },
     {
