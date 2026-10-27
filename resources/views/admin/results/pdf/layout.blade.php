@@ -2,6 +2,8 @@
     Layout for every printed score sheet. Rendered by dompdf, which supports CSS 2.1 tables but not
     flexbox, grid or CSS variables, so this stays plain: ruled tables, Helvetica, one crimson rule.
     Sections: eyebrow, heading, content (the table), signatures (admin/results/pdf/signatures).
+    Every sheet prints on one page of long bond paper, signatures included: 9 candidates with two-line
+    rows and two rows of signature lines fill it, so check the page count after adding rows or notes.
     The LCUAA mark heads every sheet on the left and the Mr. & Ms. LCUAA 2026 event logo on the right.
     Both are inlined so dompdf needs no file access or network.
 --}}
@@ -17,7 +19,7 @@
     <title>@yield('heading') · Mr. & Ms. LCUAA 2026</title>
     <style>
         @page {
-            margin: 34pt 40pt 46pt;
+            margin: 22pt 32pt 30pt;
         }
 
         body {
@@ -29,8 +31,8 @@
         .masthead {
             width: 100%;
             border-bottom: 2pt solid #a50000;
-            padding-bottom: 8pt;
-            margin-bottom: 14pt;
+            padding-bottom: 5pt;
+            margin-bottom: 8pt;
         }
 
         .masthead td {
@@ -44,7 +46,7 @@
         }
 
         .masthead td.logo img {
-            height: 40pt;
+            height: 32pt;
         }
 
         .event {
@@ -53,13 +55,13 @@
         }
 
         h1 {
-            font-size: 17pt;
+            font-size: 15pt;
             margin: 2pt 0 0;
         }
 
         .masthead td.printed img {
-            height: 46pt;
-            margin-bottom: 3pt;
+            height: 34pt;
+            margin-bottom: 2pt;
         }
 
         .printed {
@@ -82,13 +84,13 @@
             font-size: 8.5pt;
             font-weight: bold;
             color: #3d3233;
-            padding: 6pt 5pt;
+            padding: 3.5pt 4pt;
             border: 0.75pt solid #a89c9d;
             text-align: center;
         }
 
         table.sheet td {
-            padding: 5.5pt 5pt;
+            padding: 3pt 4pt;
             border: 0.75pt solid #c4b9ba;
             text-align: center;
         }
@@ -108,7 +110,7 @@
 
         table.sheet .sub {
             display: block;
-            font-size: 7.5pt;
+            font-size: 7pt;
             font-weight: normal;
             color: #5c4f50;
         }
@@ -162,7 +164,7 @@
         table.sheet.announce tbody td {
             font-size: 16pt;
             font-weight: bold;
-            padding: 10pt 8pt;
+            padding: 8pt 8pt;
         }
 
         table.sheet.announce tbody td.school {
@@ -182,8 +184,8 @@
         }
 
         .note {
-            margin: 0 0 8pt;
-            font-size: 9pt;
+            margin: 0 0 5pt;
+            font-size: 8.5pt;
             color: #5c4f50;
         }
 
@@ -204,7 +206,7 @@
         }
 
         table.sheet td.empty {
-            padding: 18pt;
+            padding: 14pt;
             font-weight: normal;
             color: #5c4f50;
             text-align: center;
@@ -212,29 +214,29 @@
 
         .signatures {
             width: 100%;
-            margin-top: 34pt;
+            margin-top: 8pt;
             page-break-inside: avoid;
         }
 
         .signatures td {
             padding: 0 14pt 0 0;
             vertical-align: top;
-            font-size: 9pt;
+            font-size: 8.5pt;
             color: #5c4f50;
         }
 
         .signatures .line {
             border-top: 0.75pt solid #1d1515;
-            padding-top: 4pt;
-            margin-top: 28pt;
+            padding-top: 3pt;
+            margin-top: 24pt;
         }
 
         .footer {
             position: fixed;
-            bottom: -26pt;
+            bottom: -20pt;
             left: 0;
             right: 0;
-            font-size: 8pt;
+            font-size: 7.5pt;
             color: #5c4f50;
         }
 

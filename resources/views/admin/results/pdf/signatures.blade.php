@@ -1,15 +1,15 @@
-{{-- Signature lines, four to a row. `$signers` is a list of labels; the board signs last on every printed sheet. --}}
+{{-- Signature lines, five to a row, so Round 1's ten signers take two rows. `$signers` is a list of labels; the board signs last on every printed sheet. --}}
 @php
     $signers = [...$signers, config('pageant.board')];
 @endphp
 <table class="signatures">
-    @foreach (array_chunk($signers, 4) as $row)
+    @foreach (array_chunk($signers, 5) as $row)
         <tr>
             @foreach ($row as $signer)
-                <td style="width: 25%;"><div class="line">{{ $signer }}</div></td>
+                <td style="width: 20%;"><div class="line">{{ $signer }}</div></td>
             @endforeach
-            @for ($i = count($row); $i < 4; $i++)
-                <td style="width: 25%;"></td>
+            @for ($i = count($row); $i < 5; $i++)
+                <td style="width: 20%;"></td>
             @endfor
         </tr>
     @endforeach
