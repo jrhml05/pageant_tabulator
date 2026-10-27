@@ -136,6 +136,7 @@
 
         .decided {
             color: #5c4f50;
+            white-space: nowrap;
         }
 
         .sr-only {

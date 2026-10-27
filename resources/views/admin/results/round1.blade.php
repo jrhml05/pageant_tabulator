@@ -27,7 +27,7 @@
     <x-results-header title="Round 1 results" eyebrow="Overall and finalists" :print="route('results.round1.pdf', $division)" />
 
     <p class="-mt-2 mb-4 max-w-prose text-sm text-ink-2">
-        @include('admin.results.round1-method') a tie left after that is the board's call.
+        @include('admin.results.round1-method') a tie left after that is the board of judges' call.
     </p>
 
     <div data-refresh-region class="mb-4 flex flex-col gap-2 text-sm">
@@ -40,7 +40,7 @@
                     $goingOut->isNotEmpty() ? $names($goingOut).' '.$verb($goingOut).' out' : null,
                 ])->filter()->join(', ') }}.
                 @if ($atCut->isNotEmpty())
-                    {{ $names($atCut) }} are tied at the cut, so the board decides between them.
+                    {{ $names($atCut) }} are tied at the cut, so the board of judges decides between them.
                 @endif
                 Update the ticks under Top {{ $expected }} finalists and save.
             </p>
@@ -54,7 +54,7 @@
                 Tied{{ $incomplete ? ' for now' : '' }}:
                 {{ $tied->map(fn ($group, $rank) => "rank {$rank}, ".$group->map(fn ($r) => 'No. '.$r['candidate']->number)->join(' and '))->join('; ') }}.
                 @if ($result['cutoff_tie'])
-                    One tie crosses the top {{ $expected }} cut, so the board decides who goes through.
+                    One tie crosses the top {{ $expected }} cut, so the board of judges decides who goes through.
                 @endif
             </p>
         @endif
@@ -81,7 +81,7 @@
                 </p>
                 @if ($result['cutoff_tie'])
                     <p role="alert" class="mt-3 rounded-md bg-danger-soft px-3 py-2 text-sm font-medium text-danger">
-                        Candidates are tied for the last finalist spot. Untick the ones the board leaves out, then save.
+                        Candidates are tied for the last finalist spot. Untick the ones the board of judges leaves out, then save.
                     </p>
                 @endif
                 @error('finalists')

@@ -37,13 +37,13 @@ class TieBreakTest extends TestCase
 
         $this->actingAs($this->admin)->get('/results/ms/final')->assertOk()
             ->assertSee('Tied for 1st runner-up: No. 2 and No. 4.')
-            ->assertSee("Record the board's order under Settle the tie, below the table.")
+            ->assertSee("Record the board of judges' order under Settle the tie, below the table.")
             ->assertSee('Settle the tie')
             ->assertSee('The other takes 2nd runner-up.');
 
         $this->put('/results/ms/final/ties', ['ties' => [2 => [$this->ms[4]->id]]])
             ->assertRedirect('/results/ms/final')
-            ->assertSessionHas('success', 'Saved. No. 2 and No. 4 tied at 80.00; the board placed No. 4 higher.');
+            ->assertSessionHas('success', 'Saved. No. 2 and No. 4 tied at 80.00; the board of judges placed No. 4 higher.');
 
         $rows = $this->rows('final');
         $this->assertSame([1, 3, 4, 2, 5], array_map(fn ($n) => $rows[$n]['rank'], [1, 2, 3, 4, 5]));
@@ -53,10 +53,10 @@ class TieBreakTest extends TestCase
         $this->assertSame([5, 3, 2, 4, 1], Tabulator::winners((new Tabulator)->segment(Segment::find('final'), 'ms'))->pluck('candidate.number')->all());
 
         $this->get('/results/ms/final')->assertOk()
-            ->assertSee('No. 2 and No. 4 tied at 80.00; the board placed No. 4 higher.')
+            ->assertSee('No. 2 and No. 4 tied at 80.00; the board of judges placed No. 4 higher.')
             ->assertSee('Saved: No. 4, then No. 2.')
-            ->assertSee('<span class="decided">Board</span>', false)
-            ->assertDontSee("Record the board's order");
+            ->assertSee('<span class="decided">Board of judges</span>', false)
+            ->assertDontSee("Record the board of judges' order");
         $this->get('/results/ms/final/winners')->assertOk();
         $this->get('/results/ms/final/print')->assertOk();
     }
@@ -68,7 +68,15 @@ class TieBreakTest extends TestCase
 
         $this->actingAs($this->admin)->get('/results/ms/final')->assertOk()
             ->assertSee('Tied for now:')
+            ->assertSee("If this tie still stands once every judge has locked in, a form below the table records the board of judges' order.")
             ->assertDontSee('Settle the tie');
+
+        ScoreLock::where('segment', 'swim_wear')->delete();
+        $this->scoreSwimWear([1 => 12, 2 => 12, 3 => 11, 4 => 10, 5 => 9, 6 => 8, 7 => 7, 8 => 6, 9 => 5]);
+        ScoreLock::where('segment', 'swim_wear')->first()->delete();
+        $this->get('/results/ms/swim_wear')->assertOk()
+            ->assertSee("a form below the table records the board of judges' pick for the winner.")
+            ->assertDontSee('Save winner');
 
         $this->put('/results/ms/final/ties', ['ties' => [2 => [$this->ms[4]->id]]])
             ->assertSessionHas('error', 'A tie can be settled once every judge has locked in and scored every finalist.');
@@ -86,7 +94,7 @@ class TieBreakTest extends TestCase
         $this->assertSame(0, TieDecision::count());
 
         $this->put('/results/ms/final/ties', ['ties' => [2 => [$id(4), $id(2)]]])
-            ->assertSessionHas('success', 'Saved. No. 2, No. 3 and No. 4 tied at 80.00; the board placed them in this order: No. 4, No. 2, No. 3.');
+            ->assertSessionHas('success', 'Saved. No. 2, No. 3 and No. 4 tied at 80.00; the board of judges placed them in this order: No. 4, No. 2, No. 3.');
 
         $rows = $this->rows('final');
         $this->assertSame([2 => 3, 3 => 4, 4 => 2], [2 => $rows[2]['rank'], 3 => $rows[3]['rank'], 4 => $rows[4]['rank']]);
@@ -130,7 +138,7 @@ class TieBreakTest extends TestCase
         $this->assertSame([1], array_column((new Tabulator)->segment(Segment::find('swim_wear'), 'ms')['ties'], 'rank'));
 
         $this->put('/results/ms/swim_wear/ties', ['ties' => [1 => [$this->ms[3]->id]]])
-            ->assertSessionHas('success', 'Saved. No. 1, No. 2 and No. 3 tied for first at 12.00; the board named No. 3 the winner.');
+            ->assertSessionHas('success', 'Saved. No. 1, No. 2 and No. 3 tied for first at 12.00; the board of judges named No. 3 the winner.');
 
         $rows = $this->rows('swim_wear');
         $this->assertSame([1, 2, 2], [$rows[3]['rank'], $rows[1]['rank'], $rows[2]['rank']]);

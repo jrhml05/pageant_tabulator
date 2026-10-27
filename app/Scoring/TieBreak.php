@@ -109,7 +109,7 @@ final class TieBreak
         TieDecision::where('segment', $segment->key)->where('division', $division)->where('rank', $rank)->delete();
     }
 
-    /** "No. 3 and No. 5 tied at 88.40; the board placed No. 3 higher." For a tie with a saved order. */
+    /** "No. 3 and No. 5 tied at 88.40; the board of judges placed No. 3 higher." For a tie with a saved order. */
     public static function note(Segment $segment, array $tie): string
     {
         $number = fn (int $id) => 'No. '.$tie['candidates']->firstWhere('id', $id)->number;
@@ -117,11 +117,11 @@ final class TieBreak
         $at = Points::format($tie['average']);
 
         if (! $segment->forFinalistsOnly()) {
-            return "{$tied} tied for first at {$at}; the board named {$number($tie['order'][0])} the winner.";
+            return "{$tied} tied for first at {$at}; the board of judges named {$number($tie['order'][0])} the winner.";
         }
 
         return count($tie['order']) === 2
-            ? "{$tied} tied at {$at}; the board placed {$number($tie['order'][0])} higher."
-            : "{$tied} tied at {$at}; the board placed them in this order: ".collect($tie['order'])->map($number)->join(', ').'.';
+            ? "{$tied} tied at {$at}; the board of judges placed {$number($tie['order'][0])} higher."
+            : "{$tied} tied at {$at}; the board of judges placed them in this order: ".collect($tie['order'])->map($number)->join(', ').'.';
     }
 }

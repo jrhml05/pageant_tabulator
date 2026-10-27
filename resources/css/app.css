@@ -228,7 +228,7 @@
 
     /* A rank the board set after a tie: settled, so outlined in neutral rather than flagged. */
     .decided {
-        @apply text-ink-2 ring-1 ring-line-strong ring-inset;
+        @apply text-ink-2 ring-1 ring-line-strong ring-inset whitespace-nowrap;
     }
 
     /* The sign-in art panel wears the logo's own fill: crimson darkening toward the bottom. */

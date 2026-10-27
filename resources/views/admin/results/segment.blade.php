@@ -68,7 +68,7 @@
             @if ($unsettled->isNotEmpty())
                 <p role="alert" class="rounded-md bg-danger-soft px-3 py-2 font-medium text-danger">
                     {{ $unsettled->map(fn ($tie) => 'Tied for '.TieBreak::place($segment, $tie['rank'], $division).': '.$tie['candidates']->map(fn ($c) => 'No. '.$c->number)->join(', ', ' and '))->join('; ') }}.
-                    {{ $segment->forFinalistsOnly() ? 'Record the board\'s order' : 'Record the board\'s pick for the winner' }} under {{ $ties->count() === 1 ? 'Settle the tie' : 'Settle ties' }}, below the table.
+                    {{ $segment->forFinalistsOnly() ? 'Record the board of judges\' order' : 'Record the board of judges\' pick for the winner' }} under {{ $ties->count() === 1 ? 'Settle the tie' : 'Settle ties' }}, below the table.
                 </p>
             @endif
             @foreach ($ties->whereNotNull('order') as $tie)
@@ -78,8 +78,14 @@
                 {{-- Ties are routine while sheets are open; they need the board only once every judge has locked in. --}}
                 <p @if ($final) role="alert" @endif
                     class="{{ $final ? 'rounded-md bg-danger-soft px-3 py-2 font-medium text-danger' : 'text-ink-2' }}">
-                    {{ $final ? 'Tied, the board decides their order:' : 'Tied for now:' }}
+                    {{ $final ? 'Tied, the board of judges decides their order:' : 'Tied for now:' }}
                     {{ $tied->map(fn ($rows, $rank) => "rank {$rank}, ".$rows->map(fn ($r) => 'No. '.$r['candidate']->number)->join(' and '))->join('; ') }}.
+                </p>
+            @endif
+            @if (! $final && $ties->isNotEmpty())
+                <p class="text-ink-2">
+                    <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
+                    If {{ $ties->count() === 1 ? 'this tie' : 'these ties' }} still {{ $ties->count() === 1 ? 'stands' : 'stand' }} once every judge has locked in, a form below the table records {{ $segment->forFinalistsOnly() ? 'the board of judges\' order' : 'the board of judges\' pick for the winner' }}.
                 </p>
             @endif
         @endif

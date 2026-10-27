@@ -180,7 +180,7 @@ class PagesTest extends TestCase
         $this->assertNull($this->finalistsNotice());
 
         $save([1, 2, 3, 4, 7]);
-        $this->assertSame("Saved finalists don't match the current top 5: No. 7 is out. No. 5 and No. 6 are tied at the cut, so the board decides between them. Update the ticks under Top 5 finalists and save.", $this->finalistsNotice());
+        $this->assertSame("Saved finalists don't match the current top 5: No. 7 is out. No. 5 and No. 6 are tied at the cut, so the board of judges decides between them. Update the ticks under Top 5 finalists and save.", $this->finalistsNotice());
     }
 
     public function test_changing_finalists_after_round_two_unlocks_it_for_the_new_finalist(): void

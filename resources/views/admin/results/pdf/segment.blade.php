@@ -19,7 +19,7 @@
     @endif
     @unless ($judge)
         @foreach (collect($result['ties'])->whereNotNull('order') as $tie)
-            <p class="note"><strong>Tie settled by the board:</strong> {{ TieBreak::note($segment, $tie) }}</p>
+            <p class="note"><strong>Tie settled by the board of judges:</strong> {{ TieBreak::note($segment, $tie) }}</p>
         @endforeach
     @endunless
     @include($judge ? 'admin.results.tables.judge' : 'admin.results.tables.segment', ['print' => true])

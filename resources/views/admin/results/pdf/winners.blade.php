@@ -27,14 +27,14 @@
     @if ($announce)
         <p class="note">Read from the top down: the 4th runner-up first, the winner last.</p>
         @if ($tied->isNotEmpty())
-            <p class="note"><strong>Tied, the board decides their order:</strong>
+            <p class="note"><strong>Tied, the board of judges decides their order:</strong>
                 {{ $tied->map(fn ($rows, $rank) => Tabulator::placement($rank, $division).', '.$rows->map(fn ($r) => 'No. '.$r['candidate']->number)->join(' and '))->join('; ') }}.</p>
         @endif
     @elseif ($winners->count() > 1)
-        <p class="note"><strong>Tied for first.</strong> The board decides the winner.</p>
+        <p class="note"><strong>Tied for first.</strong> The board of judges decides the winner.</p>
     @endif
     @foreach (collect($result['ties'])->whereNotNull('order') as $tie)
-        <p class="note"><strong>Tie settled by the board:</strong> {{ TieBreak::note($segment, $tie) }}</p>
+        <p class="note"><strong>Tie settled by the board of judges:</strong> {{ TieBreak::note($segment, $tie) }}</p>
     @endforeach
 
     <table class="sheet announce">

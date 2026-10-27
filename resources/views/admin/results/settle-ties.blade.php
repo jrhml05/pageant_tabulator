@@ -19,8 +19,8 @@
         <div class="p-5 sm:p-6">
             <h2 id="ties-heading" class="text-lg font-semibold">{{ $ties->count() === 1 ? 'Settle the tie' : 'Settle ties' }}</h2>
             <p class="mt-1 text-sm text-ink-2">
-                Every judge has locked in and these averages are equal to the hundredth, so the board decides.
-                Record its decision here: the table, the {{ $round2 ? 'Announcement of winners' : 'winner sheet' }} and the printouts follow it, with a note that the board placed them.
+                Every judge has locked in and these averages are equal to the hundredth, so the board of judges decides.
+                Record its decision here: the table, the {{ $round2 ? 'Announcement of winners' : 'winner sheet' }} and the printouts follow it, with a note that the board of judges placed them.
                 If a score changes later, the decision is cleared.
             </p>
 
